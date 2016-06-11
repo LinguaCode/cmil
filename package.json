@@ -1,0 +1,42 @@
+{
+  "name": "LinguaCode",
+  "version": "0.2.0",
+  "description": "Multilinguage programming platform especially for kids",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "watch": "gulp watch",
+    "test": "gulp lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:linguacode/linguacode-api.git"
+  },
+  "engines": {
+    "node": ">= 4.4.5"
+  },
+  "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.github.com)",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": "https://github.com/LinguaCode/linguacode-api/issues",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "connect": "^3.4.1",
+    "cookie": "^0.2.3",
+    "cookie-parser": "^1.4.0",
+    "cors": "^2.7.1",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "express-validator": "^2.19.1",
+    "geotools": "0.0.6",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.0.0",
+    "helmet": "^1.3.0",
+    "kerberos": "0.0.19",
+    "lodash": "^4.11.1",
+    "mongoose": "^4.4.12",
+    "mongoose-q": "^0.1.0",
+    "socket.io": "^1.4.5",
+    "yandex-translate-api": "^1.0.1"
+  }
+}
