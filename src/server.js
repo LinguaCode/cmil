@@ -25,7 +25,7 @@ if (env == 'production') {
       'root.crt',
       '1_cross_Intermediate.crt',
       '2_issuer_Intermediate.crt',
-      '3_user_linguacode.me.crt',
+      '3_user_linguacode.me.crt'
     ];
     for (i = 0, len = certFileList.length; i < len; i++) {
       var file = certFileList[i];

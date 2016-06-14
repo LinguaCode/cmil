@@ -18,7 +18,7 @@ global.__io = socketIO();
 
 //routes
 var api = require('./routes/api');
-  
+
 app.use(helmet());
 
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 var corsWhiteList = [
   '127.0.0.1',
   'linguacode.me',
-  'localhost',
+  'localhost'
 ];
 
 var corsWhiteListRegExp = new RegExp(corsWhiteList.join('|'));
