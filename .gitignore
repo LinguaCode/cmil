@@ -31,4 +31,5 @@ build/Release
 node_modules
 
 #certificate files
-src/config/keys/*
+src/config/keys/*.crt
+src/config/keys/*.key
