@@ -7,7 +7,6 @@ let options = {
 
 let socketURL = 'http://localhost:3005';
 let compileId = 0;
-let sessionId;
 
 const sourceCodesDB = [{
   language: 'hy',
@@ -20,13 +19,6 @@ const sourceCodesDB = [{
 }];
 
 let socket = io.connect(socketURL, options);
-socket
-  .on('connect', function () {
-    socketId = setSocketId(socket.io.engine.id);
-  })
-  .on('error', function (err) {
-    console.log(err);
-  });
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
@@ -42,8 +34,6 @@ let codeSubmit = function (sessionId, sourceCode) {
     sourceCode: sourceCode
   };
 
-  console.log(sendData);
-
   socket.emit('submit', sendData);
 
   socket.on(sessionId + '_' + 'submitSuccess', () => {
@@ -55,49 +45,61 @@ let codeSubmit = function (sessionId, sourceCode) {
 
 let socketId;
 
-describe("Codes", function () {
+describe('initialize', function () {
+  it('socketId', function (done) {
+    socket
+      .on('connect', function () {
+        socketId = setSocketId(socket.io.engine.id);
+        done();
+      })
+      .on('error', function (err) {
+        done(err);
+      });
+  });
+});
+
+describe('sockets', function () {
   sourceCodesDB.forEach(function (sourceCodes) {
     let language = sourceCodes.language;
     let sources = sourceCodes.sources;
+    describe(language, function () {
+      sources.forEach(function (source) {
+        let title = source.title;
+        let code = source.code;
+        let expectedOutput = source.output;
+        let inputs = source.inputs;
 
-    sources.forEach(function (source) {
-      let title = source.title;
-      let code = source.code;
-      let expectedOutput = source.output;
-      let inputs = source.inputs;
-      let sessionId = setSessionId();
+        it(title, function (done) {
+          let sessionId = setSessionId();
+          let evalStatus;
+          let evalResult;
+          let inputDataIndex = 0;
 
-      let testTitle = language + ': ' + title;
+          codeSubmit(sessionId, code);
 
-      it(testTitle, function (done) {
-        let evalStatus;
-        let evalResult;
-        let inputDataIndex = 0;
+          socket
+            .on(sessionId + '_' + 'evaluated', function (receivedData) {
 
-        codeSubmit(sessionId, code);
+              evalStatus = receivedData.status;
+              evalResult = receivedData.result;
 
-        socket
-          .on(sessionId + '_' + 'evaluated', function (receivedData) {
+              if (inputs.length) {
+                let toSendData = {
+                  sessionId: sessionId,
+                  inputText: inputs[inputDataIndex++]
+                };
 
-            evalStatus = receivedData.status;
-            evalResult = receivedData.result;
-
-            let toSendData = {
-              sessionId: sessionId,
-              inputText: inputs[inputDataIndex++]
-            };
-
-            socket.emit('evaluated', toSendData);
-
-          })
-          .on(sessionId + '_' + 'sessionEnd', function () {
-            if (evalStatus == 'success' && evalResult == expectedOutput) {
-              done();
-            } else {
-              done(evalStatus);
-            }
-
-          });
+                socket.emit('evaluated', toSendData);
+              }
+            })
+            .on(sessionId + '_' + 'sessionEnd', function () {
+              if (evalStatus == 'success' && evalResult == expectedOutput + '\n') {
+                done();
+              } else {
+                done(new Error(evalStatus));
+              }
+            });
+        });
       });
     });
   });

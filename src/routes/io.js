@@ -15,10 +15,10 @@ let sockets = {
     require('../core/globals')(sessionId);
 
     __io.emit(sessionId + '_' + 'submitSuccess');
-    console.info('Socket.IO: sourceCode has been successfully received!');
+    console.info('Socket.IO: server: sourceCode has been successfully received!');
 
     if (errorHandler.isHackAttempted(sourceCode)) {
-      console.info('Socket.IO: output text has been successfully send! (Hack attempt)');
+      console.info('Socket.IO: server: output text has been successfully send! (Hack attempt)');
       let result = {
         result: '',
         status: 'Հաքերությունը հայտնաբերվա՛ծ է։ Ձեր "' + address + '" ip հասցեն պահպանված է ։）'
@@ -31,7 +31,7 @@ let sockets = {
   },
 
   disconnect: function () {
-    console.info('Socket.IO: One of connections closed.');
+    console.info('Socket.IO: server: One of connections closed.');
   },
 
   language: function (translation, sessionId) {
@@ -57,7 +57,7 @@ let sockets = {
   evaluated: function (receivedData) {
     let inputText = receivedData.inputText;
     let sessionId = receivedData.sessionId;
-    console.info('Socket.IO: \'' + inputText + '\' text successfully received!');
+    console.info('Socket.IO: server: \'' + inputText + '\' text successfully received!');
 
     compiler.listener(sessionId, inputText);
   },
@@ -80,7 +80,7 @@ let ipAddressResolver = function (ipAddress) {
 __io.on('connection', function (socket) {
 
   var ipAddress = ipAddressResolver(socket.handshake.address);
-  console.info('Socket.IO: New connection from ' + ipAddress);
+  console.info('Socket.IO: server: New connection from ' + ipAddress);
 
   sockets.init(socket);
 

@@ -16,7 +16,7 @@ var upgrader = function (sessionId, typeOfObject) {
     };
 
     __io.emit(sessionId + '_' + 'evaluated', evaluated);
-    console.info('Socket.IO: output text  has been successfully send! (waits for input text)');
+    console.info('Socket.IO: server: output text  has been successfully send! (waits for input text)');
   } else {
     positions[typeOfObject](sessionId);
   }
