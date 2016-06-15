@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.execute = function (sessionId, sourceCode) {
   this.structure(sessionId, sourceCode);
   this.session(sessionId);

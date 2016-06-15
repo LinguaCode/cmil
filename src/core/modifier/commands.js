@@ -6,11 +6,6 @@
  * @requires database/commands:listOfCommandGroups
  * @requires database/connection
  * @requires uglify:unixStandardize
- *
- *
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
  */
 
 var yandexTranslateKey = require('../../config/config').yandexTranslate;

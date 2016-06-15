@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var _ = require('lodash');
 
 exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {

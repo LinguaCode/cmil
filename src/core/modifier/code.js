@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var core = function (data, lng, which, toWhat) {
   var re, reStr;
   for (var i = 0; i < database.translations[lng].length; i++) { //languages

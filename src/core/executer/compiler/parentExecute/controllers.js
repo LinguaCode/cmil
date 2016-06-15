@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var controller = {
   manage: function (sessionId) {
     var parentObject = controller.oscillation(sessionId);

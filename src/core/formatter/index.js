@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.codeSemicolon = function (sourceCode, levels) {
   var dataList = sourceCode.split('\n');
   var semicolon = ';';

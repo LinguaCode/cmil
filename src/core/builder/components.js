@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var executions = require('../../database/constants').executions;
 
 exports.parent = function (listOfCommands, listOfLevels, index) {

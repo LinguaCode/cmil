@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var compiler = exports.operations = require('./compiler');
 exports.getter = require('./getter');
 exports.setter = require('./setter');

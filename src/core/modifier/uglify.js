@@ -1,9 +1,5 @@
 /**
  * Converting the user written sourceCode into a LinguaCode's understandable sourceCode.
- *
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
  */
 
 /**
