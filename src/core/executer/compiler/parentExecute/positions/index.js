@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.toCompile = function (sessionId, inputValue) {
   var toCompile = controllers.prepareToCompile(sessionId, inputValue);
   var evaluated = evaluate.code(sessionId, toCompile);

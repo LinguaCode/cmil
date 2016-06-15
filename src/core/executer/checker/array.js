@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.ended = function (sessionId) {
   return getter.index(sessionId) >= getter.limitOfArray(sessionId);
 };

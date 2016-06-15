@@ -3,10 +3,6 @@
  * - old and new changed language types,
  * - translation texts,
  * - structured sourceCode and the structure's dynamic operation path.
- *
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
  */
 
 /**

@@ -1,10 +1,6 @@
 /**
  * This is a lib of some useful scripts which can be used in other projects.
  * @requires errorHandler/levels:spaces
- *
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
  */
 
 var errorHandler = require('./errorHandler');

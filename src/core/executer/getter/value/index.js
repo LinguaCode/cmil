@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.index = function (sessionId) {
   var pathOfLocation = path.location(sessionId);
   var indexOfBracketBegin = pathOfLocation.lastIndexOf('[') + 1;

@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 const PARENT = 'parent';
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';

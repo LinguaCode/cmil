@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var fs = require('fs');
 var reservedWords = require('./reservedWords');
 var tools = require('./../libs/tools');

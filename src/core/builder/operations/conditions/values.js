@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var tools = require('../../../../libs/tools');
 var _ = require('lodash');
 

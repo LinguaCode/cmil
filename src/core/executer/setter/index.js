@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 exports.indexIncrement = function (sessionId) {
   __store[sessionId].pathOfLocation = getter.parentObjectPath(sessionId) + '[' + ( getter.index(sessionId) + 1) + ']';
 };

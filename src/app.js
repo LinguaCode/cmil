@@ -1,9 +1,3 @@
-/**
- * @author Arman Yeghiazaryan
- * @copyright LinguaCode 2016
- * @license GPLv3
- */
-
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
