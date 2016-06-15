@@ -25,9 +25,9 @@ exports.toCompile = function (sessionId, inputValue) {
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {
-    console.info('Socket.IO: output text has been successfully send! (output)');
+    console.info('Socket.IO: server: output text has been successfully send! (output)');
   } else {
-    console.info('Socket.IO: output text has been successfully send! (ping)');
+    console.info('Socket.IO: server: output text has been successfully send! (ping)');
   }
 
   controllers.controller(sessionId);
