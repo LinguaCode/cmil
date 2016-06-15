@@ -33,21 +33,22 @@ let setSocketId = function (socketId) {
 };
 
 let setSessionId = function () {
-  sessionId = socketId + '_' + compileId;
+  return socketId + '_' + compileId;
 };
 
-let codeSubmit = function () {
+let codeSubmit = function (sessionId, sourceCode) {
   let sendData = {
     sessionId: sessionId,
     sourceCode: sourceCode
   };
+
+  console.log(sendData);
 
   socket.emit('submit', sendData);
 
   socket.on(sessionId + '_' + 'submitSuccess', () => {
     console.log('Socket.IO: sourceCode has been successfully send!');
   });
-
 
   compileId = compileId + 1;
 };
@@ -62,15 +63,41 @@ describe("Codes", function () {
     sources.forEach(function (source) {
       let title = source.title;
       let code = source.code;
-      let output = source.output;
+      let expectedOutput = source.output;
       let inputs = source.inputs;
+      let sessionId = setSessionId();
 
-      let testTitle = language +': '+ title;
+      let testTitle = language + ': ' + title;
 
       it(testTitle, function (done) {
-        let sessionId = setSessionId();
+        let evalStatus;
+        let evalResult;
+        let inputDataIndex = 0;
 
-        codeSubmit(code);
+        codeSubmit(sessionId, code);
+
+        socket
+          .on(sessionId + '_' + 'evaluated', function (receivedData) {
+
+            evalStatus = receivedData.status;
+            evalResult = receivedData.result;
+
+            let toSendData = {
+              sessionId: sessionId,
+              inputText: inputs[inputDataIndex++]
+            };
+
+            socket.emit('evaluated', toSendData);
+
+          })
+          .on(sessionId + '_' + 'sessionEnd', function () {
+            if (evalStatus == 'success' && evalResult == expectedOutput) {
+              done();
+            } else {
+              done(evalStatus);
+            }
+
+          });
       });
     });
   });
