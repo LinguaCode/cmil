@@ -15,8 +15,6 @@ With LinguaCode one can not only study programming, but also learn languages.
   - **install:** `npm`
   - **clone:** `git clone git@github.com:otanim/LinguaCode.git`
   - **run:** `npm install`
-  - **run:** `npm install --global gulp`
-  - **run:** `npm install --production`
 
 ### Preparation
   - **run:** `gulp`
