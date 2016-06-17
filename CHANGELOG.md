@@ -1,3 +1,9 @@
+## 0.2.1 (2016-06-18)
+
+  - [new] mocha tests.
+  - [fix] empty code compile.
+  - [fix] minor fixes.
+
 ## 0.2.0 (2016-06-11)
 
   - Optimizations.
