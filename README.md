@@ -9,19 +9,15 @@ With LinguaCode one can not only study programming, but also learn languages.
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
 
-## How to run
-### Install
-  - **install:** `node.js`
-  - **install:** `npm`
-  - **clone:** `git clone git@github.com:otanim/LinguaCode.git`
-  - **run:** `npm install`
+## Preparation
+### Get started
+`npm install`
 
-### Preparation
-  - **run:** `gulp`
+### Start
+`npm start`
 
-### Run
-  - **run:** `bin/www.js`
-  - **open:** `http://localhost:3000` in the browser
+### Run tests
+`npm run test`
 
 ## Changelog
 

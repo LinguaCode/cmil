@@ -1,12 +1,13 @@
 {
   "name": "LinguaCode",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "watch": "gulp watch",
-    "test": "gulp lint"
+    "lint": "gulp lint",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
