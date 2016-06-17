@@ -7,10 +7,6 @@ exports.condition = function (sessionId) {
 };
 
 exports.code = function (sessionId, sourceCode) {
-  if (sourceCode.length == 0) {
-    return '';
-  }
-
   var codeFormatted = formatter.codeFormatting(sessionId, sourceCode);
 
   var evalResult;
