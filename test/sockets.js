@@ -5,8 +5,9 @@ let options = {
   'force new connection': true
 };
 
-let socketURL = 'http://localhost:3005';
+const socketURL = 'http://localhost:3005';
 let compileId = 0;
+let socketId;
 
 const sourceCodesDB = require('./sourceCodesDB');
 
@@ -35,8 +36,6 @@ let codeSubmit = function (sessionId, sourceCode) {
   compileId = compileId + 1;
 };
 
-let socketId;
-
 let paranoidalRecurser = function (sources) {
   sources.forEach(function (source) {
     if (source.sources) {
@@ -45,8 +44,8 @@ let paranoidalRecurser = function (sources) {
       });
     } else {
       let title = source.title;
-      let code = source.code;
-      let expectedOutput = source.output;
+      let code = source.code || '';
+      let expectedOutput = source.output || '';
       let inputs = source.inputs;
 
       it(title, function (done) {
@@ -63,7 +62,7 @@ let paranoidalRecurser = function (sources) {
             evalStatus = receivedData.status;
             evalResult = receivedData.result;
 
-            if (inputs && inputs.length) {
+            if (inputs && inputs.length && inputDataIndex != inputs.length) {
               let toSendData = {
                 sessionId: sessionId,
                 inputText: inputs[inputDataIndex++]
@@ -75,11 +74,14 @@ let paranoidalRecurser = function (sources) {
           .on(sessionId + '_' + 'sessionEnd', function () {
             if (evalStatus == 'success' && evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult)) {
               console.log(`\nTitle: ${title}`);
-              console.log('Expected: ' + (evalResult ? '"' + evalResult.substring(0, evalResult.length - 1) + '"' : 'n/a'));
-              console.log('Output: ' + (expectedOutput ? '"' + expectedOutput + '"' : 'n/a') + '\n\n');
+              console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
+              console.log('Expected result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a'));
+              console.log('Final result:\n' + (expectedOutput ? expectedOutput : 'n/a') + '\n\n');
               done();
             } else if (evalResult && evalResult != expectedOutput + '\n') {
-              let errMessage = `The result "${evalResult}" didn't equal to "${expectedOutput ? expectedOutput.substr(0, expectedOutput.length - 1) : ''}".\n`;
+              let errMessage =
+                'Expected result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') +
+                '\nFinal result:\n' + (expectedOutput ? expectedOutput : 'n/a') + '\n\n';
               done(new Error(errMessage));
             } else {
               done(new Error(evalStatus));
