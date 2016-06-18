@@ -50,8 +50,8 @@ let paranoidalRecurser = function (sources) {
 
       it(title, function (done) {
         let sessionId = setSessionId();
-        let evalStatus;
-        let evalResult;
+        let evalStatus = 'success';
+        let evalResult = '';
         let inputDataIndex = 0;
 
         codeSubmit(sessionId, code);
@@ -72,16 +72,17 @@ let paranoidalRecurser = function (sources) {
             }
           })
           .on(sessionId + '_' + 'sessionEnd', function () {
+            console.log(`\nTitle: ${title}`);
+            console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
+
             if (evalStatus == 'success' && evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult)) {
-              console.log(`\nTitle: ${title}`);
-              console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
-              console.log('Expected result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a'));
-              console.log('Final result:\n' + (expectedOutput ? expectedOutput : 'n/a') + '\n\n');
+              console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
+              console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
               done();
             } else if (evalResult && evalResult != expectedOutput + '\n') {
               let errMessage =
-                'Expected result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') +
-                '\nFinal result:\n' + (expectedOutput ? expectedOutput : 'n/a') + '\n\n';
+                '\nExpected result:\n' + (expectedOutput ? expectedOutput : 'n/a') +
+                '\nFinal result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n';
               done(new Error(errMessage));
             } else {
               done(new Error(evalStatus));
