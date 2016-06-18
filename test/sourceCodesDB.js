@@ -1,9 +1,9 @@
 module.exports = [{
   title: 'empty'
 }, {
-  name: 'hy',
+  group: 'hy',
   sources: [{
-    name: 'output',
+    group: 'output',
     sources: [{
       title: 'output: «text»',
       code: 'տպել «բարեւ»',
@@ -38,7 +38,7 @@ module.exports = [{
       output: '125'
     }]
   }, {
-    name: 'input',
+    group: 'input',
     sources: [{
       title: 'variable',
       code: 'գրել X',
@@ -49,7 +49,7 @@ module.exports = [{
       inputs: [617, 2]
     }]
   }, {
-    name: 'output; input',
+    group: 'output; input',
     sources: [{
       title: 'variable',
       code: 'գրել X\nտպել X',
@@ -62,11 +62,11 @@ module.exports = [{
       output: '1234'
     }]
   }, {
-    name: 'output; operations',
+    group: 'output; operations',
     sources: [{
-      name: 'numbers',
+      group: 'numbers',
       sources: [{
-        name: 'types',
+        group: 'types',
         sources: [{
           title: '*',
           code: 'տպել 617 * 2',
@@ -115,7 +115,7 @@ module.exports = [{
       output: '1234'
     }]
   }, {
-    name: 'comments',
+    group: 'comments',
     sources: [{
       title: 'comments: single',
       code: '# comment comment comment'
@@ -127,7 +127,7 @@ module.exports = [{
       code: '# comment\n# comment\n# comment'
     }]
   }, {
-    name: 'output; comments',
+    group: 'output; comments',
     sources: [{
       title: 'comment in new line and output',
       code: '# comment\nտպել 123',
@@ -142,7 +142,7 @@ module.exports = [{
       output: '321'
     }]
   }, {
-    name: 'conditions',
+    group: 'conditions',
     sources: [{
       title: 'if: with tail',
       code: 'եթե 4 > 2 ապա\n    տպել «4 > 2»',
@@ -176,11 +176,11 @@ module.exports = [{
       output: '4 > 2'
     }]
   }, {
-    name: 'output; boolean',
+    group: 'output; boolean',
     sources: [{
-      name: 'operators',
+      group: 'operators',
       sources: [{
-        name: 'condition',
+        group: 'condition',
         sources: [{
           title: '>',
           code: 'տպել 4 > 2',
@@ -211,7 +211,7 @@ module.exports = [{
           output: 'ճիշտ'
         }]
       }, {
-        name: 'boolean',
+        group: 'boolean',
         sources: [{
           title: 'AND: true result',
           code: 'տպել 4 > 2 և 4 != 2',
