@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/LinguaCode/linguacode-api/badge.svg?branch=master)](https://coveralls.io/github/LinguaCode/linguacode-api?branch=master)
 [![Dependency Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org/LinguaCode/linguacode-api)
 [![devDependency Status](https://david-dm.org/LinguaCode/linguacode-api/dev-status.svg)](https://david-dm.org/LinguaCode/linguacode-api#info=devDependencies)
-[![GratiPay](https://img.shields.io/gratipay/team/LinguaCode.svg)](https://gratipay.com/LinguaCode/)
+[![GratiPay](https://img.shields.io/gratipay/team/l inguacode.svg)](https://gratipay.com/LinguaCode/)
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Description
