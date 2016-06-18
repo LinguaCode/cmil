@@ -6,30 +6,30 @@
 
 ## 0.2.0 (2016-06-11)
 
-  - Optimizations.
-  - public files deleted.
-  - repository files minimised from 6.7mb to 0.8mb.
+  - [optimize] Optimizations.
+  - [optimize] public files deleted.
+  - [optimize] repository files minimised from 6.7mb to 0.8mb.
 
 ## 0.0.2 (2015-09-13)
 
-  - gulp implementation.
-  - css files are now scss.
-  - html files are now jade.
-  - scripts are now minimised.
-  - public files minimised from 11.5mb to 6.7mb.
+  - [new] gulp implementation.
+  - [optimize] css files are now scss.
+  - [optimize] html files are now jade.
+  - [optimize] scripts are now minimised.
+  - [optimize] public files minimised from 11.5mb to 6.7mb.
 
 ## 0.0.1 (2015-08-23)
 
-  - commands: variables.
-  - commands: output
-  - commands: if-else statements.
-  - commands: loops: repeats N times.
-  - translations: languages: Armenian, Russian, Georgian, Japanese.
-  - translations: multilingual syntax.
-  - translations: text translation via Yandex.
-  - IDE: toolbar: compile.
-  - IDE: toolbar: change translation.
-  - Terminal.
-  - syntax highlight.
-  - programming code is not case sensitive.
-  - unicode scope support..
+  - [new] commands: variables.
+  - [new] commands: output
+  - [new] commands: if-else statements.
+  - [new] commands: loops: repeats N times.
+  - [new] translations: languages: Armenian, Russian, Georgian, Japanese.
+  - [new] translations: multilingual syntax.
+  - [new] translations: text translation via Yandex.
+  - [new] IDE: toolbar: compile.
+  - [new] IDE: toolbar: change translation.
+  - [new] Terminal.
+  - [new] syntax highlight.
+  - [new] programming code is not case sensitive.
+  - [new] unicode scope support..
