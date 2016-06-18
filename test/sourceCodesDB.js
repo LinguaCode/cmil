@@ -38,6 +38,17 @@ module.exports = [{
       output: '125'
     }]
   }, {
+    name: 'input',
+    sources: [{
+      title: 'variable',
+      code: 'գրել X',
+      inputs: [617]
+    }, {
+      title: '2 variables',
+      code: 'գրել X\nգրել Y',
+      inputs: [617, 2]
+    }]
+  }, {
     name: 'output; input',
     sources: [{
       title: 'variable',
@@ -51,36 +62,36 @@ module.exports = [{
       output: '1234'
     }]
   }, {
-    name: 'input',
-    sources: [{
-      title: 'variable',
-      code: 'գրել X',
-      inputs: [617]
-    }, {
-      title: '2 variables',
-      code: 'գրել X\nգրել Y',
-      inputs: [617, 2]
-    }]
-  }, {
     name: 'output; operations',
     sources: [{
       name: 'numbers',
       sources: [{
-        title: 'output: multiply',
-        code: 'տպել 617 * 2',
-        output: '1234'
+        name: 'types',
+        sources: [{
+          title: '*',
+          code: 'տպել 617 * 2',
+          output: '1234'
+        }, {
+          title: '/',
+          code: 'տպել 1234 / 2',
+          output: '617'
+        }, {
+          title: '+',
+          code: 'տպել 617 + 617',
+          output: '1234'
+        }, {
+          title: '-',
+          code: 'տպել 1234 - 617',
+          output: '617'
+        }]
       }, {
-        title: 'output: divide',
-        code: 'տպել 1234 / 2',
-        output: '617'
+        title: 'output: multiple operations',
+        code: 'տպել 1 + 2 * 3 - 4',
+        output: '3'
       }, {
-        title: 'output: summarize',
-        code: 'տպել 617 + 617',
-        output: '1234'
-      }, {
-        title: 'output: multiply',
-        code: 'տպել 1234 - 617',
-        output: '617'
+        title: 'output: multiple operations; scopes',
+        code: 'տպել (1 + 2) * (3 - 4)',
+        output: '-3'
       }]
     }, {
       title: 'texts',
@@ -118,13 +129,127 @@ module.exports = [{
   }, {
     name: 'output; comments',
     sources: [{
-      title: 'comment and 2 outputs',
-      code: '# comment\nտպել 123\nտպել 321',
-      output: '123\n321'
+      title: 'comment in new line and output',
+      code: '# comment\nտպել 123',
+      output: '123'
+    }, {
+      title: 'comment in the same line with output',
+      code: 'տպել 123 # 123',
+      output: '123'
     }, {
       title: '2 outputs which first was commented',
       code: '# տպել 123\nտպել 321',
       output: '321'
+    }]
+  }, {
+    name: 'conditions',
+    sources: [{
+      title: 'if: with tail',
+      code: 'եթե 4 > 2 ապա\n    տպել «4 > 2»',
+      output: '4 > 2'
+    }, {
+      title: 'if: without tail',
+      code: 'եթե 4 > 2\n    տպել «4 > 2»',
+      output: '4 > 2'
+    }, {
+      title: 'if: wrong result',
+      code: 'եթե 4 > 6\n    տպել «4 > 6»'
+    }, {
+      title: 'if-else: right answer',
+      code: 'եթե 4 > 2\n    տպել «4 > 2»\nայլապես\n    տպել «2 >= 4»',
+      output: '4 > 2'
+    }, {
+      title: 'if-else: wrong answer',
+      code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես\n    տպել «6 >= 4»',
+      output: '6 >= 4'
+    }, {
+      title: 'else-if-else: 1st condition was right',
+      code: 'եթե 4 > 2\n    տպել «4 > 2»\nայլապես եթե 4 > 6\n    տպել «4 > 6»\nայլապես\n    տպել «4 == 4»',
+      output: '4 > 2'
+    }, {
+      title: 'else-if-else: 2st condition was right',
+      code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 > 2\n    տպել «4 > 2»\nայլապես\n    տպել «4 == 4»',
+      output: '4 > 2'
+    }, {
+      title: 'else-if-else: 3st condition was right',
+      code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 == 2\n    տպել «4 == 4»\nայլապես\n    տպել «4 > 2»',
+      output: '4 > 2'
+    }]
+  }, {
+    name: 'output; boolean',
+    sources: [{
+      name: 'operators',
+      sources: [{
+        name: 'condition',
+        sources: [{
+          title: '>',
+          code: 'տպել 4 > 2',
+          output: 'ճիշտ'
+        }, {
+          title: '<',
+          code: 'տպել 2 < 4',
+          output: 'ճիշտ'
+        }, {
+          title: '==',
+          code: 'տպել 4 == 4',
+          output: 'ճիշտ'
+        }, {
+          title: '>=',
+          code: 'տպել 4 >= 2',
+          output: 'ճիշտ'
+        }, {
+          title: '<=',
+          code: 'տպել 2 <= 4',
+          output: 'ճիշտ'
+        }, {
+          title: '!=',
+          code: 'տպել 4 != 2',
+          output: 'ճիշտ'
+        }, {
+          title: 'not()',
+          code: 'տպել ոչ(4 < 2)',
+          output: 'ճիշտ'
+        }]
+      }, {
+        name: 'boolean',
+        sources: [{
+          title: 'AND: true result',
+          code: 'տպել 4 > 2 և 4 != 2',
+          output: 'ճիշտ'
+        }, {
+          title: 'AND: false result',
+          code: 'տպել 4 > 2 և 4 == 2',
+          output: 'սխալ'
+        }, {
+          title: 'OR: true result',
+          code: 'տպել 4 > 2 կամ 4 == 2',
+          output: 'ճիշտ'
+        }, {
+          title: 'OR: false result',
+          code: 'տպել 4 < 2 կամ 4 == 2',
+          output: 'սխալ'
+        }]
+      }]
+    }, {
+      title: 'true value',
+      code: 'տպել ճիշտ',
+      output: 'ճիշտ'
+    }, {
+      title: 'false value',
+      code: 'տպել սխալ',
+      output: 'սխալ'
+    }, {
+      title: 'true condition',
+      code: 'տպել 4 > 2',
+      output: 'ճիշտ'
+    }, {
+      title: 'false condition',
+      code: 'տպել 4 < 2',
+      output: 'սխալ'
+    }, {
+      title: 'scopes',
+      code: 'տպել 5 < 1 և (1 < 7 կամ (1 >= 3 կամ 9 == 9))',
+      output: 'սխալ'
     }]
   }]
 }];
