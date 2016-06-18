@@ -1,12 +1,11 @@
 let io = require('socket.io-client');
+const sourceCodesDB = require('./sourceCodesDB');
 
-const socketURL = 'http://localhost:3005';
+let socket = io.connect('http://localhost:3005');
+
 let compileId = 0;
 let socketId;
 
-const sourceCodesDB = require('./sourceCodesDB');
-
-let socket = io.connect(socketURL);
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
