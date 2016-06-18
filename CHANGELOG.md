@@ -1,6 +1,7 @@
 ## 0.2.1 (2016-06-18)
 
   - [new] mocha test count: 55.
+  - [new] include test coverage: istanbul.
   - [fix] empty code compile.
   - [fix] minor fixes.
 
