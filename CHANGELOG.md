@@ -1,6 +1,6 @@
 ## 0.2.1 (2016-06-18)
 
-  - [new] mocha tests.
+  - [new] mocha test count: 55.
   - [fix] empty code compile.
   - [fix] minor fixes.
 
