@@ -1,17 +1,12 @@
 let io = require('socket.io-client');
 
-let options = {
-  transports: ['websocket'],
-  'force new connection': true
-};
-
 const socketURL = 'http://localhost:3005';
 let compileId = 0;
 let socketId;
 
 const sourceCodesDB = require('./sourceCodesDB');
 
-let socket = io.connect(socketURL, options);
+let socket = io.connect(socketURL);
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
