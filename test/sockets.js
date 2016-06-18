@@ -39,7 +39,7 @@ let codeSubmit = function (sessionId, sourceCode) {
 let paranoidalRecurser = function (sources) {
   sources.forEach(function (source) {
     if (source.sources) {
-      describe(source.name, function () {
+      describe(source.group, function () {
         paranoidalRecurser(source.sources);
       });
     } else {
