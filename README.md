@@ -9,10 +9,6 @@ Due to our solution children can not only get acquainted and study the basic ele
 
 With LinguaCode one can not only study programming, but also learn languages.
 
-### Screenshots
-
-![0.0.1](/screenshots/demonstration_0.0.1.gif)
-
 ### Preparation
 #### Get started
 `npm install`
@@ -28,3 +24,7 @@ With LinguaCode one can not only study programming, but also learn languages.
 npm install instanbul -g
 npm run coverage
 `
+
+### Screenshots
+
+![0.0.1](/screenshots/demonstration_0.0.1.gif)
