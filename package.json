@@ -7,9 +7,8 @@
     "start": "node src/server.js",
     "watch": "gulp watch",
     "lint": "gulp lint",
-    "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
-    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "nodeunit test",
+    "coveralls": "jscoverage lib && QUICKSORT_COV=1 nodeunit --reporter=lcov test | coveralls"
   },
   "repository": {
     "type": "git",
@@ -45,8 +44,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
+    "jscoverage": "^0.6.0",
     "mocha": "^2.5.1",
     "mocha-lcov-reporter": "^1.2.0",
+    "nodeunit": "^0.9.1",
     "should": "^9.0.2",
     "socket.io-client": "^1.4.6",
     "supertest": "^1.2.0"
