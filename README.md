@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/LinguaCode/linguacode-api.svg?branch=master)](https://travis-ci.org/LinguaCode/linguacode-api)
-[![Build Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org)
+[![Dependency Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org/LinguaCode/linguacode-api)
+[![devDependency Status](https://david-dm.org/LinguaCode/linguacode-api/dev-status.svg)](https://david-dm.org/LinguaCode/linguacode-api#info=devDependencies)
 [![Coverage Status](https://coveralls.io/repos/github/LinguaCode/linguacode-api/badge.svg?branch=master)](https://coveralls.io/github/LinguaCode/linguacode-api?branch=master)
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 
