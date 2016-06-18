@@ -23,7 +23,7 @@ With LinguaCode one can not only study programming, but also learn languages.
 `npm run test`
 
 #### Run test coverage
-`
+```
 npm install instanbul -g
 npm run coverage
 `
