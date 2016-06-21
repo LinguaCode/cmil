@@ -1,7 +1,23 @@
+const booleanDefinitions = {
+  true: 'ճիշտ',
+  false: 'սխալ'
+};
+
+let booleanParse = function (outputText) {
+  for (var key in booleanDefinitions) {
+    let regExp = new RegExp(key, 'g');
+    if (regExp.test(outputText)) {
+      outputText = outputText.replace(regExp, booleanDefinitions[key]);
+    }
+  }
+
+  return outputText;
+};
+
 exports.toCompile = function (sessionId, inputValue) {
-  var toCompile = controllers.prepareToCompile(sessionId, inputValue);
-  var evaluated = evaluate.code(sessionId, toCompile);
-  var concatenatedCompileCode = toCompile.join('\n');
+  let toCompile = controllers.prepareToCompile(sessionId, inputValue);
+  let evaluated = evaluate.code(sessionId, toCompile);
+  let concatenatedCompileCode = toCompile.join('\n');
 
   //TODO: improve this part of code
   //this is hard coded part of checking for divide on zero.
@@ -9,13 +25,7 @@ exports.toCompile = function (sessionId, inputValue) {
     evaluated.result = evaluated.result.replace(/Infinity/g, 'Անվերջություն');
   }
 
-  if (/true/.test(evaluated.result)) {
-    evaluated.result = evaluated.result.replace(/true/g, 'ճիշտ');
-  }
-
-  if (/false/.test(evaluated.result)) {
-    evaluated.result = evaluated.result.replace(/false/g, 'սխալ');
-  }
+  evaluated.result = booleanParse(evaluated.result);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {
@@ -29,7 +39,7 @@ exports.toCompile = function (sessionId, inputValue) {
 
 exports.child = function (sessionId) {
   if (checker.needToUpgrade(sessionId)) {
-    var firsKeyOfObject = getter.firstKeyOfObject(sessionId);
+    let firsKeyOfObject = getter.firstKeyOfObject(sessionId);
     upgrader(sessionId, firsKeyOfObject);
   }
 
@@ -39,10 +49,10 @@ exports.child = function (sessionId) {
 };
 
 exports.parent = function (sessionId, isPassedBefore) {
-  var isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
-  var isParentAllow = evaluate.condition(sessionId);
-  var isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
-  var isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
+  let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
+  let isParentAllow = evaluate.condition(sessionId);
+  let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
+  let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
   if (isConditionStatementPassed && !isPassedBefore) {
@@ -63,12 +73,12 @@ exports.parent = function (sessionId, isPassedBefore) {
   }
 };
 
-var upgrader = exports.upgrader = require('./upgrader');
+let upgrader = exports.upgrader = require('./upgrader');
 
-var controllers = require('../controllers');
+let controllers = require('../controllers');
 
-var evaluate = require('../../evaluate');
+let evaluate = require('../../evaluate');
 
-var checker = require('../../../checker');
-var getter = require('../../../getter');
-var setter = require('../../../setter');
+let checker = require('../../../checker');
+let getter = require('../../../getter');
+let setter = require('../../../setter');
