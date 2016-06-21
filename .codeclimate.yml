@@ -12,6 +12,9 @@ engines:
     enabled: true
   fixme:
     enabled: true
+  checks:
+    linebreak-style:
+    enabled: false
 ratings:
   paths:
   - "**.inc"
