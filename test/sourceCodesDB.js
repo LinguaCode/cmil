@@ -257,5 +257,21 @@ module.exports = [{
       code: 'տպել 5 < 1 և (1 < 7 կամ (1 >= 3 կամ 9 == 9))',
       output: 'սխալ'
     }]
+  }, {
+    group: 'loops',
+    sources: [
+      {
+      title: 'while-do',
+      code: 'a = 0\nմինչ a < 5\n    տպել a\n    a = a + 1',
+      output: '0\n1\n2\n3\n4'
+    }, {
+      title: 'do-while',
+        code: 'a = 0\nկրկնել\n    տպել a\n    a = a + 1\nմինչ a < 5',
+        output: '0\n1\n2\n3\n4'
+    }, {
+      title: 'repeat',
+        code: 'a = 0\nկրկնել 5 անգամ\n    տպել a\n    a = a + 1\n',
+        output: '0\n1\n2\n3\n4'
+    }]
   }]
 }];
