@@ -14,7 +14,7 @@ engines:
     enabled: true
   checks:
     linebreak-style:
-    enabled: false
+      enabled: false
 ratings:
   paths:
   - "**.inc"
