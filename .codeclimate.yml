@@ -11,6 +11,8 @@ engines:
         - a817c97640284ca59b22d22f36a269cd
 
         - 4249a5ae65bc75eeb58b058691005cc4
+
+        - a7be63e8544cd32d57a8d62c83ca5c57
   eslint:
     enabled: true
     checks:
