@@ -1,18 +1,21 @@
 var path = require('./path');
-var value = exports.value = require('./value');
+var value = require('./value');
 
-//paths
-exports.parentObjectPath = path.operations.parentObject;
-exports.pathOfLocation = path.location;
+module.exports = {
+  //paths
+  parentObjectPath: path.operations.parentObject,
+  pathOfLocation: path.location,
 
-//values
-exports.object = value.structure.object;
-exports.operations = value.structure.operations;
-exports.firstKeyOfObject = value.structure.firstKeyOfObject;
-exports.limitOfArray = value.structure.limit;
-exports.inputVariable = value.structure.inputVariable;
-exports.condition = value.structure.condition;
-exports.conditionType = value.structure.conditionType;
+  //values
+  object: value.structure.object,
+  operations: value.structure.operations,
+  firstKeyOfObject: value.structure.firstKeyOfObject,
+  limitOfArray: value.structure.limit,
+  inputVariable: value.structure.inputVariable,
+  condition: value.structure.condition,
+  conditionType: value.structure.conditionType,
 
-exports.nameOfProperty = value.nameOfProperty;
-exports.index = value.index;
+  nameOfProperty: value.nameOfProperty,
+  index: value.index
+};
+
