@@ -24,8 +24,10 @@ let sockets = {
         result: '',
         status: 'Հաքերությունը հայտնաբերվա՛ծ է։ Ձեր "' + ipAddress + '" ip հասցեն պահպանված է ։）'
       };
+      
       __io.emit(sessionId + '_' + 'evaluated', result);
-      __io.emit(sessionId + '_' + 'sessionEnd');
+      
+      return __io.emit(sessionId + '_' + 'sessionEnd');
     }
 
     compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
