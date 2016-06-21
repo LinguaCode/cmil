@@ -55,11 +55,11 @@ exports.parser = function (sessionId, sourceCode, lng, isCondition) {
   var toReplace;
   var replaceObject = database.languages[lng](sessionId, isCondition).replace;
   for (var i = 0; i < replaceObject.length; i++) { //languages
-    re = new RegExp(replaceObject[i].which, 'g');
+    re = new RegExp(replaceObject[i].command, 'g');
     while ((reStr = re.exec(sourceCode)) !== null) { //in line
       correctResult = reStr[1] ? reStr[1] : reStr[0];
       if (tools.isPartOfCode(sourceCode, reStr.index)) {
-        toReplace = replaceObject[i].toWhat.replace('$1', correctResult);
+        toReplace = replaceObject[i].definition.replace('$1', correctResult);
         sourceCode = sourceCode.substring(0, reStr.index) + toReplace + sourceCode.substring(reStr.index + reStr[0].length);
       }
     }

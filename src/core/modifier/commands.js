@@ -33,8 +33,8 @@ exports.groupAllTranslations = function (language) {
   return listOfCommandGroups.map(function (commandGroup) {
     var convertedCommandGroup = [];
     database.translations[language].forEach(function (translation) {
-      if (commandGroup.indexOf(translation.which) != -1) {
-        convertedCommandGroup.push(translation.toWhat);
+      if (commandGroup.indexOf(translation.command) != -1) {
+        convertedCommandGroup.push(translation.definition);
       }
     });
 

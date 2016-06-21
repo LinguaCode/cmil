@@ -10,61 +10,61 @@ module.exports = function (sessionId, isCondition) {
   }
 
   var toReplace = [{
-    which: '(' + commands.not + ')\\s*\\(',
-    toWhat: '!('
+    command: '(' + commands.not + ')\\s*\\(',
+    definition: '!('
   }, {
-    which: commands.true,
-    toWhat: 'true'
+    command: commands.true,
+    definition: 'true'
   }, {
-    which: commands.false,
-    toWhat: 'false'
+    command: commands.false,
+    definition: 'false'
   }, {
-    which: commands.or,
-    toWhat: '||'
+    command: commands.or,
+    definition: '||'
   }, {
-    which: commands.and1,
-    toWhat: '&&'
+    command: commands.and1,
+    definition: '&&'
   }, {
-    which: commands.and2,
-    toWhat: '&&'
+    command: commands.and2,
+    definition: '&&'
   }, {
-    which: commands.output + '\\s+([^\\n\\r\\;]*)\\s*;',
-    toWhat: sessionId + '._output += ($1) + \'\\n\';'
+    command: commands.output + '\\s+([^\\n\\r\\;]*)\\s*;',
+    definition: sessionId + '._output += ($1) + \'\\n\';'
   }, {
-    which: commands.if + '\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
-    toWhat: 'if ($1)'
+    command: commands.if + '\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
+    definition: 'if ($1)'
   }, {
-    which: commands.while + '\\s+(.*)\\s*',
-    toWhat: 'while ($1)'
+    command: commands.while + '\\s+(.*)\\s*',
+    definition: 'while ($1)'
   }, {
-    which: commands.else,
-    toWhat: 'else'
+    command: commands.else,
+    definition: 'else'
   }, {
-    which: commands.break,
-    toWhat: 'break'
+    command: commands.break,
+    definition: 'break'
   }, {
-    which: commands.continue,
-    toWhat: 'continue'
+    command: commands.continue,
+    definition: 'continue'
   }, {
-    which: commands.function + ' \\s*\\(([^\\n\\r\\;])\\)\\s*',
-    toWhat: 'function ($1)'
+    command: commands.function + ' \\s*\\(([^\\n\\r\\;])\\)\\s*',
+    definition: 'function ($1)'
   }, {
-    which: '#',
-    toWhat: '//'
+    command: '#',
+    definition: '//'
   }
     /*{
-     which: 'Math.pi',
-     toWhat: 'Math.PI'
+     command: 'Math.pi',
+     definition: 'Math.PI'
      }, {
-     which: 'Math.e',
-     toWhat: 'Math.E'
+     command: 'Math.e',
+     definition: 'Math.E'
      },*/
   ];
 
   if (!isCondition) {
     toReplace.push({
-      which: '^([\\s\\S]*)$',
-      toWhat: 'function _compile() {\
+      command: '^([\\s\\S]*)$',
+      definition: 'function _compile() {\
             ' + sessionId + '._output = \'\';\
             $1\n\
             return ' + sessionId + '._output;\
