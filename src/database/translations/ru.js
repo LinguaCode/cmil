@@ -1,39 +1,39 @@
 var commands = require('../commands/variables');
 
 module.exports = [{
-  which: commands.input,
-  toWhat: 'ввести'
+  command: commands.input,
+  definition: 'ввести'
 }, {
-  which: commands.output,
-  toWhat: 'вывести'
+  command: commands.output,
+  definition: 'вывести'
 }, {
-  which: commands.do,
-  toWhat: 'կատարել'
+  command: commands.do,
+  definition: 'կատարել'
 }, {
-  which: commands.if,
-  toWhat: 'если'
+  command: commands.if,
+  definition: 'если'
 }, {
-  which: commands.else,
-  toWhat: 'иначе'
+  command: commands.else,
+  definition: 'иначе'
 }, {
-  which: commands.var,
-  toWhat: 'переменная'
+  command: commands.var,
+  definition: 'переменная'
 }, {
-  which: commands.break,
-  toWhat: 'прервать'
+  command: commands.break,
+  definition: 'прервать'
 }, {
-  which: commands.continue,
-  toWhat: 'продолжить'
+  command: commands.continue,
+  definition: 'продолжить'
 }, {
-  which: commands.while,
-  toWhat: 'пока'
+  command: commands.while,
+  definition: 'пока'
 }, {
-  which: commands.repeat,
-  toWhat: 'повторить'
+  command: commands.repeat,
+  definition: 'повторить'
 }, {
-  which: commands.times,
-  toWhat: 'раз'
+  command: commands.times,
+  definition: 'раз'
 }, {
-  which: commands.function,
-  toWhat: 'функция'
+  command: commands.function,
+  definition: 'функция'
 }];
