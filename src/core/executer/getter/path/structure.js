@@ -8,7 +8,7 @@ var conditionParse = function (sessionId, parseType) {
     return path.location(sessionId) + '.' + parseType;
   }
 
-  return this.parent(sessionId) + '.' + parseType;
+  return exports.parent(sessionId) + '.' + parseType;
 };
 
 exports.condition = function (sessionId) {
