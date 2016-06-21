@@ -1,27 +1,27 @@
 var fs = require('fs');
 
-/**
- * Database of translations.
- * exports.tutorials();
- * @returns {Object} Returns the database of translations.
- */
-var translations = {};
-var pathOfTranslation = require('path').join(__dirname, './translations/');
-fs.readdirSync(pathOfTranslation).forEach(function (file) {
-  var fileName = file.substring(0, file.indexOf('.'));
-  translations[fileName] = require('./translations/' + file);
-});
-exports.translations = translations;
+const dbs = ['translations', 'languages'];
 
 /**
  * Database of languages.
- * exports.tutorials();
+ *
+ *  @example
+ * dbCollect('folder');
+ *
+ * @param {String} dbName
  * @returns {Object} Returns the database of languages.
  */
-var languages = {};
-var pathOfLanguages = require('path').join(__dirname, './languages/');
-fs.readdirSync(pathOfLanguages).forEach(function (file) {
-  var fileName = file.substring(0, file.indexOf('.'));
-  languages[fileName] = require('./languages/' + file);
+var dbCollect = function (dbName) {
+  var db = {};
+  var pathOfTranslation = require('path').join(__dirname, './' + dbName + '/');
+  fs.readdirSync(pathOfTranslation).forEach(function (file) {
+    var fileName = file.substring(0, file.indexOf('.'));
+    db[fileName] = require('./' + dbName + '/' + file);
+  });
+  
+  return db;
+};
+
+dbs.forEach(function (dbName) {
+  exports[dbName] = dbCollect(dbName);
 });
-exports.languages = languages;
