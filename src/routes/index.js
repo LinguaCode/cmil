@@ -28,7 +28,6 @@ let sockets = {
       __io.emit(sessionId + '_' + 'sessionEnd');
     }
 
-    console.log(compiler);
     compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
   },
 
