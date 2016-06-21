@@ -66,7 +66,6 @@ let paranoidalRecurser = function (sources) {
             }
           })
           .on(sessionId + '_' + 'sessionEnd', function () {
-            console.log('check for double');
             console.log(`\nTitle: ${title}`);
             console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
 
