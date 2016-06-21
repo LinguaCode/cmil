@@ -28,14 +28,15 @@ exports.bracing = function (sourceCode, levels) {
         break;
       }
 
+      dataList[i + 1] = dataList[i + 1].replace(new RegExp('[\\s]{' + (levels[i + 1] * 4) + '}'), '{');
+      
       if (levels[i] >= levels[j]) {
-        dataList[i + 1] = dataList[i + 1].replace(new RegExp('[\\s]{' + (levels[i + 1] * 4) + '}'), '{');
         dataList[j - 1] = dataList[j - 1].replace(new RegExp('[\\s]{' + (levels[j - 1] * 4) + '}'), '') + '}';
         isLevelPassed[j] = true;
         break;
       }
+      
       if (j == levels.length - 1) {
-        dataList[i + 1] = dataList[i + 1].replace(new RegExp('[\\s]{' + (levels[i + 1] * 4) + '}'), '{');
         dataList[j] = dataList[j].replace(new RegExp('[\\s]{' + (levels[j] * 4) + '}'), '') + '}';
         isLevelPassed[j] = true;
         break;
