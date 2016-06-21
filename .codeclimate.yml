@@ -7,13 +7,13 @@ engines:
       - javascript
   eslint:
     enabled: true
-    checks:
-      linebreak-style:
-        enabled: false
     exclude_fingerprints:
     - 2f35fc4f8c28e3f0c1c6b139e3a16331
     - 9031d0c037ff0cb8cb3f8a6e1c4dc3c2
     - a817c97640284ca59b22d22f36a269cd
+    checks:
+      linebreak-style:
+        enabled: false
   fixme:
     enabled: true
 ratings:
