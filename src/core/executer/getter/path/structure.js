@@ -2,24 +2,22 @@ const PARENT = 'parent';
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';
 
-exports.condition = function (sessionId) {
+var conditionParse = function (sessionId, parseType) {
   var nameOfProperty = value.nameOfProperty(sessionId);
   if (nameOfProperty !== 'child') {
-    return path.location(sessionId) + '.condition';
+    return path.location(sessionId) + '.' + parseType;
   }
 
-  return this.parent(sessionId) + '.condition';
+  return this.parent(sessionId) + '.' + parseType;
+};
+
+exports.condition = function (sessionId) {
+  return conditionParse(sessionId, 'condition');
 };
 
 exports.conditionType = function (sessionId) {
-  var nameOfProperty = value.nameOfProperty(sessionId);
-  if (nameOfProperty !== 'child') {
-    return path.location(sessionId) + '.type';
-  }
-
-  return this.parent(sessionId) + '.type';
+  return conditionParse(sessionId, 'type');
 };
-
 
 exports.operations = function (sessionId) {
   return path.location(sessionId) + '.' + OPERATIONS;
