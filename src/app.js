@@ -1,44 +1,40 @@
-var cors = require('cors');
-var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
-var session = require('express-session');
-var express = require('express');
-var helmet = require('helmet');
+let cors = require('cors');
+let bodyParser = require('body-parser');
+let expressValidator = require('express-validator');
+let session = require('express-session');
+let express = require('express');
+let helmet = require('helmet');
 
-var app = express();
+let app = express();
 
-var socketIO = require('socket.io');
+let socketIO = require('socket.io');
 global.__io = socketIO();
-
-//routes
-var api = require('./routes/api');
 
 app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-var corsWhiteList = [
+let corsWhiteList = [
   '127.0.0.1',
   'linguacode.me',
   'localhost'
 ];
 
-var corsWhiteListRegExp = new RegExp(corsWhiteList.join('|'));
+let corsWhiteListRegExp = new RegExp(corsWhiteList.join('|'));
 
-var corsOptions = {
+let corsOptions = {
   origin: function (origin, callback) {
-    var originIsWhiteListed = corsWhiteListRegExp.test(origin);
+    let originIsWhiteListed = corsWhiteListRegExp.test(origin);
     callback(null, originIsWhiteListed);
   }
 };
 app.use(cors(corsOptions));
 
 app.use(expressValidator());
-app.use('/', api);
 
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
@@ -59,6 +55,7 @@ if (app.get('env') === 'development') {
     });
   });
 }
-require('./routes/io');
+
+require('./routes');
 
 module.exports = app;

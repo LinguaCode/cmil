@@ -6,6 +6,7 @@ const LOCALHOST = [
 let code = require('../core/modifier/code');
 let errorHandler = require('../libs/errorHandler');
 let compiler = require('../core/executer/compiler');
+let ipAddress;
 
 let sockets = {
   submit: function (receivedData) {
@@ -21,7 +22,7 @@ let sockets = {
       console.info('Socket.IO: server: output text has been successfully send! (Hack attempt)');
       let result = {
         result: '',
-        status: 'Հաքերությունը հայտնաբերվա՛ծ է։ Ձեր "' + address + '" ip հասցեն պահպանված է ։）'
+        status: 'Հաքերությունը հայտնաբերվա՛ծ է։ Ձեր "' + ipAddress + '" ip հասցեն պահպանված է ։）'
       };
       __io.emit(sessionId + '_' + 'evaluated', result);
       __io.emit(sessionId + '_' + 'sessionEnd');
@@ -79,7 +80,7 @@ let ipAddressResolver = function (ipAddress) {
 
 __io.on('connection', function (socket) {
 
-  var ipAddress = ipAddressResolver(socket.handshake.address);
+  ipAddress = ipAddressResolver(socket.handshake.address);
   console.info('Socket.IO: server: New connection from ' + ipAddress);
 
   sockets.init(socket);
