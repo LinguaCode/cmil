@@ -2,9 +2,6 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty'
-  },{
-    title: 'hack attempt',
-    code: 'console.log(\'Hello world\')'
   }]
 }, {
   group: 'hy',
