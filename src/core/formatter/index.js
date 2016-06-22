@@ -29,13 +29,13 @@ exports.bracing = function (sourceCode, levels) {
       }
 
       dataList[i + 1] = dataList[i + 1].replace(new RegExp('[\\s]{' + (levels[i + 1] * 4) + '}'), '{');
-      
+
       if (levels[i] >= levels[j]) {
         dataList[j - 1] = dataList[j - 1].replace(new RegExp('[\\s]{' + (levels[j - 1] * 4) + '}'), '') + '}';
         isLevelPassed[j] = true;
         break;
       }
-      
+
       if (j == levels.length - 1) {
         dataList[j] = dataList[j].replace(new RegExp('[\\s]{' + (levels[j] * 4) + '}'), '') + '}';
         isLevelPassed[j] = true;
@@ -48,6 +48,7 @@ exports.bracing = function (sourceCode, levels) {
   }
   return dataList.join('\n');
 };
+
 
 exports.parser = function (sessionId, sourceCode, lng, isCondition) {
   var re, reStr;
@@ -71,7 +72,7 @@ exports.fullParse = function (sessionId, sourceCode, isCondition) {
   var codeParsedMain = this.parser(sessionId, sourceCode, 'main');
   return this.parser(sessionId, codeParsedMain, 'linguacode', isCondition);
 };
-  
+
 exports.codeFormatting = function (sessionId, sourceCode) {
   var levelOfCode = tools.codeDepthLevels.all(sourceCode);
   sourceCode = sourceCode.join('\n');

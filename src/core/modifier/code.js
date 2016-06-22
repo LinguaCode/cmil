@@ -13,10 +13,6 @@ var core = function (data, lng, command, definition) {
   return data;
 };
 
-exports.toSpeech = function (data, lng) {
-  return core(data, lng, 'command', 'definition');
-};
-
 exports.toCode = function (data, lng) {
   return core(data, lng, 'definition', 'command');
 };
