@@ -247,7 +247,23 @@ module.exports = [{
       code: 'տպել 4 < 2',
       output: 'սխալ'
     }, {
-      title: 'scopes',
+      title: 'and: result: true',
+      code: 'տպել ճիշտ և ճիշտ',
+      output: 'ճիշտ'
+    }, {
+      title: 'and։ result: false',
+      code: 'տպել ճիշտ և սխալ',
+      output: 'սխալ'
+    }, {
+      title: 'or։ result: true',
+      code: 'տպել ճիշտ կամ սխալ',
+      output: 'ճիշտ'
+    }, {
+      title: 'or։ result: false',
+      code: 'տպել սխալ կամ սխալ',
+      output: 'սխալ'
+    }, {
+      title: 'mixed',
       code: 'տպել 5 < 1 և (1 < 7 կամ (1 >= 3 կամ 9 == 9))',
       output: 'սխալ'
     }]
