@@ -65,8 +65,14 @@ exports.parent = function (sessionId, isPassedBefore) {
     }
   } else if (isParentAllow) {
     upgrader(sessionId, 'child');
-    if (!checker.session.ended(sessionId) && getter.nameOfProperty(sessionId) == 'child') {
-      upgrader(sessionId, 'parent');
+    if (!checker.session.ended(sessionId)) {
+      if (getter.nameOfProperty(sessionId) == 'child') {
+        upgrader(sessionId, 'parent');
+      }
+
+      if (getter.nameOfProperty(sessionId) == 'parent') {
+        this.parent(sessionId);
+      }
     }
   } else {
     controllers.controller(sessionId);
