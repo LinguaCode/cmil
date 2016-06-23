@@ -4,7 +4,10 @@ exports.execute = function (sessionId, sourceCode) {
 };
 
 exports.structure = function (sessionId, sourceCode) {
+  // make a tree
   __store[sessionId].structure = builder(sessionId, sourceCode);
+
+  //current path of the tree
   __store[sessionId].pathOfLocation = '[0]';
 };
 
