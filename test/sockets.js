@@ -54,7 +54,7 @@ let paranoidalRecurser = function (sources) {
           .on(sessionId + '_' + 'evaluated', function (receivedData) {
 
             evalStatus = receivedData.status;
-            evalResult = receivedData.result;
+            evalResult += receivedData.result;
 
             if (inputs && inputs.length && inputDataIndex != inputs.length) {
               let toSendData = {
