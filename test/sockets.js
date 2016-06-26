@@ -1,5 +1,6 @@
 let io = require('socket.io-client');
-const sourceCodesDB = require('./sourceCodesDB');
+const successDB = require('./successDB');
+const errorDB = require('./errorDB');
 
 let socket = io.connect('http://localhost:3005');
 
@@ -40,6 +41,7 @@ let paranoidalRecurser = function (sources) {
       let title = source.title;
       let code = source.code || '';
       let expectedOutput = source.output || '';
+      let expectedStatus = new RegExp(source.status || 'success');
       let inputs = source.inputs;
 
       it(title, function (done) {
@@ -66,12 +68,16 @@ let paranoidalRecurser = function (sources) {
             }
           })
           .on(sessionId + '_' + 'sessionEnd', function () {
+
             console.log(`\nTitle: ${title}`);
             console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
 
-            if (evalStatus == 'success' && evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult)) {
+            if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult))) {
               console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
               console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
+              done();
+            } else if (expectedStatus.test(evalStatus)) {
+              console.log(`\nError message:\n${evalStatus}\n\n`);
               done();
             } else if (evalResult && evalResult != expectedOutput + '\n') {
               let errMessage =
@@ -88,6 +94,7 @@ let paranoidalRecurser = function (sources) {
 };
 
 describe('initialize', function () {
+
   it('socketId', function (done) {
     socket
       .on('connect', function () {
@@ -98,8 +105,26 @@ describe('initialize', function () {
         done(err);
       });
   });
+
 });
 
-describe('sockets', function () {
-  paranoidalRecurser(sourceCodesDB);
+describe('success', function () {
+
+  paranoidalRecurser(successDB);
+
+});
+
+describe('error', function () {
+
+  paranoidalRecurser(errorDB);
+
+});
+
+describe('disconnect', function () {
+
+  it('disconnect', function (done) {
+    socket.disconnect();
+    done();
+  });
+
 });

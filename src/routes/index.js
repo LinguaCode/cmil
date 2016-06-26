@@ -18,15 +18,17 @@ let sockets = {
     __io.emit(sessionId + '_' + 'submitSuccess');
     console.info('Socket.IO: server: sourceCode has been successfully received!');
 
-    if (errorHandler.isHackAttempted(sourceCode)) {
+    let errorMessage = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
+    if (errorMessage) {
+
+      //TODO: Arman: put here mail logging system
       console.info('Socket.IO: server: output text has been successfully send! (Hack attempt)');
-      let result = {
+
+      __io.emit(sessionId + '_' + 'evaluated', {
         result: '',
-        status: 'Հաքերությունը հայտնաբերվա՛ծ է։ Ձեր "' + ipAddress + '" ip հասցեն պահպանված է ։）'
-      };
-      
-      __io.emit(sessionId + '_' + 'evaluated', result);
-      
+        status: errorMessage
+      });
+
       return __io.emit(sessionId + '_' + 'sessionEnd');
     }
 
