@@ -106,6 +106,7 @@ exports.isPartOfCode = function (input, index) {
  * @returns {Array.<Number>} Returns Array of code depth levels of the sourceCode.
  */
 exports.codeDepthLevels = {
+
   line: function (str) {
     let spaces, level;
     spaces = 0;
@@ -121,6 +122,7 @@ exports.codeDepthLevels = {
     level = spaces / 4;
     return level;
   },
+
   all: function (listOfCommands) {
     let levels = [];
     for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
@@ -133,6 +135,7 @@ exports.codeDepthLevels = {
     }
     return levels;
   }
+
 };
 
 /**

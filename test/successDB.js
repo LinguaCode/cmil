@@ -1,10 +1,8 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'
-  }, {
-    title: 'hack attempt',
-    code: 'eval("console.log("hello world");")'
+    title: 'empty'/*,
+    code: 'տպել «բարեւ»'*/
   }]
 }, {
   group: 'hy',
