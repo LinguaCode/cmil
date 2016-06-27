@@ -3,7 +3,7 @@
  * @requires errorHandler/levels:spaces
  */
 
-var errorHandler = require('./errorHandler');
+let errorHandler = require('./errorHandler');
 
 /**
  * jQuery trim clone.
@@ -13,11 +13,11 @@ var errorHandler = require('./errorHandler');
  * @param {String} text
  * @returns {String} Returns the result as jQuery.trim(text)
  */
-exports.trim = function( text ) {
-  var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+exports.trim = function (text) {
+  let rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
   return text == null ?
     "" :
-    ( text + "" ).replace( rtrim, "" );
+    ( text + "" ).replace(rtrim, "");
 };
 
 /**
@@ -30,7 +30,7 @@ exports.trim = function( text ) {
  */
 exports.unicodeEscape = function (input) {
   return input.replace(/[\s\S]/g, function (character) {
-    var escape = character.charCodeAt(0).toString(16),
+    let escape = character.charCodeAt(0).toString(16),
       longhand = escape.length > 2;
     return '\\' + (longhand ? 'u' : 'x') + ('0000' + escape).slice(longhand ? -4 : -2);
   });
@@ -40,22 +40,22 @@ exports.unicodeEscape = function (input) {
  * Checks if the index is between text or comment.
  * @example
  * // returns '\u0562\u0561\u0580\u0565\u0582'
- * exports.isPartOfCode('var = "var a"', 7);
+ * exports.isPartOfCode('let = "let a"', 7);
  * @param {String} input
  * @param {Number} index
  * @returns {Boolean} Returns true if index in input is between text or comment else no.
  */
 exports.isPartOfCode = function (input, index) {
-  var ch = ['\"', '\''];
-  var quotationMarks = ['«', '»'];
-  var counter = [0, 0];
+  const ch = ['\"', '\''];
+  const quotationMarks = ['«', '»'];
+  let counter = [0, 0];
 
-  var currentSymbol = input[index];
+  let currentSymbol = input[index];
   if (ch.indexOf(currentSymbol) != -1 || quotationMarks.indexOf(currentSymbol) != -1) {
     return true;
   }
 
-  for (var i = index - 1; i >= 0; i--) {
+  for (let i = index - 1; i >= 0; i--) {
     if (input[i] == ch[0]) {
       counter[0]++;
     }
@@ -63,14 +63,16 @@ exports.isPartOfCode = function (input, index) {
       counter[1]++;
     }
   }
+
   if (input[index] == ch[0]) {
     return (counter[0] === 0 || counter[0] % 2 === 1);
   }
+
   if (input[index] == ch[1]) {
     return (counter[1] === 0 || counter[1] % 2 === 1);
   }
 
-  var quotationMarkIndexes = [
+  let quotationMarkIndexes = [
     input.lastIndexOf(quotationMarks[0], index - 1),
     input.lastIndexOf(quotationMarks[1], index - 1),
     input.indexOf(quotationMarks[1], index + 1)
@@ -104,10 +106,11 @@ exports.isPartOfCode = function (input, index) {
  * @returns {Array.<Number>} Returns Array of code depth levels of the sourceCode.
  */
 exports.codeDepthLevels = {
+
   line: function (str) {
-    var spaces, level;
+    let spaces, level;
     spaces = 0;
-    for (var i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++) {
       if (str[i] != ' ') {
         break;
       }
@@ -119,9 +122,10 @@ exports.codeDepthLevels = {
     level = spaces / 4;
     return level;
   },
+
   all: function (listOfCommands) {
-    var levels = [];
-    for (var i = 0, levelsTemp; i < listOfCommands.length; i++) {
+    let levels = [];
+    for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
       levelsTemp = this.line(listOfCommands[i]);
       if (levelsTemp == -1) {
         errorHandler.levels.spaces(i);
@@ -131,6 +135,7 @@ exports.codeDepthLevels = {
     }
     return levels;
   }
+
 };
 
 /**

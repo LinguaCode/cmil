@@ -1,36 +1,36 @@
-## 0.2.0 (2016-06-11)
-Performance:
+## 0.2.1 (2016-06-18)
 
-  - Optimizations.
-  - public files deleted.
-  - repository files minimised from 6.7mb to 0.8mb.
+  - [new] mocha test count: 55.
+  - [new] include test coverage: istanbul.
+  - [fix] empty code compile.
+  - [fix] minor fixes.
+
+## 0.2.0 (2016-06-11)
+
+  - [optimize] Optimizations.
+  - [optimize] public files deleted.
+  - [optimize] repository files minimised from 6.7mb to 0.8mb.
 
 ## 0.0.2 (2015-09-13)
-Performance:
 
-  - gulp implementation.
-  - css files are now scss.
-  - html files are now jade.
-  - scripts are now minimised.
-  - public files minimised from 11.5mb to 6.7mb.
+  - [new] gulp implementation.
+  - [optimize] css files are now scss.
+  - [optimize] html files are now jade.
+  - [optimize] scripts are now minimised.
+  - [optimize] public files minimised from 11.5mb to 6.7mb.
 
 ## 0.0.1 (2015-08-23)
 
-Features:
-
-  - commands: variables.
-  - commands: output
-  - commands: if-else statements.
-  - commands: loops: repeats N times.
-  - translations: languages: Armenian, Russian, Georgian, Japanese.
-  - translations: multilingual syntax.
-  - translations: text translation via Yandex.
-  - IDE: toolbar: compile.
-  - IDE: toolbar: change translation.
-  - Terminal.
-
-Performance:
-
-  - syntax highlight.
-  - programming code is not case sensitive.
-  - unicode scope support..
+  - [new] commands: variables.
+  - [new] commands: output
+  - [new] commands: if-else statements.
+  - [new] commands: loops: repeats N times.
+  - [new] translations: languages: Armenian, Russian, Georgian, Japanese.
+  - [new] translations: multilingual syntax.
+  - [new] translations: text translation via Yandex.
+  - [new] IDE: toolbar: compile.
+  - [new] IDE: toolbar: change translation.
+  - [new] Terminal.
+  - [new] syntax highlight.
+  - [new] programming code is not case sensitive.
+  - [new] unicode scope support..

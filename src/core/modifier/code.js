@@ -1,11 +1,11 @@
-var core = function (data, lng, which, toWhat) {
+var core = function (data, lng, command, definition) {
   var re, reStr;
   for (var i = 0; i < database.translations[lng].length; i++) { //languages
-    re = new RegExp(database.translations[lng][i][which], 'ig');
+    re = new RegExp(database.translations[lng][i][command], 'ig');
     while ((reStr = re.exec(data)) !== null) { //in line
       if (tools.isPartOfCode(data, reStr.index)) {
         data = data.substring(0, reStr.index) +
-          database.translations[lng][i][toWhat].replace(/\\/g, '') +
+          database.translations[lng][i][definition].replace(/\\/g, '') +
           data.substring(reStr.index + reStr[0].length);
       }
     }
@@ -13,12 +13,8 @@ var core = function (data, lng, which, toWhat) {
   return data;
 };
 
-exports.toSpeech = function (data, lng) {
-  return core(data, lng, 'which', 'toWhat');
-};
-
 exports.toCode = function (data, lng) {
-  return core(data, lng, 'toWhat', 'which');
+  return core(data, lng, 'definition', 'command');
 };
 
 var tools = require('../../libs/tools');

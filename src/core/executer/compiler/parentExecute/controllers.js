@@ -46,7 +46,7 @@ var controller = {
       }
     }
   }
-  };
+};
 
 exports.controller = controller.manage;
 

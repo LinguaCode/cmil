@@ -1,20 +1,20 @@
 module.exports = function () {
   return {
     replace: [{
-      which: '։',
-      toWhat: ':'
+      command: '։',
+      definition: ':'
     }, {
-      which: '"',
-      toWhat: '\''
+      command: '"',
+      definition: '\''
     }, {
-      which: '«',
-      toWhat: '\''
+      command: '«',
+      definition: '\''
     }, {
-      which: '»',
-      toWhat: '\''
+      command: '»',
+      definition: '\''
     }, {
-      which: '․',
-      toWhat: '.'
+      command: '․',
+      definition: '.'
     }]
   };
 };

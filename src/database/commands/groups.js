@@ -1,3 +1,4 @@
+//TODO: Arman: move to Frontend
 var commands = require('./variables');
 
 module.exports = [
