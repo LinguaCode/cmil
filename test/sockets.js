@@ -1,24 +1,12 @@
 let io = require('socket.io-client');
+const successDB = require('./successDB');
+const errorDB = require('./errorDB');
 
-let options = {
-  transports: ['websocket'],
-  'force new connection': true
-};
+let socket = io.connect('http://localhost:3005');
 
-let socketURL = 'http://localhost:3005';
 let compileId = 0;
+let socketId;
 
-const sourceCodesDB = [{
-  language: 'hy',
-  sources: [{
-    title: '#output («)',
-    code: 'տպել «բարեւ»',
-    output: 'բարեւ',
-    inputs: []
-  }]
-}];
-
-let socket = io.connect(socketURL, options);
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
@@ -37,15 +25,76 @@ let codeSubmit = function (sessionId, sourceCode) {
   socket.emit('submit', sendData);
 
   socket.on(sessionId + '_' + 'submitSuccess', () => {
-    console.log('Socket.IO: sourceCode has been successfully send!');
+    console.log('Socket.IO: client: sourceCode has been successfully send!');
   });
 
   compileId = compileId + 1;
 };
 
-let socketId;
+let paranoidalRecurser = function (sources) {
+  sources.forEach(function (source) {
+    if (source.sources) {
+      describe(source.group, function () {
+        paranoidalRecurser(source.sources);
+      });
+    } else {
+      let title = source.title;
+      let code = source.code || '';
+      let expectedOutput = source.output || '';
+      let expectedStatus = new RegExp(source.status || 'success');
+      let inputs = source.inputs;
+
+      it(title, function (done) {
+        let sessionId = setSessionId();
+        let evalStatus = 'success';
+        let evalResult = '';
+        let inputDataIndex = 0;
+
+        codeSubmit(sessionId, code);
+
+        socket
+          .on(sessionId + '_' + 'evaluated', function (receivedData) {
+
+            evalStatus = receivedData.status;
+            evalResult += receivedData.result;
+
+            if (inputs && inputs.length && inputDataIndex != inputs.length) {
+              let toSendData = {
+                sessionId: sessionId,
+                inputText: inputs[inputDataIndex++]
+              };
+
+              socket.emit('evaluated', toSendData);
+            }
+          })
+          .on(sessionId + '_' + 'sessionEnd', function () {
+
+            console.log(`\nTitle: ${title}`);
+            console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
+
+            if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult))) {
+              console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
+              console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
+              done();
+            } else if (expectedStatus.test(evalStatus)) {
+              console.log(`\nError message:\n${evalStatus}\n\n`);
+              done();
+            } else if (evalResult && evalResult != expectedOutput + '\n') {
+              let errMessage =
+                '\nExpected result:\n' + (expectedOutput ? expectedOutput : 'n/a') +
+                '\nFinal result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n';
+              done(new Error(errMessage));
+            } else {
+              done(new Error(evalStatus));
+            }
+          });
+      });
+    }
+  });
+};
 
 describe('initialize', function () {
+
   it('socketId', function (done) {
     socket
       .on('connect', function () {
@@ -56,51 +105,26 @@ describe('initialize', function () {
         done(err);
       });
   });
+
 });
 
-describe('sockets', function () {
-  sourceCodesDB.forEach(function (sourceCodes) {
-    let language = sourceCodes.language;
-    let sources = sourceCodes.sources;
-    describe(language, function () {
-      sources.forEach(function (source) {
-        let title = source.title;
-        let code = source.code;
-        let expectedOutput = source.output;
-        let inputs = source.inputs;
+describe('success', function () {
 
-        it(title, function (done) {
-          let sessionId = setSessionId();
-          let evalStatus;
-          let evalResult;
-          let inputDataIndex = 0;
+  paranoidalRecurser(successDB);
 
-          codeSubmit(sessionId, code);
+});
 
-          socket
-            .on(sessionId + '_' + 'evaluated', function (receivedData) {
+describe('error', function () {
 
-              evalStatus = receivedData.status;
-              evalResult = receivedData.result;
+  paranoidalRecurser(errorDB);
 
-              if (inputs.length) {
-                let toSendData = {
-                  sessionId: sessionId,
-                  inputText: inputs[inputDataIndex++]
-                };
+});
 
-                socket.emit('evaluated', toSendData);
-              }
-            })
-            .on(sessionId + '_' + 'sessionEnd', function () {
-              if (evalStatus == 'success' && evalResult == expectedOutput + '\n') {
-                done();
-              } else {
-                done(new Error(evalStatus));
-              }
-            });
-        });
-      });
-    });
+describe('disconnect', function () {
+
+  it('disconnect', function (done) {
+    socket.disconnect();
+    done();
   });
+
 });

@@ -1,20 +1,20 @@
 var commands = require('./commands/variables');
+const ifWhileRepeatCommandsGroup =
+  commands.if + '|' +
+  commands.while + '|' +
+  commands.repeat;
 
 var constants = exports.constants = {
   conditionValue: '(' +
-  commands.if + '|' +
-  commands.while + '|' +
-  commands.repeat +
+  ifWhileRepeatCommandsGroup +
   ')\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
   conditionRepeatTimesValue: '(.*)\\s+' + commands.times,
 
   conditionType: '\\s*(' +
-  commands.if + '|' +
-  commands.elif + '|' +
+  ifWhileRepeatCommandsGroup + '|' +
   commands.else + '|' +
   commands.do + '|' +
-  commands.while + '|' +
-  commands.repeat +
+  commands.elif +
   ')'
 };
 

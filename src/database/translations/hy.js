@@ -1,61 +1,61 @@
 var commands = require('../commands/variables');
 
 module.exports = [{
-  which: commands.then,
-  toWhat: 'ապա'
+  command: commands.then,
+  definition: 'ապա'
 }, {
-  which: commands.not,
-  toWhat: 'ոչ'
+  command: commands.not,
+  definition: 'ոչ'
 }, {
-  which: commands.false,
-  toWhat: 'սխալ'
+  command: commands.false,
+  definition: 'սխալ'
 }, {
-  which: commands.true,
-  toWhat: 'ճիշտ'
+  command: commands.true,
+  definition: 'ճիշտ'
 }, {
-  which: commands.or,
-  toWhat: 'կամ'
+  command: commands.or,
+  definition: 'կամ'
 }, {
-  which: commands.and1,
-  toWhat: 'և'
+  command: commands.and1,
+  definition: 'և'
 }, {
-  which: commands.and2,
-  toWhat: 'եւ'
+  command: commands.and2,
+  definition: 'եւ'
 }, {
-  which: commands.input,
-  toWhat: 'գրել'
+  command: commands.input,
+  definition: 'գրել'
 }, {
-  which: commands.do,
-  toWhat: 'կատարել'
+  command: commands.do,
+  definition: 'կատարել'
 }, {
-  which: commands.output,
-  toWhat: 'տպել'
+  command: commands.output,
+  definition: 'տպել'
 }, {
-  which: commands.if,
-  toWhat: 'եթե'
+  command: commands.if,
+  definition: 'եթե'
 }, {
-  which: commands.else,
-  toWhat: 'այլապես'
+  command: commands.else,
+  definition: 'այլապես'
 }, {
-  which: commands.var,
-  toWhat: 'փոփոխական'
+  command: commands.var,
+  definition: 'փոփոխական'
 }, {
-  which: commands.break,
-  toWhat: 'ընդհատել'
+  command: commands.break,
+  definition: 'ընդհատել'
 }, {
-  which: commands.continue,
-  toWhat: 'շարունակել'
+  command: commands.continue,
+  definition: 'շարունակել'
 }, {
-  which: commands.while,
-  toWhat: 'մինչ'
+  command: commands.while,
+  definition: 'մինչ'
 }, {
-  which: commands.repeat,
-  toWhat: 'կրկնել'
+  command: commands.repeat,
+  definition: 'կրկնել'
 }, {
-  which: commands.times,
-  toWhat: 'անգամ'
+  command: commands.times,
+  definition: 'անգամ'
 }, {
-  which: commands.function,
-  toWhat: 'ֆունկցիա'
+  command: commands.function,
+  definition: 'ֆունկցիա'
 }
 ];

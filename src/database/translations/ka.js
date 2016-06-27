@@ -1,39 +1,39 @@
 var commands = require('../commands/variables');
 
 module.exports = [{
-  which: commands.input,
-  toWhat: 'წაკითხული'
+  command: commands.input,
+  definition: 'წაკითხული'
 }, {
-  which: commands.output,
-  toWhat: 'დაწერა'
+  command: commands.output,
+  definition: 'დაწერა'
 }, {
-  which: commands.do,
-  toWhat: 'ამის'
+  command: commands.do,
+  definition: 'ამის'
 }, {
-  which: commands.if,
-  toWhat: 'თუ'
+  command: commands.if,
+  definition: 'თუ'
 }, {
-  which: commands.else,
-  toWhat: 'სხვა'
+  command: commands.else,
+  definition: 'სხვა'
 }, {
-  which: commands.var,
-  toWhat: 'ცვლადი'
+  command: commands.var,
+  definition: 'ცვლადი'
 }, {
-  which: commands.break,
-  toWhat: 'შესვენების'
+  command: commands.break,
+  definition: 'შესვენების'
 }, {
-  which: commands.continue,
-  toWhat: 'გაგრძელდება'
+  command: commands.continue,
+  definition: 'გაგრძელდება'
 }, {
-  which: commands.while,
-  toWhat: 'ხოლო'
+  command: commands.while,
+  definition: 'ხოლო'
 }, {
-  which: commands.repeat,
-  toWhat: 'განმეორებითი'
+  command: commands.repeat,
+  definition: 'განმეორებითი'
 }, {
-  which: commands.times,
-  toWhat: 'ჯერ'
+  command: commands.times,
+  definition: 'ჯერ'
 }, {
-  which: commands.function,
-  toWhat: 'ფუნქცია'
+  command: commands.function,
+  definition: 'ფუნქცია'
 }];

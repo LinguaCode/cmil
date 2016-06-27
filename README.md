@@ -1,66 +1,34 @@
-## Description
+[![Build Status](https://travis-ci.org/LinguaCode/linguacode-api.svg?branch=master)](https://travis-ci.org/LinguaCode/linguacode-api)
+[![Coverage Status](https://coveralls.io/repos/github/LinguaCode/linguacode-api/badge.svg?branch=master&v=2)](https://coveralls.io/github/LinguaCode/linguacode-api?branch=master)
+[![Code Climate](https://codeclimate.com/github/LinguaCode/linguacode-api/badges/gpa.svg?v=1)](https://codeclimate.com/github/LinguaCode/linguacode-api)
+[![Dependency Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org/LinguaCode/linguacode-api)
+[![devDependency Status](https://david-dm.org/LinguaCode/linguacode-api/dev-status.svg)](https://david-dm.org/LinguaCode/linguacode-api#info=devDependencies)
+[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000)](https://gratipay.com/LinguaCode/)
+[![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
+
+### Description
 **LinguaCode** is a social coding platform and is designed especially for children, where they can learn programming and share their codes with their native language and without the necessity of knowing English.
 
 Due to our solution children can not only get acquainted and study the basic elements of programming, but can also easily pass to professional programming languages. Knowing English is very important, but a language must not be a barrier for learning programming. 
 
 With LinguaCode one can not only study programming, but also learn languages.
 
-## Screenshots
+### Preparation
+#### Get started
+`npm install`
+
+#### Start
+`npm start`
+
+#### Run tests
+`npm run test`
+
+#### Run test coverage
+```
+npm install instanbul -g
+npm run coverage
+```
+
+### Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
-
-## How to run
-### Install
-  - **install:** `node.js`
-  - **install:** `npm`
-  - **clone:** `git clone git@github.com:otanim/LinguaCode.git`
-  - **run:** `npm install`
-  - **run:** `npm install --global gulp`
-  - **run:** `npm install --production`
-
-### Preparation
-  - **run:** `gulp`
-
-### Run
-  - **run:** `bin/www.js`
-  - **open:** `http://localhost:3000` in the browser
-
-## Changelog
-
-### 0.0.2 (2015-09-13)
-Performance:
-
-  - gulp implementation.
-  - css files are now scss.
-  - html files are now jade.
-  - scripts are now minified.
-  - public files minified from 11.5mb to 6.7mb.
-
-### 0.0.1 (2015-08-23)
-
-Features:
-
-  - commands: variables.
-  - commands: output.
-  - commands: if-else statements.
-  - commands: loops: repeats N times.
-  - translations: languages: Armenian, Russian, Georgian, Japanese.
-  - translations: multilingual syntax.
-  - translations: text translation via Yandex.
-  - IDE: toolbar: compile.
-  - IDE: toolbar: change translation.
-  - Terminal.
-
-Performance:
-
-  - syntax highlight.
-  - programming code is not case sensitive.
-  - unicode scope support..
-
-## Input & Output
-
-![io](/screenshots/input-output.png)
-
-## Translation Scheme
-
-![translation scheme](/screenshots/translationScheme.png)

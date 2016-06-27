@@ -1,39 +1,39 @@
 var commands = require('../commands/variables');
 
 module.exports = [{
-  which: commands.input,
-  toWhat: '読みます'
+  command: commands.input,
+  definition: '読みます'
 }, {
-  which: commands.output,
-  toWhat: '書きます'
+  command: commands.output,
+  definition: '書きます'
 }, {
-  which: commands.do,
-  toWhat: '行う'
+  command: commands.do,
+  definition: '行う'
 }, {
-  which: commands.if,
-  toWhat: 'もし'
+  command: commands.if,
+  definition: 'もし'
 }, {
-  which: commands.else,
-  toWhat: 'ほかに'
+  command: commands.else,
+  definition: 'ほかに'
 }, {
-  which: commands.var,
-  toWhat: '変数'
+  command: commands.var,
+  definition: '変数'
 }, {
-  which: commands.break,
-  toWhat: 'ブレーク'
+  command: commands.break,
+  definition: 'ブレーク'
 }, {
-  which: commands.continue,
-  toWhat: '続けます'
+  command: commands.continue,
+  definition: '続けます'
 }, {
-  which: commands.while,
-  toWhat: 'つつ'
+  command: commands.while,
+  definition: 'つつ'
 }, {
-  which: commands.repeat,
-  toWhat: 'リピート'
+  command: commands.repeat,
+  definition: 'リピート'
 }, {
-  which: commands.times,
-  toWhat: '回'
+  command: commands.times,
+  definition: '回'
 }, {
-  which: commands.function,
-  toWhat: '機能'
+  command: commands.function,
+  definition: '機能'
 }];
