@@ -1,3 +1,6 @@
+let _ = require('lodash');
+let errorCheck = require('../../../../errorHandler').check;
+
 const booleanDefinitions = {
   true: 'ճիշտ',
   false: 'սխալ',
@@ -23,6 +26,7 @@ exports.toCompile = function (sessionId, inputValue) {
   let evaluated = evaluate.code(sessionId, toCompile);
 
   evaluated.result = postParser(evaluated.result);
+  errorCheck.brokenVariable(sessionId, toCompile);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {

@@ -1,8 +1,8 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'/*,
-    code: 'տպել «բարեւ»'*/
+    title: 'empty',
+    code: 'x = 617\nտպել X'
   }]
 }, {
   group: 'hy',

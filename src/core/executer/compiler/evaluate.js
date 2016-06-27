@@ -1,5 +1,5 @@
 var tools = require('../../../libs/tools');
-var errorHandler = require('../../../libs/errorHandler');
+var errorHandler = require('../../errorHandler');
 
 exports.condition = function (sessionId) {
   var formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
