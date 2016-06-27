@@ -3,8 +3,6 @@
  * @requires errorHandler/levels:spaces
  */
 
-let errorHandler = require('./errorHandler');
-
 /**
  * jQuery trim clone.
  * @example
@@ -127,11 +125,10 @@ exports.codeDepthLevels = {
     let levels = [];
     for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
       levelsTemp = this.line(listOfCommands[i]);
-      if (levelsTemp == -1) {
-        errorHandler.levels.spaces(i);
-      } else {
+      if (levelsTemp != -1) {
         levels.push(levelsTemp);
       }
+
     }
     return levels;
   }

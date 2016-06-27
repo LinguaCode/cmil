@@ -4,7 +4,7 @@ const LOCALHOST = [
 ];
 
 let code = require('../core/modifier/code');
-let errorHandler = require('../libs/errorHandler');
+let errorHandler = require('../core/errorHandler');
 let compiler = require('../core/executer/compiler');
 let ipAddress;
 

@@ -21,4 +21,4 @@ src/config/keys/*.key
 coverage/
 
 # test DB
-test/testDB.js
+test/database/testDB.js
