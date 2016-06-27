@@ -1,6 +1,6 @@
 let io = require('socket.io-client');
-const successDB = require('./successDB');
-const errorDB = require('./errorDB');
+const successDB = require('./database/successDB');
+const errorDB = require('./database/errorDB');
 
 let socket = io.connect('http://localhost:3005');
 
