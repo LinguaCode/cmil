@@ -1,5 +1,5 @@
 let _ = require('lodash');
-let errorCheck = require('../../../../errorHandler').check;
+let errorCheck = require('../../../../errorHandler/checker');
 
 const booleanDefinitions = {
   true: 'ճիշտ',
@@ -25,8 +25,11 @@ exports.toCompile = function (sessionId, inputValue) {
   let toCompile = controllers.prepareToCompile(sessionId, inputValue);
   let evaluated = evaluate.code(sessionId, toCompile);
 
+  if (evaluated === false) {
+    return false;
+  }
+
   evaluated.result = postParser(evaluated.result);
-  errorCheck.brokenVariable(sessionId, toCompile);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {
@@ -41,7 +44,11 @@ exports.toCompile = function (sessionId, inputValue) {
 exports.child = function (sessionId) {
   if (checker.needToUpgrade(sessionId)) {
     let firsKeyOfObject = getter.firstKeyOfObject(sessionId);
-    upgrader(sessionId, firsKeyOfObject);
+
+    let sessionContinue = upgrader(sessionId, firsKeyOfObject);
+    if (sessionContinue === false) {
+      return false;
+    }
   }
 
   if (getter.nameOfProperty(sessionId) == 'child') {

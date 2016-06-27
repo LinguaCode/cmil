@@ -2,7 +2,7 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'x = 617\nտպել X'
+    code: '# comment comment comment'
   }]
 }, {
   group: 'hy',

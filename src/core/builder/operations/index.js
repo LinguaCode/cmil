@@ -71,5 +71,5 @@ exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
 };
 
 var coder = require('../coder');
-var setter = require('../../executer').setter;
+var setter = require('../../executer/setter');
 var conditions = require('./conditions');

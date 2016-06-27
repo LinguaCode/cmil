@@ -39,8 +39,7 @@ module.exports = {
       let variableName = variables[i];
       let variableRealName = sessionId + '.' + variableName;
       let regExp = new RegExp(variableRealName + '(?![ ]*\\=)');
-      let sourceToCompile = toCompile.join('\n');
-      if (regExp.test(sourceToCompile)) {
+      if (regExp.test(toCompile)) {
         let variableReal = global[sessionId][variableName];
         if (_.isNil(variableReal)) {
           return variableName;
