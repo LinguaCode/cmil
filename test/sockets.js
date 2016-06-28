@@ -31,11 +31,11 @@ let codeSubmit = function (sessionId, sourceCode) {
   compileId = compileId + 1;
 };
 
-let paranoidalRecurser = function (sources) {
+let dbAnalyzer = function (sources) {
   sources.forEach(function (source) {
     if (source.sources) {
       describe(source.group, function () {
-        paranoidalRecurser(source.sources);
+        dbAnalyzer(source.sources);
       });
     } else {
       let title = source.title;
@@ -110,13 +110,13 @@ describe('initialize', function () {
 
 describe('success', function () {
 
-  paranoidalRecurser(successDB);
+  dbAnalyzer(successDB);
 
 });
 
 describe('error', function () {
 
-  paranoidalRecurser(errorDB);
+  dbAnalyzer(errorDB);
 
 });
 
