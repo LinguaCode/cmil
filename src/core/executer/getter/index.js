@@ -16,6 +16,7 @@ module.exports = {
   conditionType: value.structure.conditionType,
 
   nameOfProperty: value.nameOfProperty,
-  index: value.index
+  index: value.index,
+  variables: value.variables
 };
 

@@ -15,4 +15,8 @@ exports.output = function (sessionId, output) {
   __store[sessionId].output += '\n' + output;
 };
 
+exports.variables = function (sessionId, variables) {
+  __store[sessionId].variables = variables;
+};
+
 var getter = require('../getter');

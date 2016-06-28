@@ -1,10 +1,8 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'
-  },{
-    title: 'hack attempt',
-    code: 'eval("console.log("hello world");")'
+    title: 'empty',
+    code: '# comment comment comment'
   }]
 }, {
   group: 'hy',
@@ -277,17 +275,17 @@ module.exports = [{
     group: 'loops',
     sources: [
       {
-      title: 'while-do',
-      code: 'a = 0\nմինչ a < 5\n    տպել a\n    a = a + 1',
-      output: '0\n1\n2\n3\n4'
-    }, {
-      title: 'do-while',
-        code: 'a = 0\nկրկնել\n    տպել a\n    a = a + 1\nմինչ a < 5',
+        title: 'while-do',
+        code: 'a = 0\nմինչ a < 5\n    տպել a\n    a = a + 1',
         output: '0\n1\n2\n3\n4'
-    }, {
-      title: 'repeat',
+      }, {
+        title: 'do-while',
+        code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a < 5',
+        output: '0\n1\n2\n3\n4'
+      }, {
+        title: 'repeat',
         code: 'a = 0\nկրկնել 5 անգամ\n    տպել a\n    a = a + 1\n',
         output: '0\n1\n2\n3\n4'
-    }]
+      }]
   }]
 }];

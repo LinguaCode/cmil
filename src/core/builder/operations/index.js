@@ -3,6 +3,8 @@ var tools = require('../../../libs/tools');
 exports.execute = function (sessionId, sourceCode) {
 
   var variables = coder.variables._get(sourceCode);
+  setter.variables(sessionId, variables);
+  
   var varToObj = coder.variables.variablesToObjectChild(sessionId, sourceCode, variables);
   var listOfCommands = varToObj.split('\n');
   var listOfLevels = tools.codeDepthLevels.all(listOfCommands);
@@ -16,7 +18,7 @@ exports.execute = function (sessionId, sourceCode) {
   }];
 };
 
-var buildRecursion = exports.buildRecursion  = function (sessionId, listOfCommands, listOfLevels, variables) {
+var buildRecursion = exports.buildRecursion = function (sessionId, listOfCommands, listOfLevels, variables) {
   var components = require('../components');
 
   var toCompileIndexStart = 0;
@@ -69,4 +71,5 @@ exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
 };
 
 var coder = require('../coder');
+var setter = require('../../executer/setter');
 var conditions = require('./conditions');
