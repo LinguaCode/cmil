@@ -1,12 +1,13 @@
 let io = require('socket.io-client');
+
+/**DB of tests*/
 const successDB = require('./database/successDB');
 const errorDB = require('./database/errorDB');
 
+/**Initialize the variables*/
 let socket = io.connect('http://localhost:3005');
-
 let compileId = 0;
 let socketId;
-
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
@@ -93,6 +94,8 @@ let dbAnalyzer = function (sources) {
   });
 };
 
+/**=== TESTS ===*/
+/**setup the connection*/
 describe('initialize', function () {
 
   it('socketId', function (done) {
@@ -108,18 +111,21 @@ describe('initialize', function () {
 
 });
 
+/**passed db test*/
 describe('success', function () {
 
   dbAnalyzer(successDB);
 
 });
 
+/**buggy db test*/
 describe('error', function () {
 
   dbAnalyzer(errorDB);
 
 });
 
+/**interrupt the connection*/
 describe('disconnect', function () {
 
   it('disconnect', function (done) {
