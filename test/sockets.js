@@ -1,12 +1,13 @@
 let io = require('socket.io-client');
+
+/**DB of tests*/
 const successDB = require('./database/successDB');
 const errorDB = require('./database/errorDB');
 
+/**Initialize the variables*/
 let socket = io.connect('http://localhost:3005');
-
 let compileId = 0;
 let socketId;
-
 
 let setSocketId = function (socketId) {
   return '_' + socketId.replace(/-/, '_');
@@ -31,11 +32,11 @@ let codeSubmit = function (sessionId, sourceCode) {
   compileId = compileId + 1;
 };
 
-let paranoidalRecurser = function (sources) {
+let dbAnalyzer = function (sources) {
   sources.forEach(function (source) {
     if (source.sources) {
       describe(source.group, function () {
-        paranoidalRecurser(source.sources);
+        dbAnalyzer(source.sources);
       });
     } else {
       let title = source.title;
@@ -76,7 +77,7 @@ let paranoidalRecurser = function (sources) {
               console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
               console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
               done();
-            } else if (expectedStatus.test(evalStatus)) {
+            } else if (evalStatus !== 'success' && expectedStatus.test(evalStatus)) {
               console.log(`\nError message:\n${evalStatus}\n\n`);
               done();
             } else if (evalResult && evalResult != expectedOutput + '\n') {
@@ -93,6 +94,8 @@ let paranoidalRecurser = function (sources) {
   });
 };
 
+/**=== TESTS ===*/
+/**setup the connection*/
 describe('initialize', function () {
 
   it('socketId', function (done) {
@@ -108,18 +111,21 @@ describe('initialize', function () {
 
 });
 
+/**passed db test*/
 describe('success', function () {
 
-  paranoidalRecurser(successDB);
+  dbAnalyzer(successDB);
 
 });
 
+/**buggy db test*/
 describe('error', function () {
 
-  paranoidalRecurser(errorDB);
+  dbAnalyzer(errorDB);
 
 });
 
+/**interrupt the connection*/
 describe('disconnect', function () {
 
   it('disconnect', function (done) {

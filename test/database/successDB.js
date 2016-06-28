@@ -1,8 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
-    code: '# comment comment comment'
+    title: 'empty'
   }]
 }, {
   group: 'hy',
@@ -40,7 +39,11 @@ module.exports = [{
       title: 'output: variable: case insensitivity',
       code: 'X = 125\nտպել X',
       output: '125'
-    }]
+    }/*, {
+     title: 'output: 2 quote symbol in single quited text',
+     code: 'տպել \'տեքստ»\'',
+     output: '"տեքստ"'
+     }*/]
   }, {
     group: 'input',
     sources: [{
@@ -51,6 +54,10 @@ module.exports = [{
       title: '2 variables',
       code: 'գրել X\nգրել Y',
       inputs: [617, 2]
+    }, {
+      title: 'text input',
+      code: 'գրել անուն',
+      inputs: ["Ջոն"]
     }]
   }, {
     group: 'output; input',
@@ -159,6 +166,22 @@ module.exports = [{
       title: 'if: wrong result',
       code: 'եթե 4 > 6\n    տպել «4 > 6»'
     }, {
+      title: 'if: consecutive: 2',
+      code: 'եթե 4 > 2\n    տպել «a»\nեթե 4 > 2\n    տպել «b»',
+      output: 'a\nb'
+    }, {
+      title: 'if: consecutive: 3',
+      code: 'եթե 4 > 2\n    տպել «a»\nեթե 4 > 2\n    տպել «b»\nեթե 4 > 2\n    տպել «c»',
+      output: 'a\nb\nc'
+    }, {
+      title: 'if: content: consecutive: 2',
+      code: 'եթե 4 > 2\n    տպել «a»\n    տպել «b»',
+      output: 'a\nb'
+    }, {
+      title: 'if: content: consecutive: 3',
+      code: 'եթե 4 > 2\n    տպել «a»\n    տպել «b»\n    տպել «c»',
+      output: 'a\nb\nc'
+    }, {
       title: 'if-else: right answer',
       code: 'եթե 4 > 2\n    տպել «4 > 2»\nայլապես\n    տպել «2 >= 4»',
       output: '4 > 2'
@@ -167,17 +190,41 @@ module.exports = [{
       code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես\n    տպել «6 >= 4»',
       output: '6 >= 4'
     }, {
-      title: 'else-if-else: 1st condition was right',
-      code: 'եթե 4 > 2\n    տպել «4 > 2»\nայլապես եթե 4 > 6\n    տպել «4 > 6»\nայլապես\n    տպել «4 == 4»',
-      output: '4 > 2'
+      group: 'else-if-else',
+      sources: [{
+        title: 'true: 1st condition',
+        code: 'եթե 4 > 2\n    տպել «4 > 2»\nայլապես եթե 4 > 6\n    տպել «4 > 6»\nայլապես\n    տպել «4 == 4»',
+        output: '4 > 2'
+      }, {
+        title: 'true: 2st condition',
+        code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 > 2\n    տպել «4 > 2»\nայլապես\n    տպել «4 == 4»',
+        output: '4 > 2'
+      }, {
+        title: 'true: 3st condition',
+        code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 == 2\n    տպել «4 == 4»\nայլապես\n    տպել «4 > 2»',
+        output: '4 > 2'
+      }]
     }, {
-      title: 'else-if-else: 2st condition was right',
-      code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 > 2\n    տպել «4 > 2»\nայլապես\n    տպել «4 == 4»',
-      output: '4 > 2'
-    }, {
-      title: 'else-if-else: 3st condition was right',
-      code: 'եթե 4 > 6\n    տպել «4 > 6»\nայլապես եթե 4 == 2\n    տպել «4 == 4»\nայլապես\n    տպել «4 > 2»',
-      output: '4 > 2'
+      group: 'recursively: 1 level: if',
+      sources: [{
+        title: 'if (true): if (true): output',
+        code: 'եթե 4 > 2\n    եթե 4 > 2\n    տպել "xD"',
+        output: 'xD'
+      }, {
+        title: 'if (true): output, if (true): output',
+        code: 'եթե 4 > 2\n    տպել "a"\n    եթե 4 > 2\n        տպել "b"',
+        output: 'a\nb'
+      }, {
+        title: 'if (true): output, if (false): output',
+        code: 'եթե 4 > 2\n    տպել "a"\n    եթե 4 < 2\n        տպել "b"',
+        output: 'a'
+      }, {
+        title: 'if (true): if (false): output',
+        code: 'եթե 4 > 2\n    եթե 4 < 2\n        տպել "xD"'
+      }, {
+        title: 'if (false): if (true): output',
+        code: 'եթե 4 < 2\n    եթե 4 > 2\n        տպել "xD"'
+      }]
     }]
   }, {
     group: 'output; boolean',
@@ -251,25 +298,87 @@ module.exports = [{
       code: 'տպել 4 < 2',
       output: 'սխալ'
     }, {
-      title: 'scopes',
+      title: 'and: result: true',
+      code: 'տպել ճիշտ և ճիշտ',
+      output: 'ճիշտ'
+    }, {
+      title: 'and։ result: false',
+      code: 'տպել ճիշտ և սխալ',
+      output: 'սխալ'
+    }, {
+      title: 'or։ result: true',
+      code: 'տպել ճիշտ կամ սխալ',
+      output: 'ճիշտ'
+    }, {
+      title: 'or։ result: false',
+      code: 'տպել սխալ կամ սխալ',
+      output: 'սխալ'
+    }, {
+      title: 'mixed',
       code: 'տպել 5 < 1 և (1 < 7 կամ (1 >= 3 կամ 9 == 9))',
       output: 'սխալ'
     }]
   }, {
     group: 'loops',
-    sources: [
-      {
-        title: 'while-do',
+    sources: [{
+      group: 'while-do',
+      sources: [{
+        title: '5 attempts',
         code: 'a = 0\nմինչ a < 5\n    տպել a\n    a = a + 1',
         output: '0\n1\n2\n3\n4'
       }, {
-        title: 'do-while',
+        title: '0 attempts',
+        code: 'a = 0\nմինչ a > 5\n    տպել a\n    a = a + 1'
+      }]
+    }, {
+      group: 'do-while',
+      sources: [{
+        title: '5 attempts',
         code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a < 5',
         output: '0\n1\n2\n3\n4'
       }, {
-        title: 'repeat',
-        code: 'a = 0\nկրկնել 5 անգամ\n    տպել a\n    a = a + 1\n',
-        output: '0\n1\n2\n3\n4'
+        title: '1 attempt',
+        code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a > 5',
+        output: '0'
       }]
+    }, {
+      group: 'repeat',
+      sources: [{
+        title: '0 attempts',
+        code: 'կրկնել 0 անգամ\n    տպել "a"'
+      }, {
+        title: '1 attempts',
+        code: 'կրկնել 1 անգամ\n    տպել "a"',
+        output: 'a'
+      }, {
+        title: '5 attempts',
+        code: 'կրկնել 5 անգամ\n    տպել "a"',
+        output: 'a\na\na\na\na'
+      }, {
+        group: 'recursively: 1 level: repeat',
+        sources: [{
+          title: '0x1 attempts',
+          code: 'կրկնել 0 անգամ\n    կրկնել 1 անգամ\n        տպել "a"'
+        }, {
+          title: '1x1 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 1 անգամ\n        տպել "a"',
+          output: 'a'
+        }, {
+          title: '1x0 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 0 անգամ\n        տպել "a"'
+        }, {
+          title: '1x2 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 2 անգամ\n        տպել "a"',
+          output: 'a\na'
+        }, /*{
+         title: '2x1 attempts',
+         code: 'կրկնել 2 անգամ\n    կրկնել 1 անգամ\n        տպել "a"',
+         output: 'a\na'
+         },*/ {
+          title: '2x0 attempts',
+          code: 'կրկնել 2 անգամ\n    կրկնել 0 անգամ\n        տպել "a"'
+        }]
+      }]
+    }]
   }]
 }];

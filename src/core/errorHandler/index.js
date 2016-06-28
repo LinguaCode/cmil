@@ -23,9 +23,9 @@ exports.evalResult = function (error) {
     unexpectedIdentifier: /Unexpected identifier/i,
     isNotDefined: /is not defined/
   };
-
+ 
   if (errorRegEx.unexpectedIdentifier.test(errorMessage)) {
-    errorStatus = 'Կոդում առկա է ուղղագրական սխալ։';
+    errorStatus = 'Syntax error';
   } else if (errorRegEx.isNotDefined.test(errorMessage)) {
     //let errorCoordinates = error.stack.match(/\d:\d/)[0].split(':');
     //let errorLine = parseInt(errorCoordinates[0]) - 7;

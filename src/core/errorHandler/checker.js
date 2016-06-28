@@ -25,7 +25,7 @@ module.exports = {
       let levelsTemp = tools.codeDepthLevels.line(listOfCommands[i]);
       if (levelsTemp == -1) {
         return {
-          lineNumber: i
+          lineNumber: i + 1
         }
       }
     }

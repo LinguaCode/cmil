@@ -32,6 +32,7 @@ exports.code = function (sessionId, sourceCode) {
           result: '',
           status: errorMessages.brokenVariable(hasBrokenVariable)
         });
+        management.session.end(sessionId);
         return false;
       }
 
@@ -55,3 +56,5 @@ exports.inputOperation = function (sessionId, inputValue) {
 var formatter = require('../../formatter');
 
 var getter = require('../getter');
+
+var management = require('./management');
