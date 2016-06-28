@@ -21,7 +21,7 @@ var controller = {
       }
     }
 
-
+    //parent = directive|
     return parentObject;
   },
   directive: function (sessionId, parentObject) {
@@ -43,8 +43,13 @@ var controller = {
           upgrader(sessionId, 'toCompile');
         }
         this.oscillation(sessionId);
+        /** bug fix: if, if, if */
+        upgrader(sessionId, 'parent');
+        controller.manage(sessionId);
+        /** bug fix: if, if, if */
       }
     }
+    //goto: manage|
   }
 };
 
