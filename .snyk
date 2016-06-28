@@ -1,3 +1,23 @@
 version: v1.5.0
-ignore: {}
+ignore:
+  'npm:hawk:20160119':
+    - yandex-translate-api > request > hawk:
+        reason: no info
+        expires: '2016-07-28T17:21:46.291Z'
+  'npm:negotiator:20160616':
+    - socket.io > engine.io > accepts > negotiator:
+        reason: no info
+        expires: '2016-07-28T17:21:46.292Z'
+  'npm:qs:20140806-1':
+    - yandex-translate-api > request > qs:
+        reason: patch error
+        expires: '2016-07-28T17:22:21.032Z'
+  'npm:qs:20140806':
+    - yandex-translate-api > request > qs:
+        reason: patch error
+        expires: '2016-07-28T17:22:21.032Z'
+  'npm:request:20160119':
+    - yandex-translate-api > request:
+        reason: patch error
+        expires: '2016-07-28T17:22:21.032Z'
 patch: {}
