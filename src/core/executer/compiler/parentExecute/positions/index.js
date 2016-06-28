@@ -32,13 +32,14 @@ exports.toCompile = function (sessionId, inputValue) {
   evaluated.result = postParser(evaluated.result);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
-  if (evaluated.result) {
+  if (evaluated.result) { 
     console.info('Socket.IO: server: output text has been successfully send! (output)');
   } else {
     console.info('Socket.IO: server: output text has been successfully send! (ping)');
   }
 
   controllers.controller(sessionId);
+  //goto: upgrader
 };
 
 exports.child = function (sessionId) {
@@ -54,6 +55,8 @@ exports.child = function (sessionId) {
   if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
   }
+
+  //parent = upgrader|
 };
 
 exports.parent = function (sessionId, isPassedBefore) {
@@ -63,8 +66,13 @@ exports.parent = function (sessionId, isPassedBefore) {
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
+  let statusOfPassing;
   if (isConditionStatementPassed && !isPassedBefore) {
-    upgrader(sessionId, 'child');
+    statusOfPassing = upgrader(sessionId, 'child');
+    if (statusOfPassing === false) {
+      return false;
+    }
+
     setter.downgrade(sessionId);
   } else if (isNotConditionStatementPassed || isPassedBefore) {
     controllers.controller(sessionId);
@@ -72,11 +80,14 @@ exports.parent = function (sessionId, isPassedBefore) {
       this.parent(sessionId);
     }
   } else if (isParentAllow) {
-    upgrader(sessionId, 'child');
+    let statusOfPassing = upgrader(sessionId, 'child');
+    if (statusOfPassing === false) {
+      return false;
+    }
+
+
+
     if (!checker.session.ended(sessionId)) {
-      if (getter.nameOfProperty(sessionId) == 'child') {
-        upgrader(sessionId, 'parent');
-      }
 
       if (getter.nameOfProperty(sessionId) == 'parent') {
         this.parent(sessionId);
@@ -84,6 +95,7 @@ exports.parent = function (sessionId, isPassedBefore) {
     }
   } else {
     controllers.controller(sessionId);
+    //goto: upgrader
   }
 };
 
