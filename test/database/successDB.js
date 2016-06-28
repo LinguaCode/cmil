@@ -39,6 +39,10 @@ module.exports = [{
       title: 'output: variable: case insensitivity',
       code: 'X = 125\nտպել X',
       output: '125'
+    }, {
+      title: 'output: 2 quote symbol in single quited text',
+      code: 'տպել \'"տեքստ"\'',
+      output: '"տեքստ"'
     }]
   }, {
     group: 'input',

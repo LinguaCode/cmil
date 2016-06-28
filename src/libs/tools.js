@@ -13,9 +13,7 @@
  */
 exports.trim = function (text) {
   let rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-  return text == null ?
-    "" :
-    ( text + "" ).replace(rtrim, "");
+  return text.replace(rtrim, "");
 };
 
 /**
