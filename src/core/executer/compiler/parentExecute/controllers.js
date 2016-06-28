@@ -42,8 +42,14 @@ var controller = {
         if (currentParentObject.hasOwnProperty('toCompile')) {
           upgrader(sessionId, 'toCompile');
         }
-        this.oscillation(sessionId);
+
+
         /** bug fix: if, if, if */
+        let status = this.oscillation(sessionId);
+        if (status === false ) {
+          return false;
+        }
+
         upgrader(sessionId, 'parent');
         controller.manage(sessionId);
         /** bug fix: if, if, if */
