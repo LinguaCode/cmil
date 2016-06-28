@@ -23,7 +23,7 @@ exports.evalResult = function (error) {
     unexpectedIdentifier: /Unexpected identifier/i,
     isNotDefined: /is not defined/
   };
-
+ 
   if (errorRegEx.unexpectedIdentifier.test(errorMessage)) {
     errorStatus = 'Syntax error';
   } else if (errorRegEx.isNotDefined.test(errorMessage)) {
