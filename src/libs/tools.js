@@ -3,8 +3,6 @@
  * @requires errorHandler/levels:spaces
  */
 
-let errorHandler = require('./errorHandler');
-
 /**
  * jQuery trim clone.
  * @example
@@ -106,6 +104,7 @@ exports.isPartOfCode = function (input, index) {
  * @returns {Array.<Number>} Returns Array of code depth levels of the sourceCode.
  */
 exports.codeDepthLevels = {
+
   line: function (str) {
     let spaces, level;
     spaces = 0;
@@ -121,18 +120,19 @@ exports.codeDepthLevels = {
     level = spaces / 4;
     return level;
   },
+
   all: function (listOfCommands) {
     let levels = [];
     for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
       levelsTemp = this.line(listOfCommands[i]);
-      if (levelsTemp == -1) {
-        errorHandler.levels.spaces(i);
-      } else {
+      if (levelsTemp != -1) {
         levels.push(levelsTemp);
       }
+
     }
     return levels;
   }
+
 };
 
 /**

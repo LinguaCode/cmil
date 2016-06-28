@@ -19,3 +19,6 @@ src/config/keys/*.key
 
 # Coverage folder
 coverage/
+
+# test DB
+test/database/testDB.js

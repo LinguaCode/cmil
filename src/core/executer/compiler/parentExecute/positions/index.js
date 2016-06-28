@@ -1,9 +1,16 @@
+let _ = require('lodash');
+let errorCheck = require('../../../../errorHandler/checker');
+
 const booleanDefinitions = {
   true: 'ճիշտ',
-  false: 'սխալ'
+  false: 'սխալ',
+  NaN: 'անորոշ',
+  null: 'անհայտ',
+  Infinity: 'Անվերջություն',
+  undefined: 'չհայտաարարված'
 };
 
-let booleanParse = function (outputText) {
+let postParser = function (outputText) {
   for (var key in booleanDefinitions) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
@@ -17,15 +24,12 @@ let booleanParse = function (outputText) {
 exports.toCompile = function (sessionId, inputValue) {
   let toCompile = controllers.prepareToCompile(sessionId, inputValue);
   let evaluated = evaluate.code(sessionId, toCompile);
-  let concatenatedCompileCode = toCompile.join('\n');
 
-  //TODO: improve this part of code
-  //this is hard coded part of checking for divide on zero.
-  if (/\/\s*0/.test(concatenatedCompileCode)) {
-    evaluated.result = evaluated.result.replace(/Infinity/g, 'Անվերջություն');
+  if (evaluated === false) {
+    return false;
   }
 
-  evaluated.result = booleanParse(evaluated.result);
+  evaluated.result = postParser(evaluated.result);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {
@@ -40,7 +44,11 @@ exports.toCompile = function (sessionId, inputValue) {
 exports.child = function (sessionId) {
   if (checker.needToUpgrade(sessionId)) {
     let firsKeyOfObject = getter.firstKeyOfObject(sessionId);
-    upgrader(sessionId, firsKeyOfObject);
+
+    let sessionContinue = upgrader(sessionId, firsKeyOfObject);
+    if (sessionContinue === false) {
+      return false;
+    }
   }
 
   if (getter.nameOfProperty(sessionId) == 'child') {
@@ -65,8 +73,14 @@ exports.parent = function (sessionId, isPassedBefore) {
     }
   } else if (isParentAllow) {
     upgrader(sessionId, 'child');
-    if (!checker.session.ended(sessionId) && getter.nameOfProperty(sessionId) == 'child') {
-      upgrader(sessionId, 'parent');
+    if (!checker.session.ended(sessionId)) {
+      if (getter.nameOfProperty(sessionId) == 'child') {
+        upgrader(sessionId, 'parent');
+      }
+
+      if (getter.nameOfProperty(sessionId) == 'parent') {
+        this.parent(sessionId);
+      }
     }
   } else {
     controllers.controller(sessionId);

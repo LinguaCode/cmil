@@ -1,54 +1,6 @@
-exports.codeSemicolon = function (sourceCode, levels) {
-  var dataList = sourceCode.split('\n');
-  var semicolon = ';';
-  for (var i = 0; i < levels.length - 1; i++) {
-    if (levels[i] >= levels[i + 1]) {
-      dataList[i] += semicolon;
-    }
-  }
-  dataList[dataList.length - 1] += semicolon;
-  return dataList.join('\n');
+exports.codeSemicolon = function (sourceCode) {
+  return sourceCode.replace('\n', ';\n') + ';';
 };
-
-exports.bracing = function (sourceCode, levels) {
-  var dataList = sourceCode.split('\n');
-  var isLevelPassed = [];
-  for (var i = 0; i < levels.length - 2; i++) {
-    for (var j = i + 2; j < levels.length; j++) {
-      if ((isLevelPassed[j - 1]) && j != levels.length - 1) {
-        break;
-      }
-      if (levels[i] == levels[i + 1]) {
-        break;
-      }
-      if (levels[i] > levels[i + 1]) {
-        break;
-      }
-      if (levels[j] == levels[i] && levels[i] > levels[i + 1]) {
-        break;
-      }
-
-      dataList[i + 1] = dataList[i + 1].replace(new RegExp('[\\s]{' + (levels[i + 1] * 4) + '}'), '{');
-
-      if (levels[i] >= levels[j]) {
-        dataList[j - 1] = dataList[j - 1].replace(new RegExp('[\\s]{' + (levels[j - 1] * 4) + '}'), '') + '}';
-        isLevelPassed[j] = true;
-        break;
-      }
-
-      if (j == levels.length - 1) {
-        dataList[j] = dataList[j].replace(new RegExp('[\\s]{' + (levels[j] * 4) + '}'), '') + '}';
-        isLevelPassed[j] = true;
-        break;
-      }
-    }
-  }
-  if (levels[levels.length - 1] > levels[levels.length - 2]) {
-    dataList[dataList.length - 1] = dataList[dataList.length - 1].replace(new RegExp('[\\s]{' + (levels[levels.length - 1] * 4) + '}'), '{') + '}';
-  }
-  return dataList.join('\n');
-};
-
 
 exports.parser = function (sessionId, sourceCode, lng, isCondition) {
   var re, reStr;
@@ -74,12 +26,8 @@ exports.fullParse = function (sessionId, sourceCode, isCondition) {
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {
-  var levelOfCode = tools.codeDepthLevels.all(sourceCode);
-  sourceCode = sourceCode.join('\n');
-
-  var codeSemicoloned = this.codeSemicolon(sourceCode, levelOfCode);
-  var codeBraced = this.bracing(codeSemicoloned, levelOfCode);
-  return this.fullParse(sessionId, codeBraced);
+  var codeSemicoloned = this.codeSemicolon(sourceCode);
+  return this.fullParse(sessionId, codeSemicoloned);
 };
 
 var tools = require('../../libs/tools');
