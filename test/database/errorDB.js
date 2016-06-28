@@ -1,15 +1,27 @@
 module.exports = [{
   group: 'hy',
-  sources: [/*{
+  sources: [{
     title: 'undefined variable',
-    code: 'տպել X'
-  }, */{
+    code: 'տպել X',
+    status: 'The \\D+\\d* variable didn\'t defined.'
+  }, {
     title: 'hack attempt',
     code: 'eval("console.log("hello world");")',
     status: 'Hack attempt. Your ".*" ip address was saved in the our database.'
   }, {
-    title: 'wrong size of the indent',
-    code: 'եթե 1 < 2\n     տպել 617',
-    status: 'Space error in \\d line.'
+    group: 'wrong size of the indent',
+    sources: [{
+      title: 'error in 2nd line',
+      code: 'եթե 1 < 2\n     տպել 617',
+      status: 'Space error in 2 line.'
+    }, {
+      title: 'error in 3rd line',
+      code: 'x = 12\nեթե 1 < 2\n     տպել 617',
+      status: 'Space error in 3 line.'
+    }]
+  }, {
+    title: 'Syntax error',
+    code: 'տպել 1x',
+    status: 'Syntax error'
   }]
 }];

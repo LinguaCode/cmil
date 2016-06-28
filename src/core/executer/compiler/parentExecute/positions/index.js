@@ -63,8 +63,13 @@ exports.parent = function (sessionId, isPassedBefore) {
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
+  let statusOfPassing;
   if (isConditionStatementPassed && !isPassedBefore) {
-    upgrader(sessionId, 'child');
+    statusOfPassing = upgrader(sessionId, 'child');
+    if (statusOfPassing === false) {
+      return false;
+    }
+
     setter.downgrade(sessionId);
   } else if (isNotConditionStatementPassed || isPassedBefore) {
     controllers.controller(sessionId);
@@ -72,10 +77,17 @@ exports.parent = function (sessionId, isPassedBefore) {
       this.parent(sessionId);
     }
   } else if (isParentAllow) {
-    upgrader(sessionId, 'child');
+    let statusOfPassing = upgrader(sessionId, 'child');
+    if (statusOfPassing === false) {
+      return false;
+    }
+
     if (!checker.session.ended(sessionId)) {
       if (getter.nameOfProperty(sessionId) == 'child') {
-        upgrader(sessionId, 'parent');
+        let statusOfPassing = upgrader(sessionId, 'parent');
+        if (statusOfPassing === false) {
+          return false;
+        }
       }
 
       if (getter.nameOfProperty(sessionId) == 'parent') {

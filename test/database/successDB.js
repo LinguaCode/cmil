@@ -1,8 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
-    code: '# comment comment comment'
+    title: 'empty'
   }]
 }, {
   group: 'hy',
@@ -51,6 +50,10 @@ module.exports = [{
       title: '2 variables',
       code: 'գրել X\nգրել Y',
       inputs: [617, 2]
+    }, {
+      title: 'text input',
+      code: 'գրել անուն',
+      inputs: ["Ջոն"]
     }]
   }, {
     group: 'output; input',
