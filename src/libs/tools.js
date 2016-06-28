@@ -19,22 +19,6 @@ exports.trim = function (text) {
 };
 
 /**
- * Converts the text into unicode escaped format.
- * @example
- * // returns '\u0562\u0561\u0580\u0565\u0582'
- * exports.unicodeEscape('բարեւ');
- * @param {String} input
- * @returns {String} Returns the unicode escaped text.
- */
-exports.unicodeEscape = function (input) {
-  return input.replace(/[\s\S]/g, function (character) {
-    let escape = character.charCodeAt(0).toString(16),
-      longhand = escape.length > 2;
-    return '\\' + (longhand ? 'u' : 'x') + ('0000' + escape).slice(longhand ? -4 : -2);
-  });
-};
-
-/**
  * Checks if the index is between text or comment.
  * @example
  * // returns '\u0562\u0561\u0580\u0565\u0582'
