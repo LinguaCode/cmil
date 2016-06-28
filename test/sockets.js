@@ -77,7 +77,7 @@ let dbAnalyzer = function (sources) {
               console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
               console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
               done();
-            } else if (expectedStatus.test(evalStatus)) {
+            } else if (evalStatus !== 'success' && expectedStatus.test(evalStatus)) {
               console.log(`\nError message:\n${evalStatus}\n\n`);
               done();
             } else if (evalResult && evalResult != expectedOutput + '\n') {

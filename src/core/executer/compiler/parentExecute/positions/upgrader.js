@@ -17,6 +17,8 @@ var upgrader = function (sessionId, typeOfObject) {
       return false;
     }
   }
+  
+  //goto: parent|child
 };
 
 module.exports = upgrader;
