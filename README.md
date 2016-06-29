@@ -4,7 +4,7 @@
 [![Dependency Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org/LinguaCode/linguacode-api)
 [![devDependency Status](https://david-dm.org/LinguaCode/linguacode-api/dev-status.svg)](https://david-dm.org/LinguaCode/linguacode-api#info=devDependencies)
 [![Known Vulnerabilities](https://snyk.io/test/github/LinguaCode/linguacode-api/3712b14a8a61690b8d3383227576d348df699ddf/badge.svg)](https://snyk.io/test/github/LinguaCode/linguacode-api/3712b14a8a61690b8d3383227576d348df699ddf)
-[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&v=1)](https://gratipay.com/LinguaCode/)
+[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&v=3)](https://gratipay.com/LinguaCode/)
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 ### Description
