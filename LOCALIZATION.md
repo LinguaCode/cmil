@@ -9,7 +9,7 @@ Help to translate the project into all the languages of the world, therefore by 
 4. Translate and submit the translation.
 
 ##Languages
-[![Transifex](https://www.transifex.com/projects/p/h_sharp/resource/h-sharp-universal-languages-commands/chart/image_png "Transifex") ](https://www.transifex.com/linguacode/h_sharp/) 
+[![Transifex](https://chart.googleapis.com/chart?chxt=y%2Cr&chd=e%3A......AAAAAAAAAAAAAAAAAAAAAA&chco=84CCFF%2CBFE4FF%2CF4F6FB&chbh=9&chs=350x196&cht=bhs&chxl=0%3A%7CArabic+%28Syria%29%7CArabic+%28Sudan%29%7CArabic+%28Saudi+Arabia%29%7CArabic+%28Egypt%29%7CArabic%7CAmharic+%28Ethiopia%29%7CAmharic%7CAlbanian+Gheg%7CAlbanian+%28Albania%29%7CAlbanian%7CAkan%7CRussian%7CEnglish%7CArmenian%7C1%3A%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C0%25%7C100%25%7C100%25%7C100%25%7C "Transifex") ](https://www.transifex.com/linguacode/h_sharp/) 
 
 ##Contributors
 - ![Armenian](https://raw.githubusercontent.com/stevenrskelton/flag-icon/master/png/16/country-4x3/am.png "Language: Armenian, Translator: Arman Yeghiazaryan") **Armenian** ([Arman Yeghiazaryan](https://github.com/otanim))
