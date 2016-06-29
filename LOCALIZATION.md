@@ -1,4 +1,4 @@
-#Contributing to LinguaCode
+#Localizing to LinguaCode
 
 Help to translate the project into all the languages of the world, therefore by making it possible for all children of the world to learn a programming.
 
