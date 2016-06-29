@@ -8,7 +8,7 @@ The following is a set of guidelines for contributing to LinguaCode and its modu
 
 [How you can contribute](#how-you-can-contribute)
 
-[How to translate the project](#how-to-translate)
+[How to translate](#how-to-translate)
   * [Translations](#translations)
   * [Translators](#translators)
 
