@@ -1,14 +1,8 @@
-const PARENT = 'parent';
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';
 
 var conditionParse = function (sessionId, parseType) {
-  var nameOfProperty = value.nameOfProperty(sessionId);
-  if (nameOfProperty !== 'child') {
-    return path.location(sessionId) + '.' + parseType;
-  }
-
-  return exports.parent(sessionId) + '.' + parseType;
+  return path.location(sessionId) + '.' + parseType;
 };
 
 exports.condition = function (sessionId) {
@@ -25,13 +19,6 @@ exports.operations = function (sessionId) {
 
 exports.inputVariable = function (sessionId) {
   return path.location(sessionId) + '.' + INPUT_VARIABLE;
-};
-
-exports.parent = function (sessionId) {
-  var parentObjectPath = path.parentObject(sessionId);
-  var indexOfLastParent = parentObjectPath.lastIndexOf(PARENT);
-  var indexOfLastElementOfParent = parentObjectPath.indexOf('.', indexOfLastParent);
-  return path.parentObject(sessionId).substring(0, indexOfLastElementOfParent);
 };
 
 var path = require('./');

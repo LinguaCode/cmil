@@ -1,18 +1,18 @@
-var _ = require('lodash');
+let _ = require('lodash');
 
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';
 
-var value = function (sessionId, typeOfObject) {
+let value = function (sessionId, typeOfObject) {
   return _.get(current(sessionId), path.structure[typeOfObject](sessionId));
 };
 
-var current = function (sessionId) {
+let current = function (sessionId) {
   return __store[sessionId].structure;
 };
 
 exports.limit = function (sessionId) {
-  var currentStructure = current(sessionId);
+  let currentStructure = current(sessionId);
   return _.get(currentStructure, path.parentObject(sessionId), currentStructure).length;
 };
 
@@ -21,7 +21,7 @@ exports.condition = function (sessionId) {
 };
 
 exports.conditionType = function (sessionId) {
-  var conditionType = value(sessionId, 'conditionType');
+  let conditionType = value(sessionId, 'conditionType');
   return conditionType || 'main';
 };
 
@@ -38,10 +38,10 @@ exports.object = function (sessionId) {
 };
 
 exports.firstKeyOfObject = function (sessionId) {
-  var thisElement = this.object(sessionId);
-  var keysOfThisElement = Object.keys(thisElement);
+  let thisElement = this.object(sessionId);
+  let keysOfThisElement = Object.keys(thisElement);
 
   return keysOfThisElement[0];
 };
 
-var path = require('../path');
+let path = require('../path');
