@@ -4,17 +4,23 @@ module.exports = function () {
       command: '։',
       definition: ':'
     }, {
+      command: '\'',
+      definition: '`'
+    }, {
       command: '"',
-      definition: '\''
+      definition: '`'
     }, {
       command: '«',
-      definition: '\''
+      definition: '`'
     }, {
       command: '»',
-      definition: '\''
+      definition: '`'
     }, {
       command: '․',
       definition: '.'
+    }, {
+      command: '`',
+      definition: '\''
     }]
   };
 };

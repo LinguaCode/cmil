@@ -2,8 +2,8 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'եթե 4 > 2\n    տպել «a»\nեթե 4 > 2\n    տպել «b»',
-    output: 'a\nb'
+    code: 'տպել «տեքստ\'»',
+    output: '«տեքստ\'»'
   }]
 }, {
   group: 'hy',
@@ -41,11 +41,30 @@ module.exports = [{
       title: 'output: variable: case insensitivity',
       code: 'X = 125\nտպել X',
       output: '125'
-    }/*, {
-     title: 'output: 2 quote symbol in single quited text',
-     code: 'տպել \'տեքստ»\'',
-     output: '"տեքստ"'
-     }*/]
+    }, {
+      group: 'quotes in quotes',
+      sources: [{
+        title: '\'text»\'',
+        code: 'տպել \'տեքստ»\'',
+        output: 'տեքստ»'
+      }, {
+        title: '"text»"',
+        code: 'տպել "տեքստ»"',
+        output: 'տեքստ»'
+      }, {
+        title: '\'«text»\'',
+        code: 'տպել \'«տեքստ»\'',
+        output: '«տեքստ»'
+      }, {
+        title: '"«text»"',
+        code: 'տպել "«տեքստ»"',
+        output: '«տեքստ»'
+      }, {
+        title: '«text\'»',
+        code: 'տպել «տեքստ\'»',
+        output: '«տեքստ\'»'
+      }]
+    }]
   }, {
     group: 'input',
     sources: [{
