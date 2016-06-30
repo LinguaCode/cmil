@@ -2,8 +2,8 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'տպել «տեքստ\'»',
-    output: '«տեքստ\'»'
+    code: 'տպել «lambs: » + "empty"',
+    output: 'lambs: empty'
   }]
 }, {
   group: 'hy',
@@ -62,7 +62,7 @@ module.exports = [{
       }, {
         title: '«text\'»',
         code: 'տպել «տեքստ\'»',
-        output: '«տեքստ\'»'
+        output: 'տեքստ\''
       }]
     }]
   }, {

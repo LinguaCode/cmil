@@ -60,8 +60,8 @@ let qouteAnalize = function (input, index) {
   return quotes.map(function (quote) {
     let count = quote.count;
     quote.isOpen = {
-      before: count.before,
-      after: count.after
+      before: count.before % 2 == 1,
+      after: count.after % 2 == 1
     };
 
     delete quote.count;
@@ -117,7 +117,7 @@ exports.isPartOfCode = function (input, index) {
   if (currentSymbol == quotationMarks.begin) {
     return input.lastIndexOf(quotes[0].symbol, index - 1) == -1;
   } else if (currentSymbol == quotationMarks.end) {
-    return input.lastIndexOf(quotes[0].symbol, index - 1) != -1 && quotes[0].count.after % 2 == 0;
+    return input.lastIndexOf(quotes[0].symbol, index - 1) != -1 && !quotes[0].isOpen.after;
   }
 
   for (var i = 0; i < quotes.length; i++) {
