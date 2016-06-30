@@ -6,7 +6,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/LinguaCode/linguacode-api/3712b14a8a61690b8d3383227576d348df699ddf/badge.svg)](https://snyk.io/test/github/LinguaCode/linguacode-api/3712b14a8a61690b8d3383227576d348df699ddf)
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 
-[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&style=flat-square)](https://gratipay.com/LinguaCode/)
+[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
 [![Beerpay](https://img.shields.io/beerpay/LinguaCode/linguacode-api.svg?maxAge=2592000?style=flat-square)](https://beerpay.io/LinguaCode/linguacode-api)
 
 ### Description
