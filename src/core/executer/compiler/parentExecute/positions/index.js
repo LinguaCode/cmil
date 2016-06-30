@@ -66,12 +66,8 @@ exports.parent = function (sessionId, isPassedBefore) {
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
-  let statusOfPassing;
   if (isConditionStatementPassed && !isPassedBefore) {
-    statusOfPassing = upgrader(sessionId, 'child');
-    if (statusOfPassing === false) {
-      return false;
-    }
+    upgrader(sessionId, 'child');
 
     setter.downgrade(sessionId);
   } else if (isNotConditionStatementPassed || isPassedBefore) {
