@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/LinguaCode/linguacode-api.svg?branch=master)](https://travis-ci.org/LinguaCode/linguacode-api)
-[![Coverage Status](https://coveralls.io/repos/github/LinguaCode/linguacode-api/badge.svg?branch=master&v=5)](https://coveralls.io/github/LinguaCode/linguacode-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/LinguaCode/linguacode-api/badge.svg?branch=master&v=6)](https://coveralls.io/github/LinguaCode/linguacode-api?branch=master)
 [![Code Climate](https://codeclimate.com/github/LinguaCode/linguacode-api/badges/gpa.svg?v=1)](https://codeclimate.com/github/LinguaCode/linguacode-api)
 [![Dependency Status](https://david-dm.org/LinguaCode/linguacode-api.svg)](https://david-dm.org/LinguaCode/linguacode-api)
 [![devDependency Status](https://david-dm.org/LinguaCode/linguacode-api/dev-status.svg)](https://david-dm.org/LinguaCode/linguacode-api#info=devDependencies)
