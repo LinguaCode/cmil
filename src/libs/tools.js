@@ -97,8 +97,6 @@ exports.isPartOfCode = function (input, index) {
     } else if (quotationMarkIndexes[0] < quotationMarkIndexes[2]) {
       return false;
     }
-  } else if (input.lastIndexOf(quotationMarks[0], index - 1) !== -1 && input.indexOf(quotationMarks[1], index + 1) != -1) {
-    return true;
   }
 
   //check if the symbol was <text quote>
