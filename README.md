@@ -33,3 +33,8 @@ npm run coverage
 ### Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/LinguaCode/linguacode-api/badge.svg?style=beer-square)](https://beerpay.io/LinguaCode/linguacode-api)  [![Beerpay](https://beerpay.io/LinguaCode/linguacode-api/make-wish.svg?style=flat-square)](https://beerpay.io/LinguaCode/linguacode-api?focus=wish)
