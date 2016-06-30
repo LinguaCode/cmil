@@ -1,25 +1,22 @@
 exports.index = function (sessionId) {
-  var pathOfLocation = path.location(sessionId);
-  var indexOfBracketBegin = pathOfLocation.lastIndexOf('[') + 1;
-  var indexOfBracketEnd = pathOfLocation.lastIndexOf(']');
-  var index = pathOfLocation.substring(indexOfBracketBegin, indexOfBracketEnd);
+  let pathOfLocation = path.location(sessionId);
+  let indexOfBracketBegin = pathOfLocation.lastIndexOf('[') + 1;
+  let indexOfBracketEnd = pathOfLocation.lastIndexOf(']');
+  let index = pathOfLocation.substring(indexOfBracketBegin, indexOfBracketEnd);
   return parseInt(index);
 };
 
 exports.nameOfProperty = function (sessionId) {
-  var pathOfLocation = path.location(sessionId);
-  if (pathOfLocation[pathOfLocation.length - 1] == ']') {
-    var indexOfTypeEnd = pathOfLocation.lastIndexOf('[');
-    var indexOfTypeBegin = pathOfLocation.lastIndexOf('.', indexOfTypeEnd) + 1;
-    return pathOfLocation.substring(indexOfTypeBegin, indexOfTypeEnd);
-  } else {
-    return '';
-  }
+  let pathOfLocation = path.location(sessionId);
+  let indexOfTypeEnd = pathOfLocation.lastIndexOf('[');
+  let indexOfTypeBegin = pathOfLocation.lastIndexOf('.', indexOfTypeEnd) + 1;
+  
+  return pathOfLocation.substring(indexOfTypeBegin, indexOfTypeEnd);
 };
 
 exports.variables = function (sessionId) {
   return __store[sessionId].variables;
 };
 
-var path = require('../path');
+let path = require('../path');
 exports.structure = require('./structure');

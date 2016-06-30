@@ -1,4 +1,7 @@
+const serverPath = '../src/server';
+let server = require(serverPath);
 let io = require('socket.io-client');
+let purgeCache = require('../src/libs/purgeCache');
 
 /**DB of tests*/
 const successDB = require('./database/successDB');
@@ -130,6 +133,23 @@ describe('disconnect', function () {
 
   it('disconnect', function (done) {
     socket.disconnect();
+    done();
+  });
+
+});
+
+describe('production test', function () {
+
+  it('run', function (done) {
+    process.env.NODE_ENV = 'production';
+    let port = process.env.PORT;
+    purgeCache(serverPath);
+    
+    server = require(serverPath);
+
+    server.listen(port, function () {
+      server.close();
+    });
     done();
   });
 
