@@ -1,3 +1,8 @@
+const quotationMarks = {
+  begin: '«',
+  end: '»'
+};
+
 /**
  * This is a lib of some useful scripts which can be used in other projects.
  * @requires errorHandler/levels:spaces
@@ -16,6 +21,55 @@ exports.trim = function (text) {
   return text.replace(rtrim, "");
 };
 
+let qouteAnalize = function (input, index) {
+  let quotes = [{
+    symbol: '`',
+    count: {
+      before: 0,
+      after: 0
+    }
+  }, {
+    symbol: '\'',
+    count: {
+      before: 0,
+      after: 0
+    }
+  }, {
+    symbol: '"',
+    count: {
+      before: 0,
+      after: 0
+    }
+  }];
+
+  for (let i = index - 1; i >= 0; i--) {
+    for (let j = 0; j < quotes.length; j++) {
+      if (input[i] == quotes[j].symbol && input[i - 1] !== '\\') {
+        quotes[j].count.before++;
+      }
+    }
+  }
+  for (let i = index + 1; i < input.length; i++) {
+    for (let j = 0; j < quotes.length; j++) {
+      if (input[i] == quotes[j].symbol && input[i - 1] !== '\\') {
+        quotes[j].count.after++;
+      }
+    }
+  }
+
+  return quotes.map(function (quote) {
+    let count = quote.count;
+    quote.isOpen = {
+      before: count.before,
+      after: count.after
+    };
+
+    delete quote.count;
+
+    return quote;
+  });
+};
+
 /**
  * Checks if the index is between text or comment.
  * @example
@@ -26,37 +80,17 @@ exports.trim = function (text) {
  * @returns {Boolean} Returns true if index in input is between text or comment else no.
  */
 exports.isPartOfCode = function (input, index) {
-  const ch = ['\"', '\''];
-  const quotationMarks = ['«', '»'];
-  let counter = [0, 0];
+  let quotes = qouteAnalize(input, index);
 
   let currentSymbol = input[index];
-  if (ch.indexOf(currentSymbol) != -1 || quotationMarks.indexOf(currentSymbol) != -1) {
-    return true;
-  }
 
-  for (let i = index - 1; i >= 0; i--) {
-    if (input[i] == ch[0]) {
-      counter[0]++;
-    }
-    if (input[i] == ch[1]) {
-      counter[1]++;
-    }
-  }
-
-  if (input[index] == ch[0]) {
-    return (counter[0] === 0 || counter[0] % 2 === 1);
-  }
-
-  if (input[index] == ch[1]) {
-    return (counter[1] === 0 || counter[1] % 2 === 1);
-  }
-
+  //counter of the <text quotes>
   let quotationMarkIndexes = [
-    input.lastIndexOf(quotationMarks[0], index - 1),
-    input.lastIndexOf(quotationMarks[1], index - 1),
-    input.indexOf(quotationMarks[1], index + 1)
+    input.lastIndexOf(quotationMarks.begin, index - 1),
+    input.lastIndexOf(quotationMarks.end, index - 1),
+    input.indexOf(quotationMarks.end, index + 1)
   ];
+
   if (quotationMarkIndexes[0] !== -1 && quotationMarkIndexes[2] !== -1) {
     if (quotationMarkIndexes[0] < quotationMarkIndexes[1]) {
       return true;
@@ -67,7 +101,32 @@ exports.isPartOfCode = function (input, index) {
     return true;
   }
 
-  return (counter[0] % 2 === 0 && counter[1] % 2 === 0);
+  //check if the symbol was <text quote>
+  for (let i = 1; i < quotes.length; i++) {
+    if (currentSymbol == quotes[i].symbol) {
+      if ((quotes[i].isOpen.after && !quotes[i].isOpen.before) || (quotes[i].isOpen.after || !quotes[i].isOpen.before)) {
+        return true;
+      }
+    }
+  }
+
+  if (currentSymbol == quotes[0].symbol) {
+    return !quotes[1].isOpen.before || (quotes[1].isOpen.before && !quotes[1].isOpen.after);
+  }
+
+  if (currentSymbol == quotationMarks.begin) {
+    return input.lastIndexOf(quotes[0].symbol, index - 1) == -1;
+  } else if (currentSymbol == quotationMarks.end) {
+    return input.lastIndexOf(quotes[0].symbol, index - 1) != -1 && quotes[0].count.after % 2 == 0;
+  }
+
+  for (var i = 0; i < quotes.length; i++) {
+    if (quotes[i].isOpen.before) {
+      break;
+    }
+  }
+
+  return i == quotes.length;
 };
 
 /**
