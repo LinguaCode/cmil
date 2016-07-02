@@ -1,14 +1,14 @@
-var controller = {
+let controller = {
   manage: function (sessionId) {
-    var parentObject = controller.oscillation(sessionId);
+    let parentObject = controller.oscillation(sessionId);
     if (parentObject) {
       controller.directive(sessionId, parentObject);
     }
   },
   oscillation: function (sessionId) {
-    var management = require('../management');
+    let management = require('../management');
 
-    var parentObject = getter.nameOfProperty(sessionId);
+    let parentObject = getter.nameOfProperty(sessionId);
 
     setter.indexIncrement(sessionId);
 
@@ -25,8 +25,8 @@ var controller = {
     return parentObject;
   },
   directive: function (sessionId, parentObject) {
-    var currentParentObject = getter.object(sessionId);
-    var nameOfProperty = getter.nameOfProperty(sessionId);
+    let currentParentObject = getter.object(sessionId);
+    let nameOfProperty = getter.nameOfProperty(sessionId);
 
     if (currentParentObject.hasOwnProperty('toCompile') && parentObject == 'toCompile') {
       if (currentParentObject.hasOwnProperty('parent')) {
@@ -34,7 +34,7 @@ var controller = {
       }
     } else if (nameOfProperty == 'child') {
       //execute after passing if-else
-      var newNameOfProperty = getter.nameOfProperty(sessionId);
+      let newNameOfProperty = getter.nameOfProperty(sessionId);
       if (newNameOfProperty == 'child' && parentObject == 'child') {
         if (currentParentObject.hasOwnProperty('parent')) {
           upgrader(sessionId, 'parent');
@@ -55,8 +55,8 @@ var controller = {
 exports.controller = controller.manage;
 
 exports.prepareToCompile = function (sessionId, inputValue) {
-  var codeToCompile = getter.operations(sessionId) || [];
-  var inputOperation = '';
+  let codeToCompile = getter.operations(sessionId) || [];
+  let inputOperation = '';
   if (inputValue) {
     inputOperation = evaluate.inputOperation(sessionId, inputValue);
     codeToCompile.unshift(sessionId, inputOperation);
@@ -64,12 +64,12 @@ exports.prepareToCompile = function (sessionId, inputValue) {
   return codeToCompile;
 };
 
-var evaluate = require('../evaluate');
+let evaluate = require('../evaluate');
 
-var getter = require('../../getter');
+let getter = require('../../getter');
 
-var setter = require('../../setter');
+let setter = require('../../setter');
 
-var checker = require('../../checker');
+let checker = require('../../checker');
 
-var upgrader = exports.upgrader = require('./positions').upgrader;
+let upgrader = exports.upgrader = require('./positions').upgrader;

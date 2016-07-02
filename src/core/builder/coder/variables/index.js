@@ -1,7 +1,7 @@
 exports._get = function (sourceCode) {
-  var listOfVariables = [];
-  var regStr;
-  var regExpArr = [
+  let listOfVariables = [];
+  let regStr;
+  let regExpArr = [
     /[<>\-\(\+=\*\/%\s]([^\d\u00AB\u00BB\(\)%+\-\*\/=#"'><\s!][^\u00AB\u00BB\(\)%+\-\*\/=#'"\s]*)[\-+=\*\/%\s><\)!]/g,
     /[<>\-\(\+=\*\/%\s]([^\d\u00AB\u00BB\(\)%+\-\*\/=#"'><\s!][^\u00AB\u00BB\(\)%+\-\*\/=#'"\s]*)$/g];
 
@@ -16,13 +16,13 @@ exports._get = function (sourceCode) {
 };
 
 exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariables) {
-  var regExp;
-  var regStrZero;
-  var regStrFirstIndex;
+  let regExp;
+  let regStrZero;
+  let regStrFirstIndex;
 
-  var codeTailed = tail.concat(sourceCode);
+  let codeTailed = tail.concat(sourceCode);
 
-  for (var i = 0; i < listOfVariables.length; i++) {
+  for (let i = 0; i < listOfVariables.length; i++) {
     regExp = new RegExp('[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s](' + listOfVariables[i] + ')[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)]', 'g');
     while ((regStrZero = regExp.exec(codeTailed)) !== null) { //in line
       if (tools.isPartOfCode(codeTailed, regStrZero.index)) {
@@ -37,8 +37,8 @@ exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariable
   return tail.cut(codeTailed);
 };
 
-var _ = require('lodash');
+let _ = require('lodash');
 
-var tail = require('./tail');
+let tail = require('./tail');
 
-var tools = require('../../../../libs/tools');
+let tools = require('../../../../libs/tools');

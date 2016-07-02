@@ -1,4 +1,4 @@
-var commands = require('../commands/variables');
+let commands = require('../commands/variables');
 
 module.exports = [{
   command: commands.then,

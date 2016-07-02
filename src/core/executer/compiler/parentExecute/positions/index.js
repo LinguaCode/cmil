@@ -11,7 +11,7 @@ const booleanDefinitions = {
 };
 
 let postParser = function (outputText) {
-  for (var key in booleanDefinitions) {
+  for (let key in booleanDefinitions) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
       outputText = outputText.replace(regExp, booleanDefinitions[key]);

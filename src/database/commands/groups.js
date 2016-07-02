@@ -1,5 +1,5 @@
 //TODO: Arman: move to Frontend
-var commands = require('./variables');
+let commands = require('./variables');
 
 module.exports = [
   [commands.input, commands.output, commands.function],

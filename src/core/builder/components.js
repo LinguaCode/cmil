@@ -1,4 +1,4 @@
-var executions = require('../../database/constants').executions;
+let executions = require('../../database/constants').executions;
 
 exports.parent = function (listOfCommands, listOfLevels, index) {
 
@@ -8,24 +8,24 @@ exports.parent = function (listOfCommands, listOfLevels, index) {
   }
 
   //initializations of objects
-  var parentIndexes = {};
-  var parentConditionType = {};
-  var parentConditionValue = {};
+  let parentIndexes = {};
+  let parentConditionType = {};
+  let parentConditionValue = {};
 
   //previous parent: START
-  var parentIndexPrevious = index;
-  var parentLine = listOfCommands[parentIndexPrevious];
+  let parentIndexPrevious = index;
+  let parentLine = listOfCommands[parentIndexPrevious];
   parentConditionType.previous = executions(parentLine, 'conditionType');
   parentConditionValue.previous = executions(parentLine, 'conditionValue');
   parentIndexes.previous = parentIndexPrevious;
   //previous parent: END
 
   //next parent: START
-  var nextParentIndex = operations.nextParentIndexInitialize(listOfLevels, parentIndexPrevious);
+  let nextParentIndex = operations.nextParentIndexInitialize(listOfLevels, parentIndexPrevious);
   parentIndexes.next = nextParentIndex.value;
-  var isNextParentExist = nextParentIndex.isNextParentExist;
+  let isNextParentExist = nextParentIndex.isNextParentExist;
   if (isNextParentExist) {
-    var nextParentLine = listOfCommands[nextParentIndex.value];
+    let nextParentLine = listOfCommands[nextParentIndex.value];
 
     parentConditionType.next = executions(nextParentLine, 'conditionType');
     parentConditionValue.next = executions(nextParentLine, 'conditionValue');
@@ -33,7 +33,7 @@ exports.parent = function (listOfCommands, listOfLevels, index) {
   //next parent: END
 
   //Concatenations
-  var parentConditions = {
+  let parentConditions = {
     type: parentConditionType,
     value: parentConditionValue
   };
@@ -47,12 +47,12 @@ exports.parent = function (listOfCommands, listOfLevels, index) {
 };
 
 exports.child = function (listOfCommands, listOfLevels, parentIndex) {
-  var contentIndexStart = parentIndex.previous + 1;
-  var contentIndexEnd = parentIndex.next;
+  let contentIndexStart = parentIndex.previous + 1;
+  let contentIndexEnd = parentIndex.next;
 
-  var listOfCommandsOfTail = listOfCommands.slice(contentIndexStart, contentIndexEnd);
+  let listOfCommandsOfTail = listOfCommands.slice(contentIndexStart, contentIndexEnd);
 
-  var listOfLevelsOfTail = listOfLevels.slice(contentIndexStart, contentIndexEnd);
+  let listOfLevelsOfTail = listOfLevels.slice(contentIndexStart, contentIndexEnd);
 
   return {
     listOfCommands: listOfCommandsOfTail,
@@ -61,9 +61,9 @@ exports.child = function (listOfCommands, listOfLevels, parentIndex) {
 };
 
 exports.toCompile = function (sessionId, listOfCommands, variables, indexStart, indexEnd) {
-  var toCompileCommandsArr = listOfCommands.slice(indexStart, indexEnd);
+  let toCompileCommandsArr = listOfCommands.slice(indexStart, indexEnd);
   return coder.splitToCompilableParts(sessionId, toCompileCommandsArr, variables);
 };
 
-var coder = require('./coder');
-var operations = require('./operations');
+let coder = require('./coder');
+let operations = require('./operations');

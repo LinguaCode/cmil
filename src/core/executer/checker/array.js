@@ -6,4 +6,4 @@ exports.empty = function (sessionId) {
   return getter.limitOfArray(sessionId) == 0;
 };
 
-var getter = require('../getter');
+let getter = require('../getter');
