@@ -1,10 +1,10 @@
-var upgrader = function (sessionId, typeOfObject) {
-  var positions = require('./');
+let upgrader = function (sessionId, typeOfObject) {
+  let positions = require('./');
 
   setter.upgrade(sessionId, typeOfObject);
 
   if (typeOfObject == 'toCompile' && checker.needToInput(sessionId)) {
-    var evaluated = {
+    let evaluated = {
       result: '',
       status: 'success'
     };
@@ -23,6 +23,6 @@ var upgrader = function (sessionId, typeOfObject) {
 
 module.exports = upgrader;
 
-var setter = require('../../../setter');
+let setter = require('../../../setter');
 
-var checker = require('../../../checker');
+let checker = require('../../../checker');

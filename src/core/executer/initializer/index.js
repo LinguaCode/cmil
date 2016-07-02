@@ -16,5 +16,5 @@ exports.session = function (sessionId) {
   eval(database.languages.linguacode(sessionId).initialize);
 };
 
-var database = require('../../../database/connection');
-var builder = require('../../builder');
+let database = require('../../../database/connection');
+let builder = require('../../builder');

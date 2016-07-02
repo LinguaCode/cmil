@@ -1,4 +1,4 @@
-var compiler = exports.operations = require('./compiler');
+let compiler = exports.operations = require('./compiler');
 exports.getter = require('./getter');
 exports.setter = require('./setter');
 exports.checker = require('./checker');

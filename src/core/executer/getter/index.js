@@ -1,5 +1,5 @@
-var path = require('./path');
-var value = require('./value');
+let path = require('./path');
+let value = require('./value');
 
 module.exports = {
   //paths

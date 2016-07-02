@@ -1,10 +1,10 @@
-var commands = require('./commands/variables');
+let commands = require('./commands/variables');
 const ifWhileRepeatCommandsGroup =
   commands.if + '|' +
   commands.while + '|' +
   commands.repeat;
 
-var constants = exports.constants = {
+let constants = exports.constants = {
   conditionValue: '(' +
   ifWhileRepeatCommandsGroup +
   ')\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
@@ -19,13 +19,13 @@ var constants = exports.constants = {
 };
 
 exports.executions = function (source, nameOfConstant) {
-  var regexp = new RegExp(constants[nameOfConstant]);
-  var result = regexp.exec(source);
+  let regexp = new RegExp(constants[nameOfConstant]);
+  let result = regexp.exec(source);
 
   if (result) {
     if (nameOfConstant == 'conditionValue') {
-      var regValueOfConditionRepeatTimes = new RegExp(constants.conditionRepeatTimesValue);
-      var resultOfValueOfConditionRepeatTimes = regValueOfConditionRepeatTimes.exec(result[2]);
+      let regValueOfConditionRepeatTimes = new RegExp(constants.conditionRepeatTimesValue);
+      let resultOfValueOfConditionRepeatTimes = regValueOfConditionRepeatTimes.exec(result[2]);
       result = resultOfValueOfConditionRepeatTimes ? resultOfValueOfConditionRepeatTimes[1] : result[2];
     } else {
       result = result[1];

@@ -1,5 +1,5 @@
 let _ = require('lodash');
-var colors = require('colors');
+let colors = require('colors');
 
 let env = process.env.NODE_ENV;
 let colorReservation = [];

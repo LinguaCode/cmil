@@ -1,23 +1,23 @@
-var tools = require('../../../libs/tools');
-var errorHandler = require('../../errorHandler');
+let tools = require('../../../libs/tools');
+let errorHandler = require('../../errorHandler');
 
 let errorCheck = require('../../errorHandler/checker');
 let errorMessages = require('../../errorHandler/messages');
 
 
 exports.condition = function (sessionId) {
-  var formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
+  let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
   return eval(formattedCondition) === true;
 };
 
 exports.code = function (sessionId, sourceCode) {
-  var evalResult = '';
-  var evalStatus = 'success';
+  let evalResult = '';
+  let evalStatus = 'success';
 
-  for (var i = 0; i < sourceCode.length; i++) {
+  for (let i = 0; i < sourceCode.length; i++) {
     let line = sourceCode[i];
 
-    var codeFormatted = formatter.codeFormatting(sessionId, line);
+    let codeFormatted = formatter.codeFormatting(sessionId, line);
 
 
     try {
@@ -53,8 +53,8 @@ exports.inputOperation = function (sessionId, inputValue) {
   return getter.inputVariable(sessionId) + '=' + tools.valueRender(inputValue);
 };
 
-var formatter = require('../../formatter');
+let formatter = require('../../formatter');
 
-var getter = require('../getter');
+let getter = require('../getter');
 
-var management = require('./management');
+let management = require('./management');

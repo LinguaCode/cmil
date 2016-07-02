@@ -1,7 +1,7 @@
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';
 
-var conditionParse = function (sessionId, parseType) {
+let conditionParse = function (sessionId, parseType) {
   return path.location(sessionId) + '.' + parseType;
 };
 
@@ -21,5 +21,5 @@ exports.inputVariable = function (sessionId) {
   return path.location(sessionId) + '.' + INPUT_VARIABLE;
 };
 
-var path = require('./');
-var value = require('../value');
+let path = require('./');
+let value = require('../value');

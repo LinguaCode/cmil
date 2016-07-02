@@ -1,8 +1,8 @@
-var modify = require('../../../modifier/modify');
+let modify = require('../../../modifier/modify');
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   //prepare
-  var codePrepared = modify.execute(sourceCode, language);
+  let codePrepared = modify.execute(sourceCode, language);
   //initialize
 
    initializer.execute(sessionId, codePrepared);
@@ -18,8 +18,8 @@ exports.listener = function (sessionId, inputText) {
   }
 };
 
-var parentExecute = require('../parentExecute');
-var initializer = require('../../initializer');
-var getter = require('../../getter');
+let parentExecute = require('../parentExecute');
+let initializer = require('../../initializer');
+let getter = require('../../getter');
 
 exports.session = require('./session');

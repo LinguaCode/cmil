@@ -1,4 +1,4 @@
-var fs = require('fs');
+let fs = require('fs');
 
 const dbs = ['translations', 'languages'];
 
@@ -11,11 +11,11 @@ const dbs = ['translations', 'languages'];
  * @param {String} dbName
  * @returns {Object} Returns the database of languages.
  */
-var dbCollect = function (dbName) {
-  var db = {};
-  var pathOfTranslation = require('path').join(__dirname, './' + dbName + '/');
+let dbCollect = function (dbName) {
+  let db = {};
+  let pathOfTranslation = require('path').join(__dirname, './' + dbName + '/');
   fs.readdirSync(pathOfTranslation).forEach(function (file) {
-    var fileName = file.substring(0, file.indexOf('.'));
+    let fileName = file.substring(0, file.indexOf('.'));
     db[fileName] = require('./' + dbName + '/' + file);
   });
   

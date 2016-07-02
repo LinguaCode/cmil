@@ -1,15 +1,15 @@
-var constants = require('../constants').constants;
-var commands = require('../commands/variables');
+let constants = require('../constants').constants;
+let commands = require('../commands/variables');
 
 module.exports = function (sessionId, isCondition) {
   isCondition = isCondition || false;
-  var _then = commands.then;
-  var notThen = '';
-  for (var i = 0; i < _then.length; i++) {
+  let _then = commands.then;
+  let notThen = '';
+  for (let i = 0; i < _then.length; i++) {
     notThen += '[^\\' + _then[i] + ']';
   }
 
-  var toReplace = [{
+  let toReplace = [{
     command: '(' + commands.not + ')\\s*\\(',
     definition: '!('
   }, {
