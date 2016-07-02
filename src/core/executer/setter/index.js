@@ -7,7 +7,7 @@ exports.upgrade = function (sessionId, typeOfInnerObject) {
 };
 
 exports.downgrade = function (sessionId) {
-  var lastObjectIndex = getter.pathOfLocation(sessionId).lastIndexOf('.');
+  let lastObjectIndex = getter.pathOfLocation(sessionId).lastIndexOf('.');
   __store[sessionId].pathOfLocation = getter.pathOfLocation(sessionId).substring(0, lastObjectIndex);
 };
 
@@ -19,4 +19,4 @@ exports.variables = function (sessionId, variables) {
   __store[sessionId].variables = variables;
 };
 
-var getter = require('../getter');
+let getter = require('../getter');

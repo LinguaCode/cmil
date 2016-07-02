@@ -25,7 +25,7 @@ module.exports = function (moduleName) {
  */
 function searchCache(moduleName, callback) {
   // Resolve the module identified by the specified name
-  var mod = require.resolve(path.join(process.cwd(), moduleName.substr(1)));
+  let mod = require.resolve(path.join(process.cwd(), moduleName.substr(1)));
 
   // Check if the module has been resolved and found within
   // the cache

@@ -1,3 +1,3 @@
-var operations = require('./operations');
+let operations = require('./operations');
 
 module.exports = operations.execute;
