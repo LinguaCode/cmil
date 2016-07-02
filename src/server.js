@@ -1,5 +1,5 @@
 let app = require('./app');
-let debug = require('debug')('user_api:server');
+let debug = require('../src/libs/debug');
 let fs = require('fs');
 
 let port = process.env.PORT = process.env.PORT || '3005';
@@ -12,6 +12,18 @@ const certPath = './src/config/keys/';
 let privateKeyFilePath = certPath + 'linguacode_me_private.key';
 
 let isCertFilesExist;
+process.env.DEBUG = 'user_api';
+debug('1');
+debug('2');
+debug('1');
+debug('2');
+debug('3');
+debug('4');
+debug('3');
+debug('2');
+debug('3');
+debug('2');
+debug('1');
 
 try {
   fs.accessSync(privateKeyFilePath, fs.F_OK);
