@@ -1,5 +1,4 @@
 let app = require('./app');
-let debug = require('debug')('user_api:server');
 let fs = require('fs');
 
 let port = process.env.PORT = process.env.PORT || '3005';
@@ -70,7 +69,7 @@ function onListening() {
   let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }
 
 module.exports = server;

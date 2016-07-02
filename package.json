@@ -25,6 +25,7 @@
   "bugs": "https://github.com/LinguaCode/linguacode-api/issues",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "colors": "^1.1.2",
     "connect": "^3.4.1",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.0",
