@@ -4,20 +4,16 @@ var colors = require('colors');
 let env = process.env.NODE_ENV;
 let colorReservation = [];
 
-let isScopeOpened = function (text) {
-  let listOfReservedTexts = _.map(colorReservation, 'command');
+let isScopeOpened = function (command) {
+  let countOfElements = 0;
 
-  let indexOfFistResult = listOfReservedTexts.indexOf(text);
-  let isAnyCopy = indexOfFistResult != -1;
-
-  if (isAnyCopy) {
-    let indexOfLastResult = listOfReservedTexts.lastIndexOf(text);
-    if (indexOfFistResult == indexOfLastResult) {
-      return true;
+  for (let i = 0; i < colorReservation.length; i++) {
+    if (colorReservation[i].command == command) {
+      countOfElements++;
     }
   }
 
-  return false;
+  return countOfElements % 2 == 1;
 };
 
 let indentGenerate = function () {
@@ -42,46 +38,24 @@ let indentsGenerate = function (levels) {
 
 let colorParamsGenerate = function (index) {
   const colorList = [
-    'red',
+    'white',
     'green',
     'yellow',
     'blue',
     'magenta',
     'cyan',
-    'white',
-    'gray',
-    'grey'
-  ];
-  const backgroundList = [
-    'bgBlack',
-    'bgRed',
-    'bgGreen',
-    'bgYellow',
-    'bgBlue',
-    'bgMagenta',
-    'bgCyan',
-    'bgWhite'
+    'red'
   ];
 
-  let countOfBackgrounds = backgroundList.length;
   let countOfColors = colorList.length;
 
-  let indexOfBackground = Math.floor(index / countOfColors);
-  indexOfBackground =
-    indexOfBackground <= countOfBackgrounds ?
-      indexOfBackground :
-    indexOfBackground - countOfBackgrounds;
 
   let indexOfColor =
-    index <= countOfColors ?
+    index < countOfColors ?
       index :
     index % countOfColors;
 
-
-  return {
-    background: backgroundList[indexOfBackground],
-    text: colorList[indexOfColor]
-  }
+  return colorList[indexOfColor]
 };
 let oldSibling = function (command) {
   let listOfReservedTexts = _.map(colorReservation, 'command');
@@ -105,36 +79,33 @@ let getLastIndentIndex = function (colorReservationList, command) {
     return sibling.indent;
   }
 
-  return colorReservationList[countOfReservedColors - 1].indent;
+  return colorReservationList[countOfReservedColors - 1].indent + 1;
 };
 
 module.exports = function (command) {
-  let colorParams;
+  if (env != 'testing') {
+    return;
+  }
+
+  let color;
   let indents;
   if (!isScopeOpened(command)) {
     let countOfReservedColors = colorReservation.length;
-    colorParams = colorParamsGenerate(countOfReservedColors);
-
-    indents = indentsGenerate(indexOfLevel);
+    color = colorParamsGenerate(countOfReservedColors);
   } else {
     let sibling = oldSibling(command);
-    colorParams = sibling.colors;
-
-    indents = indentsGenerate(indexOfLevel - 1);
+    color = sibling.colors;
   }
 
   let indentParam = getLastIndentIndex(colorReservation, command);
+  indents = indentsGenerate(indentParam);
   colorReservation.push({
     command: command,
-    colors: colorParams,
+    colors: color,
     indent: indentParam
   });
 
-  let text = indents + command;
+  let text = indents + colors[color](command);
 
-  let backgroundColor = colorParams.background;
-  let textColor = colorParams.text;
-  if (env == 'testing') {
-    console.log(colors[backgroundColor][textColor](text));
-  }
+  console.log(text);
 };
