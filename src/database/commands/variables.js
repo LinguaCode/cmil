@@ -1,4 +1,4 @@
-var variables = {
+let variables = {
   if: '#if',
   var: '#var',
   else: '#else',

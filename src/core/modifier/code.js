@@ -1,6 +1,6 @@
-var core = function (data, lng, command, definition) {
-  var re, reStr;
-  for (var i = 0; i < database.translations[lng].length; i++) { //languages
+let core = function (data, lng, command, definition) {
+  let re, reStr;
+  for (let i = 0; i < database.translations[lng].length; i++) { //languages
     re = new RegExp(database.translations[lng][i][command], 'ig');
     while ((reStr = re.exec(data)) !== null) { //in line
       if (tools.isPartOfCode(data, reStr.index)) {
@@ -17,5 +17,5 @@ exports.toCode = function (data, lng) {
   return core(data, lng, 'definition', 'command');
 };
 
-var tools = require('../../libs/tools');
-var database = require('../../database/connection');
+let tools = require('../../libs/tools');
+let database = require('../../database/connection');

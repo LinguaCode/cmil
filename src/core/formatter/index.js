@@ -3,11 +3,11 @@ exports.codeSemicolon = function (sourceCode) {
 };
 
 exports.parser = function (sessionId, sourceCode, db, isCondition) {
-  var re, reStr;
-  var correctResult;
-  var toReplace;
-  var replaceObject = database.languages[db](sessionId, isCondition).replace;
-  for (var i = 0; i < replaceObject.length; i++) { //languages
+  let re, reStr;
+  let correctResult;
+  let toReplace;
+  let replaceObject = database.languages[db](sessionId, isCondition).replace;
+  for (let i = 0; i < replaceObject.length; i++) { //languages
     let isGlobal = db == 'global';
     re = new RegExp(isGlobal ? '[^\\\\](' + replaceObject[i].command + ')' : replaceObject[i].command, 'g');
     while ((reStr = re.exec(sourceCode)) !== null) { //in line
@@ -26,14 +26,14 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
 };
 
 exports.fullParse = function (sessionId, sourceCode, isCondition) {
-  var codeParsedMain = this.parser(sessionId, sourceCode, 'global');
+  let codeParsedMain = this.parser(sessionId, sourceCode, 'global');
   return this.parser(sessionId, codeParsedMain, 'linguacode', isCondition);
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {
-  var codeSemicoloned = this.codeSemicolon(sourceCode);
+  let codeSemicoloned = this.codeSemicolon(sourceCode);
   return this.fullParse(sessionId, codeSemicoloned);
 };
 
-var tools = require('../../libs/tools');
-var database = require('../../database/connection');
+let tools = require('../../libs/tools');
+let database = require('../../database/connection');

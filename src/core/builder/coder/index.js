@@ -1,14 +1,14 @@
-var _ = require('lodash');
+let _ = require('lodash');
 
 exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
   sourceCode = sourceCode.join('\n');
-  var labelOfSessionObject = sessionId + '.';
-  var toCompiles = [];
-  var reInput = new RegExp(commands.input + '\\s+(' + labelOfSessionObject + '(' + variables.join('|') + '))', 'g');
-  var indexOfOperationBegin, indexOfOperationEnd;
-  var reInputStrOld, reInputStrNew;
-  var operations, inputVariable;
-  var toCompile = {};
+  let labelOfSessionObject = sessionId + '.';
+  let toCompiles = [];
+  let reInput = new RegExp(commands.input + '\\s+(' + labelOfSessionObject + '(' + variables.join('|') + '))', 'g');
+  let indexOfOperationBegin, indexOfOperationEnd;
+  let reInputStrOld, reInputStrNew;
+  let operations, inputVariable;
+  let toCompile = {};
 
   reInputStrOld = reInput.exec(sourceCode);
 
@@ -59,9 +59,9 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
   return toCompiles;
 };
 
-var commands = require('../../../database/commands/variables');
+let commands = require('../../../database/commands/variables');
 
-var variables = exports.variables = require('./variables');
-var tools = require('../../../libs/tools');
+let variables = exports.variables = require('./variables');
+let tools = require('../../../libs/tools');
 
 
