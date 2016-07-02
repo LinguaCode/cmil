@@ -11,7 +11,6 @@ const certPath = './src/config/keys/';
 let privateKeyFilePath = certPath + 'linguacode_me_private.key';
 
 let isCertFilesExist;
-process.env.DEBUG = 'user_api';
 
 try {
   fs.accessSync(privateKeyFilePath, fs.F_OK);
