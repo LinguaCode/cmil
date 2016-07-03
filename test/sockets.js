@@ -6,6 +6,7 @@ let purgeCache = require('../src/libs/purgeCache');
 /**DB of tests*/
 const successDB = require('./database/successDB');
 const errorDB = require('./database/errorDB');
+process.env.NODE_ENV = 'testing';
 
 /**Initialize the variables*/
 let socket = io.connect('http://localhost:3005');
