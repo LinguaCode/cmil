@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:linguacode/linguacode-api.git"
+    "url": "git+https://github.com/LinguaCode/linguacode-api"
   },
   "engines": {
     "node": ">= 6.1.0"
