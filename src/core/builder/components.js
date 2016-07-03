@@ -1,5 +1,3 @@
-let debug = require(' src/libs/debug');
-
 let executions = require('../../database/constants').executions;
 
 exports.parent = function (listOfCommands, listOfLevels, index) {
