@@ -24,37 +24,22 @@
   "license": "SEE LICENSE IN LICENSE file",
   "bugs": "https://github.com/LinguaCode/linguacode-api/issues",
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "connect": "^3.4.1",
-    "cookie": "^0.3.1",
-    "cookie-parser": "^1.4.0",
     "cors": "^2.7.1",
-    "debug": "^2.2.0",
     "express": "^4.14.0",
     "express-session": "^1.12.1",
-    "express-validator": "^2.20.8",
-    "geotools": "^0.1.0",
     "helmet": "^2.1.1",
-    "kerberos": "0.0.21",
     "linguacode-logger": "git+https://github.com/LinguaCode/linguacode-logger.git",
     "lodash": "^4.11.1",
-    "mongoose": "^4.5.2",
-    "mongoose-q": "^0.1.0",
     "snyk": "^1.16.0",
-    "socket.io": "^1.4.8",
-    "socket.io-client": "^1.4.8",
-    "yandex-translate-api": "^1.0.1"
+    "socket.io": "^1.4.8"
   },
   "devDependencies": {
+    "socket.io-client": "^1.4.8",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
     "istanbul-coveralls": "^1.0.3",
-    "mocha": "^2.5.1",
-    "mocha-lcov-reporter": "^1.2.0",
-    "should": "^9.0.2",
-    "socket.io-client": "^1.4.6",
-    "supertest": "^1.2.0"
+    "mocha": "^2.5.1"
   },
   "snyk": true
 }
