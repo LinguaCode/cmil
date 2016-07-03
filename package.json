@@ -21,7 +21,7 @@
     "node": ">= 6.1.0"
   },
   "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.github.com)",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "SEE LICENSE IN LICENSE file",
   "bugs": "https://github.com/LinguaCode/linguacode-api/issues",
   "dependencies": {
     "body-parser": "^1.15.2",

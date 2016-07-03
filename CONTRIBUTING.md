@@ -49,5 +49,5 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
 
 
 ##License
-LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/linguacode-api/blob/master/LICENSE.txt).
+LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/linguacode-api/blob/master/LICENSE).
 
