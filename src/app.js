@@ -2,6 +2,7 @@ let cors = require('cors');
 let session = require('express-session');
 let express = require('express');
 let helmet = require('helmet');
+require('linguacode-logger');
 
 let app = express();
 

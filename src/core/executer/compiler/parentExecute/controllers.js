@@ -1,11 +1,17 @@
 let controller = {
   manage: function (sessionId) {
+    console.llog('compiler: controller', 'begin');
+
     let parentObject = controller.oscillation(sessionId);
     if (parentObject) {
       controller.directive(sessionId, parentObject);
     }
+
+    console.llog('compiler: controller', 'end');
   },
   oscillation: function (sessionId) {
+    console.llog('compiler: oscillation');
+
     let management = require('../management');
 
     let parentObject = getter.nameOfProperty(sessionId);
@@ -21,10 +27,11 @@ let controller = {
       }
     }
 
-    //parent = directive|
     return parentObject;
   },
   directive: function (sessionId, parentObject) {
+    console.llog('compiler: directive', 'begin');
+
     let currentParentObject = getter.object(sessionId);
     let nameOfProperty = getter.nameOfProperty(sessionId);
 
@@ -41,7 +48,8 @@ let controller = {
         }
 
         let status = this.oscillation(sessionId);
-        if (status === false ) {
+        if (status === false) {
+          console.llog('compiler: directive', 'end');
           return false;
         }
 
@@ -49,6 +57,8 @@ let controller = {
         controller.manage(sessionId);
       }
     }
+
+    console.llog('compiler: directive', 'end');
   }
 };
 

@@ -49,14 +49,14 @@ if (env == 'production' && isCertFilesExist) {
   server = https.createServer(credentials, app);
 
   server.listen(port, function () {
-    console.info('Server: https://localhost:%s is listen.', port);
+    console.llog(`Server: https://localhost:${port} is listen.`);
   });
 } else {
   let http = require('http');
   server = http.createServer(app);
 
   server.listen(port, function () {
-    console.info('Server: http://localhost:%s is listen.', port);
+    console.llog(`Server: http://localhost:${port} is listen.`);
   });
 }
 
@@ -69,7 +69,7 @@ function onListening() {
   let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  console.log('Listening on ' + bind);
+  console.llog('Listening on ' + bind);
 }
 
 module.exports = server;

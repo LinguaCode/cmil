@@ -16,13 +16,13 @@ let sockets = {
     require('../core/globals')(sessionId);
 
     __io.emit(sessionId + '_' + 'submitSuccess');
-    console.info('Socket.IO: server: sourceCode has been successfully received!');
+    console.llog('Socket.IO: server: sourceCode has been successfully received!');
 
     let errorMessage = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
     if (errorMessage) {
 
       //TODO: Arman: put here mail logging system
-      console.info('Socket.IO: server: output text has been successfully send! (Hack attempt)');
+      console.llog('Socket.IO: server: output text has been successfully send! (Hack attempt)');
 
       __io.emit(sessionId + '_' + 'evaluated', {
         result: '',
@@ -36,13 +36,13 @@ let sockets = {
   },
 
   disconnect: function () {
-    console.info('Socket.IO: server: One of connections closed.');
+    console.llog('Socket.IO: server: One of connections closed.');
   },
 
   evaluated: function (receivedData) {
     let inputText = receivedData.inputText;
     let sessionId = receivedData.sessionId;
-    console.info('Socket.IO: server: \'' + inputText + '\' text successfully received!');
+    console.llog('Socket.IO: server: \'' + inputText + '\' text successfully received!');
 
     compiler.listener(sessionId, inputText);
   },
@@ -63,7 +63,7 @@ let ipAddressResolver = function (ipAddress) {
 __io.on('connection', function (socket) {
 
   ipAddress = ipAddressResolver(socket.handshake.address);
-  console.info('Socket.IO: server: New connection from ' + ipAddress);
+  console.llog('Socket.IO: server: New connection from ' + ipAddress);
 
   sockets.init(socket);
 

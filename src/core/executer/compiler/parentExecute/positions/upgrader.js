@@ -1,4 +1,6 @@
 let upgrader = function (sessionId, typeOfObject) {
+  console.llog('compiler: upgrader', 'begin');
+  
   let positions = require('./');
 
   setter.upgrade(sessionId, typeOfObject);
@@ -10,15 +12,16 @@ let upgrader = function (sessionId, typeOfObject) {
     };
 
     __io.emit(sessionId + '_' + 'evaluated', evaluated);
-    console.info('Socket.IO: server: output text  has been successfully send! (waits for input text)');
+    console.llog('compiler: Socket.IO: server: output text  has been successfully send! (waits for input text)');
   } else {
     let statusOfPassing = positions[typeOfObject](sessionId);
     if (statusOfPassing === false) {
+      console.llog('compiler: upgrader', 'end');
       return false;
     }
   }
-  
-  //goto: parent|child
+
+  console.llog('compiler: upgrader', 'end');
 };
 
 module.exports = upgrader;

@@ -1,10 +1,11 @@
 let tools = require('../../../libs/tools');
 
 exports.execute = function (sessionId, sourceCode) {
+  console.llog('builder: main', 'begin');
 
   let variables = coder.variables._get(sourceCode);
   setter.variables(sessionId, variables);
-  
+
   let varToObj = coder.variables.variablesToObjectChild(sessionId, sourceCode, variables);
   let listOfCommands = varToObj.split('\n');
   let listOfLevels = tools.codeDepthLevels.all(listOfCommands);
@@ -12,6 +13,7 @@ exports.execute = function (sessionId, sourceCode) {
     theListOfCommands[index] = command.replace(/^\s+/, '');
   });
 
+  console.llog('builder: main', 'end');
   return [{
     condition: conditions.values.mainCondition(sessionId),
     child: buildRecursion(sessionId, listOfCommands, listOfLevels, variables)
@@ -19,6 +21,8 @@ exports.execute = function (sessionId, sourceCode) {
 };
 
 let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommands, listOfLevels, variables) {
+  console.llog('builder: buildRecursion', 'begin');
+
   let components = require('../components');
 
   let toCompileIndexStart = 0;
@@ -55,15 +59,20 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
     }
   }
 
+  console.llog('builder: buildRecursion', 'end');
   return parentOfParents;
 };
 
 exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
+  console.llog('builder: nextParentIndexInitialize', 'begin');
+
   let indexOfNext = listOfLevels.indexOf(listOfLevels[currentIndex], currentIndex + 1);
   let isNextParentExist = indexOfNext != -1;
   if (!isNextParentExist) {
     indexOfNext = listOfLevels.length;
   }
+
+  console.llog('builder: nextParentIndexInitialize', 'end');
   return {
     value: indexOfNext,
     isNextParentExist: isNextParentExist

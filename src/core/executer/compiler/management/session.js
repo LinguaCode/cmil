@@ -6,5 +6,6 @@ exports.end = function (sessionId) {
   //delete __store[sessionId];
 
   __io.emit(sessionId + '_' + 'sessionEnd');
-  console.info('Socket.IO: server: Session closed.');
+  
+  console.llog('compiler: Socket.IO: server: Session closed.');
 };
