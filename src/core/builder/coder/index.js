@@ -1,6 +1,8 @@
 let _ = require('lodash');
 
 exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
+  console.llog('builder: splitToCompilableParts');
+  
   sourceCode = sourceCode.join('\n');
   let labelOfSessionObject = sessionId + '.';
   let toCompiles = [];

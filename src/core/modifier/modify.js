@@ -46,6 +46,7 @@ exports.codeNotSensitive = function (sourceCode) {
  * - this.codeNotSensitive
  */
 exports.execute = function (sourceCode, language) {
+  console.llog('modify: main');
   let uglifiedSourceCode = uglify.execute(sourceCode);
   let convertedSourceCode = code.toCode(uglifiedSourceCode, language);
   return this.codeNotSensitive(convertedSourceCode);

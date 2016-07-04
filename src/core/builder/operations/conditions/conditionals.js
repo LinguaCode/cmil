@@ -1,4 +1,5 @@
 let requiredDataGetter = function (requiredFileNameList) {
+  console.llog('builder: _requiredDataGetter', 'begin');
   let paths = {
     components: '../../components',
     commands: '../../../../database/commands/variables',
@@ -10,10 +11,13 @@ let requiredDataGetter = function (requiredFileNameList) {
     requiredFileList[fileName] = require(paths[fileName]);
   });
 
+  console.llog('builder: _requiredDataGetter', 'end');
   return requiredFileList;
 };
 
 exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
+  console.llog('builder: _if', 'begin');
+  
   let requiredFiles = requiredDataGetter(['components', 'commands', 'operations']);
 
   let _child = [];
@@ -45,7 +49,8 @@ exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variabl
   } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == requiredFiles.commands.else || nextParentConditionType == requiredFiles.commands.elif));
 
   countOfCommands--;
-
+  
+  console.llog('builder: _if', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands
@@ -53,6 +58,8 @@ exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variabl
 };
 
 exports._repeat = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
+  console.llog('builder: _repeat', 'begin');
+  
   let requiredFiles = requiredDataGetter(['components', 'operations']);
 
   let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
@@ -66,6 +73,7 @@ exports._repeat = function (sessionId, listOfCommands, listOfLevels, parent, var
 
   let countOfCommands = content.listOfCommands.length;
 
+  console.llog('builder: _repeat', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands
@@ -73,6 +81,8 @@ exports._repeat = function (sessionId, listOfCommands, listOfLevels, parent, var
 };
 
 exports._do = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
+  console.llog('builder: _do', 'begin');
+  
   let requiredFiles = requiredDataGetter(['components', 'operations']);
 
   let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
@@ -86,6 +96,7 @@ exports._do = function (sessionId, listOfCommands, listOfLevels, parent, variabl
 
   let countOfCommands = content.listOfCommands.length + 1;
 
+  console.llog('builder: _do', 'end');
   return {
     type: 'do',
     child: _child,
@@ -94,6 +105,8 @@ exports._do = function (sessionId, listOfCommands, listOfLevels, parent, variabl
 };
 
 exports._while = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
+  console.llog('builder: _while', 'begin');
+  
   let requiredFiles = requiredDataGetter(['components', 'operations']);
 
   let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
@@ -107,6 +120,7 @@ exports._while = function (sessionId, listOfCommands, listOfLevels, parent, vari
 
   let countOfCommands = content.listOfCommands.length;
 
+  console.llog('builder: _while', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands

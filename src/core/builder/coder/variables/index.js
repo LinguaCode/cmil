@@ -16,6 +16,7 @@ exports._get = function (sourceCode) {
 };
 
 exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariables) {
+  console.llog('builder: variablesToObjectChild', 'begin');
   let regExp;
   let regStrZero;
   let regStrFirstIndex;
@@ -34,7 +35,11 @@ exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariable
       }
     }
   }
-  return tail.cut(codeTailed);
+  
+  let cutedTail = tail.cut(codeTailed);
+
+  console.llog('builder: variablesToObjectChild', 'end');
+  return cutedTail;
 };
 
 let _ = require('lodash');

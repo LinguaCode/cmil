@@ -1,5 +1,4 @@
 let _ = require('lodash');
-let errorCheck = require('../../../../errorHandler/checker');
 
 const booleanDefinitions = {
   true: 'ճիշտ',
@@ -11,6 +10,7 @@ const booleanDefinitions = {
 };
 
 let postParser = function (outputText) {
+  console.llog('compiler: postParser');
   for (let key in booleanDefinitions) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
@@ -22,32 +22,39 @@ let postParser = function (outputText) {
 };
 
 exports.toCompile = function (sessionId, inputValue) {
+  console.llog('compiler: toCompile', 'begin');
+
   let toCompile = controllers.prepareToCompile(sessionId, inputValue);
   let evaluated = evaluate.code(sessionId, toCompile);
 
   if (evaluated === false) {
+    console.llog('compiler: toCompile', 'end');
     return false;
   }
 
   evaluated.result = postParser(evaluated.result);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
-  if (evaluated.result) { 
-    console.info('Socket.IO: server: output text has been successfully send! (output)');
+  if (evaluated.result) {
+    console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
-    console.info('Socket.IO: server: output text has been successfully send! (ping)');
+    console.llog('compiler: Socket.IO: server: output text has been successfully send! (ping)');
   }
 
   controllers.controller(sessionId);
-  //goto: upgrader
+
+  console.llog('compiler: toCompile', 'end');
 };
 
 exports.child = function (sessionId) {
+  console.llog('compiler: child', 'begin');
+
   if (checker.needToUpgrade(sessionId)) {
     let firsKeyOfObject = getter.firstKeyOfObject(sessionId);
 
     let sessionContinue = upgrader(sessionId, firsKeyOfObject);
     if (sessionContinue === false) {
+      console.llog('compiler: child', 'end');
       return false;
     }
   }
@@ -56,10 +63,12 @@ exports.child = function (sessionId) {
     controllers.controller(sessionId);
   }
 
-  //parent = upgrader|
+  console.llog('compiler: child', 'end');
 };
 
 exports.parent = function (sessionId, isPassedBefore) {
+  console.llog('compiler: parent', 'begin');
+
   let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
   let isParentAllow = evaluate.condition(sessionId);
   let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
@@ -78,10 +87,9 @@ exports.parent = function (sessionId, isPassedBefore) {
   } else if (isParentAllow) {
     let statusOfPassing = upgrader(sessionId, 'child');
     if (statusOfPassing === false) {
+      console.llog('compiler: parent', 'end');
       return false;
     }
-
-
 
     if (!checker.session.ended(sessionId)) {
 
@@ -89,10 +97,12 @@ exports.parent = function (sessionId, isPassedBefore) {
         this.parent(sessionId);
       }
     }
+
   } else {
     controllers.controller(sessionId);
-    //goto: upgrader
   }
+
+  console.llog('compiler: parent', 'end');
 };
 
 let upgrader = exports.upgrader = require('./upgrader');
