@@ -25,6 +25,13 @@ exports.conditionType = function (sessionId) {
   return conditionType || 'main';
 };
 
+exports.conditionIdentifier = function (sessionId) {
+  let condition = value(sessionId, 'condition');
+  let identifierRegExp = new RegExp(sessionId + '\\.\\D+\\d+');
+  let identifier = identifierRegExp.exec(condition)[0];
+  return identifier;
+};
+
 exports.operations = function (sessionId) {
   return value(sessionId, OPERATIONS);
 };

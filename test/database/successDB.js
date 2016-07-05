@@ -389,11 +389,11 @@ module.exports = [{
           title: '1x2 attempts',
           code: 'կրկնել 1 անգամ\n    կրկնել 2 անգամ\n        տպել "a"',
           output: 'a\na'
-        }, /*{
-         title: '2x1 attempts',
-         code: 'կրկնել 2 անգամ\n    կրկնել 1 անգամ\n        տպել "a"',
-         output: 'a\na'
-         },*/ {
+        }, {
+          title: '2x1 attempts',
+          code: 'կրկնել 2 անգամ\n    կրկնել 1 անգամ\n        տպել "a"',
+          output: 'a\na'
+        }, {
           title: '2x0 attempts',
           code: 'կրկնել 2 անգամ\n    կրկնել 0 անգամ\n        տպել "a"'
         }]

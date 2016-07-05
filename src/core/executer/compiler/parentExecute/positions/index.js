@@ -99,6 +99,8 @@ exports.parent = function (sessionId, isPassedBefore) {
     }
 
   } else {
+    let conditionIdentifier = getter.conditionIdentifier(sessionId);
+    initializer.condition(conditionIdentifier);
     controllers.controller(sessionId);
   }
 
@@ -114,3 +116,4 @@ let evaluate = require('../../evaluate');
 let checker = require('../../../checker');
 let getter = require('../../../getter');
 let setter = require('../../../setter');
+let initializer = require('../../../initializer');
