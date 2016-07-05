@@ -1,3 +1,5 @@
+let _ = require('lodash');
+
 exports.execute = function (sessionId, sourceCode) {
   console.llog('compiler: initialize', 'begin');
   this.structure(sessionId, sourceCode);
@@ -16,8 +18,11 @@ exports.structure = function (sessionId, sourceCode) {
 };
 
 exports.session = function (sessionId) {
-  //noinspection JSUnresolvedVariable
   eval(database.languages.linguacode(sessionId).initialize);
+};
+
+exports.condition = function (conditionIdentifier) {
+  _.set(global, conditionIdentifier, undefined);
 };
 
 let database = require('../../../database/connection');

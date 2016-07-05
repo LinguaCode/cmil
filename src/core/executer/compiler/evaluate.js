@@ -7,7 +7,8 @@ let errorMessages = require('../../errorHandler/messages');
 
 exports.condition = function (sessionId) {
   let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
-  return eval(formattedCondition) === true;
+  let isPassed = eval(formattedCondition) === true;
+  return isPassed;
 };
 
 exports.code = function (sessionId, sourceCode) {
