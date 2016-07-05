@@ -1,3 +1,25 @@
+## 0.2.2 (2016-07-05)
+
+  - [added] tests: 39 (total 94).
+  - [added] documentation:CONTRIBUTING.md
+  - [added] module: linguacode-logger.
+  - [added] tool: snyk.
+  - [added] tool: travis.
+  - [added] tool: coveralls.
+  - [added] tool: code climate.
+  - [added] tool: david: dependencies checker.
+  - [added] tool: david: devDependencies checker.
+  - [added] badge: Gratipay.
+  - [added] badge: Beerpay.
+  - [added] badge: license GPLv3.
+  - [optimize] useless module remove from package.json file.
+  - [optimize] ES6: 'var' to 'let' and 'const' convert.
+  - [optimize] refactorings.
+  - [status] coverage: development: 99.24%, production: 97.72%.
+  - [status] code climate: 3.7.
+  - [fix] looping loop error initialize.
+  - [fix] minor fixes.
+
 ## 0.2.1 (2016-06-18)
 
   - [new] mocha test count: 55.
