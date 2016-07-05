@@ -23,5 +23,13 @@ module.exports = [{
     title: 'Syntax error',
     code: 'տպել 1x',
     status: 'Syntax error'
+  }, {
+    title: 'Big loop: overload',
+    code: 'կրկնել 100000 անգամ\n    տպել 1010101010',
+    status: 'timeout'
+  }, {
+    title: 'Infinity loop',
+    code: 'մինչ 1 < 4\n    տպել 123',
+    status: 'timeout'
   }]
 }];

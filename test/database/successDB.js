@@ -1,7 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'
+    title: 'empty',
   }]
 }, {
   group: 'hy',
