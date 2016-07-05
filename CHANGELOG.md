@@ -1,3 +1,11 @@
+## 0.2.3 (upcoming)
+
+  - **[added]** code compile timeout.
+  - **[added]** total: up to 100 and more.
+  - **[optimize]** readme: include paths of CONTRIBUTING.md, CHANGELOG.md.
+  - **[status]** coverage: development: 99.5%.
+  - **[status]** code climate: 4.
+
 ## 0.2.2 (2016-07-05)
 
   - **[added]** tests: 39 (total 94).
