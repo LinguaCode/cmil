@@ -15,10 +15,10 @@
   - [optimize] useless module remove from package.json file.
   - [optimize] ES6: 'var' to 'let' and 'const' convert.
   - [optimize] refactorings.
-  - [status] coverage: development: 99.24%, production: 97.72%.
-  - [status] code climate: 3.7.
   - [fix] looping loop error initialize.
   - [fix] minor fixes.
+  - [status] coverage: development: 99.24%, production: 97.72%.
+  - [status] code climate: 3.7.
 
 ## 0.2.1 (2016-06-18)
 
