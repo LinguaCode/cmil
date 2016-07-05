@@ -18,6 +18,16 @@ let controller = {
 
     setter.indexIncrement(sessionId);
 
+    if (checker.session.expired(sessionId)) {
+      __io.emit(sessionId + '_' + 'evaluated', {
+        result: '',
+        status: 'timeout'
+      });
+
+      management.session.end(sessionId);
+      return false;
+    }
+
     if (checker.array.ended(sessionId)) {
       setter.downgrade(sessionId);
 

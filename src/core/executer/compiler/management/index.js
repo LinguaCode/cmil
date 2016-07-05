@@ -3,6 +3,9 @@ let logger = require('linguacode-logger');
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   console.llog('compiler: codeRun', 'begin');
+  
+  setter.sessionTime(sessionId);
+
   //prepare
   let codePrepared = modify.execute(sourceCode, language);
   //initialize
@@ -16,6 +19,8 @@ exports.codeRun = function (sessionId, sourceCode, language) {
 exports.listener = function (sessionId, inputText) {
   console.llog('compiler: listener', 'begin');
 
+  setter.sessionTime(sessionId);
+
   parentExecute.positions.toCompile(sessionId, inputText);
 
   if (getter.nameOfProperty(sessionId) == 'child') {
@@ -28,5 +33,6 @@ exports.listener = function (sessionId, inputText) {
 let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
 let getter = require('../../getter');
+let setter = require('../../setter');
 
 exports.session = require('./session');

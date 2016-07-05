@@ -19,4 +19,7 @@ exports.variables = function (sessionId) {
 };
 
 let path = require('../path');
+
 exports.structure = require('./structure');
+
+exports.session = require('./session');

@@ -19,4 +19,8 @@ exports.variables = function (sessionId, variables) {
   __store[sessionId].variables = variables;
 };
 
+exports.sessionTime = function (sessionId) {
+  __store[sessionId].time = new Date();
+};
+
 let getter = require('../getter');
