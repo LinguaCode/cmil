@@ -6,6 +6,7 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
   let re, reStr;
   let correctResult;
   let toReplace;
+  let scopes = ['\'', '"', '«', '»'];
   let replaceObject = database.languages[db](sessionId, isCondition).replace;
   for (let i = 0; i < replaceObject.length; i++) { //languages
     let isGlobal = db == 'global';
@@ -16,8 +17,8 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
       if (tools.isPartOfCode(sourceCode, indexOfResult)) {
         toReplace = replaceObject[i].definition.replace('$1', correctResult);
         sourceCode = sourceCode.substring(0, indexOfResult) + toReplace + sourceCode.substring(reStr.index + reStr[0].length);
-      } else if (correctResult == '\'') {
-        toReplace = '\\\'';
+      } else if (scopes.indexOf(correctResult) != -1) {
+        toReplace = '\\' + correctResult;
         sourceCode = sourceCode.substring(0, indexOfResult) + toReplace + sourceCode.substring(reStr.index + reStr[0].length);
       }
     }
