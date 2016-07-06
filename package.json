@@ -1,6 +1,6 @@
 {
   "name": "linguacode-api",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
