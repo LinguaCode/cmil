@@ -4,7 +4,7 @@
   - **[status]** coverage: development: 99.5%.
   - **[status]** code climate: 4.
 
-## 0.2.4 (upcoming)
+## 0.2.4 (2016-07-07)
 
   - **[added]** tests: 26 (total 122).
   - **[optimize]** readme: include paths of CONTRIBUTING.md, CHANGELOG.md.
