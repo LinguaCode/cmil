@@ -1,4 +1,4 @@
-## 0.2.3 (upcoming)
+## 0.2.4 (upcoming)
 
   - **[added]** total: up to 100 and more.
   - **[optimize]** readme: include paths of CONTRIBUTING.md, CHANGELOG.md.
