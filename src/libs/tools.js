@@ -118,8 +118,8 @@ exports.isPartOfCode = function (input, index) {
     if ((quotes.single.isOpen.after && !quotes.single.isOpen.before) || (quotes.es6.isOpen.before && !quotes.single.isOpen.after)) {
       return true;
     }
-  } else {
-    if (quotes.single.isOpen.after && quotes.single.isOpen.before) {
+  } else if (currentSymbol == quotes.double.symbol) {
+    if (quotes.es6.isOpen.after && quotes.es6.isOpen.before) {
       return false;
     }
 
@@ -144,6 +144,8 @@ exports.isPartOfCode = function (input, index) {
       return false;
     }
   }
+
+  return true;
 };
 
 /**
