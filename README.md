@@ -19,7 +19,7 @@ With LinguaCode one can not only study programming, but also learn languages.
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/LinguaCode/linguacode-api/blob/master/CONTRIBUTING.md).
 
-### How to ?
+## How to get started ?
 #### Start
 `npm start`
 
