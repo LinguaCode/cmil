@@ -32,7 +32,7 @@ npm install instanbul -g
 npm run coverage
 ```
 
-### Screenshot
+## Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
 
