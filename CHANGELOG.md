@@ -11,6 +11,8 @@
   - **[added]** tests: 2 (total 96).
   - **[added]** module: moment.
   - **[added]** code compile timeout.
+  - **[status]** coverage: development: 99.26%, production: 97.76%.
+  - **[status]** code climate: 3.67.
 
 ## 0.2.2 (2016-07-05)
 
