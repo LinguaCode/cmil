@@ -6,7 +6,7 @@
   - **[fix]** inner quote symbol detect fix: ", «, ».
   - **[status]** code climate: 4.
 
-## 0.2.3 (2016-07-05)
+## 0.2.3 (2016-07-06)
 
   - **[added]** tests: 2 (total 96).
   - **[added]** module: moment.
