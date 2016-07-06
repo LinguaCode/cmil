@@ -21,53 +21,63 @@ exports.trim = function (text) {
   return text.replace(rtrim, "");
 };
 
-let qouteAnalize = function (input, index) {
-  let quotes = [{
-    symbol: '`',
-    count: {
-      before: 0,
-      after: 0
+let quoteAnalize = function (input, index) {
+  let quotes = {
+    es6: {
+      symbol: '`',
+      count: {
+        before: 0,
+        after: 0
+      }
+    },
+    single: {
+      symbol: '\'',
+      count: {
+        before: 0,
+        after: 0
+      }
+    },
+    double: {
+      symbol: '"',
+      count: {
+        before: 0,
+        after: 0
+      }
     }
-  }, {
-    symbol: '\'',
-    count: {
-      before: 0,
-      after: 0
-    }
-  }, {
-    symbol: '"',
-    count: {
-      before: 0,
-      after: 0
-    }
-  }];
+  };
 
   for (let i = index - 1; i >= 0; i--) {
-    for (let j = 0; j < quotes.length; j++) {
-      if (input[i] == quotes[j].symbol && input[i - 1] !== '\\') {
-        quotes[j].count.before++;
-      }
-    }
-  }
-  for (let i = index + 1; i < input.length; i++) {
-    for (let j = 0; j < quotes.length; j++) {
-      if (input[i] == quotes[j].symbol && input[i - 1] !== '\\') {
-        quotes[j].count.after++;
-      }
-    }
+    quotes = counter(quotes, input, 'before',  i);
   }
 
-  return quotes.map(function (quote) {
-    let count = quote.count;
-    quote.isOpen = {
+  for (let i = index + 1; i < input.length; i++) {
+    quotes = counter(quotes, input, 'after', i);
+  }
+
+  for (let key in quotes) {
+    let count = quotes[key].count;
+    quotes[key].isOpen = {
       before: count.before % 2 == 1,
       after: count.after % 2 == 1
     };
 
-    delete quote.count;
+    delete quotes[key].count;
+  }
 
-    return quote;
-  });
+  return quotes;
+};
+
+
+let counter = function (quotes, input, position, index) {
+
+
+  for (let key in quotes) {
+    if (input[index] == quotes[key].symbol && input[index - 1] !== '\\') {
+      quotes[key].count[position]++;
+    }
+  }
+
+  return quotes;
 };
 
 /**
@@ -80,7 +90,7 @@ let qouteAnalize = function (input, index) {
  * @returns {Boolean} Returns true if index in input is between text or comment else no.
  */
 exports.isPartOfCode = function (input, index) {
-  let quotes = qouteAnalize(input, index);
+  let quotes = quoteAnalize(input, index);
 
   let currentSymbol = input[index];
 
@@ -100,31 +110,42 @@ exports.isPartOfCode = function (input, index) {
   }
 
   //check if the symbol was <text quote>
-  for (let i = 1; i < quotes.length; i++) {
-    if (currentSymbol == quotes[i].symbol) {
-      if ((quotes[i].isOpen.after && !quotes[i].isOpen.before) || (quotes[i].isOpen.after || !quotes[i].isOpen.before)) {
-        return true;
-      }
+  if (currentSymbol == quotes.single.symbol) {
+    if (quotes.double.isOpen.after && quotes.double.isOpen.before) {
+      return false;
+    }
+
+    if ((quotes.single.isOpen.after && !quotes.single.isOpen.before) || (quotes.es6.isOpen.before && !quotes.single.isOpen.after)) {
+      return true;
+    }
+  } else if (currentSymbol == quotes.double.symbol) {
+    if (quotes.es6.isOpen.after && quotes.es6.isOpen.before) {
+      return false;
+    }
+
+    if ((quotes.double.isOpen.after && !quotes.double.isOpen.before) || (quotes.es6.isOpen.before && !quotes.double.isOpen.after)) {
+      return true;
     }
   }
 
-  if (currentSymbol == quotes[0].symbol) {
-    return !quotes[1].isOpen.before || (quotes[1].isOpen.before && !quotes[1].isOpen.after);
+
+  if (currentSymbol == quotes.es6.symbol) {
+    return !quotes.single.isOpen.before || (quotes.single.isOpen.before && !quotes.single.isOpen.after);
   }
 
   if (currentSymbol == quotationMarks.begin) {
-    return input.lastIndexOf(quotes[0].symbol, index - 1) == -1;
+    return input.lastIndexOf(quotes.es6.symbol, index - 1) == -1;
   } else if (currentSymbol == quotationMarks.end) {
-    return input.lastIndexOf(quotes[0].symbol, index - 1) != -1 && !quotes[0].isOpen.after;
+    return input.lastIndexOf(quotes.es6.symbol, index - 1) != -1 && !quotes.es6.isOpen.after;
   }
 
-  for (var i = 0; i < quotes.length; i++) {
-    if (quotes[i].isOpen.before) {
-      break;
+  for (let key in quotes) {
+    if (quotes[key].isOpen.before) {
+      return false;
     }
   }
 
-  return i == quotes.length;
+  return true;
 };
 
 /**

@@ -1,7 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
+    title: 'empty'
   }]
 }, {
   group: 'hy',
@@ -58,9 +58,143 @@ module.exports = [{
         code: 'տպել "«տեքստ»"',
         output: '«տեքստ»'
       }, {
-        title: '«text\'»',
-        code: 'տպել «տեքստ\'»',
-        output: 'տեքստ\''
+        group: 'inner scopes',
+        sources: [{
+          group: '«inner scopes»',
+          sources: [{
+            group: 'single scope',
+            sources: [{
+              title: '«text_1 \'text_2»',
+              code: 'տպել «text_1 \'text_2»',
+              output: 'text_1 \'text_2'
+            }, {
+              title: '«text_1 "text_2»',
+              code: 'տպել «text_1 "text_2»',
+              output: 'text_1 "text_2'
+            }, {
+              title: '«text_1 \\»text_2»',
+              code: 'տպել «text_1 \\»text_2»',
+              output: 'text_1 »text_2'
+            }, {
+              title: '«text_1 \\«text_2»',
+              code: 'տպել «text_1 \\«text_2»',
+              output: 'text_1 «text_2'
+            }]
+          },{
+            group: 'double scope',
+            sources: [{
+              title: '«text_1 \'text_2\' text_3»',
+              code: 'տպել «text_1 \'text_2\' text_3»',
+              output: 'text_1 \'text_2\' text_3'
+            }, {
+              title: '«text_1 "text_2" text_3»',
+              code: 'տպել «text_1 "text_2" text_3»',
+              output: 'text_1 "text_2" text_3'
+            }, {
+              title: '«text_1 \\»text_2\\» text_3»',
+              code: 'տպել «text_1 \\»text_2\\» text_3»',
+              output: 'text_1 »text_2» text_3'
+            }, {
+              title: '«text_1 \\«text_2\\« text_3»',
+              code: 'տպել «text_1 \\«text_2\\« text_3»',
+              output: 'text_1 «text_2« text_3'
+            }, {
+              title: '«text_1 \\«text_2\\» text_3»',
+              code: 'տպել «text_1 \\«text_2\\» text_3»',
+              output: 'text_1 «text_2» text_3'
+            }]
+          }]
+        },{
+          group: '"inner scopes"',
+          sources: [{
+            group: 'single scope',
+            sources: [{
+              title: '"text_1 \'text_2"',
+              code: 'տպել "text_1 \'text_2"',
+              output: 'text_1 \'text_2'
+            }, {
+              title: '"text_1 \\"text_2"',
+              code: 'տպել "text_1 \\"text_2"',
+              output: 'text_1 "text_2'
+            }, {
+              title: '"text_1 »text_2"',
+              code: 'տպել "text_1 »text_2"',
+              output: 'text_1 »text_2'
+            }, {
+              title: '"text_1 «text_2"',
+              code: 'տպել "text_1 «text_2"',
+              output: 'text_1 «text_2'
+            }]
+          },{
+            group: 'double scope',
+            sources: [{
+              title: '"text_1 \'text_2\' text_3"',
+              code: 'տպել "text_1 \'text_2\' text_3"',
+              output: 'text_1 \'text_2\' text_3'
+            }, {
+              title: '"text_1 \\"text_2\\" text_3"',
+              code: 'տպել "text_1 \\"text_2\\" text_3"',
+              output: 'text_1 "text_2" text_3'
+            }, {
+              title: '"text_1 »text_2» text_3"',
+              code: 'տպել "text_1 »text_2» text_3"',
+              output: 'text_1 »text_2» text_3'
+            }, {
+              title: '"text_1 «text_2« text_3"',
+              code: 'տպել "text_1 «text_2« text_3"',
+              output: 'text_1 «text_2« text_3'
+            }, {
+              title: '"text_1 «text_2» text_3"',
+              code: 'տպել "text_1 «text_2» text_3"',
+              output: 'text_1 «text_2» text_3'
+            }]
+          }]
+        },{
+          group: '\'inner scopes\'',
+          sources: [{
+            group: 'single scope',
+            sources: [{
+              title: '\'text_1 \\\'text_2\'',
+              code: 'տպել \'text_1 \\\'text_2\'',
+              output: 'text_1 \'text_2'
+            }, {
+              title: '\'text_1 "text_2\'',
+              code: 'տպել \'text_1 \\"text_2\'',
+              output: 'text_1 "text_2'
+            }, {
+              title: '\'text_1 »text_2\'',
+              code: 'տպել \'text_1 »text_2\'',
+              output: 'text_1 »text_2'
+            }, {
+              title: '\'text_1 «text_2\'',
+              code: 'տպել \'text_1 «text_2\'',
+              output: 'text_1 «text_2'
+            }]
+          },{
+            group: 'double scope',
+            sources: [{
+              title: '\'text_1 \\\'text_2\\\' text_3\'',
+              code: 'տպել \'text_1 \\\'text_2\\\' text_3\'',
+              output: 'text_1 \'text_2\' text_3'
+            }, {
+              title: '\'text_1 "text_2" text_3\'',
+              code: 'տպել \'text_1 "text_2" text_3\'',
+              output: 'text_1 "text_2" text_3'
+            }, {
+              title: '\'text_1 »text_2» text_3\'',
+              code: 'տպել \'text_1 »text_2» text_3\'',
+              output: 'text_1 »text_2» text_3'
+            }, {
+              title: '\'text_1 «text_2« text_3\'',
+              code: 'տպել \'text_1 «text_2« text_3\'',
+              output: 'text_1 «text_2« text_3'
+            }, {
+              title: '\'text_1 «text_2» text_3\'',
+              code: 'տպել \'text_1 «text_2» text_3\'',
+              output: 'text_1 «text_2» text_3'
+            }]
+          }]
+        }]
       }]
     }]
   }, {

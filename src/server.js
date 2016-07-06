@@ -49,7 +49,7 @@ if (env == 'production' && isCertFilesExist) {
   server = https.createServer(credentials, app);
 
   server.listen(port, function () {
-    console.llog(`Server: https://localhost:${port} is listen.`);
+    console.log(`Server: https://localhost:${port} is listen.`);
   });
 } else {
   let http = require('http');
@@ -65,11 +65,9 @@ __io.attach(server);
 server.on('listening', onListening);
 
 function onListening() {
-  let addr = server.address();
-  let bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  console.llog('Listening on ' + bind);
+  let address = server.address();
+  let fullAddress = 'port ' + address.port;
+  console.llog('Listening on ' + fullAddress);
 }
 
 module.exports = server;
