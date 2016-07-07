@@ -31,7 +31,7 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
   for (let i = 0; i < listOfLevels.length; i++) {
     let parent = components.parent(listOfCommands, listOfLevels, i);
     let _toCompile;
-    if (i < listOfLevels.length - 1 && parent) {
+    if (i < listOfLevels.length - 1 && parent !== false) {
       if (toCompileIndexStart !== parent.index.previous) {
         _toCompile = components.toCompile(sessionId, listOfCommands, variables, toCompileIndexStart, parent.index.previous);
       } else {
@@ -53,10 +53,14 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
       i += conditionResult.countOfCommands;
       toCompileIndexStart = i + 1;
     } else if (i >= listOfLevels.length - 1) {
-      parentOfParents.push({
-        toCompile: coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
-      });
-    }
+      if (parentOfParents.length && parentOfParents[parentOfParents.length - 1].parent) {
+        parentOfParents[parentOfParents.length - 1].toCompile = coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
+      } else {
+        parentOfParents.push({
+          toCompile: coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
+        });
+      }
+     }
   }
 
   console.llog('builder: buildRecursion', 'end');
@@ -64,7 +68,7 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
 };
 
 exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
-  console.llog('builder: nextParentIndexInitialize', 'begin');
+  console.llog('builder: nextParentIndexInitialize');
 
   let indexOfNext = listOfLevels.indexOf(listOfLevels[currentIndex], currentIndex + 1);
   let isNextParentExist = indexOfNext != -1;
@@ -72,7 +76,6 @@ exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
     indexOfNext = listOfLevels.length;
   }
 
-  console.llog('builder: nextParentIndexInitialize', 'end');
   return {
     value: indexOfNext,
     isNextParentExist: isNextParentExist

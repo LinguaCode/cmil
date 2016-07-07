@@ -17,7 +17,7 @@ exports.nameOfProperty = function (sessionId) {
 exports.variables = function (sessionId) {
   return __store[sessionId].variables;
 };
-
+ 
 let path = require('../path');
 
 exports.structure = require('./structure');
