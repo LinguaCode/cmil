@@ -44,11 +44,11 @@ exports.object = function (sessionId) {
   return _.get(current(sessionId), path.location(sessionId));
 };
 
-exports.firstKeyOfObject = function (sessionId) {
+exports.keysOfObject = function (sessionId) {
   let thisElement = this.object(sessionId);
-  let keysOfThisElement = Object.keys(thisElement);
+  let keysOfObject = Object.keys(thisElement);
 
-  return keysOfThisElement[0];
+  return keysOfObject;
 };
 
 let path = require('../path');

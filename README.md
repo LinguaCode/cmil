@@ -9,17 +9,17 @@
 [![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
 [![Beerpay](https://img.shields.io/beerpay/LinguaCode/linguacode-api.svg?maxAge=2592000?style=flat-square)](https://beerpay.io/LinguaCode/linguacode-api)
 
-### Description
+# LinguaCode - multilingual programming language
 **LinguaCode** is a social coding platform and is designed especially for children, where they can learn programming and share their codes with their native language and without the necessity of knowing English.
 
 Due to our solution children can not only get acquainted and study the basic elements of programming, but can also easily pass to professional programming languages. Knowing English is very important, but a language must not be a barrier for learning programming. 
 
 With LinguaCode one can not only study programming, but also learn languages.
 
-### Preparation
-#### Get started
-`npm install`
+## How to make contributions?
+Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/LinguaCode/linguacode-api/blob/master/CONTRIBUTING.md).
 
+## How to get started ?
 #### Start
 `npm start`
 
@@ -32,6 +32,9 @@ npm install instanbul -g
 npm run coverage
 ```
 
-### Screenshot
+## Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
+
+## Changelog
+Please read changelog in the [CHANGELOG.md](https://github.com/LinguaCode/linguacode-api/blob/master/CHANGELOG.md).

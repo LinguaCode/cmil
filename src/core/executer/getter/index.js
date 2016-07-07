@@ -9,7 +9,7 @@ module.exports = {
   //values
   object: value.structure.object,
   operations: value.structure.operations,
-  firstKeyOfObject: value.structure.firstKeyOfObject,
+  keysOfObject: value.structure.keysOfObject,
   limitOfArray: value.structure.limit,
   inputVariable: value.structure.inputVariable,
 

@@ -38,7 +38,8 @@ exports.toCompile = function (sessionId, inputValue) {
   if (evaluated.result) {
     console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
-    console.llog('compiler: Socket.IO: server: output text has been successfully send! (ping)');
+    //trig if there no any
+    console.llog('compiler: Socket.IO: server: there is nothing to output (ping: toCompile)');
   }
 
   controllers.controller(sessionId);
@@ -50,12 +51,14 @@ exports.child = function (sessionId) {
   console.llog('compiler: child', 'begin');
 
   if (checker.needToUpgrade(sessionId)) {
-    let firsKeyOfObject = getter.firstKeyOfObject(sessionId);
+    let keysOfObject = getter.keysOfObject(sessionId);
 
-    let sessionContinue = upgrader(sessionId, firsKeyOfObject);
-    if (sessionContinue === false) {
-      console.llog('compiler: child', 'end');
-      return false;
+    for(let i = 0; i < keysOfObject.length; i++) {
+      let sessionContinue = upgrader(sessionId, keysOfObject[i]);
+      if (sessionContinue === false) {
+        console.llog('compiler: child', 'end');
+        return false;
+      }
     }
   }
 
@@ -93,7 +96,7 @@ exports.parent = function (sessionId, isPassedBefore) {
 
     if (!checker.session.ended(sessionId)) {
 
-      if (getter.nameOfProperty(sessionId) == 'parent') {
+      if (getter.nameOfProperty(sessionId) == 'parent')   {
         this.parent(sessionId);
       }
     }
