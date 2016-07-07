@@ -1,7 +1,9 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'
+    title: 'empty',
+    code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a > 5',
+    output: '0'
   }]
 }, {
   group: 'hy',
@@ -500,7 +502,7 @@ module.exports = [{
         title: '0 attempts',
         code: 'կրկնել 0 անգամ\n    տպել "a"'
       }, {
-        title: '1 attempts',
+        title: '1 attempt',
         code: 'կրկնել 1 անգամ\n    տպել "a"',
         output: 'a'
       }, {
