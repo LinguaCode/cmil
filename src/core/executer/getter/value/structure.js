@@ -46,7 +46,13 @@ exports.object = function (sessionId) {
 
 exports.keysOfObject = function (sessionId) {
   let thisElement = this.object(sessionId);
-  let keysOfObject = Object.keys(thisElement);
+  let keysOfObject = [];
+  let keys = ['toCompile', 'parent'];
+  keys.forEach(function (key) {
+    if (thisElement.hasOwnProperty(key)) {
+      keysOfObject.push(key);
+    }
+  });
 
   return keysOfObject;
 };
