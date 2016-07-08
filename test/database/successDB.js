@@ -1,9 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
-    code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a > 5',
-    output: '0'
+    title: 'empty'
   }]
 }, {
   group: 'hy',
