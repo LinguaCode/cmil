@@ -18,10 +18,12 @@ exports.structure = function (sessionId, sourceCode) {
 };
 
 exports.session = function (sessionId) {
+  console.llog('compiler: initialize: session');
   eval(database.languages.linguacode(sessionId).initialize);
 };
 
 exports.condition = function (conditionIdentifier) {
+  console.llog('compiler: initialize: condition');
   _.set(global, conditionIdentifier, undefined);
 };
 
