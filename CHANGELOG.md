@@ -4,12 +4,12 @@
   - **[status]** coverage: development: 99.5%.
   - **[status]** code climate: 4.
 
-## 0.2.4 (upcoming)
+## 0.2.4 (2016-07-07)
 
   - **[added]** tests: 26 (total 122).
   - **[optimize]** readme: include paths of CONTRIBUTING.md, CHANGELOG.md.
   - **[fix]** inner quote symbol detect fix: ", «, ».
-  - **[status]** coverage: development: 99.26%, production: 97.782%%.
+  - **[status]** coverage: development: 99.26%, production: 97.782%.
   - **[status]** code climate: 3.64.
 
 ## 0.2.3 (2016-07-06)

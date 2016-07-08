@@ -45,11 +45,7 @@ let controller = {
     let currentParentObject = getter.object(sessionId);
     let nameOfProperty = getter.nameOfProperty(sessionId);
 
-    if (currentParentObject.hasOwnProperty('toCompile') && parentObject == 'toCompile') {
-      if (currentParentObject.hasOwnProperty('parent')) {
-        upgrader(sessionId, 'parent');
-      }
-    } else if (nameOfProperty == 'child') {
+    if (nameOfProperty == 'child') {
       //execute after passing if-else
       let newNameOfProperty = getter.nameOfProperty(sessionId);
       if (newNameOfProperty == 'child' && parentObject == 'child') {
