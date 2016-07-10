@@ -4,9 +4,8 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
   console.llog('builder: splitToCompilableParts');
   
   sourceCode = sourceCode.join('\n');
-  let labelOfSessionObject = sessionId + '.';
   let toCompiles = [];
-  let reInput = new RegExp(commands.input + '\\s+(' + labelOfSessionObject + '(' + variables.join('|') + '))', 'g');
+  let reInput = new RegExp(commands.input + '\\s+(' + sessionId + '.(' + variables.join('|') + '))', 'g');
   let indexOfOperationBegin, indexOfOperationEnd;
   let reInputStrOld, reInputStrNew;
   let operations, inputVariable;
