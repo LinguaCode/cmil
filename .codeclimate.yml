@@ -12,10 +12,13 @@ engines:
         - 4249a5ae65bc75eeb58b058691005cc4
         - a7be63e8544cd32d57a8d62c83ca5c57
         - 45ea807e751a32a9d90799e2761eff1d
+        - 59676db13d93f4957bb3dc72e2068eee
   eslint:
     enabled: true
     checks:
       linebreak-style:
+        enabled: false
+      guard-for-in:
         enabled: false
   fixme:
     enabled: true
