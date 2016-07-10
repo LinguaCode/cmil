@@ -1,10 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
-    code: 'գրել X\nկրկնել 5 անգամ\n    տպել X',
-    inputs: ['a'],
-    output: 'a\na\na\na\na'
+    title: 'empty'
   }]
 }, {
   group: 'hy',
@@ -511,10 +508,15 @@ module.exports = [{
         code: 'կրկնել 5 անգամ\n    տպել "a"',
         output: 'a\na\na\na\na'
       }, {
-        title: 'input; repeat',
-        code: 'գրել X\nկրկնել 5 անգամ\n    տպել X',
+        title: 'input; repeat 2x',
+        code: 'գրել X\nկրկնել 2 անգամ\n    տպել X',
         inputs: ['a'],
-        output: 'a\na\na\na\na'
+        output: 'a\na'
+      }, {
+        title: 'repeat 2x; input; output',
+        code: 'կրկնել 2 անգամ\n    տպել "a"\nգրել X\nտպել X',
+        inputs: ['X'],
+        output: 'a\na\nX'
       }, {
         group: 'recursively: 1 level: repeat',
         sources: [{

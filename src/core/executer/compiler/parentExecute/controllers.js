@@ -1,12 +1,14 @@
 let controller = {
   manage: function (sessionId) {
     console.llog('compiler: controller', 'begin');
+    console.llog(__store[sessionId].pathOfLocation);
 
-    let parentObject = controller.oscillation(sessionId);
-    if (parentObject) {
-      controller.directive(sessionId, parentObject);
+    let exKey = controller.oscillation(sessionId);
+    if (exKey) {
+      controller.directive(sessionId, exKey);
     }
 
+    console.llog(__store[sessionId].pathOfLocation);
     console.llog('compiler: controller', 'end');
   },
   oscillation: function (sessionId) {
@@ -14,7 +16,7 @@ let controller = {
 
     let management = require('../management');
 
-    let parentObject = getter.nameOfProperty(sessionId);
+    let exKey = getter.nameOfProperty(sessionId);
 
     setter.indexIncrement(sessionId);
 
@@ -37,35 +39,40 @@ let controller = {
       }
     }
 
-    return parentObject;
+    return exKey;
   },
 
-  directive: function (sessionId, parentObject) {
+  directive: function (sessionId, exKey) {
     console.llog('compiler: directive', 'begin');
 
     let currentParentObject = getter.object(sessionId);
     let nameOfProperty = getter.nameOfProperty(sessionId);
 
-    if (nameOfProperty == 'child') {
+
+    if (nameOfProperty == 'child' && exKey == 'child') {
+      //child[N++]
+
+      let status;
       //execute after passing if-else
-      let newNameOfProperty = getter.nameOfProperty(sessionId);
-      if (newNameOfProperty == 'child' && parentObject == 'child') {
-        if (currentParentObject.hasOwnProperty('parent')) {
-          upgrade(sessionId, 'parent');
-        }
-
-        let status = this.oscillation(sessionId);
-        if (status === false) {
-          console.llog('compiler: directive', 'end');
-          return false;
-        }
-
+      if (currentParentObject.hasOwnProperty('parent')) {
         upgrade(sessionId, 'parent');
-        controller.manage(sessionId);
       }
-    }
 
-    console.llog('compiler: directive', 'end');
+      if (currentParentObject.hasOwnProperty('toCompile')) {
+        status = upgrade(sessionId, 'toCompile');
+      }
+
+      if (status === false) {
+        console.llog('compiler: directive', 'end');
+        return false;
+      }
+
+      controller.manage(sessionId);
+    }/* else  if (nameOfProperty == 'parent' && exKey == 'child') {
+      this.oscillation(sessionId);
+    }*/
+
+      console.llog('compiler: directive', 'end');
   }
 };
 

@@ -22,13 +22,7 @@ exports.listener = function (sessionId, input) {
   setter.sessionTime(sessionId);
   setter.input(sessionId, input);
 
-
   parentExecute.positions.toCompile(sessionId);
-
-  let keysOfObject = getter.keysOfObject(sessionId);
-  if (keysOfObject.indexOf('parent') !== -1) {
-    parentExecute.controllers.upgrade(sessionId, 'parent');
-  }
 
   if (getter.nameOfProperty(sessionId) == 'child') {
     parentExecute.controllers.controller(sessionId);
@@ -39,7 +33,7 @@ exports.listener = function (sessionId, input) {
 
 let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
-let getter = require('../../getter');
 let setter = require('../../setter');
+let getter = require('../../getter');
 
 exports.session = require('./session');
