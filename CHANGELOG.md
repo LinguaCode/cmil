@@ -1,12 +1,23 @@
-## 0.2.5 (upcoming)
+## 0.2.6 (upcoming)
 
-  - **[added]** total: up to 150 and more.
+  - **[add]** total tests: up to 150 and more.
+  - **[add]** output data collector.
   - **[status]** coverage: development: 99.5%.
   - **[status]** code climate: 4.
 
+## 0.2.5 (2016-07-11)
+
+  - **[add]** tests: 26 (total 124).
+  - **[optimize]** compiler algorithm.
+  - **[fix]** builder;
+  - **[fix]** input; repeat;
+  - **[status]** coverage: development: 99.26%, production: 97.794%.
+  - **[status]** code climate: 3.97.
+
+
 ## 0.2.4 (2016-07-07)
 
-  - **[added]** tests: 26 (total 122).
+  - **[add]** tests: 26 (total 122).
   - **[optimize]** readme: include paths of CONTRIBUTING.md, CHANGELOG.md.
   - **[fix]** inner quote symbol detect fix: ", «, ».
   - **[status]** coverage: development: 99.26%, production: 97.782%.
@@ -14,26 +25,26 @@
 
 ## 0.2.3 (2016-07-06)
 
-  - **[added]** tests: 2 (total 96).
-  - **[added]** module: moment.
-  - **[added]** code compile timeout.
+  - **[add]** tests: 2 (total 96).
+  - **[add]** module: moment.
+  - **[add]** code compile timeout.
   - **[status]** coverage: development: 99.26%, production: 97.76%.
   - **[status]** code climate: 3.67.
 
 ## 0.2.2 (2016-07-05)
 
-  - **[added]** tests: 39 (total 94).
-  - **[added]** documentation:CONTRIBUTING.md
-  - **[added]** module: linguacode-logger.
-  - **[added]** tool: snyk.
-  - **[added]** tool: travis.
-  - **[added]** tool: coveralls.
-  - **[added]** tool: code climate.
-  - **[added]** tool: david: dependencies checker.
-  - **[added]** tool: david: devDependencies checker.
-  - **[added]** badge: Gratipay.
-  - **[added]** badge: Beerpay.
-  - **[added]** badge: license GPLv3.
+  - **[add]** tests: 39 (total 94).
+  - **[add]** documentation:CONTRIBUTING.md
+  - **[add]** module: linguacode-logger.
+  - **[add]** tool: snyk.
+  - **[add]** tool: travis.
+  - **[add]** tool: coveralls.
+  - **[add]** tool: code climate.
+  - **[add]** tool: david: dependencies checker.
+  - **[add]** tool: david: devDependencies checker.
+  - **[add]** badge: Gratipay.
+  - **[add]** badge: Beerpay.
+  - **[add]** badge: license GPLv3.
   - **[optimize]** useless module remove from package.json file.
   - **[optimize]** ES6: 'var' to 'let' and 'const' convert.
   - **[optimize]** refactorings.
