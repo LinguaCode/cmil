@@ -7,7 +7,7 @@
 
 ## 0.2.5 (2016-07-11)
 
-  - **[add]** tests: 26 (total 124).
+  - **[add]** tests: 2 (total 124).
   - **[optimize]** compiler algorithm.
   - **[fix]** builder;
   - **[fix]** input; repeat;
