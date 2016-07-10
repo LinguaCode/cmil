@@ -13,7 +13,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
 
   reInputStrOld = reInput.exec(sourceCode);
 
-  if (reInputStrOld === null || reInputStrOld.index != 0) {
+  if (reInputStrOld === null || reInputStrOld.index !== 0) {
     indexOfOperationBegin = 0;
     indexOfOperationEnd = reInputStrOld === null ? sourceCode.length : reInputStrOld.index;
     operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
