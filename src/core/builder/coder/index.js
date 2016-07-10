@@ -20,7 +20,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
     toCompile.operations = _.compact(operations.split('\n'));
 
-    if (toCompile != {}) {
+    if (toCompile !== {}) {
       toCompiles.push(_.cloneDeep(toCompile));
     }
   }
@@ -29,9 +29,9 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     indexOfOperationBegin = reInputStrOld.index + reInputStrOld[0].length;
 
     reInputStrNew = reInput.exec(sourceCode);
-    indexOfOperationEnd = reInputStrNew != null ? reInputStrNew.index : sourceCode.length;
+    indexOfOperationEnd = reInputStrNew !== null ? reInputStrNew.index : sourceCode.length;
 
-    inputVariable = reInputStrOld != null ? reInputStrOld[1] : '';
+    inputVariable = reInputStrOld !== null ? reInputStrOld[1] : '';
 
     operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
     operations = tools.trim(operations);
@@ -48,7 +48,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     }
 
     //===toCompiles===
-    if (toCompile != {}) {
+    if (toCompile !== {}) {
       toCompiles.push(_.cloneDeep(toCompile));
     }
     if (reInputStrNew) {
