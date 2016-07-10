@@ -68,11 +68,9 @@ let controller = {
       }
 
       controller.manage(sessionId);
-    }/* else  if (nameOfProperty == 'parent' && exKey == 'child') {
-      this.oscillation(sessionId);
-    }*/
+    }
 
-      console.llog('compiler: directive', 'end');
+    console.llog('compiler: directive', 'end');
   }
 };
 
