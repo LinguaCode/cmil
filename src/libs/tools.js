@@ -57,8 +57,8 @@ let quoteAnalize = function (input, index) {
   for (let key in quotes) {
     let count = quotes[key].count;
     quotes[key].isOpen = {
-      before: count.before % 2 == 1,
-      after: count.after % 2 == 1
+      before: count.before % 2 === 1,
+      after: count.after % 2 === 1
     };
 
     delete quotes[key].count;
@@ -72,7 +72,7 @@ let counter = function (quotes, input, position, index) {
 
 
   for (let key in quotes) {
-    if (input[index] == quotes[key].symbol && input[index - 1] !== '\\') {
+    if (input[index] === quotes[key].symbol && input[index - 1] !== '\\') {
       quotes[key].count[position]++;
     }
   }
@@ -110,7 +110,7 @@ exports.isPartOfCode = function (input, index) {
   }
 
   //check if the symbol was <text quote>
-  if (currentSymbol == quotes.single.symbol) {
+  if (currentSymbol === quotes.single.symbol) {
     if (quotes.double.isOpen.after && quotes.double.isOpen.before) {
       return false;
     }
@@ -118,7 +118,7 @@ exports.isPartOfCode = function (input, index) {
     if ((quotes.single.isOpen.after && !quotes.single.isOpen.before) || (quotes.es6.isOpen.before && !quotes.single.isOpen.after)) {
       return true;
     }
-  } else if (currentSymbol == quotes.double.symbol) {
+  } else if (currentSymbol === quotes.double.symbol) {
     if (quotes.es6.isOpen.after && quotes.es6.isOpen.before) {
       return false;
     }
@@ -129,14 +129,14 @@ exports.isPartOfCode = function (input, index) {
   }
 
 
-  if (currentSymbol == quotes.es6.symbol) {
+  if (currentSymbol === quotes.es6.symbol) {
     return !quotes.single.isOpen.before || (quotes.single.isOpen.before && !quotes.single.isOpen.after);
   }
 
-  if (currentSymbol == quotationMarks.begin) {
-    return input.lastIndexOf(quotes.es6.symbol, index - 1) == -1;
-  } else if (currentSymbol == quotationMarks.end) {
-    return input.lastIndexOf(quotes.es6.symbol, index - 1) != -1 && !quotes.es6.isOpen.after;
+  if (currentSymbol === quotationMarks.begin) {
+    return input.lastIndexOf(quotes.es6.symbol, index - 1) === -1;
+  } else if (currentSymbol === quotationMarks.end) {
+    return input.lastIndexOf(quotes.es6.symbol, index - 1) !== -1 && !quotes.es6.isOpen.after;
   }
 
   for (let key in quotes) {
@@ -169,7 +169,7 @@ exports.codeDepthLevels = {
     let spaces, level;
     spaces = 0;
     for (let i = 0; i < str.length; i++) {
-      if (str[i] != ' ') {
+      if (str[i] !== ' ') {
         break;
       }
       spaces++;
@@ -185,7 +185,7 @@ exports.codeDepthLevels = {
     let levels = [];
     for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
       levelsTemp = this.line(listOfCommands[i]);
-      if (levelsTemp != -1) {
+      if (levelsTemp !== -1) {
         levels.push(levelsTemp);
       }
 

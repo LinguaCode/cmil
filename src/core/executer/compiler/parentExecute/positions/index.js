@@ -60,7 +60,7 @@ exports.toCompile = function (sessionId) {
   }
 
   controllers.controller(sessionId);
-  
+
   console.llog('compiler: toCompile', 'end');
 };
 
@@ -77,7 +77,7 @@ exports.child = function (sessionId) {
     }
   }
 
-  if (getter.nameOfProperty(sessionId) =='child') {
+  if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
   }
 
@@ -92,15 +92,12 @@ exports.parent = function (sessionId, isPassedBefore) {
   let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
-  
+
   if (isConditionStatementPassed && !isPassedBefore) {
     upgrade(sessionId, 'child');
 
-    if (getter.nameOfProperty(sessionId) == 'child') {
-      controllers.controller(sessionId);
-    } else {
-      setter.downgrade(sessionId);
-    }
+    setter.downgrade(sessionId);
+    
   } else if (isNotConditionStatementPassed || isPassedBefore) {
     controllers.controller(sessionId);
     if (getter.nameOfProperty(sessionId) == 'parent') {
