@@ -3,7 +3,8 @@ exports._get = function (sourceCode) {
   let regStr;
   let regExpArr = [
     /[<>\-\(\+=\*\/%\s]([^\d\u00AB\u00BB\(\)%+\-\*\/=#"'><\s!][^\u00AB\u00BB\(\)%+\-\*\/=#'"\s]*)[\-+=\*\/%\s><\)!]/g,
-    /[<>\-\(\+=\*\/%\s]([^\d\u00AB\u00BB\(\)%+\-\*\/=#"'><\s!][^\u00AB\u00BB\(\)%+\-\*\/=#'"\s]*)$/g];
+    /[<>\-\(\+=\*\/%\s]([^\d\u00AB\u00BB\(\)%+\-\*\/=#"'><\s!][^\u00AB\u00BB\(\)%+\-\*\/=#'"\s]*)$/g
+  ];
 
   regExpArr.forEach(function (regExp) {
     while ((regStr = regExp.exec(sourceCode)) !== null) { //in line
@@ -35,7 +36,7 @@ exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariable
       }
     }
   }
-  
+
   let cutedTail = tail.cut(codeTailed);
 
   console.llog('builder: variablesToObjectChild', 'end');

@@ -44,17 +44,11 @@ exports.object = function (sessionId) {
   return _.get(current(sessionId), path.location(sessionId));
 };
 
-exports.keysOfObject = function (sessionId) {
+exports.firstKeyOfObject = function (sessionId) {
   let thisElement = this.object(sessionId);
-  let keysOfObject = [];
-  let keys = ['toCompile', 'parent'];
-  keys.forEach(function (key) {
-    if (thisElement.hasOwnProperty(key)) {
-      keysOfObject.push(key);
-    }
-  });
+  let keys = Object.keys(thisElement);
 
-  return keysOfObject;
+  return keys[0];
 };
 
 let path = require('../path');

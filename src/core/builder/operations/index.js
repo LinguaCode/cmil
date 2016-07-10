@@ -29,38 +29,32 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
   let parentOfParents = [];
 
   for (let i = 0; i < listOfLevels.length; i++) {
-    let parent = components.parent(listOfCommands, listOfLevels, i);
-    let _toCompile;
-    if (i < listOfLevels.length - 1 && parent !== false) {
-      if (toCompileIndexStart !== parent.index.previous) {
-        _toCompile = components.toCompile(sessionId, listOfCommands, variables, toCompileIndexStart, parent.index.previous);
+    let _parent = components.parent(listOfCommands, listOfLevels, i);
+    let toCompile;
+    if (i < listOfLevels.length - 1 && _parent !== false) {
+      if (toCompileIndexStart !== _parent.index.previous) {
+        toCompile = components.toCompile(sessionId, listOfCommands, variables, toCompileIndexStart, _parent.index.previous);
       } else {
-        _toCompile = [];
+        toCompile = [];
       }
 
-      let conditionType = parent.conditions.type.previous.substring(1);
-      let conditionResult = conditions.conditionals['_' + conditionType](sessionId, listOfCommands, listOfLevels, parent, variables);
-      let _parent = conditionResult.child;
-
-      let parentOfParent = {};
-      if (_toCompile.length != 0) {
-        parentOfParent.toCompile = _toCompile;
+      let conditionType = _parent.conditions.type.previous.substring(1);
+      let conditionResult = conditions.conditionals['_' + conditionType](sessionId, listOfCommands, listOfLevels, _parent, variables);
+      let parent = conditionResult.child;
+      
+      if (toCompile.length != 0) {
+        parentOfParents.push({toCompile: toCompile});
       }
-      parentOfParent.parent = _parent;
 
-      parentOfParents.push(parentOfParent);
+      parentOfParents.push({parent: parent});
 
       i += conditionResult.countOfCommands;
       toCompileIndexStart = i + 1;
     } else if (i >= listOfLevels.length - 1) {
-      if (parentOfParents.length && parentOfParents[parentOfParents.length - 1].parent) {
-        parentOfParents[parentOfParents.length - 1].toCompile = coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
-      } else {
-        parentOfParents.push({
-          toCompile: coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
-        });
-      }
-     }
+      parentOfParents.push({
+        toCompile: coder.splitToCompilableParts(sessionId, listOfCommands.slice(toCompileIndexStart), variables)
+      });
+    }
   }
 
   console.llog('builder: buildRecursion', 'end');

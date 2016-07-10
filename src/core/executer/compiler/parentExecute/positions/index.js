@@ -60,7 +60,7 @@ exports.toCompile = function (sessionId) {
   }
 
   controllers.controller(sessionId);
-
+  
   console.llog('compiler: toCompile', 'end');
 };
 
@@ -68,18 +68,16 @@ exports.child = function (sessionId) {
   console.llog('compiler: child', 'begin');
 
   if (checker.needToUpgrade(sessionId)) {
-    let keysOfObject = getter.keysOfObject(sessionId);
+    let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
 
-    for(let i = 0; i < keysOfObject.length; i++) {
-      let sessionContinue = upgrade(sessionId, keysOfObject[i]);
-      if (sessionContinue === false) {
-        console.llog('compiler: child', 'end');
-        return false;
-      }
+    let sessionContinue = upgrade(sessionId, firstKeyOfObject);
+    if (sessionContinue === false) {
+      console.llog('compiler: child', 'end');
+      return false;
     }
   }
 
-  if (getter.nameOfProperty(sessionId) == 'child') {
+  if (getter.nameOfProperty(sessionId) =='child') {
     controllers.controller(sessionId);
   }
 
@@ -94,17 +92,22 @@ exports.parent = function (sessionId, isPassedBefore) {
   let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
-
+  
   if (isConditionStatementPassed && !isPassedBefore) {
     upgrade(sessionId, 'child');
 
-    setter.downgrade(sessionId);
+    if (getter.nameOfProperty(sessionId) == 'child') {
+      controllers.controller(sessionId);
+    } else {
+      setter.downgrade(sessionId);
+    }
   } else if (isNotConditionStatementPassed || isPassedBefore) {
     controllers.controller(sessionId);
     if (getter.nameOfProperty(sessionId) == 'parent') {
       this.parent(sessionId);
     }
   } else if (isParentAllow) {
+
     let statusOfPassing = upgrade(sessionId, 'child');
     if (statusOfPassing === false) {
       console.llog('compiler: parent', 'end');
@@ -113,7 +116,7 @@ exports.parent = function (sessionId, isPassedBefore) {
 
     if (!checker.session.ended(sessionId)) {
 
-      if (getter.nameOfProperty(sessionId) == 'parent')   {
+      if (getter.nameOfProperty(sessionId) == 'parent') {
         this.parent(sessionId);
       }
     }
