@@ -4,11 +4,11 @@ exports.needToUpgrade = function (sessionId) {
   return !isArrayEnded && !isArrayEmpty;
 };
 
-exports.needToInput = function (sessionId, typeOfObject) {
+exports.needToInput = function (sessionId) {
   let currentToCompileObject = getter.object(sessionId);
-  let isToCompile = typeOfObject == 'toCompile';
+
   let hasInputVariableProperty = currentToCompileObject ? currentToCompileObject.hasOwnProperty('inputVariable') : false;
-  return isToCompile && hasInputVariableProperty;
+  return hasInputVariableProperty;
 };
 
 exports.array = require('./array');

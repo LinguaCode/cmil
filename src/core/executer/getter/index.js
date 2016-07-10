@@ -20,6 +20,7 @@ module.exports = {
   nameOfProperty: value.nameOfProperty,
   index: value.index,
   variables: value.variables,
+  input: value.input,
 
   sessionTime: value.session.time
 };

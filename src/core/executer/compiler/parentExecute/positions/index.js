@@ -1,16 +1,16 @@
 let _ = require('lodash');
 
-const booleanDefinitions = {
-  true: 'ճիշտ',
-  false: 'սխալ',
-  NaN: 'անորոշ',
-  null: 'անհայտ',
-  Infinity: 'Անվերջություն',
-  undefined: 'չհայտաարարված'
-};
+let preOutput = function (outputText) {
+  const booleanDefinitions = {
+    true: 'ճիշտ',
+    false: 'սխալ',
+    NaN: 'անորոշ',
+    null: 'անհայտ',
+    Infinity: 'Անվերջություն',
+    undefined: 'չհայտաարարված'
+  };
 
-let postParser = function (outputText) {
-  console.llog('compiler: postParser');
+  console.llog('compiler: preOutput');
   for (let key in booleanDefinitions) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
@@ -21,10 +21,27 @@ let postParser = function (outputText) {
   return outputText;
 };
 
-exports.toCompile = function (sessionId, inputValue) {
+exports.toCompile = function (sessionId) {
+  let input = getter.input(sessionId);
   console.llog('compiler: toCompile', 'begin');
 
-  let toCompile = controllers.prepareToCompile(sessionId, inputValue);
+  if (!input && checker.needToInput(sessionId)) {
+    let evaluated = {
+      result: '',
+      status: 'success'
+    };
+
+    __io.emit(sessionId + '_' + 'evaluated', evaluated);
+    //trig if there is nothing to evaluate
+    console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
+
+    console.llog('compiler: toCompile', 'end');
+    return false;
+  } else {
+    setter.input(sessionId, undefined);
+  }
+
+  let toCompile = controllers.prepareToCompile(sessionId, input);
   let evaluated = evaluate.code(sessionId, toCompile);
 
   if (evaluated === false) {
@@ -32,7 +49,7 @@ exports.toCompile = function (sessionId, inputValue) {
     return false;
   }
 
-  evaluated.result = postParser(evaluated.result);
+  evaluated.result = preOutput(evaluated.result);
 
   __io.emit(sessionId + '_' + 'evaluated', evaluated);
   if (evaluated.result) {
@@ -54,7 +71,7 @@ exports.child = function (sessionId) {
     let keysOfObject = getter.keysOfObject(sessionId);
 
     for(let i = 0; i < keysOfObject.length; i++) {
-      let sessionContinue = upgrader(sessionId, keysOfObject[i]);
+      let sessionContinue = upgrade(sessionId, keysOfObject[i]);
       if (sessionContinue === false) {
         console.llog('compiler: child', 'end');
         return false;
@@ -79,7 +96,7 @@ exports.parent = function (sessionId, isPassedBefore) {
   isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
   if (isConditionStatementPassed && !isPassedBefore) {
-    upgrader(sessionId, 'child');
+    upgrade(sessionId, 'child');
 
     setter.downgrade(sessionId);
   } else if (isNotConditionStatementPassed || isPassedBefore) {
@@ -88,7 +105,7 @@ exports.parent = function (sessionId, isPassedBefore) {
       this.parent(sessionId);
     }
   } else if (isParentAllow) {
-    let statusOfPassing = upgrader(sessionId, 'child');
+    let statusOfPassing = upgrade(sessionId, 'child');
     if (statusOfPassing === false) {
       console.llog('compiler: parent', 'end');
       return false;
@@ -110,7 +127,7 @@ exports.parent = function (sessionId, isPassedBefore) {
   console.llog('compiler: parent', 'end');
 };
 
-let upgrader = exports.upgrader = require('./upgrader');
+let upgrade = exports.upgrade = require('./upgrade');
 
 let controllers = require('../controllers');
 

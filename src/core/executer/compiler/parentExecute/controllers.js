@@ -39,6 +39,7 @@ let controller = {
 
     return parentObject;
   },
+
   directive: function (sessionId, parentObject) {
     console.llog('compiler: directive', 'begin');
 
@@ -50,7 +51,7 @@ let controller = {
       let newNameOfProperty = getter.nameOfProperty(sessionId);
       if (newNameOfProperty == 'child' && parentObject == 'child') {
         if (currentParentObject.hasOwnProperty('parent')) {
-          upgrader(sessionId, 'parent');
+          upgrade(sessionId, 'parent');
         }
 
         let status = this.oscillation(sessionId);
@@ -59,7 +60,7 @@ let controller = {
           return false;
         }
 
-        upgrader(sessionId, 'parent');
+        upgrade(sessionId, 'parent');
         controller.manage(sessionId);
       }
     }
@@ -88,4 +89,4 @@ let setter = require('../../setter');
 
 let checker = require('../../checker');
 
-let upgrader = exports.upgrader = require('./positions').upgrader;
+let upgrade = exports.upgrade = require('./positions').upgrade;
