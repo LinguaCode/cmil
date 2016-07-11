@@ -3,9 +3,6 @@ let server = require(serverPath);
 let io = require('socket.io-client');
 let purgeCache = require('../src/libs/purgeCache');
 
-/**DB of tests*/
-const successDB = require('./database/successDB');
-const errorDB = require('./database/errorDB');
 process.env.NODE_ENV = 'testing';
 
 /**Initialize the variables*/
@@ -116,17 +113,11 @@ describe('initialize', function () {
 });
 
 /**passed db test*/
-describe('success', function () {
-
-  dbAnalyzer(successDB);
-
-});
-
-/**buggy db test*/
-describe('error', function () {
-
-  dbAnalyzer(errorDB);
-
+var dbs = ['successes', 'tutorials', 'errors'];
+dbs.forEach((db)=> {
+  describe(db, function () {
+    dbAnalyzer(require('./database/' + db));
+  });
 });
 
 /**interrupt the connection*/
@@ -145,7 +136,7 @@ describe('production test', function () {
     process.env.NODE_ENV = 'production';
     let port = process.env.PORT;
     purgeCache(serverPath);
-    
+
     server = require(serverPath);
 
     server.listen(port, function () {
