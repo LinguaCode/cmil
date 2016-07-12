@@ -1,10 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
-    code: 'տպել «Մուտքը միայն չափահասների համար է։»',
-    inputs: [17],
-    output: 'Մուտքը միայն չափահասների համար է։'
+    title: 'empty'
   }]
 }, {
   group: 'hy',
