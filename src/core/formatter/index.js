@@ -18,8 +18,10 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
         toReplace = replaceObject[i].definition.replace('$1', correctResult);
       } else if (scopes.indexOf(correctResult) !== -1) {
         toReplace = '\\' + correctResult;
+      } else {
+        toReplace = replaceObject[i].command;
       }
-      
+
       sourceCode = sourceCode.substring(0, indexOfResult) + toReplace + sourceCode.substring(reStr.index + reStr[0].length);
     }
   }

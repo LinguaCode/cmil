@@ -2,8 +2,9 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'X = 617\nտպել «lambs: » + X',
-    output: 'lambs: 617'
+    code: 'տպել «Մուտքը միայն չափահասների համար է։»',
+    inputs: [17],
+    output: 'Մուտքը միայն չափահասների համար է։'
   }]
 }, {
   group: 'hy',
