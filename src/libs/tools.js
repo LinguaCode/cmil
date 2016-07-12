@@ -43,11 +43,25 @@ let quoteAnalize = function (input, index) {
         before: 0,
         after: 0
       }
+    },
+    markBegin: {
+      symbol: '«',
+      count: {
+        before: 0,
+        after: 0
+      }
+    },
+    markEnd: {
+      symbol: '»',
+      count: {
+        before: 0,
+        after: 0
+      }
     }
   };
 
   for (let i = index - 1; i >= 0; i--) {
-    quotes = counter(quotes, input, 'before',  i);
+    quotes = counter(quotes, input, 'before', i);
   }
 
   for (let i = index + 1; i < input.length; i++) {
@@ -134,14 +148,16 @@ exports.isPartOfCode = function (input, index) {
   }
 
   if (currentSymbol === quotationMarks.begin) {
-    return input.lastIndexOf(quotes.es6.symbol, index - 1) === -1;
+    return !quotes.es6.isOpen.after;
   } else if (currentSymbol === quotationMarks.end) {
-    return input.lastIndexOf(quotes.es6.symbol, index - 1) !== -1 && !quotes.es6.isOpen.after;
+    return !quotes.es6.isOpen.before || !quotes.es6.isOpen.after;
   }
 
   for (let key in quotes) {
-    if (quotes[key].isOpen.before) {
-      return false;
+    if (key !== 'markBegin' && key !== 'markEnd') {
+      if (quotes[key].isOpen.before) {
+        return false;
+      }
     }
   }
 
