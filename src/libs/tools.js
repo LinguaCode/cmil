@@ -150,7 +150,11 @@ exports.isPartOfCode = function (input, index) {
   if (currentSymbol === quotationMarks.begin) {
     return !quotes.es6.isOpen.after;
   } else if (currentSymbol === quotationMarks.end) {
-    return !quotes.es6.isOpen.before || !quotes.es6.isOpen.after;
+    let indexOfNextMarkEnd = input.indexOf(currentSymbol, index + 1);
+    let isNextMarkEndExists = indexOfNextMarkEnd !== -1;
+    let indexOfNextES6 = input.indexOf(quotes.es6.symbol, index + 1);
+    let isIndexOfNextMarkEndLowerThanIndexOfNextES6 = isNextMarkEndExists && indexOfNextMarkEnd < indexOfNextES6;
+    return !quotes.es6.isOpen.before || !quotes.es6.isOpen.after || (quotes.es6.isOpen.before && quotes.es6.isOpen.after && isNextMarkEndExists && ! isIndexOfNextMarkEndLowerThanIndexOfNextES6);
   }
 
   for (let key in quotes) {
