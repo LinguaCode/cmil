@@ -1,3 +1,5 @@
+let _ = require('lodash');
+
 let controller = {
   manage: function (sessionId) {
     console.llog('compiler: controller', 'begin');
@@ -27,6 +29,7 @@ let controller = {
       });
 
       management.session.end(sessionId);
+      console.llog('compiler: timeout');
       return false;
     }
 
@@ -35,6 +38,7 @@ let controller = {
 
       if (checker.session.ended(sessionId)) {
         management.session.end(sessionId);
+        console.llog('compiler: session ended');
         return false;
       }
     }
@@ -77,11 +81,11 @@ let controller = {
 exports.controller = controller.manage;
 
 exports.prepareToCompile = function (sessionId, inputValue) {
-  let codeToCompile = getter.operations(sessionId) || [];
+  let codeToCompile = _.cloneDeep(getter.operations(sessionId)) || [];
   let inputOperation = '';
   if (inputValue) {
     inputOperation = evaluate.inputOperation(sessionId, inputValue);
-    codeToCompile.unshift(sessionId, inputOperation);
+    codeToCompile.unshift(inputOperation);
   }
   return codeToCompile;
 };
