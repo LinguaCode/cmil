@@ -1,7 +1,10 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty'
+    title: 'empty',
+    code: 'տպել «Մուտքը միայն չափահասների համար է։»',
+    inputs: [17],
+    output: 'Մուտքը միայն չափահասների համար է։'
   }]
 }, {
   group: 'hy',
@@ -80,7 +83,7 @@ module.exports = [{
               code: 'տպել «text_1 \\«text_2»',
               output: 'text_1 «text_2'
             }]
-          },{
+          }, {
             group: 'double scope',
             sources: [{
               title: '«text_1 \'text_2\' text_3»',
@@ -104,7 +107,7 @@ module.exports = [{
               output: 'text_1 «text_2» text_3'
             }]
           }]
-        },{
+        }, {
           group: '"inner scopes"',
           sources: [{
             group: 'single scope',
@@ -125,7 +128,7 @@ module.exports = [{
               code: 'տպել "text_1 «text_2"',
               output: 'text_1 «text_2'
             }]
-          },{
+          }, {
             group: 'double scope',
             sources: [{
               title: '"text_1 \'text_2\' text_3"',
@@ -149,7 +152,7 @@ module.exports = [{
               output: 'text_1 «text_2» text_3'
             }]
           }]
-        },{
+        }, {
           group: '\'inner scopes\'',
           sources: [{
             group: 'single scope',
@@ -170,7 +173,7 @@ module.exports = [{
               code: 'տպել \'text_1 «text_2\'',
               output: 'text_1 «text_2'
             }]
-          },{
+          }, {
             group: 'double scope',
             sources: [{
               title: '\'text_1 \\\'text_2\\\' text_3\'',
@@ -497,20 +500,34 @@ module.exports = [{
     }, {
       group: 'repeat',
       sources: [{
-        title: '0 attempts',
+        title: 'repeat 0x',
         code: 'կրկնել 0 անգամ\n    տպել "a"'
       }, {
-        title: '1 attempt',
+        title: 'repeat 1x',
         code: 'կրկնել 1 անգամ\n    տպել "a"',
         output: 'a'
       }, {
-        title: '5 attempts',
+        title: 'repeat 5x',
         code: 'կրկնել 5 անգամ\n    տպել "a"',
         output: 'a\na\na\na\na'
       }, {
         title: 'input; repeat 2x',
         code: 'գրել X\nկրկնել 2 անգամ\n    տպել X',
         inputs: ['a'],
+        output: 'a\na'
+      }, {
+        title: 'repeat 2x; input;',
+        code: 'կրկնել 2 անգամ\n    տպել "a"\nգրել X\nտպել X',
+        inputs: ['X'],
+        output: 'a\na\nX'
+      }, {
+        title: 'repeat 2x; repeat 3x;',
+        code: 'կրկնել 2 անգամ\n    տպել "a"\nկրկնել 3 անգամ\n    տպել "b"',
+        output: 'a\na\nb\nb\nb'
+      }, {
+        title: 'repeat 2x; input',
+        code: 'կրկնել 2 անգամ\n    տպել "a"\nգրել X',
+        inputs: ['X'],
         output: 'a\na'
       }, {
         title: 'repeat 2x; input; output',
@@ -540,6 +557,25 @@ module.exports = [{
         }, {
           title: '2x0 attempts',
           code: 'կրկնել 2 անգամ\n    կրկնել 0 անգամ\n        տպել "a"'
+        }]
+      }, {
+        group: 'recursively: 2 level: repeat',
+        sources: [{
+          title: '1x1x1 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 1 անգամ\n        կրկնել 1 անգամ\n            տպել "a"',
+          output: 'a'
+        }, {
+          title: '1x2x3 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 2 անգամ\n        կրկնել 3 անգամ\n            տպել "a"',
+          output: 'a\na\na\na\na\na'
+        }, {
+          title: '3x2x1 attempts',
+          code: 'կրկնել 1 անգամ\n    կրկնել 2 անգամ\n        կրկնել 3 անգամ\n            տպել "a"',
+          output: 'a\na\na\na\na\na'
+        }, {
+          title: '3x2x1 attempts with complexity (outputs)',
+          code: 'կրկնել 1 անգամ\n    տպել "X"\n    կրկնել 2 անգամ\n        տպել "Y"\n        կրկնել 3 անգամ\n            տպել "a"\nտպել "Z"',
+          output: 'X\nY\na\na\na\nY\na\na\na\nZ'
         }]
       }]
     }]
