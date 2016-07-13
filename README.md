@@ -28,7 +28,7 @@ Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/Lin
 
 #### Run test coverage
 ```
-npm install instanbul -g
+npm install istanbul -g
 npm run coverage
 ```
 
