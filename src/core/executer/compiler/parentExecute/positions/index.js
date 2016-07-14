@@ -1,5 +1,9 @@
 let _ = require('lodash');
 
+const status = {
+  success: 'success'
+};
+
 let preOutput = function (outputText) {
   const booleanDefinitions = {
     true: 'ճիշտ',
@@ -26,12 +30,8 @@ exports.toCompile = function (sessionId) {
   console.llog('compiler: toCompile', 'begin');
 
   if (!input && checker.needToInput(sessionId)) {
-    let evaluated = {
-      result: '',
-      status: 'success'
-    };
 
-    __io.emit(sessionId + '_' + 'evaluated', evaluated);
+    setter.output(sessionId, status.success);
     //trig if there is nothing to evaluate
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
@@ -51,7 +51,7 @@ exports.toCompile = function (sessionId) {
 
   evaluated.result = preOutput(evaluated.result);
 
-  __io.emit(sessionId + '_' + 'evaluated', evaluated);
+  setter.output(sessionId, evaluated.status, evaluated.result);
   if (evaluated.result) {
     console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
@@ -97,7 +97,7 @@ exports.parent = function (sessionId, isPassedBefore) {
     upgrade(sessionId, 'child');
 
     setter.downgrade(sessionId);
-    
+
   } else if (isNotConditionStatementPassed || isPassedBefore) {
     controllers.controller(sessionId);
     if (getter.nameOfProperty(sessionId) == 'parent') {

@@ -13,6 +13,10 @@ exports.codeRun = function (sessionId, sourceCode, language) {
   initializer.execute(sessionId, codePrepared);
 
   parentExecute.positions.parent(sessionId);
+
+  let output = getter.output(sessionId);
+  sender.evaluate(sessionId, output);
+
   console.llog('compiler: codeRun', 'end');
 };
 
@@ -28,6 +32,8 @@ exports.listener = function (sessionId, input) {
     parentExecute.controllers.controller(sessionId);
   }
 
+  let output = getter.output(sessionId);
+  sender.evaluate(sessionId, output);
   console.llog('compiler: listener', 'end');
 };
 
@@ -35,5 +41,6 @@ let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
 let setter = require('../../setter');
 let getter = require('../../getter');
+let sender = require('../../sender');
 
 exports.session = require('./session');

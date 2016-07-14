@@ -1,4 +1,7 @@
 let _ = require('lodash');
+const status = {
+  timeout: 'timeout'
+};
 
 let controller = {
   manage: function (sessionId) {
@@ -23,11 +26,7 @@ let controller = {
     setter.indexIncrement(sessionId);
 
     if (checker.session.expired(sessionId)) {
-      __io.emit(sessionId + '_' + 'evaluated', {
-        result: '',
-        status: 'timeout'
-      });
-
+      setter.output(sessionId, status.timeout);
       management.session.end(sessionId);
       console.llog('compiler: timeout');
       return false;
