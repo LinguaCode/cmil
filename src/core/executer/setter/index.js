@@ -24,8 +24,12 @@ exports.downgrade = function (sessionId) {
  * Sets the last output.
  * All outputs in once.
  * */
-exports.output = function (sessionId, output) {
-  __store[sessionId].output += '\n' + output;
+exports.output = function (sessionId, status, output) {
+  if (status == 'success' || typeof(output) !== 'undefined') {
+    __store[sessionId].output += output + '\n';
+  }
+
+  __store[sessionId].status = status;
 };
 
 /**

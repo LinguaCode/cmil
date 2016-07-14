@@ -1,5 +1,7 @@
-let app = require('./app');
 let fs = require('fs');
+let io = require('socket.io');
+
+let app = require('./app');
 
 let port = process.env.PORT = process.env.PORT || '3005';
 let env = process.env.NODE_ENV || 'local';
@@ -60,7 +62,7 @@ if (env == 'production' && isCertFilesExist) {
   });
 }
 
-__io.attach(server);
+io.attach(server);
 
 server.on('listening', onListening);
 

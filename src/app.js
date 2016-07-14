@@ -5,9 +5,6 @@ require('linguacode-logger');
 
 let app = express();
 
-let socketIO = require('socket.io');
-global.__io = socketIO();
-
 app.use(helmet());
 
 let corsWhiteList = [

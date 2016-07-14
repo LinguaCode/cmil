@@ -29,10 +29,7 @@ exports.code = function (sessionId, sourceCode) {
 
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
       if (hasBrokenVariable) {
-        __io.emit(sessionId + '_' + 'evaluated', {
-          result: '',
-          status: errorMessages.brokenVariable(hasBrokenVariable)
-        });
+        setter.output(sessionId, errorMessages.brokenVariable(hasBrokenVariable));
         management.session.end(sessionId);
         return false;
       }
@@ -57,5 +54,6 @@ exports.inputOperation = function (sessionId, inputValue) {
 let formatter = require('../../formatter');
 
 let getter = require('../getter');
+ let setter = require('../setter');
 
 let management = require('./management');
