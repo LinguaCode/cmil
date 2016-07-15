@@ -30,7 +30,7 @@ exports.code = function (sessionId, sourceCode) {
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
       if (hasBrokenVariable) {
         setter.output(sessionId, errorMessages.brokenVariable(hasBrokenVariable));
-        management.session.end(sessionId);
+        console.llog('compiler: trigger: broken variable');
         return false;
       }
 

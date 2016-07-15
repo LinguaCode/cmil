@@ -27,17 +27,15 @@ let controller = {
 
     if (checker.session.expired(sessionId)) {
       setter.output(sessionId, status.timeout);
-      management.session.end(sessionId);
-      console.llog('compiler: timeout');
+      console.llog('compiler: trigger: timeout');
       return false;
     }
 
     if (checker.array.ended(sessionId)) {
       setter.downgrade(sessionId);
 
-      if (checker.session.ended(sessionId)) {
-        management.session.end(sessionId);
-        console.llog('compiler: session ended');
+      if (checker.session.pathOfLocationEnded(sessionId)) {
+        console.llog('compiler: trigger: session ended');
         return false;
       }
     }
@@ -74,7 +72,8 @@ let controller = {
     }
 
     console.llog('compiler: directive', 'end');
-  }
+  },
+
 };
 
 exports.controller = controller.manage;

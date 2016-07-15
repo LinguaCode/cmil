@@ -1,7 +1,8 @@
 let _ = require('lodash');
 
 const status = {
-  success: 'success'
+  success: 'success',
+  waitsForInput: 'waitsForInput'
 };
 
 let preOutput = function (outputText) {
@@ -31,7 +32,7 @@ exports.toCompile = function (sessionId) {
 
   if (!input && checker.needToInput(sessionId)) {
 
-    setter.output(sessionId, status.success);
+    setter.output(sessionId, status.waitsForInput);
     //trig if there is nothing to evaluate
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
@@ -111,7 +112,7 @@ exports.parent = function (sessionId, isPassedBefore) {
       return false;
     }
 
-    if (!checker.session.ended(sessionId)) {
+    if (!checker.session.pathOfLocationEnded(sessionId)) {
 
       if (getter.nameOfProperty(sessionId) == 'parent') {
         this.parent(sessionId);

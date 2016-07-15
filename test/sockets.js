@@ -72,7 +72,7 @@ let dbAnalyzer = function (sources) {
           .on(sessionId + '_' + 'sessionEnd', function () {
 
             console.log(`\nTitle: ${title}`);
-            console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
+            console.log(`Source code:\n== START ==\n${code ? `${code}\n` : ''}== END ==`);
 
             if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult))) {
               console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));

@@ -1,4 +1,4 @@
-let io = require('socket.io');
+let io = require('../../../io');
 
 exports.evaluate = function (sessionId, output) {
   io.emit(sessionId + '_' + 'evaluated', output);
