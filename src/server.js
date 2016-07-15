@@ -1,5 +1,5 @@
 let fs = require('fs');
-let io = require('socket.io');
+let io = require('./io');
 
 let app = require('./app');
 

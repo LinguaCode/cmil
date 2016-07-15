@@ -3,7 +3,8 @@ const LOCALHOST = [
   '::1'
 ];
 
-let io = require('socket.io');
+let io = require('../io');
+
 let code = require('../core/modifier/code');
 let errorHandler = require('../core/errorHandler');
 let compiler = require('../core/executer/compiler');
