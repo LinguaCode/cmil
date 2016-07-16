@@ -26,12 +26,12 @@ let sockets = {
       //TODO: Arman: put here mail logging system
       console.llog('Socket.IO: server: output text has been successfully send! (Hack attempt)');
 
-      sender.evaluate(sessionId, errorMessage);
-
-      return sender.sessionEnd(sessionId);
+      setter.output(sessionId, errorMessage);
+    } else {
+      compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
     }
 
-    compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
+    postExecute(sessionId);
   },
 
   disconnect: function () {
@@ -44,6 +44,8 @@ let sockets = {
     console.llog('Socket.IO: server: \'' + inputText + '\' text successfully received!');
 
     compiler.listener(sessionId, inputText);
+    
+    postExecute(sessionId);
   },
 
   init: function (socket) {
@@ -61,6 +63,15 @@ let ipAddressResolver = function (ipAddress) {
   return LOCALHOST.indexOf(ipAddress) != -1 ? '\'localhost\'' : ipAddress
 };
 
+const postExecute = function (sessionId) {
+  let output = getter.output(sessionId);
+  sender.evaluate(sessionId, output);
+
+  if (checker.session.ended(sessionId)) {
+    sender.sessionEnd(sessionId);
+  }
+};
+
 io.on('connection', function (socket) {
 
   ipAddress = ipAddressResolver(socket.handshake.address);
@@ -72,3 +83,6 @@ io.on('connection', function (socket) {
 
 let formatter = require('../core/formatter');
 let sender = require('../core/executer/sender');
+let setter = require('../core/executer/setter');
+let checker = require('../core/executer/checker');
+let getter = require('../core/executer/getter');

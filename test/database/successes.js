@@ -2,8 +2,8 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'եթե 4 > 2\n    տպել "a"\n    եթե 4 > 2\n        տպել "b"',
-    output: 'a\nb'
+    code: 'եթե 1 < 2\n     տպել 617',
+    status: 'Space error in 2 line.'
   }]
 }, {
   group: 'hy',

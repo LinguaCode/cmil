@@ -46,7 +46,7 @@ var isExpiredCheck = exports.expired = function (sessionId) {
   let sessionTime = moment(getter.sessionTime(sessionId));
   let now = moment();
   let timeDifferenceBySeconds = now.diff(sessionTime);
-  if (/*timeDifferenceBySeconds > 666*/false) {
+  if (timeDifferenceBySeconds > 666) {
     return true;
   }
 

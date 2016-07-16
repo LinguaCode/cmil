@@ -23,8 +23,8 @@ exports.code = function (sessionId, sourceCode) {
 
     try {
       let output = eval(codeFormatted);
-      if (output) {
-        evalResult += output;
+      if (output !== '') {
+        evalResult += output + '\n';
       }
 
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
@@ -42,7 +42,7 @@ exports.code = function (sessionId, sourceCode) {
   }
 
   return {
-    result: evalResult,
+    result: evalResult.slice(0, -1),
     status: evalStatus
   }
 };
