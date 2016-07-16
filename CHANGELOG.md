@@ -5,6 +5,13 @@
   - **[status]** coverage: development: 99.5%.
   - **[status]** code climate: 4.
 
+## 0.2.6 (upcoming)
+
+  - **[add]** total tests: up to 150 and more.
+  - **[add]** output data collector.
+  - **[status]** coverage: development: 99.5%.
+  - **[status]** code climate: 4.
+
 ## 0.2.5 (2016-07-11)
 
   - **[add]** tests: 2 (total 124).
@@ -13,7 +20,6 @@
   - **[fix]** input; repeat;
   - **[status]** coverage: development: 99.26%, production: 97.794%.
   - **[status]** code climate: 3.97.
-
 
 ## 0.2.4 (2016-07-07)
 
