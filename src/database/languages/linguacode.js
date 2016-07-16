@@ -29,7 +29,7 @@ module.exports = (sessionId, isCondition) => {
     definition: '&&'
   }, {
     command: `${commands.output}\\s+([^\\n\\r\\;]*)\\s*;`,
-    definition: `output += ($1) + '\\n';`
+    definition: `output = $1;`
   }, {
     command: `${commands.if}\\s+([^\\r\\n]*[^\\${commands.then}])( ${commands.then})*`,
     definition: 'if ($1)'
@@ -68,7 +68,7 @@ module.exports = (sessionId, isCondition) => {
       (() => {
         let output = '';
         $1
-        return output.substr(0, output.length - 1);
+        return output;
       })();`
     })
   }

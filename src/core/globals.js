@@ -72,7 +72,8 @@ let store = function (sessionId) {
   __store[sessionId] = {
     structure: {},
     pathOfLocation: '',
-    output: ''
+    output: '',
+    status: 'success'
   };
 };
 
