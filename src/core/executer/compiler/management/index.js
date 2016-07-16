@@ -1,5 +1,5 @@
 let modify = require('../../../modifier/modify');
-let logger = require('linguacode-logger');
+let logger = require('lingua-logger');
 const status = {
   success: 'success',
   waitsForInput: 'waitsForInput'
@@ -43,5 +43,3 @@ let initializer = require('../../initializer');
 let setter = require('../../setter');
 let getter = require('../../getter');
 let checker = require('../../checker');
-
-exports.session = require('./session');
