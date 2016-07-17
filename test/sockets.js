@@ -1,9 +1,20 @@
-const serverPath = '../src/server';
-let server = require(serverPath);
+let path = require('path');
 let io = require('socket.io-client');
-let purgeCache = require('../src/libs/purgeCache');
+let cacheWiper = require('node-cache-wiper');
 
-process.env.NODE_ENV = 'testing';
+const serverFileName = 'server';
+const sourceFilePath = './src/';
+const serverPath = path.join(sourceFilePath, serverFileName);
+const currentPathOfTheServer = path.join(process.cwd(), serverPath);
+
+let server = require(currentPathOfTheServer);
+
+const ENV = {
+  testing: 'testing',
+  production: 'production'
+};
+
+process.env.NODE_ENV = ENV.testing;
 
 /**Initialize the variables*/
 let socket = io.connect('http://localhost:3005');
@@ -131,19 +142,33 @@ describe('disconnect', function () {
 
 });
 
+
 describe('production test', function () {
 
-  it('run', function (done) {
-    process.env.NODE_ENV = 'production';
-    let port = process.env.PORT;
-    purgeCache(serverPath);
+  it('with cert files', function (done) {
+    cacheWiper(serverPath);
 
-    server = require(serverPath);
+    process.env.PORT = 3003;
+    process.env.NODE_ENV = ENV.production;
+    server = require(currentPathOfTheServer);
 
-    server.listen(port, function () {
-      server.close();
-    });
-    done();
+    setTimeout(function () {
+      done();
+    })
+  });
+
+  it('without cert files', function (done) {
+    cacheWiper(serverPath);
+    const FAKE_PATH = './fake/path';
+
+    process.env.PORT = 3004;
+    process.env.CERT_FILE_PATH = FAKE_PATH;
+    process.env.NODE_ENV = ENV.production;
+    server = require(currentPathOfTheServer);
+
+    setTimeout(function () {
+      done();
+    })
   });
 
 });

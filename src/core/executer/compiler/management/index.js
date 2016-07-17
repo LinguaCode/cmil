@@ -1,5 +1,5 @@
 let modify = require('../../../modifier/modify');
-let logger = require('lingua-logger');
+
 const status = {
   success: 'success',
   waitsForInput: 'waitsForInput'

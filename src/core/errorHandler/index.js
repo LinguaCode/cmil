@@ -20,20 +20,11 @@ exports.evalResult = function (error) {
   let errorMessage = error.message;
   let errorStatus;
   let errorRegEx = {
-    unexpectedIdentifier: /Unexpected identifier/i,
-    isNotDefined: /is not defined/
+    unexpectedIdentifier: /Unexpected identifier/i
   };
  
   if (errorRegEx.unexpectedIdentifier.test(errorMessage)) {
     errorStatus = 'Syntax error';
-  } else if (errorRegEx.isNotDefined.test(errorMessage)) {
-    //let errorCoordinates = error.stack.match(/\d:\d/)[0].split(':');
-    //let errorLine = parseInt(errorCoordinates[0]) - 7;
-    //let errorRow = parseInt(errorCoordinates[1]);
-    let undefinedVariableName = error.message.match(/(.*) is not defined/)[1];
-
-    errorStatus = 'Գրված «' + undefinedVariableName + '» փոփոխականը հայտարարված չէ։'/*
-     + '\nՏես տող՝ ' + errorLine + ', դիրք՝ ' + errorRow + '։'*/;
   } else {
     errorStatus = 'Syntax error';
   }
