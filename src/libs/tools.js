@@ -109,18 +109,20 @@ exports.isPartOfCode = function (input, index) {
   let currentSymbol = input[index];
 
   //counter of the <text quotes>
-  let quotationMarkIndexes = [
-    input.lastIndexOf(quotationMarks.begin, index - 1),
-    input.lastIndexOf(quotationMarks.end, index - 1),
-    input.indexOf(quotationMarks.end, index + 1)
-  ];
+  let quotationMarkIndexes = {
+    begin: input.lastIndexOf(quotationMarks.begin, index - 1),
+    endOfBefore: input.lastIndexOf(quotationMarks.end, index - 1),
+    endOfAfter: input.indexOf(quotationMarks.end, index + 1)
+  };
 
-  if (quotationMarkIndexes[0] !== -1 && quotationMarkIndexes[2] !== -1) {
-    if (quotationMarkIndexes[0] < quotationMarkIndexes[1]) {
-      return true;
-    } else if (quotationMarkIndexes[0] < quotationMarkIndexes[2]) {
-      return false;
-    }
+  let isAnyQuotationMarkBegin = quotationMarkIndexes.begin !== -1;
+  let isAnyQuotationMarkEnd = quotationMarkIndexes.endOfAfter !== -1;
+  let isAnyQuotationMarks = isAnyQuotationMarkBegin && isAnyQuotationMarkEnd;
+
+  if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore) {
+    return true;
+  } else if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter) {
+    return false;
   }
 
   //check if the symbol was <text quote>
@@ -154,7 +156,7 @@ exports.isPartOfCode = function (input, index) {
     let isNextMarkEndExists = indexOfNextMarkEnd !== -1;
     let indexOfNextES6 = input.indexOf(quotes.es6.symbol, index + 1);
     let isIndexOfNextMarkEndLowerThanIndexOfNextES6 = isNextMarkEndExists && indexOfNextMarkEnd < indexOfNextES6;
-    return !quotes.es6.isOpen.before || !quotes.es6.isOpen.after || (quotes.es6.isOpen.before && quotes.es6.isOpen.after && isNextMarkEndExists && ! isIndexOfNextMarkEndLowerThanIndexOfNextES6);
+    return !quotes.es6.isOpen.before || !quotes.es6.isOpen.after || (quotes.es6.isOpen.before && quotes.es6.isOpen.after && isNextMarkEndExists && !isIndexOfNextMarkEndLowerThanIndexOfNextES6);
   }
 
   for (let key in quotes) {
@@ -202,15 +204,9 @@ exports.codeDepthLevels = {
   },
 
   all: function (listOfCommands) {
-    let levels = [];
-    for (let i = 0, levelsTemp; i < listOfCommands.length; i++) {
-      levelsTemp = this.line(listOfCommands[i]);
-      if (levelsTemp !== -1) {
-        levels.push(levelsTemp);
-      }
-
-    }
-    return levels;
+    return listOfCommands.map(function (levelsTemp) {
+      return this.line(levelsTemp);
+    }.bind(this));
   }
 
 };

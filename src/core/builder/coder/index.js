@@ -2,7 +2,7 @@ let _ = require('lodash');
 
 exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
   console.llog('builder: splitToCompilableParts');
-  
+
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
   let reInput = new RegExp(commands.input + '\\s+(' + sessionId + '.(' + variables.join('|') + '))', 'g');
@@ -19,9 +19,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
     toCompile.operations = _.compact(operations.split('\n'));
 
-    if (toCompile !== {}) {
-      toCompiles.push(_.cloneDeep(toCompile));
-    }
+    toCompiles.push(_.cloneDeep(toCompile));
   }
 
   while (reInputStrOld !== null) {
@@ -30,7 +28,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     reInputStrNew = reInput.exec(sourceCode);
     indexOfOperationEnd = reInputStrNew !== null ? reInputStrNew.index : sourceCode.length;
 
-    inputVariable = reInputStrOld !== null ? reInputStrOld[1] : '';
+    inputVariable = reInputStrOld[1];
 
     operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
     operations = tools.trim(operations);
@@ -38,18 +36,15 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
     //==toCompile==
     //toCompile.operations
     toCompile = {};
-    if (operations) {
-      toCompile.operations = _.compact(operations.split('\n'));
-    }
+
+    toCompile.operations = _.compact(operations.split('\n'));
+
     //toCompile.inputVariable
-    if (inputVariable) {
-      toCompile.inputVariable = inputVariable;
-    }
+    toCompile.inputVariable = inputVariable;
 
     //===toCompiles===
-    if (toCompile !== {}) {
-      toCompiles.push(_.cloneDeep(toCompile));
-    }
+    toCompiles.push(_.cloneDeep(toCompile));
+
     if (reInputStrNew) {
       reInputStrOld = _.cloneDeep(reInputStrNew);
     } else {

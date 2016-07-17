@@ -1,8 +1,3 @@
-const LOCALHOST = [
-  '::ffff:127.0.0.1',
-  '::1'
-];
-
 let io = require('../io');
 
 let code = require('../core/modifier/code');
@@ -44,7 +39,7 @@ let sockets = {
     console.llog('Socket.IO: server: \'' + inputText + '\' text successfully received!');
 
     compiler.listener(sessionId, inputText);
-    
+
     postExecute(sessionId);
   },
 
@@ -59,10 +54,6 @@ let sockets = {
   }
 };
 
-let ipAddressResolver = function (ipAddress) {
-  return LOCALHOST.indexOf(ipAddress) != -1 ? '\'localhost\'' : ipAddress
-};
-
 const postExecute = function (sessionId) {
   let output = getter.output(sessionId);
   sender.evaluate(sessionId, output);
@@ -74,7 +65,7 @@ const postExecute = function (sessionId) {
 
 io.on('connection', function (socket) {
 
-  ipAddress = ipAddressResolver(socket.handshake.address);
+  ipAddress = socket.handshake.address;
   console.llog('Socket.IO: server: New connection from ' + ipAddress);
 
   sockets.init(socket);

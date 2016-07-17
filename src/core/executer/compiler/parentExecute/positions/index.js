@@ -68,16 +68,15 @@ exports.toCompile = function (sessionId) {
 exports.child = function (sessionId) {
   console.llog('compiler: child', 'begin');
 
-  if (checker.needToUpgrade(sessionId)) {
-    let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
+  let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
 
-    let sessionContinue = upgrade(sessionId, firstKeyOfObject);
-    if (sessionContinue === false) {
-      console.llog('compiler: child', 'end');
-      return false;
-    }
+  let sessionContinue = upgrade(sessionId, firstKeyOfObject);
+
+  if (checker.needToUpgrade(sessionId) && sessionContinue === false) {
+    console.llog('compiler: child', 'end');
+    return false;
   }
-
+  
   if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
   }
@@ -85,21 +84,20 @@ exports.child = function (sessionId) {
   console.llog('compiler: child', 'end');
 };
 
-exports.parent = function (sessionId, isPassedBefore) {
+exports.parent = function (sessionId) {
   console.llog('compiler: parent', 'begin');
 
   let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
   let isParentAllow = evaluate.condition(sessionId);
   let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
-  isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
-  if (isConditionStatementPassed && !isPassedBefore) {
+  if (isConditionStatementPassed) {
     upgrade(sessionId, 'child');
 
     setter.downgrade(sessionId);
 
-  } else if (isNotConditionStatementPassed || isPassedBefore) {
+  } else if (isNotConditionStatementPassed) {
     controllers.controller(sessionId);
     if (getter.nameOfProperty(sessionId) == 'parent') {
       this.parent(sessionId);
