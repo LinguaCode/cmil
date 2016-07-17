@@ -1,6 +1,6 @@
 {
   "name": "core",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
