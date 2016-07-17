@@ -5,11 +5,13 @@
   - **[status]** coverage: development: 99.5%.
   - **[status]** code climate: 4.
 
-## 0.2.6 (upcoming)
+## 0.2.6 (2016-07-17)
 
-  - **[add]** total tests: up to 150 and more.
+  - **[add]** tests: 28 (total 152).
+  - **[optimize]** compiler algorithm.
   - **[add]** output data collector.
-  - **[status]** coverage: development: 99.5%.
+  - **[status]** coverage: development: 100%, production: 97.794%.
+  - **[status]** rename: "linguacode-api" to "core".
   - **[status]** code climate: 4.
 
 ## 0.2.5 (2016-07-11)
