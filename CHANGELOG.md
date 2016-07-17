@@ -8,8 +8,8 @@
   - **[add]** tests: 28 (total 152).
   - **[optimize]** compiler algorithm.
   - **[add]** output data collector.
+  - **[change]** rename: "linguacode-api" to "core".
   - **[status]** coverage: development: 100%, production: 98.339%.
-  - **[status]** rename: "linguacode-api" to "core".
   - **[status]** code climate: 3.9.
 
 ## 0.2.5 (2016-07-11)
