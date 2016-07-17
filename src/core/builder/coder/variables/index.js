@@ -26,14 +26,14 @@ exports.variablesToObjectChild = function (sessionId, sourceCode, listOfVariable
 
   for (let i = 0; i < listOfVariables.length; i++) {
     regExp = new RegExp('[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s](' + listOfVariables[i] + ')[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)]', 'g');
-    while ((regStrZero = regExp.exec(codeTailed)) !== null) { //in line
-      if (tools.isPartOfCode(codeTailed, regStrZero.index)) {
-        if ((regStrFirstIndex = codeTailed.indexOf(listOfVariables[i], regStrZero.index)) != -1) {
-          codeTailed = codeTailed.substring(0, regStrFirstIndex) +
-            sessionId + '.' + listOfVariables[i] +
-            codeTailed.substring(regStrFirstIndex + listOfVariables[i].length);
-        }
-      }
+
+    while ((
+      regStrZero = regExp.exec(codeTailed)) !== null &&
+    tools.isPartOfCode(codeTailed, regStrZero.index) &&
+    (regStrFirstIndex = codeTailed.indexOf(listOfVariables[i], regStrZero.index)) != -1) { //in line
+      codeTailed = codeTailed.substring(0, regStrFirstIndex) +
+        sessionId + '.' + listOfVariables[i] +
+        codeTailed.substring(regStrFirstIndex + listOfVariables[i].length);
     }
   }
 

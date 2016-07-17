@@ -1,5 +1,9 @@
 let modify = require('../../../modifier/modify');
-let logger = require('linguacode-logger');
+
+const status = {
+  success: 'success',
+  waitsForInput: 'waitsForInput'
+};
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   console.llog('compiler: codeRun', 'begin');
@@ -13,6 +17,7 @@ exports.codeRun = function (sessionId, sourceCode, language) {
   initializer.execute(sessionId, codePrepared);
 
   parentExecute.positions.parent(sessionId);
+
   console.llog('compiler: codeRun', 'end');
 };
 
@@ -21,6 +26,7 @@ exports.listener = function (sessionId, input) {
 
   setter.sessionTime(sessionId);
   setter.input(sessionId, input);
+  initializer.output(sessionId, status.success, '');
 
   parentExecute.positions.toCompile(sessionId);
 
@@ -31,9 +37,9 @@ exports.listener = function (sessionId, input) {
   console.llog('compiler: listener', 'end');
 };
 
+
 let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
 let setter = require('../../setter');
 let getter = require('../../getter');
-
-exports.session = require('./session');
+let checker = require('../../checker');

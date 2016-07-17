@@ -1,13 +1,19 @@
-let app = require('./app');
 let fs = require('fs');
+let io = require('./io');
+let express = require('express');
+let logger = require('lingua-logger');
+
+let app = express();
 
 let port = process.env.PORT = process.env.PORT || '3005';
 let env = process.env.NODE_ENV || 'local';
 app.set('port', port);
 
+require('./routes');
+
 let server;
 
-const certPath = './src/config/keys/';
+const certPath = process.env.CERT_FILE_PATH = process.env.CERT_FILE_PATH || './src/config/keys/';
 let privateKeyFilePath = certPath + 'linguacode_me_private.key';
 
 let isCertFilesExist;
@@ -60,7 +66,7 @@ if (env == 'production' && isCertFilesExist) {
   });
 }
 
-__io.attach(server);
+io.attach(server);
 
 server.on('listening', onListening);
 

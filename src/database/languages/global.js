@@ -1,26 +1,24 @@
-module.exports = function () {
-  return {
-    replace: [{
-      command: '։',
-      definition: ':'
-    }, {
-      command: '\'',
-      definition: '`'
-    }, {
-      command: '"',
-      definition: '`'
-    }, {
-      command: '«',
-      definition: '`'
-    }, {
-      command: '»',
-      definition: '`'
-    }, {
-      command: '․',
-      definition: '.'
-    }, {
-      command: '`',
-      definition: '\''
-    }]
-  };
-};
+module.exports = () => ({
+  replace: [{
+    command: '։',
+    definition: ':'
+  }, {
+    command: '\'',
+    definition: '`'
+  }, {
+    command: '"',
+    definition: '`'
+  }, {
+    command: '«',
+    definition: '`'
+  }, {
+    command: '»',
+    definition: '`'
+  }, {
+    command: '․',
+    definition: '.'
+  }, {
+    command: '`',
+    definition: '\''
+  }]
+});

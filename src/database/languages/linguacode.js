@@ -1,16 +1,16 @@
 let constants = require('../constants').constants;
 let commands = require('../commands/variables');
 
-module.exports = function (sessionId, isCondition) {
+module.exports = (sessionId, isCondition) => {
   isCondition = isCondition || false;
-  let _then = commands.then;
+  const _then = commands.then;
   let notThen = '';
   for (let i = 0; i < _then.length; i++) {
-    notThen += '[^\\' + _then[i] + ']';
+    notThen += `[^\\${_then[i]}]`;
   }
 
-  let toReplace = [{
-    command: '(' + commands.not + ')\\s*\\(',
+  const toReplace = [{
+    command: `(${commands.not})\\s*\\(`,
     definition: '!('
   }, {
     command: commands.true,
@@ -28,13 +28,13 @@ module.exports = function (sessionId, isCondition) {
     command: commands.and2,
     definition: '&&'
   }, {
-    command: commands.output + '\\s+([^\\n\\r\\;]*)\\s*;',
-    definition: sessionId + '._output += ($1) + \'\\n\';'
+    command: `${commands.output}\\s+([^\\n\\r\\;]*)\\s*;`,
+    definition: `output = $1;`
   }, {
-    command: commands.if + '\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
+    command: `${commands.if}\\s+([^\\r\\n]*[^\\${commands.then}])( ${commands.then})*`,
     definition: 'if ($1)'
   }, {
-    command: commands.while + '\\s+(.*)\\s*',
+    command: `${commands.while}\\s+(.*)\\s*`,
     definition: 'while ($1)'
   }, {
     command: commands.else,
@@ -46,7 +46,7 @@ module.exports = function (sessionId, isCondition) {
     command: commands.continue,
     definition: 'continue'
   }, {
-    command: commands.function + ' \\s*\\(([^\\n\\r\\;])\\)\\s*',
+    command: `${commands.function} \\s*\\(([^\\n\\r\\;])\\)\\s*`,
     definition: 'function ($1)'
   }, {
     command: '#',
@@ -64,18 +64,18 @@ module.exports = function (sessionId, isCondition) {
   if (!isCondition) {
     toReplace.push({
       command: '^([\\s\\S]*)$',
-      definition: 'function _compile() {\
-            ' + sessionId + '._output = \'\';\
-            $1\n\
-            return ' + sessionId + '._output;\
-            }\
-            _compile();'
+      definition: `
+      (() => {
+        let output = '';
+        $1
+        return output;
+      })();`
     })
   }
 
   return {
-    initialize: 'global.' + sessionId + ' = {}',
-    unInitialize: sessionId + ' = {};',
+    initialize: `global.${sessionId} = {}`,
+    unInitialize: `delete global.${sessionId}`,
     replace: toReplace
   }
 };
