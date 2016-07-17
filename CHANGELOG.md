@@ -1,9 +1,9 @@
-## 0.2.7 (upcoming)
+## 0.3.1 (upcoming)
 
   - **[add]** syntax: functions.
   - **[optimize]** convert: ES5 to ES6;
 
-## 0.2.6 (2016-07-17)
+## 0.3.0 (2016-07-17)
 
   - **[add]** tests: 28 (total 152).
   - **[optimize]** compiler algorithm.
