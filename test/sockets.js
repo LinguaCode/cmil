@@ -1,9 +1,20 @@
-const serverPath = '../src/server';
-let server = require(serverPath);
+let path = require('path');
 let io = require('socket.io-client');
-let purgeCache = require('../src/libs/purgeCache');
+let cacheWiper = require('node-cache-wiper');
 
-process.env.NODE_ENV = 'testing';
+const serverFileName = 'server';
+const sourceFilePath = './src/';
+const serverPath = path.join(sourceFilePath, serverFileName);
+const currentPathOfTheServer = path.join(process.cwd(), serverPath);
+
+let server = require(currentPathOfTheServer);
+
+const ENV = {
+  testing: 'testing',
+  production: 'production'
+};
+
+process.env.NODE_ENV = ENV.testing;
 
 /**Initialize the variables*/
 let socket = io.connect('http://localhost:3005');
@@ -58,7 +69,7 @@ let dbAnalyzer = function (sources) {
           .on(sessionId + '_' + 'evaluated', function (receivedData) {
 
             evalStatus = receivedData.status;
-            evalResult += receivedData.result;
+            evalResult += receivedData.result ? receivedData.result + '\n' : '';
 
             if (inputs && inputs.length && inputDataIndex != inputs.length) {
               let toSendData = {
@@ -70,13 +81,14 @@ let dbAnalyzer = function (sources) {
             }
           })
           .on(sessionId + '_' + 'sessionEnd', function () {
+            evalResult = evalResult ? evalResult.slice(0, -1) : '';
 
             console.log(`\nTitle: ${title}`);
-            console.log(`Source code:\n== START ==\n${code ? code + '\n' : ''}== END ==`);
+            console.log(`Source code:\n== START ==\n${code ? `${code}\n` : ''}== END ==`);
 
-            if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput + '\n' || (evalResult == expectedOutput && !evalResult))) {
+            if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput || (evalResult == expectedOutput && !evalResult))) {
               console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
-              console.log('Final result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n');
+              console.log('Final result:\n' + (evalResult || 'n/a') + '\n\n');
               done();
             } else if (evalStatus !== 'success' && expectedStatus.test(evalStatus)) {
               console.log(`\nError message:\n${evalStatus}\n\n`);
@@ -84,7 +96,7 @@ let dbAnalyzer = function (sources) {
             } else if (evalResult && evalResult != expectedOutput + '\n') {
               let errMessage =
                 '\nExpected result:\n' + (expectedOutput ? expectedOutput : 'n/a') +
-                '\nFinal result:\n' + (evalResult ? evalResult.substring(0, evalResult.length - 1) : 'n/a') + '\n\n';
+                '\nFinal result:\n' + (evalResult || 'n/a') + '\n\n';
               done(new Error(errMessage));
             } else {
               done(new Error(evalStatus));
@@ -130,19 +142,33 @@ describe('disconnect', function () {
 
 });
 
+
 describe('production test', function () {
 
-  it('run', function (done) {
-    process.env.NODE_ENV = 'production';
-    let port = process.env.PORT;
-    purgeCache(serverPath);
+  it('with cert files', function (done) {
+    cacheWiper(serverPath);
 
-    server = require(serverPath);
+    process.env.PORT = 3003;
+    process.env.NODE_ENV = ENV.production;
+    server = require(currentPathOfTheServer);
 
-    server.listen(port, function () {
-      server.close();
-    });
-    done();
+    setTimeout(function () {
+      done();
+    })
+  });
+
+  it('without cert files', function (done) {
+    cacheWiper(serverPath);
+    const FAKE_PATH = './fake/path';
+
+    process.env.PORT = 3004;
+    process.env.CERT_FILE_PATH = FAKE_PATH;
+    process.env.NODE_ENV = ENV.production;
+    server = require(currentPathOfTheServer);
+
+    setTimeout(function () {
+      done();
+    })
   });
 
 });

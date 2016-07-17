@@ -1,6 +1,6 @@
 {
-  "name": "linguacode-api",
-  "version": "0.2.4",
+  "name": "core",
+  "version": "0.2.5",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
@@ -8,28 +8,27 @@
     "watch": "gulp watch",
     "lint": "gulp lint",
     "test": "snyk test && mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec",
+    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && start coverage/lcov-report/index.html",
     "coveralls": "istanbul cover ./node_modules/.bin/_mocha && ./node_modules/.bin/istanbul-coveralls",
     "snyk-protect": "snyk protect",
     "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LinguaCode/linguacode-api"
+    "url": "git+https://github.com/LinguaCode/core"
   },
   "engines": {
     "node": ">= 6.1.0"
   },
   "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.github.com)",
   "license": "SEE LICENSE IN LICENSE file",
-  "bugs": "https://github.com/LinguaCode/linguacode-api/issues",
+  "bugs": "https://github.com/LinguaCode/core/issues",
   "dependencies": {
-    "cors": "^2.7.1",
     "express": "^4.14.0",
-    "helmet": "^2.1.1",
-    "linguacode-logger": "git+https://github.com/LinguaCode/linguacode-logger.git",
+    "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
     "lodash": "^4.11.1",
     "moment": "^2.14.1",
+    "node-cache-wiper": "git+https://github.com/otanim/node-cache-wiper.git",
     "snyk": "^1.17.0",
     "socket.io": "^1.4.8"
   },

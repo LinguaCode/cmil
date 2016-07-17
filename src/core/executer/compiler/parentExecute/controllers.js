@@ -1,4 +1,7 @@
 let _ = require('lodash');
+const status = {
+  timeout: 'timeout'
+};
 
 let controller = {
   manage: function (sessionId) {
@@ -23,22 +26,16 @@ let controller = {
     setter.indexIncrement(sessionId);
 
     if (checker.session.expired(sessionId)) {
-      __io.emit(sessionId + '_' + 'evaluated', {
-        result: '',
-        status: 'timeout'
-      });
-
-      management.session.end(sessionId);
-      console.llog('compiler: timeout');
+      setter.output(sessionId, status.timeout);
+      console.llog('compiler: trigger: timeout');
       return false;
     }
 
     if (checker.array.ended(sessionId)) {
       setter.downgrade(sessionId);
 
-      if (checker.session.ended(sessionId)) {
-        management.session.end(sessionId);
-        console.llog('compiler: session ended');
+      if (checker.session.pathOfLocationEnded(sessionId)) {
+        console.llog('compiler: trigger: session ended');
         return false;
       }
     }
@@ -75,13 +72,14 @@ let controller = {
     }
 
     console.llog('compiler: directive', 'end');
-  }
+  },
+
 };
 
 exports.controller = controller.manage;
 
 exports.prepareToCompile = function (sessionId, inputValue) {
-  let codeToCompile = _.cloneDeep(getter.operations(sessionId)) || [];
+  let codeToCompile = _.cloneDeep(getter.operations(sessionId));
   let inputOperation = '';
   if (inputValue) {
     inputOperation = evaluate.inputOperation(sessionId, inputValue);

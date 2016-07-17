@@ -1,5 +1,10 @@
 let _ = require('lodash');
 
+const status = {
+  success: 'success',
+  waitsForInput: 'waitsForInput'
+};
+
 let preOutput = function (outputText) {
   const booleanDefinitions = {
     true: 'ճիշտ',
@@ -26,12 +31,8 @@ exports.toCompile = function (sessionId) {
   console.llog('compiler: toCompile', 'begin');
 
   if (!input && checker.needToInput(sessionId)) {
-    let evaluated = {
-      result: '',
-      status: 'success'
-    };
 
-    __io.emit(sessionId + '_' + 'evaluated', evaluated);
+    setter.output(sessionId, status.waitsForInput);
     //trig if there is nothing to evaluate
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
@@ -51,7 +52,7 @@ exports.toCompile = function (sessionId) {
 
   evaluated.result = preOutput(evaluated.result);
 
-  __io.emit(sessionId + '_' + 'evaluated', evaluated);
+  setter.output(sessionId, evaluated.status, evaluated.result);
   if (evaluated.result) {
     console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
@@ -67,16 +68,15 @@ exports.toCompile = function (sessionId) {
 exports.child = function (sessionId) {
   console.llog('compiler: child', 'begin');
 
-  if (checker.needToUpgrade(sessionId)) {
-    let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
+  let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
 
-    let sessionContinue = upgrade(sessionId, firstKeyOfObject);
-    if (sessionContinue === false) {
-      console.llog('compiler: child', 'end');
-      return false;
-    }
+  let sessionContinue = upgrade(sessionId, firstKeyOfObject);
+
+  if (checker.needToUpgrade(sessionId) && sessionContinue === false) {
+    console.llog('compiler: child', 'end');
+    return false;
   }
-
+  
   if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
   }
@@ -84,21 +84,20 @@ exports.child = function (sessionId) {
   console.llog('compiler: child', 'end');
 };
 
-exports.parent = function (sessionId, isPassedBefore) {
+exports.parent = function (sessionId) {
   console.llog('compiler: parent', 'begin');
 
   let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
   let isParentAllow = evaluate.condition(sessionId);
   let isConditionStatementPassed = isParentIfElseStatement && isParentAllow;
   let isNotConditionStatementPassed = isParentIfElseStatement && !isParentAllow;
-  isPassedBefore = typeof(isPassedBefore) !== 'undefined' ? isPassedBefore : false;
 
-  if (isConditionStatementPassed && !isPassedBefore) {
+  if (isConditionStatementPassed) {
     upgrade(sessionId, 'child');
 
     setter.downgrade(sessionId);
-    
-  } else if (isNotConditionStatementPassed || isPassedBefore) {
+
+  } else if (isNotConditionStatementPassed) {
     controllers.controller(sessionId);
     if (getter.nameOfProperty(sessionId) == 'parent') {
       this.parent(sessionId);
@@ -111,7 +110,7 @@ exports.parent = function (sessionId, isPassedBefore) {
       return false;
     }
 
-    if (!checker.session.ended(sessionId)) {
+    if (!checker.session.pathOfLocationEnded(sessionId)) {
 
       if (getter.nameOfProperty(sessionId) == 'parent') {
         this.parent(sessionId);

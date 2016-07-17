@@ -23,17 +23,14 @@ exports.code = function (sessionId, sourceCode) {
 
     try {
       let output = eval(codeFormatted);
-      if (output) {
-        evalResult += output;
+      if (output !== '') {
+        evalResult += output + '\n';
       }
 
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
       if (hasBrokenVariable) {
-        __io.emit(sessionId + '_' + 'evaluated', {
-          result: '',
-          status: errorMessages.brokenVariable(hasBrokenVariable)
-        });
-        management.session.end(sessionId);
+        setter.output(sessionId, errorMessages.brokenVariable(hasBrokenVariable));
+        console.llog('compiler: trigger: broken variable');
         return false;
       }
 
@@ -45,7 +42,7 @@ exports.code = function (sessionId, sourceCode) {
   }
 
   return {
-    result: evalResult,
+    result: evalResult.slice(0, -1),
     status: evalStatus
   }
 };
@@ -57,5 +54,6 @@ exports.inputOperation = function (sessionId, inputValue) {
 let formatter = require('../../formatter');
 
 let getter = require('../getter');
+ let setter = require('../setter');
 
 let management = require('./management');

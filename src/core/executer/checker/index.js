@@ -7,7 +7,7 @@ exports.needToUpgrade = function (sessionId) {
 exports.needToInput = function (sessionId) {
   let currentToCompileObject = getter.object(sessionId);
 
-  let hasInputVariableProperty = currentToCompileObject ? currentToCompileObject.hasOwnProperty('inputVariable') : false;
+  let hasInputVariableProperty = currentToCompileObject.hasOwnProperty('inputVariable');
   return hasInputVariableProperty;
 };
 

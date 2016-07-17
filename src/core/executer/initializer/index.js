@@ -22,6 +22,11 @@ exports.session = function (sessionId) {
   eval(database.languages.linguacode(sessionId).initialize);
 };
 
+exports.output = function (sessionId) {
+  console.llog('compiler: initialize: output');
+  __store[sessionId].output = '';
+};
+
 exports.condition = function (conditionIdentifier) {
   console.llog('compiler: initialize: condition');
   _.set(global, conditionIdentifier, undefined);
