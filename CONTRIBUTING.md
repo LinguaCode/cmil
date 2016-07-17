@@ -22,8 +22,8 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
    See all project repositories at https://github.com/LinguaCode.
 3. Diagnose a bug by creating an issue.
 3. Suggest an improvement by creating an issue.
-4. Close resolved issues ([here's the list](https://github.com/LinguaCode/linguacode-api/issues))
-5. [Test the code](https://github.com/LinguaCode/linguacode-api/blob/master/README.md).
+4. Close resolved issues ([here's the list](https://github.com/LinguaCode/core/issues))
+5. [Test the code](https://github.com/LinguaCode/core/blob/master/README.md).
 6. Fix a bug/resolve an issue.
 7. Write a test.
 8. Add a comment to the code.
@@ -49,5 +49,5 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
 
 
 ##License
-LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/linguacode-api/blob/master/LICENSE).
+LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/core/blob/master/LICENSE).
 
