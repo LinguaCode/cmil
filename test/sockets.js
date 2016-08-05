@@ -65,20 +65,19 @@ const dbAnalyzer = sources => {
 
         const socketPathResolve = path => `${sessionId}_${path}`;
 
-        const path = {
-          evaluated: socketPathResolve(EVALUATED),
-          waitsForInput: socketPathResolve(WAITS_FOR_INPUT),
-          sessionEnd: socketPathResolve(SESSION_END),
-          error: socketPathResolve(ERROR),
-        };
+        const PATH_EVALUATED = socketPathResolve(EVALUATED);
+        const PATH_WAITS_FOR_INPUT = socketPathResolve(WAITS_FOR_INPUT);
+        const PATH_SESSION_END = socketPathResolve(SESSION_END);
+        const PATH_ERROR = socketPathResolve(ERROR);
 
         codeSubmit(sessionId, code);
 
+        let isErrorOccurred = false;
         socket
-          .on(path.evaluated, receivedData => {
+          .on(PATH_EVALUATED, receivedData => {
             evalResult += receivedData ? `${receivedData}\n` : '';
           })
-          .on(path.waitsForInput, () => {
+          .on(PATH_WAITS_FOR_INPUT, () => {
             if (inputs && inputs.length && inputDataIndex != inputs.length) {
               const toSendData = {
                 sessionId,
@@ -88,24 +87,33 @@ const dbAnalyzer = sources => {
               socket.emit('evaluated', toSendData);
             }
           })
-          .on(path.sessionEnd, () => {
+          .on(PATH_SESSION_END, () => {
+            if (isErrorOccurred) {
+              return;
+            }
+
             evalResult = evalResult ? evalResult.slice(0, -1) : '';
 
-            console.log(`\nTitle: ${title}`);
-            console.log(`Source code:\n== START ==\n${code ? `${code}\n` : ''}== END ==`);
+            const titleMessage = `\nTitle: ${title}`;
+            const expectedResultMessage = `Expected result:\n${expectedOutput ? expectedOutput : 'n/a'}`;
+            const finalResultMessage = `Final result:\n${evalResult || 'n/a'}\n\n`;
+            const sourceCodeMessage = `Source code:\n== START ==\n${code ? `${code}\n` : ''}== END ==`;
+            const errorMessage = `\n${expectedResultMessage}\n${finalResultMessage}`;
+
+            console.log(titleMessage);
+            console.log(sourceCodeMessage);
 
             if (evalResult == expectedOutput || (evalResult == expectedOutput && !evalResult)) {
-              console.log(`Expected result:\n${expectedOutput ? expectedOutput : 'n/a'}`);
-              console.log(`Final result:\n${evalResult || 'n/a'}\n\n`);
+              console.log(errorMessage);
               done();
             } else if (evalResult && evalResult != `${expectedOutput}\n`) {
-              const errMessage = `\nExpected result:\n${expectedOutput ? expectedOutput : 'n/a'}\nFinal result:\n${evalResult || 'n/a'}\n\n`;
-              done(new Error(errMessage));
+              done(new Error(errorMessage));
             }
           })
-          .on(path.error, evalStatus => {
-            const errorMessage = `\nError message:\n${evalStatus}\n\n`;
-            if (expectedStatus.test(evalStatus)) {
+          .on(PATH_ERROR, message => {
+            isErrorOccurred = true;
+            const errorMessage = `\nError message:\n${message}\n\n`;
+            if (expectedStatus.test(message)) {
               console.log(errorMessage);
               done();
             } else {
@@ -121,15 +129,19 @@ const dbAnalyzer = sources => {
 /**setup the connection*/
 describe('initialize', () => {
 
+  let isDonePassedOnce = false;
   it('socketId', done => {
     socket
       .on('connect', () => {
+        if (isDonePassedOnce) {
+          return;
+        }
+
+        isDonePassedOnce = true;
         socketId = setSocketId(socket.io.engine.id);
         done();
       })
-      .on('error', err => {
-        done(err);
-      });
+      .on('error', done);
   });
 
 });
@@ -138,7 +150,8 @@ describe('initialize', () => {
 const dbs = ['successes', 'tutorials', 'errors'];
 dbs.forEach((db)=> {
   describe(db, () => {
-    dbAnalyzer(require(`./database/${db}`));
+    const sources = require(`./database/${db}`);
+    dbAnalyzer(sources);
   });
 });
 
@@ -179,6 +192,37 @@ describe('production test', () => {
     setTimeout(() => {
       done();
     })
+  });
+
+});
+
+describe('timeout ignore', () => {
+
+  it('true', done => {
+    cacheWiper(serverPath);
+
+    process.env.PORT = 3007;
+    process.env.TIMEOUT_IGNORE = true;
+    server = require(currentPathOfTheServer);
+
+    const sessionId = setSessionId();
+    const code = '';
+
+    socket
+      .connect()
+      .on('connect', () => {
+        socketId = setSocketId(socket.io.engine.id);
+        codeSubmit(sessionId, code);
+
+        const socketPathResolve = path => `${sessionId}_${path}`;
+
+        const PATH_SESSION_END = socketPathResolve(SESSION_END);
+
+        socket.on(PATH_SESSION_END, () => {
+          done();
+        });
+      })
+
   });
 
 });

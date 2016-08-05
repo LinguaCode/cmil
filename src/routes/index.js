@@ -63,16 +63,21 @@ let sockets = {
 const postExecute = function (sessionId) {
   let output = getter.output(sessionId);
   let currentStatus = output.status;
-  if (currentStatus == status.waitsForInput) {
+  if ((!output.result && currentStatus == status.success) || currentStatus == status.waitsForInput) {
+    if (output.result) {
+      sender.evaluate(sessionId, output.result);
+    }
     sender.waitsForInput(sessionId);
-  }else if (currentStatus == status.success) {
+  } else if (currentStatus == status.success) {
     sender.evaluate(sessionId, output.result);
+    sender.waitsForInput(sessionId);
   } else {
-    sender.error(sessionId);
+    sender.error(sessionId, currentStatus);
+    sender.sessionEnd(sessionId);
   }
 
   if (checker.session.ended(sessionId)) {
-    sender.sessionEnd(sessionId);
+    return sender.sessionEnd(sessionId);
   }
 };
 
