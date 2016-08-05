@@ -1,5 +1,7 @@
 let moment = require('moment');
 
+const TIMEOUT_TIME = 666;
+
 const status = {
   success: 'success',
   waitsForInput: 'waitsForInput',
@@ -46,11 +48,10 @@ var isExpiredCheck = exports.expired = function (sessionId) {
   let sessionTime = moment(getter.sessionTime(sessionId));
   let now = moment();
   let timeDifferenceBySeconds = now.diff(sessionTime);
-  if (timeDifferenceBySeconds > 666) {
-    return true;
-  }
+  const timeOutCondition = !process.env.TIMEOUT_IGNORE ?
+  timeDifferenceBySeconds > TIMEOUT_TIME : false;
 
-  return false;
+  return timeOutCondition;
 };
 
 let getter = require('../getter');
