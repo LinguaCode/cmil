@@ -12,8 +12,8 @@ exports.waitsForInput = sessionId => {
   io.emit(`${sessionId}_waitsForInput`);
 };
 
-exports.error = sessionId => {
-  io.emit(`${sessionId}_error`);
+exports.error = (sessionId, message) => {
+  io.emit(`${sessionId}_error`, message);
 };
 
 exports.submitSuccess = sessionId => {

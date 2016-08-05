@@ -2,8 +2,6 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-    code: 'գրել X',
-    inputs: [617]
   }]
 }, {
   group: 'hy',
