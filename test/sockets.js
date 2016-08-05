@@ -208,9 +208,8 @@ describe('timeout ignore', () => {
     const sessionId = setSessionId();
     const code = '';
 
-
-    socket.connect();
     socket
+      .connect()
       .on('connect', () => {
         socketId = setSocketId(socket.io.engine.id);
         codeSubmit(sessionId, code);
