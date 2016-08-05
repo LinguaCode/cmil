@@ -5,6 +5,12 @@ let errorHandler = require('../core/errorHandler');
 let compiler = require('../core/executer/compiler');
 let ipAddress;
 
+const status = {
+  success: 'success',
+  waitsForInput: 'waitsForInput',
+  timeout: 'timeout'
+};
+
 let sockets = {
   submit: function (receivedData) {
     let sourceCode = receivedData.sourceCode;
@@ -56,7 +62,14 @@ let sockets = {
 
 const postExecute = function (sessionId) {
   let output = getter.output(sessionId);
-  sender.evaluate(sessionId, output);
+  let currentStatus = output.status;
+  if (currentStatus == status.waitsForInput) {
+    sender.waitsForInput(sessionId);
+  }else if (currentStatus == status.success) {
+    sender.evaluate(sessionId, output.result);
+  } else {
+    sender.error(sessionId);
+  }
 
   if (checker.session.ended(sessionId)) {
     sender.sessionEnd(sessionId);
@@ -72,8 +85,8 @@ io.on('connection', function (socket) {
 
 });
 
+let sender = require('../core/sender');
 let formatter = require('../core/formatter');
-let sender = require('../core/executer/sender');
 let setter = require('../core/executer/setter');
 let checker = require('../core/executer/checker');
 let getter = require('../core/executer/getter');

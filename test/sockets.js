@@ -1,6 +1,11 @@
-let path = require('path');
-let io = require('socket.io-client');
-let cacheWiper = require('node-cache-wiper');
+const path = require('path');
+const io = require('socket.io-client');
+const cacheWiper = require('node-cache-wiper');
+
+const EVALUATED = 'evaluated';
+const WAITS_FOR_INPUT = 'waitsForInput';
+const SESSION_END = 'sessionEnd';
+const ERROR = 'error';
 
 const serverFileName = 'server';
 const sourceFilePath = './src/';
@@ -17,89 +22,94 @@ const ENV = {
 process.env.NODE_ENV = ENV.testing;
 
 /**Initialize the variables*/
-let socket = io.connect('http://localhost:3005');
+const socket = io.connect('http://localhost:3005');
 let compileId = 0;
 let socketId;
 
-let setSocketId = function (socketId) {
-  return '_' + socketId.replace(/-/, '_');
-};
+const setSocketId = socketId => `_${socketId.replace(/-/, '_')}`;
 
-let setSessionId = function () {
-  return socketId + '_' + compileId;
-};
+const setSessionId = () => `${socketId}_${compileId}`;
 
-let codeSubmit = function (sessionId, sourceCode) {
-  let sendData = {
-    sessionId: sessionId,
-    sourceCode: sourceCode
+const codeSubmit = (sessionId, sourceCode) => {
+  const sendData = {
+    sessionId,
+    sourceCode
   };
 
   socket.emit('submit', sendData);
 
-  socket.on(sessionId + '_' + 'submitSuccess', () => {
+  socket.on(`${sessionId}_submitSuccess`, () => {
     console.log('Socket.IO: client: sourceCode has been successfully send!');
   });
 
   compileId = compileId + 1;
 };
 
-let dbAnalyzer = function (sources) {
-  sources.forEach(function (source) {
+const dbAnalyzer = sources => {
+  sources.forEach(source => {
     if (source.sources) {
-      describe(source.group, function () {
+      describe(source.group, () => {
         dbAnalyzer(source.sources);
       });
     } else {
-      let title = source.title;
-      let code = source.code || '';
-      let expectedOutput = source.output || '';
-      let expectedStatus = new RegExp(source.status || 'success');
-      let inputs = source.inputs;
+      const title = source.title;
+      const code = source.code || '';
+      const expectedOutput = source.output || '';
+      const expectedStatus = new RegExp(source.status);
+      const inputs = source.inputs;
 
-      it(title, function (done) {
-        let sessionId = setSessionId();
-        let evalStatus = 'success';
+      it(title, done => {
+        const sessionId = setSessionId();
         let evalResult = '';
         let inputDataIndex = 0;
+
+        const socketPathResolve = path => `${sessionId}_${path}`;
+
+        const path = {
+          evaluated: socketPathResolve(EVALUATED),
+          waitsForInput: socketPathResolve(WAITS_FOR_INPUT),
+          sessionEnd: socketPathResolve(SESSION_END),
+          error: socketPathResolve(ERROR),
+        };
 
         codeSubmit(sessionId, code);
 
         socket
-          .on(sessionId + '_' + 'evaluated', function (receivedData) {
-
-            evalStatus = receivedData.status;
-            evalResult += receivedData.result ? receivedData.result + '\n' : '';
-
+          .on(path.evaluated, receivedData => {
+            evalResult += receivedData ? `${receivedData}\n` : '';
+          })
+          .on(path.waitsForInput, () => {
             if (inputs && inputs.length && inputDataIndex != inputs.length) {
-              let toSendData = {
-                sessionId: sessionId,
+              const toSendData = {
+                sessionId,
                 inputText: inputs[inputDataIndex++]
               };
 
               socket.emit('evaluated', toSendData);
             }
           })
-          .on(sessionId + '_' + 'sessionEnd', function () {
+          .on(path.sessionEnd, () => {
             evalResult = evalResult ? evalResult.slice(0, -1) : '';
 
             console.log(`\nTitle: ${title}`);
             console.log(`Source code:\n== START ==\n${code ? `${code}\n` : ''}== END ==`);
 
-            if (evalStatus == 'success' && expectedStatus.test(evalStatus) && ( evalResult == expectedOutput || (evalResult == expectedOutput && !evalResult))) {
-              console.log('Expected result:\n' + (expectedOutput ? expectedOutput : 'n/a'));
-              console.log('Final result:\n' + (evalResult || 'n/a') + '\n\n');
+            if (evalResult == expectedOutput || (evalResult == expectedOutput && !evalResult)) {
+              console.log(`Expected result:\n${expectedOutput ? expectedOutput : 'n/a'}`);
+              console.log(`Final result:\n${evalResult || 'n/a'}\n\n`);
               done();
-            } else if (evalStatus !== 'success' && expectedStatus.test(evalStatus)) {
-              console.log(`\nError message:\n${evalStatus}\n\n`);
-              done();
-            } else if (evalResult && evalResult != expectedOutput + '\n') {
-              let errMessage =
-                '\nExpected result:\n' + (expectedOutput ? expectedOutput : 'n/a') +
-                '\nFinal result:\n' + (evalResult || 'n/a') + '\n\n';
+            } else if (evalResult && evalResult != `${expectedOutput}\n`) {
+              const errMessage = `\nExpected result:\n${expectedOutput ? expectedOutput : 'n/a'}\nFinal result:\n${evalResult || 'n/a'}\n\n`;
               done(new Error(errMessage));
+            }
+          })
+          .on(path.error, evalStatus => {
+            const errorMessage = `\nError message:\n${evalStatus}\n\n`;
+            if (expectedStatus.test(evalStatus)) {
+              console.log(errorMessage);
+              done();
             } else {
-              done(new Error(evalStatus));
+              done(new Error(errorMessage));
             }
           });
       });
@@ -109,15 +119,15 @@ let dbAnalyzer = function (sources) {
 
 /**=== TESTS ===*/
 /**setup the connection*/
-describe('initialize', function () {
+describe('initialize', () => {
 
-  it('socketId', function (done) {
+  it('socketId', done => {
     socket
-      .on('connect', function () {
+      .on('connect', () => {
         socketId = setSocketId(socket.io.engine.id);
         done();
       })
-      .on('error', function (err) {
+      .on('error', err => {
         done(err);
       });
   });
@@ -125,17 +135,17 @@ describe('initialize', function () {
 });
 
 /**passed db test*/
-var dbs = ['successes', 'tutorials', 'errors'];
+const dbs = ['successes', 'tutorials', 'errors'];
 dbs.forEach((db)=> {
-  describe(db, function () {
-    dbAnalyzer(require('./database/' + db));
+  describe(db, () => {
+    dbAnalyzer(require(`./database/${db}`));
   });
 });
 
 /**interrupt the connection*/
-describe('disconnect', function () {
+describe('disconnect', () => {
 
-  it('disconnect', function (done) {
+  it('disconnect', done => {
     socket.disconnect();
     done();
   });
@@ -143,21 +153,21 @@ describe('disconnect', function () {
 });
 
 
-describe('production test', function () {
+describe('production test', () => {
 
-  it('with cert files', function (done) {
+  it('with cert files', done => {
     cacheWiper(serverPath);
 
     process.env.PORT = 3003;
     process.env.NODE_ENV = ENV.production;
     server = require(currentPathOfTheServer);
 
-    setTimeout(function () {
+    setTimeout(() => {
       done();
     })
   });
 
-  it('without cert files', function (done) {
+  it('without cert files', done => {
     cacheWiper(serverPath);
     const FAKE_PATH = './fake/path';
 
@@ -166,7 +176,7 @@ describe('production test', function () {
     process.env.NODE_ENV = ENV.production;
     server = require(currentPathOfTheServer);
 
-    setTimeout(function () {
+    setTimeout(() => {
       done();
     })
   });
