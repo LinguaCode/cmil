@@ -1,7 +1,6 @@
 let _ = require('lodash');
-const status = {
-  timeout: 'timeout'
-};
+
+const TIMEOUT = require('../../../../constants').STATUS.TIMEOUT;
 
 let controller = {
   manage: function (sessionId) {
@@ -26,7 +25,7 @@ let controller = {
     setter.indexIncrement(sessionId);
 
     if (checker.session.expired(sessionId)) {
-      setter.output(sessionId, status.timeout);
+      setter.output(sessionId, TIMEOUT);
       console.llog('compiler: trigger: timeout');
       return false;
     }
