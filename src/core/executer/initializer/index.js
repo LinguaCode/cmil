@@ -17,12 +17,12 @@ exports.structure = function (sessionId, sourceCode) {
   console.llog('compiler: initialize: structure', 'end');
 };
 
-exports.session = function (sessionId) {
+exports.session = sessionId => {
   console.llog('compiler: initialize: session');
   eval(LANGUAGE.linguacode(sessionId).initialize);
 };
 
-exports.output = function (sessionId) {
+exports.output = sessionId => {
   console.llog('compiler: initialize: output');
   __store[sessionId].output = '';
 };

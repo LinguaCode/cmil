@@ -1,13 +1,18 @@
-let io = require('../io');
+const io = require('../io');
+const code = require('../core/modifier/code');
+const errorHandler = require('../core/errorHandler');
+const compiler = require('../core/executer/compiler');
+const STATUS = require('../constants').STATUS;
+const sender = require('../core/sender');
+const formatter = require('../core/formatter');
+const setter = require('../core/executer/setter');
+const checker = require('../core/executer/checker');
+const getter = require('../core/executer/getter');
 
-let code = require('../core/modifier/code');
-let errorHandler = require('../core/errorHandler');
-let compiler = require('../core/executer/compiler');
-let STATUS = require('../constants').STATUS;
 let ipAddress;
 
 let sockets = {
-  submit: function (receivedData) {
+  submit: receivedData => {
     let sourceCode = receivedData.sourceCode;
     let sessionId = receivedData.sessionId;
 
@@ -30,11 +35,9 @@ let sockets = {
     postExecute(sessionId);
   },
 
-  disconnect: function () {
-    console.llog('Socket.IO: server: One of connections closed.');
-  },
+  disconnect: () => console.llog('Socket.IO: server: One of connections closed.'),
 
-  evaluated: function (receivedData) {
+  evaluated: receivedData => {
     let inputText = receivedData.inputText;
     let sessionId = receivedData.sessionId;
     console.llog(`Socket.IO: server: '${inputText}' text successfully received!`);
@@ -44,7 +47,7 @@ let sockets = {
     postExecute(sessionId);
   },
 
-  init: function (socket) {
+  init: function(socket) {
 
     socket.on('submit', this.submit);
 
@@ -55,7 +58,7 @@ let sockets = {
   }
 };
 
-const postExecute = function (sessionId) {
+const postExecute = sessionId => {
   let output = getter.output(sessionId);
   let currentStatus = output.status;
   if ((!output.result && currentStatus == STATUS.SUCCESS) || currentStatus == STATUS.WAITS_FOR_INPUT) {
@@ -76,17 +79,9 @@ const postExecute = function (sessionId) {
   }
 };
 
-io.on('connection', function (socket) {
-
+io.on('connection', socket => {
   ipAddress = socket.handshake.address;
   console.llog(`Socket.IO: server: New connection from ${ipAddress}`);
 
   sockets.init(socket);
-
 });
-
-let sender = require('../core/sender');
-let formatter = require('../core/formatter');
-let setter = require('../core/executer/setter');
-let checker = require('../core/executer/checker');
-let getter = require('../core/executer/getter');

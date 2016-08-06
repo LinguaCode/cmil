@@ -3,7 +3,7 @@ let _ = require('lodash');
 const TIMEOUT = require('../../../../constants').STATUS.TIMEOUT;
 
 let controller = {
-  manage: function (sessionId) {
+  manage: sessionId => {
     console.llog('compiler: controller', 'begin');
     console.llog(__store[sessionId].pathOfLocation);
 
@@ -15,7 +15,7 @@ let controller = {
     console.llog(__store[sessionId].pathOfLocation);
     console.llog('compiler: controller', 'end');
   },
-  oscillation: function (sessionId) {
+  oscillation: sessionId => {
     console.llog('compiler: oscillation');
 
     let management = require('../management');

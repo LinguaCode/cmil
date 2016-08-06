@@ -1,3 +1,3 @@
-exports.time = function (sessionId) {
+exports.time = sessionId => {
   return __store[sessionId].time;
 };

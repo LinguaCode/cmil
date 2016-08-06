@@ -4,7 +4,7 @@ let errorHandler = require('../../errorHandler');
 let errorCheck = require('../../errorHandler/checker');
 let errorMessages = require('../../errorHandler/messages');
 
-exports.condition = function (sessionId) {
+exports.condition = sessionId => {
   let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
   let isPassed = eval(formattedCondition) === true;
   return isPassed;

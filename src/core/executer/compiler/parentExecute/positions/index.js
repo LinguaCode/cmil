@@ -15,7 +15,7 @@ let preOutput = function (outputText) {
   return outputText;
 };
 
-exports.toCompile = function (sessionId) {
+exports.toCompile = sessionId => {
   let input = getter.input(sessionId);
   console.llog('compiler: toCompile', 'begin');
 
@@ -54,7 +54,7 @@ exports.toCompile = function (sessionId) {
   console.llog('compiler: toCompile', 'end');
 };
 
-exports.child = function (sessionId) {
+exports.child = sessionId => {
   console.llog('compiler: child', 'begin');
 
   let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
@@ -73,7 +73,7 @@ exports.child = function (sessionId) {
   console.llog('compiler: child', 'end');
 };
 
-exports.parent = function (sessionId) {
+exports.parent = sessionId => {
   console.llog('compiler: parent', 'begin');
 
   let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';

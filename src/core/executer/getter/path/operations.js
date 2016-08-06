@@ -1,4 +1,4 @@
-exports.parentObject = function (sessionId) {
+exports.parentObject = sessionId => {
   let pathOfLocation = location(sessionId);
 
   let pathOfParent = pathOfLocation.lastIndexOf('[');
@@ -6,6 +6,6 @@ exports.parentObject = function (sessionId) {
   return pathOfLocation.substring(0, pathOfParent);
 };
 
-let location = exports.location = function (sessionId) {
+let location = exports.location = sessionId => {
   return __store[sessionId].pathOfLocation;
 };
