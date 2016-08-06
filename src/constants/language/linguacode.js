@@ -1,52 +1,51 @@
-let constants = require('../constants').constants;
-let commands = require('../commands/variables');
+let VARIABLE = require('../variable');
 
 module.exports = (sessionId, isCondition) => {
   isCondition = isCondition || false;
-  const _then = commands.then;
+  const _then = VARIABLE.then;
   let notThen = '';
   for (let i = 0; i < _then.length; i++) {
     notThen += `[^\\${_then[i]}]`;
   }
 
   const toReplace = [{
-    command: `(${commands.not})\\s*\\(`,
+    command: `(${VARIABLE.not})\\s*\\(`,
     definition: '!('
   }, {
-    command: commands.true,
+    command: VARIABLE.true,
     definition: 'true'
   }, {
-    command: commands.false,
+    command: VARIABLE.false,
     definition: 'false'
   }, {
-    command: commands.or,
+    command: VARIABLE.or,
     definition: '||'
   }, {
-    command: commands.and1,
+    command: VARIABLE.and1,
     definition: '&&'
   }, {
-    command: commands.and2,
+    command: VARIABLE.and2,
     definition: '&&'
   }, {
-    command: `${commands.output}\\s+([^\\n\\r\\;]*)\\s*;`,
+    command: `${VARIABLE.output}\\s+([^\\n\\r\\;]*)\\s*;`,
     definition: `output = $1;`
   }, {
-    command: `${commands.if}\\s+([^\\r\\n]*[^\\${commands.then}])( ${commands.then})*`,
+    command: `${VARIABLE.if}\\s+([^\\r\\n]*[^\\${VARIABLE.then}])( ${VARIABLE.then})*`,
     definition: 'if ($1)'
   }, {
-    command: `${commands.while}\\s+(.*)\\s*`,
+    command: `${VARIABLE.while}\\s+(.*)\\s*`,
     definition: 'while ($1)'
   }, {
-    command: commands.else,
+    command: VARIABLE.else,
     definition: 'else'
   }, {
-    command: commands.break,
+    command: VARIABLE.break,
     definition: 'break'
   }, {
-    command: commands.continue,
+    command: VARIABLE.continue,
     definition: 'continue'
   }, {
-    command: `${commands.function} \\s*\\(([^\\n\\r\\;])\\)\\s*`,
+    command: `${VARIABLE.function} \\s*\\(([^\\n\\r\\;])\\)\\s*`,
     definition: 'function ($1)'
   }, {
     command: '#',

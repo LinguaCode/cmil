@@ -7,7 +7,7 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
   let correctResult;
   let toReplace;
   let scopes = ['\'', '"', '«', '»'];
-  let replaceObject = database.languages[db](sessionId, isCondition).replace;
+  let replaceObject = LANGUAGES[db](sessionId, isCondition).replace;
   for (let i = 0; i < replaceObject.length; i++) { //languages
     let isGlobal = db === 'global';
     re = new RegExp(isGlobal ? '[^\\\\](' + replaceObject[i].command + ')' : replaceObject[i].command, 'g');
@@ -39,4 +39,4 @@ exports.codeFormatting = function (sessionId, sourceCode) {
 };
 
 let tools = require('../../libs/tools');
-let database = require('../../database/connection');
+let LANGUAGES = require('../../constants').LANGUAGE;

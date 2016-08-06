@@ -1,24 +1,9 @@
-let requiredDataGetter = function (requiredFileNameList) {
-  console.llog('builder: _requiredDataGetter', 'begin');
-  let paths = {
-    components: '../../components',
-    commands: '../../../../database/commands/variables',
-    operations: '../../operations'
-  };
-
-  let requiredFileList = {};
-  requiredFileNameList.forEach(function (fileName) {
-    requiredFileList[fileName] = require(paths[fileName]);
-  });
-
-  console.llog('builder: _requiredDataGetter', 'end');
-  return requiredFileList;
-};
+const VARIABLE = require('../../../../constants').VARIABLE;
+const components = require('../../components');
+const operations = require('../../operations');
 
 exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
   console.llog('builder: _if', 'begin');
-  
-  let requiredFiles = requiredDataGetter(['components', 'commands', 'operations']);
 
   let _child = [];
   let previousParentIndex = parent.index.previous;
@@ -26,12 +11,12 @@ exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variabl
   let parentOfIfCommand;
   let nextParentConditionType;
   do {
-    parentOfIfCommand = requiredFiles.components.parent(listOfCommands, listOfLevels, previousParentIndex);
+    parentOfIfCommand = components.parent(listOfCommands, listOfLevels, previousParentIndex);
     let nextParentIndex = parentOfIfCommand.index.next;
 
     //start
-    let content = requiredFiles.components.child(listOfCommands, listOfLevels, parentOfIfCommand.index);
-    let _content = requiredFiles.operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
+    let content = components.child(listOfCommands, listOfLevels, parentOfIfCommand.index);
+    let _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
     let _condition = values.ifCondition(sessionId, parentOfIfCommand.conditions.value.previous);
 
     _child.push({
@@ -46,10 +31,10 @@ exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variabl
     countOfCommands += content.listOfCommands.length + 1;
     nextParentConditionType = parentOfIfCommand.conditions.type.next;
 
-  } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == requiredFiles.commands.else || nextParentConditionType == requiredFiles.commands.elif));
+  } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == VARIABLE.else || nextParentConditionType == VARIABLE.elif));
 
   countOfCommands--;
-  
+
   console.llog('builder: _if', 'end');
   return {
     child: _child,
@@ -59,11 +44,9 @@ exports._if = function (sessionId, listOfCommands, listOfLevels, parent, variabl
 
 exports._repeat = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
   console.llog('builder: _repeat', 'begin');
-  
-  let requiredFiles = requiredDataGetter(['components', 'operations']);
 
-  let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
-  let _content = requiredFiles.operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
+  let content = components.child(listOfCommands, listOfLevels, parent.index);
+  let _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
   let _condition = values.repeatCondition(sessionId, parent.conditions.value.previous);
   let _child = [{
     type: 'repeat',
@@ -82,11 +65,9 @@ exports._repeat = function (sessionId, listOfCommands, listOfLevels, parent, var
 
 exports._do = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
   console.llog('builder: _do', 'begin');
-  
-  let requiredFiles = requiredDataGetter(['components', 'operations']);
 
-  let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
-  let _content = requiredFiles.operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
+  let content = components.child(listOfCommands, listOfLevels, parent.index);
+  let _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
   let _condition = values.doCondition(sessionId, parent.conditions.value.next);
   let _child = [{
     type: 'whileDo',
@@ -106,11 +87,9 @@ exports._do = function (sessionId, listOfCommands, listOfLevels, parent, variabl
 
 exports._while = function (sessionId, listOfCommands, listOfLevels, parent, variables) {
   console.llog('builder: _while', 'begin');
-  
-  let requiredFiles = requiredDataGetter(['components', 'operations']);
 
-  let content = requiredFiles.components.child(listOfCommands, listOfLevels, parent.index);
-  let _content = requiredFiles.operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
+  let content = components.child(listOfCommands, listOfLevels, parent.index);
+  let _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
   let _condition = parent.conditions.value.previous;
   let _child = [{
     type: 'while',

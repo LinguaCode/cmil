@@ -42,5 +42,3 @@ exports.conditionNameInit = function (sessionId, conditionType) {
   let repeatVarWithIndex = conditionType + '_' + randomIndex;
   return sessionName + repeatVarWithIndex;
 };
-
-let commands = require('../../../../database/commands/variables');

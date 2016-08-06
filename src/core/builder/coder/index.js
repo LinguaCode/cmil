@@ -5,7 +5,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
 
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
-  let reInput = new RegExp(commands.input + '\\s+(' + sessionId + '.(' + variables.join('|') + '))', 'g');
+  let reInput = new RegExp(VARIABLE.input + '\\s+(' + sessionId + '.(' + variables.join('|') + '))', 'g');
   let indexOfOperationBegin, indexOfOperationEnd;
   let reInputStrOld, reInputStrNew;
   let operations, inputVariable;
@@ -55,7 +55,7 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
   return toCompiles;
 };
 
-let commands = require('../../../database/commands/variables');
+let VARIABLE = require('../../../constants').VARIABLE;
 
 let variables = exports.variables = require('./variables');
 let tools = require('../../../libs/tools');

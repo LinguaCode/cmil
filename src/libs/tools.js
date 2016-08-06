@@ -81,7 +81,6 @@ let quoteAnalize = function (input, index) {
   return quotes;
 };
 
-
 let counter = function (quotes, input, position, index) {
 
 
