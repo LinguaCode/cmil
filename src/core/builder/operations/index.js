@@ -40,7 +40,7 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
       }
 
       let conditionType = _parent.conditions.type.previous.substring(1);
-      let conditionResult = conditions.conditionals['_' + conditionType](sessionId, listOfCommands, listOfLevels, _parent, variables);
+      let conditionResult = conditions.conditionals[`_${conditionType}`](sessionId, listOfCommands, listOfLevels, _parent, variables);
       let parent = conditionResult.child;
 
       if (toCompile.length != 0) {

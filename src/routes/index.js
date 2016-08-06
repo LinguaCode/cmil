@@ -37,7 +37,7 @@ let sockets = {
   evaluated: function (receivedData) {
     let inputText = receivedData.inputText;
     let sessionId = receivedData.sessionId;
-    console.llog('Socket.IO: server: \'' + inputText + '\' text successfully received!');
+    console.llog(`Socket.IO: server: '${inputText}' text successfully received!`);
 
     compiler.listener(sessionId, inputText);
 
@@ -79,7 +79,7 @@ const postExecute = function (sessionId) {
 io.on('connection', function (socket) {
 
   ipAddress = socket.handshake.address;
-  console.llog('Socket.IO: server: New connection from ' + ipAddress);
+  console.llog(`Socket.IO: server: New connection from ${ipAddress}`);
 
   sockets.init(socket);
 

@@ -240,5 +240,5 @@ exports.valueRender = function (inputText) {
   if (this.isNumeric(inputText)) {
     return parseFloat(inputText);
   }
-  return '\'' + inputText + '\'';
+  return `'${inputText}'`;
 };
