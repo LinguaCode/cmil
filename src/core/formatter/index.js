@@ -1,6 +1,4 @@
-exports.codeSemicolon = function (sourceCode) {
-  return `${sourceCode.replace('\n', ';\n')};`;
-};
+exports.codeSemicolon = sourceCode => `${sourceCode.replace('\n', ';\n')};`;
 
 exports.parser = function (sessionId, sourceCode, db, isCondition) {
   let re, reStr;
