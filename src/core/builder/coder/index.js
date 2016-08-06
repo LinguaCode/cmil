@@ -1,11 +1,14 @@
 let _ = require('lodash');
+const VARIABLE = require('../../../constants').VARIABLE;
+const tools = require('../../../libs/tools');
+const variables = exports.variables = require('./variables');
 
-exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
+exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   console.llog('builder: splitToCompilableParts');
 
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
-  let reInput = new RegExp(VARIABLE.input + '\\s+(' + sessionId + '.(' + variables.join('|') + '))', 'g');
+  let reInput = new RegExp(`${VARIABLE.input}\\s+(${sessionId}.(${variables.join('|')}))`, 'g');
   let indexOfOperationBegin, indexOfOperationEnd;
   let reInputStrOld, reInputStrNew;
   let operations, inputVariable;
@@ -54,10 +57,3 @@ exports.splitToCompilableParts = function (sessionId, sourceCode, variables) {
 
   return toCompiles;
 };
-
-let VARIABLE = require('../../../constants').VARIABLE;
-
-let variables = exports.variables = require('./variables');
-let tools = require('../../../libs/tools');
-
-
