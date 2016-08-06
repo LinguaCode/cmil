@@ -1,3 +1,5 @@
+const getter = require('../getter');
+
 exports.needToUpgrade = sessionId => {
   let isArrayEnded = this.array.ended(sessionId);
   let isArrayEmpty = this.array.empty(sessionId);
@@ -13,5 +15,3 @@ exports.needToInput = sessionId => {
 
 exports.array = require('./array');
 exports.session = require('./session');
-
-let getter = require('../getter');

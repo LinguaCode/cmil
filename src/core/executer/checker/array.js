@@ -1,9 +1,5 @@
-exports.ended = sessionId => {
-  return getter.index(sessionId) >= getter.limitOfArray(sessionId);
-};
+const getter = require('../getter');
 
-exports.empty = sessionId => {
-  return getter.limitOfArray(sessionId) == 0;
-};
+exports.ended = sessionId => getter.index(sessionId) >= getter.limitOfArray(sessionId);
 
-let getter = require('../getter');
+exports.empty = sessionId => getter.limitOfArray(sessionId) == 0;
