@@ -1,3 +1,3 @@
-let operations = require('./operations');
+const operations = require('./operations');
 
 module.exports = operations.execute;
