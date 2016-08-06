@@ -1,8 +1,3 @@
-exports.concat = function (sourceCode) {
-  return ' ' + sourceCode + ' ';
-};
+exports.concat = sourceCode => ` ${sourceCode} `;
 
-exports.cut = function (sourceCode) {
-  console.llog('builder: cut');
-  return sourceCode.replace(/^\s+/, '').replace(/\s+$/, '');
-};
+exports.cut = sourceCode => sourceCode.replace(/^\s+/, '').replace(/\s+$/, '');
