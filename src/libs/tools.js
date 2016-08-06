@@ -81,7 +81,6 @@ let quoteAnalize = function (input, index) {
   return quotes;
 };
 
-
 let counter = function (quotes, input, position, index) {
 
 
@@ -241,5 +240,5 @@ exports.valueRender = function (inputText) {
   if (this.isNumeric(inputText)) {
     return parseFloat(inputText);
   }
-  return '\'' + inputText + '\'';
+  return `'${inputText}'`;
 };

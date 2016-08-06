@@ -3,13 +3,14 @@ const io = require('socket.io-client');
 const cacheWiper = require('node-cache-wiper');
 
 const constants = require('../src/constants');
+const ENVIRONMENT = constants.ENVIRONMENT;
 
 const serverPath = path.join(constants.SOURCE_FILE_PATH, constants.SERVER_FILE_NAME);
 const currentPathOfTheServer = path.join(process.cwd(), serverPath);
 
 let server = require(currentPathOfTheServer);
 
-process.env.NODE_ENV = constants.TESTING;
+process.env.NODE_ENV = ENVIRONMENT.TEST;
 
 /**Initialize the variables*/
 const socket = io.connect('http://localhost:3005');
@@ -140,7 +141,7 @@ describe('initialize', () => {
 const dbs = ['successes', 'tutorials', 'errors'];
 dbs.forEach((db)=> {
   describe(db, () => {
-    const sources = require(`./database/${db}`);
+    const sources = require(`./collection/${db}`);
     dbAnalyzer(sources);
   });
 });
@@ -162,7 +163,7 @@ describe('production test', () => {
     cacheWiper(serverPath);
 
     process.env.PORT = 3003;
-    process.env.NODE_ENV = constants.PRODUCTION;
+    process.env.NODE_ENV = ENVIRONMENT.PRODUCTION;
     server = require(currentPathOfTheServer);
 
     setTimeout(() => {
@@ -175,7 +176,7 @@ describe('production test', () => {
 
     process.env.PORT = 3004;
     process.env.CERT_FILE_PATH = constants.FAKE_PATH;
-    process.env.NODE_ENV = constants.PRODUCTION;
+    process.env.NODE_ENV = ENVIRONMENT.PRODUCTION;
     server = require(currentPathOfTheServer);
 
     setTimeout(() => {

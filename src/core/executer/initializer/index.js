@@ -17,12 +17,12 @@ exports.structure = function (sessionId, sourceCode) {
   console.llog('compiler: initialize: structure', 'end');
 };
 
-exports.session = function (sessionId) {
+exports.session = sessionId => {
   console.llog('compiler: initialize: session');
-  eval(database.languages.linguacode(sessionId).initialize);
+  eval(LANGUAGE.linguacode(sessionId).initialize);
 };
 
-exports.output = function (sessionId) {
+exports.output = sessionId => {
   console.llog('compiler: initialize: output');
   __store[sessionId].output = '';
 };
@@ -32,5 +32,5 @@ exports.condition = function (conditionIdentifier) {
   _.set(global, conditionIdentifier, undefined);
 };
 
-let database = require('../../../database/connection');
+let LANGUAGE = require('../../../constants').LANGUAGE;
 let builder = require('../../builder');

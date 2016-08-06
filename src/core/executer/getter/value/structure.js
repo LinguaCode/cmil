@@ -7,44 +7,44 @@ let value = function (sessionId, typeOfObject) {
   return _.get(current(sessionId), path.structure[typeOfObject](sessionId));
 };
 
-let current = function (sessionId) {
+let current = sessionId => {
   return __store[sessionId].structure;
 };
 
-exports.limit = function (sessionId) {
+exports.limit = sessionId => {
   let currentStructure = current(sessionId);
   return _.get(currentStructure, path.parentObject(sessionId), currentStructure).length;
 };
 
-exports.condition = function (sessionId) {
+exports.condition = sessionId => {
   return value(sessionId, 'condition');
 };
 
-exports.conditionType = function (sessionId) {
+exports.conditionType = sessionId => {
   let conditionType = value(sessionId, 'conditionType');
   return conditionType || 'main';
 };
 
-exports.conditionIdentifier = function (sessionId) {
+exports.conditionIdentifier = sessionId => {
   let condition = value(sessionId, 'condition');
-  let identifierRegExp = new RegExp(sessionId + '\\.\\D+\\d+');
+  let identifierRegExp = new RegExp(`${sessionId}\\.\\D+\\d+`);
   let identifier = identifierRegExp.exec(condition)[0];
   return identifier;
 };
 
-exports.operations = function (sessionId) {
+exports.operations = sessionId => {
   return value(sessionId, OPERATIONS);
 };
 
-exports.inputVariable = function (sessionId) {
+exports.inputVariable = sessionId => {
   return value(sessionId, INPUT_VARIABLE);
 };
 
-exports.object = function (sessionId) {
+exports.object = sessionId => {
   return _.get(current(sessionId), path.location(sessionId));
 };
 
-exports.firstKeyOfObject = function (sessionId) {
+exports.firstKeyOfObject = sessionId => {
   let thisElement = this.object(sessionId);
   let keys = Object.keys(thisElement);
 

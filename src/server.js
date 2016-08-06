@@ -1,12 +1,14 @@
-let fs = require('fs');
-let io = require('./io');
-let express = require('express');
-let logger = require('lingua-logger');
+const fs = require('fs');
+const io = require('./io');
+const https = require('https');
+const express = require('express');
+const logger = require('lingua-logger');
+const ENVIRONMENT = require('./constants').ENVIRONMENT;
 
 let app = express();
 
-let port = process.env.PORT = process.env.PORT || '3005';
-let env = process.env.NODE_ENV || 'local';
+const port = process.env.PORT = process.env.PORT || '3005';
+const environment = process.env.NODE_ENV || 'local';
 app.set('port', port);
 
 require('./routes');
@@ -14,7 +16,7 @@ require('./routes');
 let server;
 
 const certPath = process.env.CERT_FILE_PATH = process.env.CERT_FILE_PATH || './src/config/keys/';
-let privateKeyFilePath = certPath + 'linguacode_me_private.key';
+const privateKeyFilePath = `${certPath}linguacode_me_private.key`;
 
 let isCertFilesExist;
 
@@ -25,10 +27,9 @@ try {
   isCertFilesExist = false;
 }
 
-if (env == 'production' && isCertFilesExist) {
-  let https = require('https');
-  let privateKey = fs.readFileSync(certPath + 'linguacode_me_private.key', 'utf8');
-  let certificate = fs.readFileSync(certPath + '3_user_linguacode.me.crt', 'utf8');
+if (environment == ENVIRONMENT.PRODUCTION && isCertFilesExist) {
+  const privateKey = fs.readFileSync(`${certPath}linguacode_me_private.key`, 'utf8');
+  const certificate = fs.readFileSync(`${certPath}3_user_linguacode.me.crt`, 'utf8');
 
   let certificates = (function () {
     let i, len, results;
@@ -71,9 +72,9 @@ io.attach(server);
 server.on('listening', onListening);
 
 function onListening() {
-  let address = server.address();
-  let fullAddress = 'port ' + address.port;
-  console.llog('Listening on ' + fullAddress);
+  const address = server.address();
+  const fullAddress = `port ${address.port}`;
+  console.llog(`Listening on ${fullAddress}`);
 }
 
 module.exports = server;
