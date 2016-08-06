@@ -1,39 +1,36 @@
-let commands = require('../commands/variables');
+const VARIABLE = require('../variable');
 
 module.exports = [{
-  command: commands.input,
+  command: VARIABLE.input,
   definition: 'წაკითხული'
 }, {
-  command: commands.output,
+  command: VARIABLE.output,
   definition: 'დაწერა'
 }, {
-  command: commands.do,
+  command: VARIABLE.do,
   definition: 'ამის'
 }, {
-  command: commands.if,
+  command: VARIABLE.if,
   definition: 'თუ'
 }, {
-  command: commands.else,
+  command: VARIABLE.else,
   definition: 'სხვა'
 }, {
-  command: commands.var,
-  definition: 'ცვლადი'
-}, {
-  command: commands.break,
+  command: VARIABLE.break,
   definition: 'შესვენების'
 }, {
-  command: commands.continue,
+  command: VARIABLE.continue,
   definition: 'გაგრძელდება'
 }, {
-  command: commands.while,
+  command: VARIABLE.while,
   definition: 'ხოლო'
 }, {
-  command: commands.repeat,
+  command: VARIABLE.repeat,
   definition: 'განმეორებითი'
 }, {
-  command: commands.times,
+  command: VARIABLE.times,
   definition: 'ჯერ'
 }, {
-  command: commands.function,
+  command: VARIABLE.function,
   definition: 'ფუნქცია'
 }];

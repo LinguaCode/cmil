@@ -1,17 +1,19 @@
- let tools = require('../../../libs/tools');
-let errorHandler = require('../../errorHandler');
+const tools = require('../../../libs/tools');
+const errorHandler = require('../../errorHandler');
+const errorCheck = require('../../errorHandler/checker');
+const errorMessages = require('../../errorHandler/messages');
+const formatter = require('../../formatter');
+const getter = require('../getter');
+const setter = require('../setter');
+const management = require('./management');
 
-let errorCheck = require('../../errorHandler/checker');
-let errorMessages = require('../../errorHandler/messages');
-
-
-exports.condition = function (sessionId) {
+exports.condition = sessionId => {
   let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
   let isPassed = eval(formattedCondition) === true;
   return isPassed;
 };
 
-exports.code = function (sessionId, sourceCode) {
+exports.code = (sessionId, sourceCode) => {
   let evalResult = '';
   let evalStatus = 'success';
 
@@ -20,11 +22,10 @@ exports.code = function (sessionId, sourceCode) {
 
     let codeFormatted = formatter.codeFormatting(sessionId, line);
 
-
     try {
       let output = eval(codeFormatted);
       if (output !== '') {
-        evalResult += output + '\n';
+        evalResult += `${output}\n`;
       }
 
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
@@ -47,13 +48,4 @@ exports.code = function (sessionId, sourceCode) {
   }
 };
 
-exports.inputOperation = function (sessionId, inputValue) {
-  return getter.inputVariable(sessionId) + '=' + tools.valueRender(inputValue);
-};
-
-let formatter = require('../../formatter');
-
-let getter = require('../getter');
- let setter = require('../setter');
-
-let management = require('./management');
+exports.inputOperation = (sessionId, inputValue) => `${getter.inputVariable(sessionId)}=${tools.valueRender(inputValue)}`;

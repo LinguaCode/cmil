@@ -1,21 +1,17 @@
 /**
  * Increment the index of the element of the pathOfLocation.
  * */
-exports.indexIncrement = function (sessionId) {
-  __store[sessionId].pathOfLocation = getter.parentObjectPath(sessionId) + '[' + ( getter.index(sessionId) + 1) + ']';
-};
+exports.indexIncrement = sessionId => __store[sessionId].pathOfLocation = `${getter.parentObjectPath(sessionId)}[${getter.index(sessionId) + 1}]`;
 
 /**
  * Upgrade the pathOfLocation.
  * */
-exports.upgrade = function (sessionId, typeOfInnerObject) {
-  __store[sessionId].pathOfLocation += '.' + typeOfInnerObject + '[0]';
-};
+exports.upgrade = (sessionId, typeOfInnerObject) => __store[sessionId].pathOfLocation += `.${typeOfInnerObject}[0]`;
 
 /**
  * Downgrade the pathOfLocation.
  * */
-exports.downgrade = function (sessionId) {
+exports.downgrade = sessionId => {
   let lastObjectIndex = getter.pathOfLocation(sessionId).lastIndexOf('.');
   __store[sessionId].pathOfLocation = getter.pathOfLocation(sessionId).substring(0, lastObjectIndex);
 };
@@ -26,7 +22,7 @@ exports.downgrade = function (sessionId) {
  * */
 exports.output = function (sessionId, status, output) {
   if (status == 'success' && output) {
-    __store[sessionId].output += output + '\n';
+    __store[sessionId].output += `${output}\n`;
   }
 
   __store[sessionId].status = status;
@@ -36,24 +32,18 @@ exports.output = function (sessionId, status, output) {
  * Sets list of variables for current application.
  * Use case: to check for undefined variable.
  * */
-exports.variables = function (sessionId, variables) {
-  __store[sessionId].variables = variables;
-};
+exports.variables = (sessionId, variables) => __store[sessionId].variables = variables;
 
 /**
  * Initialize the session time start.
  * Use case: to check for timeout.
  * */
-exports.sessionTime = function (sessionId) {
-  __store[sessionId].time = new Date();
-};
+exports.sessionTime = sessionId => __store[sessionId].time = new Date();
 
 /**
  * Sets input text.
  * Input text receives from client.
  * */
-exports.input = function (sessionId, input) {
-  __store[sessionId].input = input;
-};
+exports.input = (sessionId, input) => __store[sessionId].input = input;
 
 let getter = require('../getter');

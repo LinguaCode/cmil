@@ -1,4 +1,4 @@
-exports.index = function (sessionId) {
+exports.index = sessionId => {
   let pathOfLocation = path.location(sessionId);
   let indexOfBracketBegin = pathOfLocation.lastIndexOf('[') + 1;
   let indexOfBracketEnd = pathOfLocation.lastIndexOf(']');
@@ -6,7 +6,7 @@ exports.index = function (sessionId) {
   return parseInt(index);
 };
 
-exports.nameOfProperty = function (sessionId) {
+exports.nameOfProperty = sessionId => {
   let pathOfLocation = path.location(sessionId);
   let indexOfTypeEnd = pathOfLocation.lastIndexOf('[');
   let indexOfTypeBegin = pathOfLocation.lastIndexOf('.', indexOfTypeEnd) + 1;
@@ -14,11 +14,11 @@ exports.nameOfProperty = function (sessionId) {
   return pathOfLocation.substring(indexOfTypeBegin, indexOfTypeEnd);
 };
 
-exports.variables = function (sessionId) {
+exports.variables = sessionId => {
   return __store[sessionId].variables;
 };
 
-exports.output = function (sessionId) {
+exports.output = sessionId => {
   let result = __store[sessionId].output;
   result = result ? result.substr(0, result.length - 1) : '';
   let status = __store[sessionId].status;
@@ -29,7 +29,7 @@ exports.output = function (sessionId) {
   }
 };
 
-exports.input = function (sessionId) {
+exports.input = sessionId => {
   return __store[sessionId].input;
 };
 

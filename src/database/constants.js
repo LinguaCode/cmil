@@ -1,38 +1,28 @@
-let commands = require('./commands/variables');
-const ifWhileRepeatCommandsGroup =
-  commands.if + '|' +
-  commands.while + '|' +
-  commands.repeat;
+let VARIABLE = require('../constants').VARIABLE;
+const ifWhileRepeatCommandsGroup = `${VARIABLE.if}|${VARIABLE.while}|${VARIABLE.repeat}`;
 
-let constants = exports.constants = {
-  conditionValue: '(' +
-  ifWhileRepeatCommandsGroup +
-  ')\\s+([^\\r\\n]*[^\\' + commands.then + '])( ' + commands.then + ')*',
-  conditionRepeatTimesValue: '(.*)\\s+' + commands.times,
+const constants = exports.constants = {
+  conditionValue: `(${ifWhileRepeatCommandsGroup})\\s+([^\\r\\n]*[^\\${VARIABLE.then}])( ${VARIABLE.then})*`,
+  conditionRepeatTimesValue: `(.*)\\s+${VARIABLE.times}`,
 
-  conditionType: '\\s*(' +
-  ifWhileRepeatCommandsGroup + '|' +
-  commands.else + '|' +
-  commands.do + '|' +
-  commands.elif +
-  ')'
+  conditionType: `\\s*(${ifWhileRepeatCommandsGroup}|${VARIABLE.else}|${VARIABLE.do}|${VARIABLE.elif})`
 };
 
-exports.executions = function (source, nameOfConstant) {
-  let regexp = new RegExp(constants[nameOfConstant]);
+exports.executions = (source, nameOfConstant) => {
+  const regexp = new RegExp(constants[nameOfConstant]);
   let result = regexp.exec(source);
 
-  if (result) {
-    if (nameOfConstant == 'conditionValue') {
-      let regValueOfConditionRepeatTimes = new RegExp(constants.conditionRepeatTimesValue);
-      let resultOfValueOfConditionRepeatTimes = regValueOfConditionRepeatTimes.exec(result[2]);
-      result = resultOfValueOfConditionRepeatTimes ? resultOfValueOfConditionRepeatTimes[1] : result[2];
-    } else {
-      result = result[1];
-    }
-
-
-    return result.replace(/\s+$/, '');
+  if (!result) {
+    return true;
   }
-  return true;
+
+  if (nameOfConstant == 'conditionValue') {
+    const regValueOfConditionRepeatTimes = new RegExp(constants.conditionRepeatTimesValue);
+    const resultOfValueOfConditionRepeatTimes = regValueOfConditionRepeatTimes.exec(result[2]);
+    result = resultOfValueOfConditionRepeatTimes ? resultOfValueOfConditionRepeatTimes[1] : result[2];
+  } else {
+    result = result[1];
+  }
+
+  return result.replace(/\s+$/, '');
 };

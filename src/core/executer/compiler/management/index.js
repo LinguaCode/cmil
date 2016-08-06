@@ -34,7 +34,6 @@ exports.listener = function (sessionId, input) {
   console.llog('compiler: listener', 'end');
 };
 
-
 let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
 let setter = require('../../setter');

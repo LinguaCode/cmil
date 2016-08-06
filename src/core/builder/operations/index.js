@@ -1,6 +1,11 @@
-let tools = require('../../../libs/tools');
+const tools = require('../../../libs/tools');
 
-exports.execute = function (sessionId, sourceCode) {
+const coder = require('../coder');
+const setter = require('../../executer/setter');
+const conditions = require('./conditions');
+const components = require('../components');
+
+exports.execute = (sessionId, sourceCode) => {
   console.llog('builder: main', 'begin');
 
   let variables = coder.variables._get(sourceCode);
@@ -9,21 +14,17 @@ exports.execute = function (sessionId, sourceCode) {
   let varToObj = coder.variables.variablesToObjectChild(sessionId, sourceCode, variables);
   let listOfCommands = varToObj.split('\n');
   let listOfLevels = tools.codeDepthLevels.all(listOfCommands);
-  listOfCommands.map(function (command, index, theListOfCommands) {
-    theListOfCommands[index] = command.replace(/^\s+/, '');
-  });
+  listOfCommands = listOfCommands.map(command => command.replace(/^\s+/, ''));
 
   console.llog('builder: main', 'end');
   return [{
     condition: conditions.values.mainCondition(sessionId),
-    child: buildRecursion(sessionId, listOfCommands, listOfLevels, variables)
+    child: exports.buildRecursion(sessionId, listOfCommands, listOfLevels, variables)
   }];
 };
 
-let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommands, listOfLevels, variables) {
+exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) => {
   console.llog('builder: buildRecursion', 'begin');
-
-  let components = require('../components');
 
   let toCompileIndexStart = 0;
   let parentOfParents = [];
@@ -39,9 +40,9 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
       }
 
       let conditionType = _parent.conditions.type.previous.substring(1);
-      let conditionResult = conditions.conditionals['_' + conditionType](sessionId, listOfCommands, listOfLevels, _parent, variables);
+      let conditionResult = conditions.conditionals[`_${conditionType}`](sessionId, listOfCommands, listOfLevels, _parent, variables);
       let parent = conditionResult.child;
-      
+
       if (toCompile.length != 0) {
         parentOfParents.push({toCompile: toCompile});
       }
@@ -61,11 +62,12 @@ let buildRecursion = exports.buildRecursion = function (sessionId, listOfCommand
   return parentOfParents;
 };
 
-exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
+exports.nextParentIndexInitialize = (listOfLevels, currentIndex) => {
   console.llog('builder: nextParentIndexInitialize');
 
   let indexOfNext = listOfLevels.indexOf(listOfLevels[currentIndex], currentIndex + 1);
-  let isNextParentExist = indexOfNext != -1;
+  const isNextParentExist = indexOfNext != -1;
+
   if (!isNextParentExist) {
     indexOfNext = listOfLevels.length;
   }
@@ -75,7 +77,3 @@ exports.nextParentIndexInitialize = function (listOfLevels, currentIndex) {
     isNextParentExist: isNextParentExist
   };
 };
-
-let coder = require('../coder');
-let setter = require('../../executer/setter');
-let conditions = require('./conditions');

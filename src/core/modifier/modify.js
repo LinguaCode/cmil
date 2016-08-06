@@ -5,9 +5,9 @@
  * @requires code:toCode
  */
 
-let tools = require('../../libs/tools');
-let uglify = require('./uglify');
-let code = require('./code');
+const tools = require('../../libs/tools');
+const uglify = require('./uglify');
+const code = require('./code');
 
 /**
  * Changes sourceCode into a lower case, except String type texts.
@@ -19,12 +19,13 @@ let code = require('./code');
  * @param {String} sourceCode
  * @returns {String} Returns lower cased sourceCode, except String type texts.
  */
-exports.codeNotSensitive = function (sourceCode) {
+exports.codeNotSensitive = sourceCode => {
   for (let i = 0; i < sourceCode.length; i++) {
     if (tools.isPartOfCode(sourceCode, i)) {
       sourceCode = sourceCode.substring(0, i) + sourceCode[i].toLowerCase() + sourceCode.substring(i + 1);
     }
   }
+
   return sourceCode;
 };
 
@@ -45,9 +46,10 @@ exports.codeNotSensitive = function (sourceCode) {
  * - code.toCode
  * - this.codeNotSensitive
  */
-exports.execute = function (sourceCode, language) {
+exports.execute = (sourceCode, language) => {
   console.llog('modify: main');
-  let uglifiedSourceCode = uglify.execute(sourceCode);
-  let convertedSourceCode = code.toCode(uglifiedSourceCode, language);
+  const uglifiedSourceCode = uglify.execute(sourceCode);
+  const convertedSourceCode = code.toCode(uglifiedSourceCode, language);
+
   return this.codeNotSensitive(convertedSourceCode);
 };

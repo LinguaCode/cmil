@@ -1,6 +1,9 @@
-let executions = require('../../database/constants').executions;
+const executions = require('../../database/constants').executions;
 
-exports.parent = function (listOfCommands, listOfLevels, index) {
+const coder = require('./coder');
+const operations = require('./operations');
+
+exports.parent = (listOfCommands, listOfLevels, index) => {
   console.llog('builder: parent', 'begin');
 
   //checks if parent has been identified or not, if not - exit, else continue the interpretation
@@ -49,16 +52,15 @@ exports.parent = function (listOfCommands, listOfLevels, index) {
   };
 };
 
-exports.child = function (listOfCommands, listOfLevels, parentIndex) {
+exports.child = (listOfCommands, listOfLevels, parentIndex) => {
   console.llog('builder: child', 'begin');
 
-  let contentIndexStart = parentIndex.previous + 1;
-  let contentIndexEnd = parentIndex.next;
+  const contentIndexStart = parentIndex.previous + 1;
+  const contentIndexEnd = parentIndex.next;
 
-  let listOfCommandsOfTail = listOfCommands.slice(contentIndexStart, contentIndexEnd);
+  const listOfCommandsOfTail = listOfCommands.slice(contentIndexStart, contentIndexEnd);
 
-  let listOfLevelsOfTail = listOfLevels.slice(contentIndexStart, contentIndexEnd);
-
+  const listOfLevelsOfTail = listOfLevels.slice(contentIndexStart, contentIndexEnd);
 
   console.llog('builder: child', 'end');
   return {
@@ -67,11 +69,8 @@ exports.child = function (listOfCommands, listOfLevels, parentIndex) {
   };
 };
 
-exports.toCompile = function (sessionId, listOfCommands, variables, indexStart, indexEnd) {
+exports.toCompile = (sessionId, listOfCommands, variables, indexStart, indexEnd) => {
   console.llog('builder: toCompile');
-  let toCompileCommandsArr = listOfCommands.slice(indexStart, indexEnd);
+  const toCompileCommandsArr = listOfCommands.slice(indexStart, indexEnd);
   return coder.splitToCompilableParts(sessionId, toCompileCommandsArr, variables);
 };
-
-let coder = require('./coder');
-let operations = require('./operations');
