@@ -2,24 +2,14 @@ const path = require('path');
 const io = require('socket.io-client');
 const cacheWiper = require('node-cache-wiper');
 
-const EVALUATED = 'evaluated';
-const WAITS_FOR_INPUT = 'waitsForInput';
-const SESSION_END = 'sessionEnd';
-const ERROR = 'error';
+const constants = require('../src/constants');
 
-const serverFileName = 'server';
-const sourceFilePath = './src/';
-const serverPath = path.join(sourceFilePath, serverFileName);
+const serverPath = path.join(constants.SOURCE_FILE_PATH, constants.SERVER_FILE_NAME);
 const currentPathOfTheServer = path.join(process.cwd(), serverPath);
 
 let server = require(currentPathOfTheServer);
 
-const ENV = {
-  testing: 'testing',
-  production: 'production'
-};
-
-process.env.NODE_ENV = ENV.testing;
+process.env.NODE_ENV = constants.TESTING;
 
 /**Initialize the variables*/
 const socket = io.connect('http://localhost:3005');
@@ -65,10 +55,10 @@ const dbAnalyzer = sources => {
 
         const socketPathResolve = path => `${sessionId}_${path}`;
 
-        const PATH_EVALUATED = socketPathResolve(EVALUATED);
-        const PATH_WAITS_FOR_INPUT = socketPathResolve(WAITS_FOR_INPUT);
-        const PATH_SESSION_END = socketPathResolve(SESSION_END);
-        const PATH_ERROR = socketPathResolve(ERROR);
+        const PATH_EVALUATED = socketPathResolve(constants.EVALUATED);
+        const PATH_WAITS_FOR_INPUT = socketPathResolve(constants.WAITS_FOR_INPUT);
+        const PATH_SESSION_END = socketPathResolve(constants.SESSION_END);
+        const PATH_ERROR = socketPathResolve(constants.ERROR);
 
         codeSubmit(sessionId, code);
 
@@ -172,7 +162,7 @@ describe('production test', () => {
     cacheWiper(serverPath);
 
     process.env.PORT = 3003;
-    process.env.NODE_ENV = ENV.production;
+    process.env.NODE_ENV = constants.PRODUCTION;
     server = require(currentPathOfTheServer);
 
     setTimeout(() => {
@@ -182,11 +172,10 @@ describe('production test', () => {
 
   it('without cert files', done => {
     cacheWiper(serverPath);
-    const FAKE_PATH = './fake/path';
 
     process.env.PORT = 3004;
-    process.env.CERT_FILE_PATH = FAKE_PATH;
-    process.env.NODE_ENV = ENV.production;
+    process.env.CERT_FILE_PATH = constants.FAKE_PATH;
+    process.env.NODE_ENV = constants.PRODUCTION;
     server = require(currentPathOfTheServer);
 
     setTimeout(() => {
@@ -216,7 +205,7 @@ describe('timeout ignore', () => {
 
         const socketPathResolve = path => `${sessionId}_${path}`;
 
-        const PATH_SESSION_END = socketPathResolve(SESSION_END);
+        const PATH_SESSION_END = socketPathResolve(constants.SESSION_END);
 
         socket.on(PATH_SESSION_END, () => {
           done();
