@@ -19,7 +19,7 @@ exports.structure = function (sessionId, sourceCode) {
 
 exports.session = function (sessionId) {
   console.llog('compiler: initialize: session');
-  eval(database.languages.linguacode(sessionId).initialize);
+  eval(LANGUAGE.linguacode(sessionId).initialize);
 };
 
 exports.output = function (sessionId) {
@@ -32,5 +32,5 @@ exports.condition = function (conditionIdentifier) {
   _.set(global, conditionIdentifier, undefined);
 };
 
-let database = require('../../../database/connection');
+let LANGUAGE = require('../../../constants').LANGUAGE;
 let builder = require('../../builder');

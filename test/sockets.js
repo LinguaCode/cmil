@@ -140,7 +140,7 @@ describe('initialize', () => {
 const dbs = ['successes', 'tutorials', 'errors'];
 dbs.forEach((db)=> {
   describe(db, () => {
-    const sources = require(`./database/${db}`);
+    const sources = require(`./collection/${db}`);
     dbAnalyzer(sources);
   });
 });
