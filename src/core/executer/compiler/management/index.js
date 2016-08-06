@@ -1,9 +1,6 @@
 let modify = require('../../../modifier/modify');
 
-const status = {
-  success: 'success',
-  waitsForInput: 'waitsForInput'
-};
+const SUCCESS = require('../../../../constants').STATUS.SUCCESS;
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   console.llog('compiler: codeRun', 'begin');
@@ -26,7 +23,7 @@ exports.listener = function (sessionId, input) {
 
   setter.sessionTime(sessionId);
   setter.input(sessionId, input);
-  initializer.output(sessionId, status.success, '');
+  initializer.output(sessionId, SUCCESS, '');
 
   parentExecute.positions.toCompile(sessionId);
 

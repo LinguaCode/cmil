@@ -1,25 +1,14 @@
-let _ = require('lodash');
-
-const status = {
-  success: 'success',
-  waitsForInput: 'waitsForInput'
-};
+const constants = require('../../../../../constants');
+const WAITS_FOR_INPUT = constants.STATUS.WAITS_FOR_INPUT;
+const BOOLEAN_DEFINITION = constants.BOOLEAN_DEFINITION;
 
 let preOutput = function (outputText) {
-  const booleanDefinitions = {
-    true: 'ճիշտ',
-    false: 'սխալ',
-    NaN: 'անորոշ',
-    null: 'անհայտ',
-    Infinity: 'Անվերջություն',
-    undefined: 'չհայտաարարված'
-  };
 
   console.llog('compiler: preOutput');
-  for (let key in booleanDefinitions) {
+  for (let key in BOOLEAN_DEFINITION) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
-      outputText = outputText.replace(regExp, booleanDefinitions[key]);
+      outputText = outputText.replace(regExp, BOOLEAN_DEFINITION[key]);
     }
   }
 
@@ -32,7 +21,7 @@ exports.toCompile = function (sessionId) {
 
   if (!input && checker.needToInput(sessionId)) {
 
-    setter.output(sessionId, status.waitsForInput);
+    setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
@@ -76,7 +65,7 @@ exports.child = function (sessionId) {
     console.llog('compiler: child', 'end');
     return false;
   }
-  
+
   if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
   }
