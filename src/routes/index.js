@@ -3,13 +3,8 @@ let io = require('../io');
 let code = require('../core/modifier/code');
 let errorHandler = require('../core/errorHandler');
 let compiler = require('../core/executer/compiler');
+let STATUS = require('../constants').STATUS;
 let ipAddress;
-
-const status = {
-  success: 'success',
-  waitsForInput: 'waitsForInput',
-  timeout: 'timeout'
-};
 
 let sockets = {
   submit: function (receivedData) {
@@ -63,12 +58,12 @@ let sockets = {
 const postExecute = function (sessionId) {
   let output = getter.output(sessionId);
   let currentStatus = output.status;
-  if ((!output.result && currentStatus == status.success) || currentStatus == status.waitsForInput) {
+  if ((!output.result && currentStatus == STATUS.SUCCESS) || currentStatus == STATUS.WAITS_FOR_INPUT) {
     if (output.result) {
       sender.evaluate(sessionId, output.result);
     }
     sender.waitsForInput(sessionId);
-  } else if (currentStatus == status.success) {
+  } else if (currentStatus == STATUS.SUCCESS) {
     sender.evaluate(sessionId, output.result);
     sender.waitsForInput(sessionId);
   } else {

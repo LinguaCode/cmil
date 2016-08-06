@@ -1,12 +1,6 @@
 let moment = require('moment');
-
-const TIMEOUT_TIME = 666;
-
-const status = {
-  success: 'success',
-  waitsForInput: 'waitsForInput',
-  timeout: 'timeout'
-};
+const constants = require('../../../constants');
+const STATUS = constants.STATUS;
 
 var isPathOfLocationEndedCheck = exports.pathOfLocationEnded = function (sessionId) {
   let pathOfLocation = __store[sessionId].pathOfLocation;
@@ -34,8 +28,8 @@ exports.ended = function (sessionId) {
 
 let isErrorOccurredCheck = function (outputStatus) {
   let isErrorOccurred = true;
-  for (var key in status) {
-    if (outputStatus == status[key]) {
+  for (var key in STATUS) {
+    if (outputStatus == STATUS[key]) {
       isErrorOccurred = false;
       break;
     }
@@ -49,7 +43,7 @@ var isExpiredCheck = exports.expired = function (sessionId) {
   let now = moment();
   let timeDifferenceBySeconds = now.diff(sessionTime);
   const timeOutCondition = !process.env.TIMEOUT_IGNORE ?
-  timeDifferenceBySeconds > TIMEOUT_TIME : false;
+  timeDifferenceBySeconds > constants.TIMEOUT_TIME : false;
 
   return timeOutCondition;
 };
