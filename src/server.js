@@ -2,11 +2,12 @@ let fs = require('fs');
 let io = require('./io');
 let express = require('express');
 let logger = require('lingua-logger');
+let ENVIRONMENT = require('./constants').ENVIRONMENT;
 
 let app = express();
 
 let port = process.env.PORT = process.env.PORT || '3005';
-let env = process.env.NODE_ENV || 'local';
+let environment = process.env.NODE_ENV || 'local';
 app.set('port', port);
 
 require('./routes');
@@ -25,7 +26,7 @@ try {
   isCertFilesExist = false;
 }
 
-if (env == 'production' && isCertFilesExist) {
+if (environment == ENVIRONMENT.PRODUCTION && isCertFilesExist) {
   let https = require('https');
   let privateKey = fs.readFileSync(certPath + 'linguacode_me_private.key', 'utf8');
   let certificate = fs.readFileSync(certPath + '3_user_linguacode.me.crt', 'utf8');

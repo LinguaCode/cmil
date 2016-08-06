@@ -1,4 +1,4 @@
-let _ = require('lodash');
+const _ = require('lodash');
 const VARIABLE = require('../../../constants').VARIABLE;
 const tools = require('../../../libs/tools');
 const variables = exports.variables = require('./variables');
@@ -9,12 +9,13 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
   let reInput = new RegExp(`${VARIABLE.input}\\s+(${sessionId}.(${variables.join('|')}))`, 'g');
-  let indexOfOperationBegin, indexOfOperationEnd;
-  let reInputStrOld, reInputStrNew;
-  let operations, inputVariable;
+  let indexOfOperationBegin;
+  let indexOfOperationEnd;
+  let operations;
+  let inputVariable;
   let toCompile = {};
 
-  reInputStrOld = reInput.exec(sourceCode);
+  let reInputStrOld = reInput.exec(sourceCode);
 
   if (reInputStrOld === null || reInputStrOld.index !== 0) {
     indexOfOperationBegin = 0;
@@ -28,7 +29,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   while (reInputStrOld !== null) {
     indexOfOperationBegin = reInputStrOld.index + reInputStrOld[0].length;
 
-    reInputStrNew = reInput.exec(sourceCode);
+    let reInputStrNew = reInput.exec(sourceCode);
     indexOfOperationEnd = reInputStrNew !== null ? reInputStrNew.index : sourceCode.length;
 
     inputVariable = reInputStrOld[1];
