@@ -1,7 +1,7 @@
 /**
  * Increment the index of the element of the pathOfLocation.
  * */
-exports.indexIncrement = function (sessionId) {
+exports.indexIncrement = sessionId => {
   __store[sessionId].pathOfLocation = `${getter.parentObjectPath(sessionId)}[${getter.index(sessionId) + 1}]`;
 };
 
@@ -15,7 +15,7 @@ exports.upgrade = function (sessionId, typeOfInnerObject) {
 /**
  * Downgrade the pathOfLocation.
  * */
-exports.downgrade = function (sessionId) {
+exports.downgrade = sessionId => {
   let lastObjectIndex = getter.pathOfLocation(sessionId).lastIndexOf('.');
   __store[sessionId].pathOfLocation = getter.pathOfLocation(sessionId).substring(0, lastObjectIndex);
 };
@@ -44,7 +44,7 @@ exports.variables = function (sessionId, variables) {
  * Initialize the session time start.
  * Use case: to check for timeout.
  * */
-exports.sessionTime = function (sessionId) {
+exports.sessionTime = sessionId => {
   __store[sessionId].time = new Date();
 };
 

@@ -1,10 +1,10 @@
-exports.needToUpgrade = function (sessionId) {
+exports.needToUpgrade = sessionId => {
   let isArrayEnded = this.array.ended(sessionId);
   let isArrayEmpty = this.array.empty(sessionId);
   return !isArrayEnded && !isArrayEmpty;
 };
 
-exports.needToInput = function (sessionId) {
+exports.needToInput = sessionId => {
   let currentToCompileObject = getter.object(sessionId);
 
   let hasInputVariableProperty = currentToCompileObject.hasOwnProperty('inputVariable');

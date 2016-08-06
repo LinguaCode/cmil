@@ -2,13 +2,13 @@ let moment = require('moment');
 const constants = require('../../../constants');
 const STATUS = constants.STATUS;
 
-var isPathOfLocationEndedCheck = exports.pathOfLocationEnded = function (sessionId) {
+var isPathOfLocationEndedCheck = exports.pathOfLocationEnded = sessionId => {
   let pathOfLocation = __store[sessionId].pathOfLocation;
   let lastChildIndex = pathOfLocation.indexOf('.');
   return lastChildIndex == -1;
 };
 
-exports.ended = function (sessionId) {
+exports.ended = sessionId => {
   let output = getter.output(sessionId);
   let outputStatus = output.status;
   let is = {
@@ -38,7 +38,7 @@ let isErrorOccurredCheck = function (outputStatus) {
   return isErrorOccurred;
 };
 
-var isExpiredCheck = exports.expired = function (sessionId) {
+var isExpiredCheck = exports.expired = sessionId => {
   let sessionTime = moment(getter.sessionTime(sessionId));
   let now = moment();
   let timeDifferenceBySeconds = now.diff(sessionTime);
