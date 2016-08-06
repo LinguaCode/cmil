@@ -13,7 +13,7 @@
  *
  * @param {String} sessionId - session id.
  */
-module.exports = function (sessionId) {
+module.exports = sessionId => {
   globals(sessionId);
   translator(sessionId);
   store(sessionId);
@@ -23,7 +23,7 @@ module.exports = function (sessionId) {
 /**
  * Global variable initialize.
  */
-let globals = function () {
+var globals = () => {
   /**
    * @param {Object} __language - get and set the language.
    * @param {Object} __store - sourceCode controlling.
@@ -43,7 +43,7 @@ let globals = function () {
  *
  * @param {String} sessionId - session id.
  */
-let translator = function (sessionId) {
+var translator = sessionId => {
   /**
    * @param {Number} __translator[sessionId].structure - structure of the LinguaCode's sourceCode.
    * @param {Array} __translator[sessionId].from - list of the translation texts.
@@ -64,7 +64,7 @@ let translator = function (sessionId) {
  *
  * @param {String} sessionId - session id.
  */
-let store = function (sessionId) {
+var store = sessionId => {
   /**
    * @param {Object} __store[sessionId].structure - structure of the LinguaCode's sourceCode.
    * @param {String} __store[sessionId].pathOfLocation - dynamic path of the operation.
@@ -85,7 +85,7 @@ let store = function (sessionId) {
  *
  * @param {String} sessionId - session id.
  */
-let language = function (sessionId) {
+var language = sessionId => {
   /**
    * @param {String} __language[sessionId].new - the Changed language, type: ISO 639-1.
    * @param {String} __language[sessionId].old - the old language which is changed, type: ISO 639-1.
