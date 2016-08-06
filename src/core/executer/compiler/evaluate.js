@@ -1,9 +1,8 @@
- let tools = require('../../../libs/tools');
+let tools = require('../../../libs/tools');
 let errorHandler = require('../../errorHandler');
 
 let errorCheck = require('../../errorHandler/checker');
 let errorMessages = require('../../errorHandler/messages');
-
 
 exports.condition = function (sessionId) {
   let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
@@ -20,11 +19,10 @@ exports.code = function (sessionId, sourceCode) {
 
     let codeFormatted = formatter.codeFormatting(sessionId, line);
 
-
     try {
       let output = eval(codeFormatted);
       if (output !== '') {
-        evalResult += output + '\n';
+        evalResult += `${output}\n`;
       }
 
       let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
@@ -48,12 +46,12 @@ exports.code = function (sessionId, sourceCode) {
 };
 
 exports.inputOperation = function (sessionId, inputValue) {
-  return getter.inputVariable(sessionId) + '=' + tools.valueRender(inputValue);
+  return `${getter.inputVariable(sessionId)}=${tools.valueRender(inputValue)}`;
 };
 
 let formatter = require('../../formatter');
 
 let getter = require('../getter');
- let setter = require('../setter');
+let setter = require('../setter');
 
 let management = require('./management');

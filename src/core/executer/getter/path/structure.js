@@ -1,25 +1,15 @@
+const path = require('./');
+const value = require('../value');
+
 const OPERATIONS = 'operations';
 const INPUT_VARIABLE = 'inputVariable';
 
-let conditionParse = function (sessionId, parseType) {
-  return path.location(sessionId) + '.' + parseType;
-};
+let conditionParse = (sessionId, parseType) => `${path.location(sessionId)}.${parseType}`;
 
-exports.condition = function (sessionId) {
-  return conditionParse(sessionId, 'condition');
-};
+exports.condition = sessionId => conditionParse(sessionId, 'condition');
 
-exports.conditionType = function (sessionId) {
-  return conditionParse(sessionId, 'type');
-};
+exports.conditionType = sessionId => conditionParse(sessionId, 'type');
 
-exports.operations = function (sessionId) {
-  return path.location(sessionId) + '.' + OPERATIONS;
-};
+exports.operations = sessionId => `${path.location(sessionId)}.${OPERATIONS}`;
 
-exports.inputVariable = function (sessionId) {
-  return path.location(sessionId) + '.' + INPUT_VARIABLE;
-};
-
-let path = require('./');
-let value = require('../value');
+exports.inputVariable = sessionId => `${path.location(sessionId)}.${INPUT_VARIABLE}`;

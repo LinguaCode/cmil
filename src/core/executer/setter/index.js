@@ -2,14 +2,14 @@
  * Increment the index of the element of the pathOfLocation.
  * */
 exports.indexIncrement = function (sessionId) {
-  __store[sessionId].pathOfLocation = getter.parentObjectPath(sessionId) + '[' + ( getter.index(sessionId) + 1) + ']';
+  __store[sessionId].pathOfLocation = `${getter.parentObjectPath(sessionId)}[${getter.index(sessionId) + 1}]`;
 };
 
 /**
  * Upgrade the pathOfLocation.
  * */
 exports.upgrade = function (sessionId, typeOfInnerObject) {
-  __store[sessionId].pathOfLocation += '.' + typeOfInnerObject + '[0]';
+  __store[sessionId].pathOfLocation += `.${typeOfInnerObject}[0]`;
 };
 
 /**
@@ -26,7 +26,7 @@ exports.downgrade = function (sessionId) {
  * */
 exports.output = function (sessionId, status, output) {
   if (status == 'success' && output) {
-    __store[sessionId].output += output + '\n';
+    __store[sessionId].output += `${output}\n`;
   }
 
   __store[sessionId].status = status;
