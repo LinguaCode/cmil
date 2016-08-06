@@ -13,9 +13,7 @@
  * @param {String} sourceCode
  * @returns {String} Returns Unix standardized CR format text.
  */
-exports.unixStandardize = function (sourceCode) {
-  return sourceCode.replace(/\r/g, '');
-};
+exports.unixStandardize = sourceCode => sourceCode.replace(/\r/g, '');
 
 /**
  * Removes duplicated \n (new line) symbols.
@@ -27,9 +25,7 @@ exports.unixStandardize = function (sourceCode) {
  * @param {String} sourceCode
  * @returns {String} Returns the same text, via removing duplicated \n (new line) symbols.
  */
-exports.codeCorrect = function (sourceCode) {
-  return sourceCode.replace(/[\n]{2,}/g, '\n');
-};
+exports.codeCorrect = sourceCode => sourceCode.replace(/[\n]{2,}/g, '\n');
 
 /**
  * Removes all commented lines.
@@ -41,9 +37,7 @@ exports.codeCorrect = function (sourceCode) {
  * @param {String} sourceCode
  * @returns {String} Returns the same text, via removing commented lines.
  */
-exports.codeUnComment = function (sourceCode) {
-  return sourceCode.replace(/#.*/g, '');
-};
+exports.codeUnComment = sourceCode => sourceCode.replace(/#.*/g, '');
 
 /**
  * Returns formatted sourceCode with via this pipeline:
@@ -61,9 +55,9 @@ exports.codeUnComment = function (sourceCode) {
  * - uglify.codeCorrect
  * - uglify.codeUnComment
  */
-exports.execute = function (sourceCode) {
-  sourceCode = this.unixStandardize(sourceCode);
-  sourceCode = this.codeCorrect(sourceCode);
-  sourceCode = this.codeUnComment(sourceCode);
-  return sourceCode;
+exports.execute = sourceCode => {
+  const unixStandardized = this.unixStandardize(sourceCode);
+  const codeCorrected = this.codeCorrect(unixStandardized);
+  const codeUnCommented = this.codeUnComment(codeCorrected);
+  return codeUnCommented;
 };

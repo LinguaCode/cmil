@@ -13,7 +13,7 @@ let core = function (data, lng, command, definition) {
   return data;
 };
 
-exports.toCode = function (data, lng) {
+exports.toCode = (data, lng) => {
   return core(data, lng, 'definition', 'command');
 };
 
