@@ -24,35 +24,35 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
     toCompile.operations = _.compact(operations.split('\n'));
 
     toCompiles.push(_.cloneDeep(toCompile));
-  }
+  } else {
+    while (reInputStrOld !== null) {
+      indexOfOperationBegin = reInputStrOld.index + reInputStrOld[0].length;
 
-  while (reInputStrOld !== null) {
-    indexOfOperationBegin = reInputStrOld.index + reInputStrOld[0].length;
+      let reInputStrNew = reInput.exec(sourceCode);
+      indexOfOperationEnd = reInputStrNew !== null ? reInputStrNew.index : sourceCode.length;
 
-    let reInputStrNew = reInput.exec(sourceCode);
-    indexOfOperationEnd = reInputStrNew !== null ? reInputStrNew.index : sourceCode.length;
+      inputVariable = reInputStrOld[1];
 
-    inputVariable = reInputStrOld[1];
+      operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
+      operations = tools.trim(operations);
 
-    operations = sourceCode.substring(indexOfOperationBegin, indexOfOperationEnd);
-    operations = tools.trim(operations);
+      //==toCompile==
+      //toCompile.operations
+      toCompile = {};
 
-    //==toCompile==
-    //toCompile.operations
-    toCompile = {};
+      toCompile.operations = _.compact(operations.split('\n'));
 
-    toCompile.operations = _.compact(operations.split('\n'));
+      //toCompile.inputVariable
+      toCompile.inputVariable = inputVariable;
 
-    //toCompile.inputVariable
-    toCompile.inputVariable = inputVariable;
+      //===toCompiles===
+      toCompiles.push(_.cloneDeep(toCompile));
 
-    //===toCompiles===
-    toCompiles.push(_.cloneDeep(toCompile));
-
-    if (reInputStrNew) {
-      reInputStrOld = _.cloneDeep(reInputStrNew);
-    } else {
-      break;
+      if (reInputStrNew) {
+        reInputStrOld = _.cloneDeep(reInputStrNew);
+      } else {
+        break;
+      }
     }
   }
 
