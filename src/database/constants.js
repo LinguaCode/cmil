@@ -1,11 +1,10 @@
-let VARIABLE = require('../constants').VARIABLE;
-const ifWhileRepeatCommandsGroup = `${VARIABLE.if}|${VARIABLE.while}|${VARIABLE.repeat}`;
+let COMMAND = require('../constants').COMMAND;
 
-const constants = exports.constants = {
-  conditionValue: `(${ifWhileRepeatCommandsGroup})\\s+([^\\r\\n]*[^\\${VARIABLE.then}])( ${VARIABLE.then})*`,
-  conditionRepeatTimesValue: `(.*)\\s+${VARIABLE.times}`,
+const constants =  {
+  conditionValue: `(${COMMAND.IF_WHILE_REPEAT})\\s+([^\\r\\n]*[^\\${COMMAND.THEN}])( ${COMMAND.THEN})*`,
+  conditionRepeatTimesValue: `(.*)\\s+${COMMAND.TIMES}`,
 
-  conditionType: `\\s*(${ifWhileRepeatCommandsGroup}|${VARIABLE.else}|${VARIABLE.do}|${VARIABLE.elif})`
+  conditionType: `\\s*(${COMMAND.IF_WHILE_REPEAT}|${COMMAND.ELSE}|${COMMAND.DO}|${COMMAND.ELIF})`
 };
 
 exports.executions = (source, nameOfConstant) => {

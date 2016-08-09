@@ -1,36 +1,36 @@
-const VARIABLE = require('../variable');
+const COMMAND = require('../command');
 
 module.exports = [{
-  command: VARIABLE.input,
+  command: COMMAND.INPUT,
   definition: 'ввести'
 }, {
-  command: VARIABLE.output,
+  command: COMMAND.OUTPUT,
   definition: 'вывести'
 }, {
-  command: VARIABLE.do,
+  command: COMMAND.DO,
   definition: 'сделать'
 }, {
-  command: VARIABLE.if,
+  command: COMMAND.IF,
   definition: 'если'
 }, {
-  command: VARIABLE.else,
+  command: COMMAND.ELSE,
   definition: 'иначе'
 }, {
-  command: VARIABLE.break,
+  command: COMMAND.BREAK,
   definition: 'прервать'
 }, {
-  command: VARIABLE.continue,
+  command: COMMAND.CONTINUE,
   definition: 'продолжить'
 }, {
-  command: VARIABLE.while,
+  command: COMMAND.WHILE,
   definition: 'пока'
 }, {
-  command: VARIABLE.repeat,
+  command: COMMAND.REPEAT,
   definition: 'повторить'
 }, {
-  command: VARIABLE.times,
+  command: COMMAND.TIMES,
   definition: 'раз'
 }, {
-  command: VARIABLE.function,
+  command: COMMAND.FUNCTION,
   definition: 'функция'
 }];

@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const VARIABLE = require('../../../constants').VARIABLE;
+const COMMAND = require('../../../constants').COMMAND;
 const tools = require('../../../libs/tools');
 const variables = exports.variables = require('./variables');
 
@@ -8,7 +8,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
 
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
-  let reInput = new RegExp(`${VARIABLE.input}\\s+(${sessionId}.(${variables.join('|')}))`, 'g');
+  let reInput = new RegExp(`${COMMAND.INPUT}\\s+(${sessionId}.(${variables.join('|')}))`, 'g');
   let indexOfOperationBegin;
   let indexOfOperationEnd;
   let operations;

@@ -1,58 +1,58 @@
-const VARIABLE = require('../variable');
+const COMMAND = require('../command');
 
 module.exports = [{
-  command: VARIABLE.then,
+  command: COMMAND.THEN,
   definition: 'ապա'
 }, {
-  command: VARIABLE.not,
+  command: COMMAND.NOT,
   definition: 'ոչ'
 }, {
-  command: VARIABLE.false,
+  command: COMMAND.FALSE,
   definition: 'սխալ'
 }, {
-  command: VARIABLE.true,
+  command: COMMAND.TRUE,
   definition: 'ճիշտ'
 }, {
-  command: VARIABLE.or,
+  command: COMMAND.OR,
   definition: 'կամ'
 }, {
-  command: VARIABLE.and1,
+  command: COMMAND.AND_1,
   definition: 'և'
 }, {
-  command: VARIABLE.and2,
+  command: COMMAND.AND_2,
   definition: 'եւ'
 }, {
-  command: VARIABLE.input,
+  command: COMMAND.INPUT,
   definition: 'գրել'
 }, {
-  command: VARIABLE.do,
+  command: COMMAND.DO,
   definition: 'կատարել'
 }, {
-  command: VARIABLE.output,
+  command: COMMAND.OUTPUT,
   definition: 'տպել'
 }, {
-  command: VARIABLE.if,
+  command: COMMAND.IF,
   definition: 'եթե'
 }, {
-  command: VARIABLE.else,
+  command: COMMAND.ELSE,
   definition: 'այլապես'
 }, {
-  command: VARIABLE.break,
+  command: COMMAND.BREAK,
   definition: 'ընդհատել'
 }, {
-  command: VARIABLE.continue,
+  command: COMMAND.CONTINUE,
   definition: 'շարունակել'
 }, {
-  command: VARIABLE.while,
+  command: COMMAND.WHILE,
   definition: 'մինչ'
 }, {
-  command: VARIABLE.repeat,
+  command: COMMAND.REPEAT,
   definition: 'կրկնել'
 }, {
-  command: VARIABLE.times,
+  command: COMMAND.TIMES,
   definition: 'անգամ'
 }, {
-  command: VARIABLE.function,
+  command: COMMAND.FUNCTION,
   definition: 'ֆունկցիա'
 }
 ];

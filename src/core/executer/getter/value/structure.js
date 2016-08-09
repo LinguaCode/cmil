@@ -1,7 +1,7 @@
 let _ = require('lodash');
 
 const OPERATIONS = 'operations';
-const INPUT_VARIABLE = 'inputVariable';
+const INPUT_COMMAND = 'inputVariable';
 
 let value = function (sessionId, typeOfObject) {
   return _.get(current(sessionId), path.structure[typeOfObject](sessionId));
@@ -37,7 +37,7 @@ exports.operations = sessionId => {
 };
 
 exports.inputVariable = sessionId => {
-  return value(sessionId, INPUT_VARIABLE);
+  return value(sessionId, INPUT_COMMAND);
 };
 
 exports.object = sessionId => {

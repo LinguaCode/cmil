@@ -5,8 +5,6 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "watch": "gulp watch",
-    "lint": "gulp lint",
     "test": "snyk test && mocha",
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && start coverage/lcov-report/index.html",
     "coveralls": "istanbul cover ./node_modules/.bin/_mocha && ./node_modules/.bin/istanbul-coveralls",
@@ -18,7 +16,7 @@
     "url": "git+https://github.com/LinguaCode/core"
   },
   "engines": {
-    "node": ">= 6.1.0"
+    "node": ">= 6.3.1"
   },
   "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.github.com)",
   "license": "SEE LICENSE IN LICENSE file",
