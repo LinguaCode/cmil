@@ -1,4 +1,4 @@
-const VARIABLE = require('../../../../constants').VARIABLE;
+const COMMAND = require('../../../../constants').COMMAND;
 const components = require('../../components');
 const operations = require('../../operations');
 
@@ -33,7 +33,7 @@ exports._if = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
     countOfCommands += content.listOfCommands.length + 1;
     nextParentConditionType = parentOfIfCommand.conditions.type.next;
 
-  } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == VARIABLE.else || nextParentConditionType == VARIABLE.elif));
+  } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == COMMAND.ELSE || nextParentConditionType == COMMAND.ELIF));
 
   countOfCommands--;
 

@@ -22,7 +22,7 @@ module.exports = [{
     output: '617\n1234'
   }]
 }, {
-  group: 'variables/',
+  group: 'variables',
   sources: [{
     title: 'variables_declares_and_assigns',
     code: 'X = 617\nY = 2\nտպել X * Y',

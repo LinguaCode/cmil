@@ -8,7 +8,7 @@ exports.TRANSLATION = requireDir('./translation');
 exports.ENVIRONMENT = require('./environment');
 exports.STATUS = require('./status');
 exports.BOOLEAN_DEFINITION = require('./boolean_definition');
-exports.VARIABLE = require('./variable');
+exports.COMMAND = require('./command');
 
 //constants
 exports.TIMEOUT_TIME = 666;

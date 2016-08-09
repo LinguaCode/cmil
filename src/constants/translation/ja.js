@@ -1,36 +1,36 @@
-const VARIABLE = require('../variable');
+const COMMAND = require('../command');
 
 module.exports = [{
-  command: VARIABLE.input,
+  command: COMMAND.INPUT,
   definition: '読みます'
 }, {
-  command: VARIABLE.output,
+  command: COMMAND.OUTPUT,
   definition: '書きます'
 }, {
-  command: VARIABLE.do,
+  command: COMMAND.DO,
   definition: '行う'
 }, {
-  command: VARIABLE.if,
+  command: COMMAND.IF,
   definition: 'もし'
 }, {
-  command: VARIABLE.else,
+  command: COMMAND.ELSE,
   definition: 'ほかに'
 }, {
-  command: VARIABLE.break,
+  command: COMMAND.BREAK,
   definition: 'ブレーク'
 }, {
-  command: VARIABLE.continue,
+  command: COMMAND.CONTINUE,
   definition: '続けます'
 }, {
-  command: VARIABLE.while,
+  command: COMMAND.WHILE,
   definition: 'つつ'
 }, {
-  command: VARIABLE.repeat,
+  command: COMMAND.REPEAT,
   definition: 'リピート'
 }, {
-  command: VARIABLE.times,
+  command: COMMAND.TIMES,
   definition: '回'
 }, {
-  command: VARIABLE.function,
+  command: COMMAND.FUNCTION,
   definition: '機能'
 }];
