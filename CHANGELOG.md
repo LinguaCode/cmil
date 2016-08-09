@@ -7,6 +7,8 @@
 
   - **[optimize]** convert: ES5 to ES6;
   - **[optimize]** constants: separation;
+  - **[status]** coverage: development: 100%, production: 98.436%.
+  - **[status]** code climate: 3.86.
 
 ## 0.3.0 (2016-07-17)
 
