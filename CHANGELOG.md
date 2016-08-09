@@ -1,7 +1,10 @@
-
-## 0.3.1 (upcoming)
+## 0.3.2 (upcoming)
 
   - **[add]** syntax: functions.
+  - **[optimize]** convert: ES5 to ES6;
+
+## 0.3.1 (2016-08-19)
+
   - **[optimize]** convert: ES5 to ES6;
 
 ## 0.3.0 (2016-07-17)
