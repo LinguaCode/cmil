@@ -3,7 +3,6 @@
 [![Code Climate](https://codeclimate.com/github/LinguaCode/core/badges/gpa.svg?v=1)](https://codeclimate.com/github/LinguaCode/core)
 [![Dependency Status](https://david-dm.org/LinguaCode/core.svg)](https://david-dm.org/LinguaCode/core)
 [![devDependency Status](https://david-dm.org/LinguaCode/core/dev-status.svg)](https://david-dm.org/LinguaCode/core#info=devDependencies)
-[![Known Vulnerabilities](https://snyk.io/test/github/LinguaCode/core/3712b14a8a61690b8d3383227576d348df699ddf/badge.svg)](https://snyk.io/test/github/LinguaCode/core/3712b14a8a61690b8d3383227576d348df699ddf)
 [![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 [![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
