@@ -1,7 +1,27 @@
-const executions = require('../../database/constants').executions;
+const COMMAND = require('../../constants').COMMAND;
 
 const coder = require('./coder');
+
 const operations = require('./operations');
+
+const executions = (source, constant) => {
+  const regexp = new RegExp(constant);
+  let result = regexp.exec(source);
+
+  if (!result) {
+    return true;
+  }
+
+  if (constant == COMMAND.CONDITION_VALUE) {
+    const regValueOfConditionRepeatTimes = new RegExp(COMMAND.CONDITION_OF_REPEAT_TIMES_VALUE);
+    const resultOfValueOfConditionRepeatTimes = regValueOfConditionRepeatTimes.exec(result[2]);
+    result = resultOfValueOfConditionRepeatTimes ? resultOfValueOfConditionRepeatTimes[1] : result[2];
+  } else {
+    result = result[1];
+  }
+
+  return result.replace(/\s+$/, '');
+};
 
 exports.parent = (listOfCommands, listOfLevels, index) => {
   console.llog('builder: parent', 'begin');
@@ -20,8 +40,8 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
   //previous parent: START
   let parentIndexPrevious = index;
   let parentLine = listOfCommands[parentIndexPrevious];
-  parentConditionType.previous = executions(parentLine, 'conditionType');
-  parentConditionValue.previous = executions(parentLine, 'conditionValue');
+  parentConditionType.previous = executions(parentLine, COMMAND.CONDITION_TYPE);
+  parentConditionValue.previous = executions(parentLine, COMMAND.CONDITION_VALUE);
   parentIndexes.previous = parentIndexPrevious;
   //previous parent: END
 
@@ -32,8 +52,8 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
   if (isNextParentExist) {
     let nextParentLine = listOfCommands[nextParentIndex.value];
 
-    parentConditionType.next = executions(nextParentLine, 'conditionType');
-    parentConditionValue.next = executions(nextParentLine, 'conditionValue');
+    parentConditionType.next = executions(nextParentLine, COMMAND.CONDITION_TYPE);
+    parentConditionValue.next = executions(nextParentLine, COMMAND.CONDITION_VALUE);
   }
   //next parent: END
 
