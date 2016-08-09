@@ -6,6 +6,7 @@
 ## 0.3.1 (2016-08-19)
 
   - **[optimize]** convert: ES5 to ES6;
+  - **[optimize]** constants: separation;
 
 ## 0.3.0 (2016-07-17)
 
