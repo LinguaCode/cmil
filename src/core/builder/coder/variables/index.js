@@ -22,23 +22,32 @@ exports._get = sourceCode => {
 
 exports.variablesToObjectChild = (sessionId, sourceCode, listOfVariables) => {
   console.llog('builder: variablesToObjectChild', 'begin');
-  let regStrZero;
   let regStrFirstIndex;
 
   let codeTailed = tail.concat(sourceCode);
 
   for (let i = 0; i < listOfVariables.length; i++) {
-    let regExp = new RegExp(`[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s](${listOfVariables[i]})[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)]`, 'g');
+    const currentVariable = listOfVariables[i];
 
-    while (
-    (regStrZero = regExp.exec(codeTailed)) !== null &&
-    tools.isPartOfCode(codeTailed, regStrZero.index) &&
-    (regStrFirstIndex = codeTailed.indexOf(listOfVariables[i], regStrZero.index)) != -1) { //in line
-      const codeTailedLeftPart = codeTailed.substring(0, regStrFirstIndex);
-      const codeTailedRightPart = codeTailed.substring(regStrFirstIndex + listOfVariables[i].length);
-      const modifiedVariableName = `${sessionId}.${listOfVariables[i]}`;
-      codeTailed = codeTailedLeftPart + modifiedVariableName + codeTailedRightPart;
+    let regExp = new RegExp(`[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s](${currentVariable})[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)]`, 'g');
+
+    let regIndexOfVariable ;
+    let indexOfVariable;
+    let isPartOfCode;
+
+    do {
+      regIndexOfVariable = regExp.exec(codeTailed);
+      indexOfVariable = regIndexOfVariable ? codeTailed.indexOf(currentVariable, regIndexOfVariable.index) : -1;
+      isPartOfCode = tools.isPartOfCode(codeTailed, indexOfVariable);
+
+      if (regIndexOfVariable && indexOfVariable !== -1 && isPartOfCode) {
+        const codeTailedLeftPart = codeTailed.substring(0, indexOfVariable);
+        const codeTailedRightPart = codeTailed.substring(indexOfVariable + listOfVariables[i].length);
+        const modifiedVariableName = `${sessionId}.${currentVariable}`;
+        codeTailed = codeTailedLeftPart + modifiedVariableName + codeTailedRightPart;
+      }
     }
+    while (!!regIndexOfVariable);
   }
 
   let cut = tail.cut(codeTailed);
