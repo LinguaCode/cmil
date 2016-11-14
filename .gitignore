@@ -23,6 +23,5 @@ coverage/
 # test DB
 test/database/testDB.js
 
-
 # Deploy
 deploy.bat
