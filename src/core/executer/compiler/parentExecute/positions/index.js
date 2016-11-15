@@ -23,6 +23,7 @@ exports.toCompile = function (sessionId) {
 
     setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
+    console.llog(__store[sessionId].pathOfLocation);
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
     console.llog('compiler: toCompile', 'end');
