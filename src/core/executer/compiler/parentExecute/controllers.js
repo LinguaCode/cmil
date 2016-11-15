@@ -42,6 +42,7 @@ let controller = {
     return exKey;
   },
 
+
   directive: function (sessionId, exKey) {
     console.llog('compiler: directive', 'begin');
 
@@ -67,7 +68,9 @@ let controller = {
         return false;
       }
 
-      controller.manage(sessionId);
+      if (getter.nameOfProperty(sessionId) != 'toCompile') {
+        controller.manage(sessionId);
+      }
     }
 
     console.llog('compiler: directive', 'end');
@@ -96,3 +99,5 @@ let setter = require('../../setter');
 let checker = require('../../checker');
 
 let upgrade = exports.upgrade = require('./positions').upgrade;
+
+let parent = require('./positions').parent;

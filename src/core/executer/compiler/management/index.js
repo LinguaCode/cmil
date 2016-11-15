@@ -27,12 +27,22 @@ exports.listener = function (sessionId, input) {
 
   parentExecute.positions.toCompile(sessionId);
 
-  if (getter.nameOfProperty(sessionId) == 'child') {
-    parentExecute.controllers.controller(sessionId);
-  }
+  listenerController(sessionId);
 
   console.llog('compiler: listener', 'end');
 };
+
+function listenerController(sessionId) {
+  if (getter.nameOfProperty(sessionId) == 'child') {
+    parentExecute.controllers.controller(sessionId);
+    listenerController(sessionId);
+  } else if (getter.nameOfProperty(sessionId) == 'parent') {
+    parentExecute.positions.parent(sessionId);
+    if (getter.nameOfProperty(sessionId) != 'toCompile') {
+      listenerController(sessionId);
+    }
+  }
+}
 
 let parentExecute = require('../parentExecute');
 let initializer = require('../../initializer');
