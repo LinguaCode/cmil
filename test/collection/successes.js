@@ -1,7 +1,7 @@
 module.exports = [{
   group: 'etc',
   sources: [{
-    title: 'empty',
+    title: 'empty'
   }]
 }, {
   group: 'hy',
@@ -493,6 +493,16 @@ module.exports = [{
         title: '1 attempt',
         code: 'a = 0\nկատարել\n    տպել a\n    a = a + 1\nմինչ a > 5',
         output: '0'
+      }, {
+        title: 'do-while {output; input}; do-while {output; input}; output',
+        code: 'կատարել\n    տպել "Մուտքագրեք գաղտնանունը՝"\n    գրել գաղտնանուն\nմինչ գաղտնանուն != "root"\n\nկատարել\n    տպել "Մուտքագրեք գաղտնաբառը՝"\n    գրել գաղտնաբառ\nմինչ գաղտնաբառ != "toor"\n\nտպել "Դուք հաջողությամբ մուտք եք գործել ։)"',
+        inputs: ['root', 'toor'],
+        output: 'Մուտքագրեք գաղտնանունը՝\nՄուտքագրեք գաղտնաբառը՝\nԴուք հաջողությամբ մուտք եք գործել ։)',
+      }, {
+        title: 'do-while {output; input}; do-while {output; input}; output (first input error)',
+        code: 'կատարել\n    տպել "Մուտքագրեք գաղտնանունը՝"\n    գրել գաղտնանուն\nմինչ գաղտնանուն != "root"\n\nկատարել\n    տպել "Մուտքագրեք գաղտնաբառը՝"\n    գրել գաղտնաբառ\nմինչ գաղտնաբառ != "toor"\n\nտպել "Դուք հաջողությամբ մուտք եք գործել ։)"',
+        inputs: ['login', 'root', 'toor'],
+        output: 'Մուտքագրեք գաղտնանունը՝\nՄուտքագրեք գաղտնանունը՝\nՄուտքագրեք գաղտնաբառը՝\nԴուք հաջողությամբ մուտք եք գործել ։)',
       }]
     }, {
       group: 'repeat',
@@ -531,6 +541,20 @@ module.exports = [{
         code: 'կրկնել 2 անգամ\n    տպել "a"\nգրել X\nտպել X',
         inputs: ['X'],
         output: 'a\na\nX'
+      }, {
+        title: 'repeat 1x {input; output}',
+        code: 'կրկնել 1 անգամ\n    գրել N\n    տպել N',
+        inputs: [617],
+        output: '617'
+      }, {
+        title: 'repeat 5x {input; output}',
+        code: 'կրկնել 5 անգամ\n    գրել N\n    տպել N',
+        inputs: [617, 2, 1, 2, 3],
+        output: '617\n2\n1\n2\n3'
+      }, {
+        title: 'repeat 5x {input}',
+        code: 'կրկնել 5 անգամ\n    գրել N',
+        inputs: [617, 2, 1, 2, 3]
       }, {
         group: 'recursively: 1 level: repeat',
         sources: [{
