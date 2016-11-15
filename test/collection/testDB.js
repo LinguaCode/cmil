@@ -1,4 +1,4 @@
-module.exports = [{
+  xmodule.exports = [{
   title: 'variable',
   code: 'գրել X\nտպել X',
   inputs: [617],
