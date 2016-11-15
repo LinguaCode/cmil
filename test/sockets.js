@@ -95,7 +95,7 @@ const dbAnalyzer = sources => {
             console.log(sourceCodeMessage);
 
             if (evalResult == expectedOutput || (evalResult == expectedOutput && !evalResult)) {
-              console.log(errorMessage);
+              console.log(`\n${expectedResultMessage}`);
               done();
             } else if (evalResult && evalResult != `${expectedOutput}\n`) {
               done(new Error(errorMessage));
