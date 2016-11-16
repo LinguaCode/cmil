@@ -61,6 +61,8 @@ let sockets = {
 const postExecute = sessionId => {
   let output = getter.output(sessionId);
   let currentStatus = output.status;
+  const isSucceed = currentStatus == STATUS.SUCCESS;
+
   if ((!output.result && currentStatus == STATUS.SUCCESS) || currentStatus == STATUS.WAITS_FOR_INPUT) {
     if (output.result) {
       sender.evaluate(sessionId, output.result);
@@ -69,12 +71,14 @@ const postExecute = sessionId => {
   } else if (currentStatus == STATUS.SUCCESS) {
     sender.evaluate(sessionId, output.result);
     sender.waitsForInput(sessionId);
-  } else {
+  }/* else {
     sender.error(sessionId, currentStatus);
-  }
+  }*/
+
+  const errorMessage = isSucceed ? '' : currentStatus;
 
   if (checker.session.ended(sessionId)) {
-    return sender.sessionEnd(sessionId);
+    return sender.sessionEnd(sessionId, errorMessage);
   }
 };
 
