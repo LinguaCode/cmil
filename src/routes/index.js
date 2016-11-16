@@ -71,7 +71,6 @@ const postExecute = sessionId => {
     sender.waitsForInput(sessionId);
   } else {
     sender.error(sessionId, currentStatus);
-    sender.sessionEnd(sessionId);
   }
 
   if (checker.session.ended(sessionId)) {
