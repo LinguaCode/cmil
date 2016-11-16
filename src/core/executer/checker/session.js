@@ -30,7 +30,7 @@ exports.ended = sessionId => {
     errorOccurred: isErrorOccurredCheck(outputStatus),
   };
 
-  for (var key in is) {
+  for (let key in is) {
     if (is[key] == true) {
       return true;
     }
