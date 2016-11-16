@@ -139,6 +139,7 @@ describe('initialize', () => {
 
 /**passed db test*/
 const dbs = ['successes', 'tutorials', 'errors'];
+//const dbs = ['testDB'];
 dbs.forEach((db)=> {
   describe(db, () => {
     const sources = require(`./collection/${db}`);
