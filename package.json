@@ -22,17 +22,17 @@
   "dependencies": {
     "express": "^4.14.0",
     "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
-    "lodash": "^4.11.1",
-    "moment": "^2.14.1",
+    "lodash": "^4.17.2",
+    "moment": "^2.16.0",
     "node-cache-wiper": "git+https://github.com/otanim/node-cache-wiper.git",
-    "require-dir": "^0.3.0",
-    "socket.io": "^1.4.8"
+    "require-dir": "^0.3.1",
+    "socket.io": "^1.5.1"
   },
   "devDependencies": {
-    "socket.io-client": "^1.4.8",
-    "coveralls": "^2.11.9",
-    "istanbul": "^0.4.3",
+    "socket.io-client": "^1.5.1",
+    "coveralls": "^2.11.15",
+    "istanbul": "^0.4.5",
     "istanbul-coveralls": "^1.0.3",
-    "mocha": "^2.5.1"
+    "mocha": "^3.1.2"
   }
 }

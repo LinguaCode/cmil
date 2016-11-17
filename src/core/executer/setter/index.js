@@ -46,4 +46,10 @@ exports.sessionTime = sessionId => __store[sessionId].time = new Date();
  * */
 exports.input = (sessionId, input) => __store[sessionId].input = input;
 
+/**
+ * Sets session language.
+ * Standard: ISO 639-1.
+ * */
+exports.language = (sessionId, language) => __language[sessionId] = language;
+
 let getter = require('../getter');

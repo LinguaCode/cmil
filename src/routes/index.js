@@ -13,15 +13,19 @@ let ipAddress;
 
 let sockets = {
   submit: receivedData => {
-    let sourceCode = receivedData.sourceCode;
-    let sessionId = receivedData.sessionId;
+    const sourceCode = receivedData.sourceCode;
+    const sessionId = receivedData.sessionId;
+    //TODO: add error handler: unsupported language
+    const language = receivedData.language || 'hy';
+
+    setter.language(sessionId, language);
 
     require('../core/globals')(sessionId);
 
     sender.submitSuccess(sessionId);
     console.llog('Socket.IO: server: sourceCode has been successfully received!');
 
-    let error = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
+    const error = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
     if (error) {
 
       //TODO: Arman: put here mail logging system
@@ -29,7 +33,7 @@ let sockets = {
 
       setter.output(sessionId, error);
     } else {
-      compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
+      compiler.codeRun(sessionId, sourceCode, language);
     }
 
     postExecute(sessionId);
