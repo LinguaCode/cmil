@@ -20,6 +20,7 @@ module.exports = {
   nameOfProperty: value.nameOfProperty,
   index: value.index,
   variables: value.variables,
+  language: value.language,
   output: value.output,
   input: value.input,
 

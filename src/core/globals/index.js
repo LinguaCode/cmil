@@ -90,8 +90,6 @@ var language = sessionId => {
    * @param {String} __language[sessionId].new - the Changed language, type: ISO 639-1.
    * @param {String} __language[sessionId].old - the old language which is changed, type: ISO 639-1.
    */
-  __language[sessionId] = {
-    new: 'hy',
-    old: 'hy'
-  };
+  //TODO: update the documentation
+  __language[sessionId] = ''
 };
