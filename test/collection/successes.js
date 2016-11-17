@@ -388,88 +388,88 @@ module.exports = [{
         sources: [{
           title: '>',
           code: 'տպել 4 > 2',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: '<',
           code: 'տպել 2 < 4',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: '==',
           code: 'տպել 4 == 4',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: '>=',
           code: 'տպել 4 >= 2',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: '<=',
           code: 'տպել 2 <= 4',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: '!=',
           code: 'տպել 4 != 2',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: 'not()',
           code: 'տպել ոչ(4 < 2)',
-          output: 'ճիշտ'
+          output: '${true}'
         }]
       }, {
         group: 'boolean',
         sources: [{
           title: 'AND: true result',
           code: 'տպել 4 > 2 և 4 != 2',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: 'AND: false result',
           code: 'տպել 4 > 2 և 4 == 2',
-          output: 'սխալ'
+          output: '${false}'
         }, {
           title: 'OR: true result',
           code: 'տպել 4 > 2 կամ 4 == 2',
-          output: 'ճիշտ'
+          output: '${true}'
         }, {
           title: 'OR: false result',
           code: 'տպել 4 < 2 կամ 4 == 2',
-          output: 'սխալ'
+          output: '${false}'
         }]
       }]
     }, {
       title: 'true value',
       code: 'տպել ճիշտ',
-      output: 'ճիշտ'
+      output: '${true}'
     }, {
       title: 'false value',
       code: 'տպել սխալ',
-      output: 'սխալ'
+      output: '${false}'
     }, {
       title: 'true condition',
       code: 'տպել 4 > 2',
-      output: 'ճիշտ'
+      output: '${true}'
     }, {
       title: 'false condition',
       code: 'տպել 4 < 2',
-      output: 'սխալ'
+      output: '${false}'
     }, {
       title: 'and: result: true',
       code: 'տպել ճիշտ և ճիշտ',
-      output: 'ճիշտ'
+      output: '${true}'
     }, {
       title: 'and։ result: false',
       code: 'տպել ճիշտ և սխալ',
-      output: 'սխալ'
+      output: '${false}'
     }, {
       title: 'or։ result: true',
       code: 'տպել ճիշտ կամ սխալ',
-      output: 'ճիշտ'
+      output: '${true}'
     }, {
       title: 'or։ result: false',
       code: 'տպել սխալ կամ սխալ',
-      output: 'սխալ'
+      output: '${false}'
     }, {
       title: 'mixed',
       code: 'տպել 5 < 1 և (1 < 7 կամ (1 >= 3 կամ 9 == 9))',
-      output: 'սխալ'
+      output: '${false}'
     }]
   }, {
     group: 'loops',
