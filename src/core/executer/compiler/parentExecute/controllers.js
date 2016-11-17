@@ -71,6 +71,8 @@ let controller = {
       if (getter.nameOfProperty(sessionId) != 'toCompile') {
         controller.manage(sessionId);
       }
+    } else if (nameOfProperty == 'toCompile') {
+      positions.toCompile(sessionId);
     }
 
     console.llog('compiler: directive', 'end');
@@ -100,4 +102,4 @@ let checker = require('../../checker');
 
 let upgrade = exports.upgrade = require('./positions').upgrade;
 
-let parent = require('./positions').parent;
+const positions = require('./positions');

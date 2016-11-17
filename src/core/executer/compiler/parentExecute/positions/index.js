@@ -21,7 +21,6 @@ exports.toCompile = function (sessionId) {
   console.llog('compiler: toCompile', 'begin');
 
   if (!input && checker.needToInput(sessionId)) {
-
     setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
     console.llog(__store[sessionId].pathOfLocation);
