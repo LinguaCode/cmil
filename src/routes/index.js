@@ -21,13 +21,13 @@ let sockets = {
     sender.submitSuccess(sessionId);
     console.llog('Socket.IO: server: sourceCode has been successfully received!');
 
-    let errorMessage = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
-    if (errorMessage) {
+    let error = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
+    if (error) {
 
       //TODO: Arman: put here mail logging system
       console.llog('Socket.IO: server: output text has been successfully send! (Hack attempt)');
 
-      setter.output(sessionId, errorMessage);
+      setter.output(sessionId, error);
     } else {
       compiler.codeRun(sessionId, sourceCode, __language[sessionId].old);
     }
@@ -47,7 +47,7 @@ let sockets = {
     postExecute(sessionId);
   },
 
-  init: function(socket) {
+  init: function (socket) {
 
     socket.on('submit', this.submit);
 
@@ -59,26 +59,25 @@ let sockets = {
 };
 
 const postExecute = sessionId => {
-  let output = getter.output(sessionId);
-  let currentStatus = output.status;
-  const isSucceed = currentStatus == STATUS.SUCCESS;
+  const output = getter.output(sessionId);
+  const status = output.status;
+  const isSucceed = status === STATUS.SUCCESS;
+  const isWaitsForInput = status === STATUS.WAITS_FOR_INPUT;
 
-  if ((!output.result && currentStatus == STATUS.SUCCESS) || currentStatus == STATUS.WAITS_FOR_INPUT) {
+  if ((!output.result && isSucceed) || isWaitsForInput) {
     if (output.result) {
       sender.evaluate(sessionId, output.result);
     }
     sender.waitsForInput(sessionId);
-  } else if (currentStatus == STATUS.SUCCESS) {
+  } else if (isSucceed) {
     sender.evaluate(sessionId, output.result);
     sender.waitsForInput(sessionId);
-  }/* else {
-    sender.error(sessionId, currentStatus);
-  }*/
+  }
 
-  const errorMessage = isSucceed ? '' : currentStatus;
+  const error = isSucceed ? '' : status;
 
   if (checker.session.ended(sessionId)) {
-    return sender.sessionEnd(sessionId, errorMessage);
+    return sender.sessionEnd(sessionId, error);
   }
 };
 

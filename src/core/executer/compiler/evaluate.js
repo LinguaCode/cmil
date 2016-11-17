@@ -1,11 +1,12 @@
 const tools = require('../../../libs/tools');
 const errorHandler = require('../../errorHandler');
 const errorCheck = require('../../errorHandler/checker');
-const errorMessages = require('../../errorHandler/messages');
 const formatter = require('../../formatter');
 const getter = require('../getter');
 const setter = require('../setter');
 const management = require('./management');
+
+const UNDEFINED_VARIABLE = 'undefinedVariable';
 
 exports.condition = sessionId => {
   let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
@@ -28,9 +29,15 @@ exports.code = (sessionId, sourceCode) => {
         evalResult += `${output}\n`;
       }
 
-      let hasBrokenVariable = errorCheck.brokenVariable(sessionId, codeFormatted);
-      if (hasBrokenVariable) {
-        setter.output(sessionId, errorMessages.brokenVariable(hasBrokenVariable));
+      const undefinedVariable = errorCheck.undefinedVariable(sessionId, codeFormatted);
+
+      if (undefinedVariable) {
+        const error = {
+          id: UNDEFINED_VARIABLE,
+          param: undefinedVariable
+        };
+
+        setter.output(sessionId, error);
         console.llog('compiler: trigger: broken variable');
         return false;
       }
