@@ -21,7 +21,7 @@ exports.downgrade = sessionId => {
  * All outputs in once.
  * */
 exports.output = function (sessionId, status, output) {
-  if (status == 'success' && output) {
+  if (status === 'success' && output) {
     __store[sessionId].output += `${output}\n`;
   }
 

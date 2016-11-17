@@ -1,6 +1,6 @@
-exports.true = 'ճիշտ';
-exports.false = 'սխալ';
-exports.NaN = 'անորոշ';
-exports.null = 'անհայտ';
-exports.Infinity = 'Անվերջություն';
-exports.undefined = 'չհայտաարարված';
+exports.true = 'true';
+exports.false = 'false';
+exports.NaN = 'NaN';
+exports.null = 'null';
+exports.Infinity = 'Infinity';
+exports.undefined = 'undefined';

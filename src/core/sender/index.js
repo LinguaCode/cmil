@@ -6,6 +6,4 @@ exports.sessionEnd = (sessionId, errorMessage) => io.emit(`${sessionId}_sessionE
 
 exports.waitsForInput = sessionId => io.emit(`${sessionId}_waitsForInput`);
 
-//exports.error = (sessionId, errorMessage) => io.emit(`${sessionId}_error`, errorMessage);
-
 exports.submitSuccess = sessionId => io.emit(`${sessionId}_submitSuccess`);
