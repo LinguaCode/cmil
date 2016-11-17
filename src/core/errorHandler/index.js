@@ -1,32 +1,37 @@
-const check = exports.check = require('./checker');
-const messages = require('./messages');
+const SYNTAX_ERROR = 'syntaxError';
+const HACK_ATTEMPT = 'hackAttempt';
+const INDENT_ERROR = 'indentError';
 
-const pipeline = ['hackAttempted', 'indentFailure'];
+const check = exports.check = require('./checker');
+
+const pipeline = [HACK_ATTEMPT, INDENT_ERROR];
 
 exports.analyze = (sourceCode, params) => {
   for (let i = 0; i < pipeline.length; i++) {
-    const testName = pipeline[i];
+    const errorId = pipeline[i];
 
-    const errorParams = check[testName](sourceCode, params);
-    if (errorParams) {
-      return messages[testName](errorParams);
+    const errorParam = check[errorId](sourceCode, params);
+    if (errorParam) {
+      return {
+        id: errorId,
+        param: errorParam
+      };
     }
   }
 
-  return false;
+  return null;
 };
 
 exports.evalResult = error => {
   const errorMessage = error.message;
-  let errorStatus;
   const unexpectedIdentifier = /Unexpected identifier/i;
 
-  if (unexpectedIdentifier.test(errorMessage)) {
-    errorStatus = 'Syntax error';
-  } else {
-    errorStatus = 'Syntax error';
-  }
+  const errorId =
+    unexpectedIdentifier.test(errorMessage) ?
+      SYNTAX_ERROR : SYNTAX_ERROR;
 
-  return errorStatus;
+  return {
+    id: errorId
+  };
 };
 
