@@ -1,5 +1,5 @@
 module.exports = [{
   title: 'undefined variable',
-  code: 'տպել X',
-  status: 'The \\D+\\d* variable didn\'t defined.'
+  code: 'տպել 1',
+  output: '1'
 }];
