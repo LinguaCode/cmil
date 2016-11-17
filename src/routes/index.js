@@ -11,16 +11,20 @@ const getter = require('../core/executer/getter');
 
 let ipAddress;
 
-let sockets = {
+const preExecute = sessionId => {
+  require('../core/globals')(sessionId);
+};
+
+const sockets = {
   submit: receivedData => {
     const sourceCode = receivedData.sourceCode;
     const sessionId = receivedData.sessionId;
+    preExecute(sessionId);
+
     //TODO: add error handler: unsupported language
     const language = receivedData.language || 'hy';
 
     setter.language(sessionId, language);
-
-    require('../core/globals')(sessionId);
 
     sender.submitSuccess(sessionId);
     console.llog('Socket.IO: server: sourceCode has been successfully received!');
