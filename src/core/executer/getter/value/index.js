@@ -33,6 +33,10 @@ exports.input = sessionId => {
   return __store[sessionId].input;
 };
 
+exports.language = sessionId => {
+  return __language[sessionId];
+};
+
 let path = require('../path');
 
 exports.structure = require('./structure');
