@@ -1,5 +1,5 @@
 module.exports = [{
   title: 'undefined variable',
-  code: 'տպել 1',
-  output: '1'
+  code: 'տպել \'text_1 «text_2» «text_3» text_3\'',
+  output: 'text_1 «text_2» «text_3» text_3'
 }];
