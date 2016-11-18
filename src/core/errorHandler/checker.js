@@ -5,10 +5,14 @@ const tools = require('../../libs/tools');
 exports.hackAttempt = (sourceCode, params) => {
   let ipAddress = params.ipAddress;
 
-  for (let i = 0; i < reservedWords.length; i++) {
-    let regExp = new RegExp(reservedWords[i], 'g');
-    if (regExp.test(sourceCode) && tools.isPartOfCode(sourceCode, regExp.lastIndex - reservedWords[i].length)) {
-      return ipAddress;
+  sourceCode = sourceCode.split('\n');
+  for (let i = 0; i < sourceCode.length; i++) {
+    const line = sourceCode[i];
+    for (let j = 0; j < reservedWords.length; j++) {
+      let regExp = new RegExp(reservedWords[i], 'g');
+      if (regExp.test(line) && tools.isPartOfCode(line, regExp.lastIndex - reservedWords[i].length)) {
+        return ipAddress;
+      }
     }
   }
 

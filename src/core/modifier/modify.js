@@ -20,11 +20,18 @@ const code = require('./code');
  * @returns {String} Returns lower cased sourceCode, except String type texts.
  */
 exports.codeNotSensitive = sourceCode => {
-  for (let i = 0; i < sourceCode.length; i++) {
-    if (tools.isPartOfCode(sourceCode, i)) {
-      sourceCode = sourceCode.substring(0, i) + sourceCode[i].toLowerCase() + sourceCode.substring(i + 1);
-    }
-  }
+  sourceCode = sourceCode
+    .split('\n')
+    .map((line) => {
+      for (let i = 0; i < line.length; i++) {
+        if (tools.isPartOfCode(line, i)) {
+          line = line.substring(0, i) + line[i].toLowerCase() + line.substring(i + 1);
+        }
+      }
+
+      return line
+    })
+    .join('\n');
 
   return sourceCode;
 };
