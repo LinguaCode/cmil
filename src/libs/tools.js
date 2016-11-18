@@ -118,9 +118,9 @@ exports.isPartOfCode = function (input, index) {
   let isAnyQuotationMarkEnd = quotationMarkIndexes.endOfAfter !== -1;
   let isAnyQuotationMarks = isAnyQuotationMarkBegin && isAnyQuotationMarkEnd;
 
-  if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore && !(quotes.es6.isOpen.before && quotes.es6.isOpen.after)) {
+  if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore && !((quotes.es6.isOpen.before && quotes.es6.isOpen.after) || (!quotes.es6.isOpen.before && !quotes.es6.isOpen.after))) {
     return true;
-  } else if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter) {
+  } else if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter && !quotes.es6.isOpen.before && !quotes.single.isOpen.before && !quotes.double.isOpen.before) {
     return false;
   }
 
