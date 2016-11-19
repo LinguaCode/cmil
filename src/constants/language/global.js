@@ -1,5 +1,8 @@
 module.exports = () => ({
   replace: [{
+    command: '""|\'\'|«»',
+    definition: 'String()'
+  },{
     command: '։',
     definition: ':'
   }, {
