@@ -21,7 +21,7 @@ exports.ifCondition = (sessionId, condition) => {
   console.llog('builder: ifCondition');
 
   const conditionName = this.conditionNameInit(sessionId, 'if');
-  condition = `${conditionName} = typeof(${conditionName}) == "undefined" ? ${condition} : false`;
+  condition = `${conditionName} = ${condition}`;
   return condition;
 };
 
@@ -36,7 +36,7 @@ exports.conditionNameInit = (sessionId, conditionType) => {
   console.llog('builder: conditionNameInit');
 
   const randomIndex = _.random(9999);
-  const sessionName = `${sessionId}.`;
+  const sessionName = `global[sessionId].`;
   const repeatVarWithIndex = `${conditionType}_${randomIndex}`;
   return sessionName + repeatVarWithIndex;
 };
