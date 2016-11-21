@@ -25,7 +25,9 @@ let controller = {
     setter.indexIncrement(sessionId);
 
     if (checker.session.expired(sessionId)) {
-      setter.output(sessionId, TIMEOUT);
+      setter.output(sessionId, {
+        id: TIMEOUT,
+      });
       console.llog('compiler: trigger: timeout');
       return false;
     }

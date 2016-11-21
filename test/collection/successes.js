@@ -493,7 +493,7 @@ module.exports = [{
         output: '0\n1\n2\n3\n4'
       },{
         title: '4 attempts: {if: true}',
-        code: 'b = 1\nմինչ b < 4\n    եթե b = 2\n        տպել "asdasd"\n    b = b + 1',
+        code: 'b = 1\nմինչ b < 4\n    եթե b == 2\n        տպել "asdasd"\n    b = b + 1',
         output: 'asdasd'
       }, {
         title: '0 attempts',
