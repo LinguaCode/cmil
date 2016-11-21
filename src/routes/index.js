@@ -84,7 +84,7 @@ const postExecute = sessionId => {
   const error = isSucceed ? '' : status;
 
   if (checker.session.ended(sessionId)) {
-    return sender.sessionEnd(sessionId, error);
+     return sender.sessionEnd(sessionId, error);
   }
 };
 
