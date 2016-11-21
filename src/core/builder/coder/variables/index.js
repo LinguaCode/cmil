@@ -49,7 +49,7 @@ exports.variablesToObjectChild = (sessionId, sourceCode, listOfVariables) => {
           if (regIndexOfVariable && isPartOfCode) {
             const lineLeftPart = line.substring(0, indexOfVariable);
             const lineRightPart = line.substring(indexOfVariable + listOfVariables[i].length);
-            const modifiedVariableName = `${sessionId}.${currentVariable}`;
+            const modifiedVariableName = `global[sessionId].${currentVariable}`;
             line = lineLeftPart + modifiedVariableName + lineRightPart;
           }
         }

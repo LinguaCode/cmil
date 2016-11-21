@@ -3,7 +3,7 @@ module.exports = [{
   sources: [{
     title: 'undefined variable',
     code: 'տպել X',
-    status: 'The \\D+\\d* variable didn\'t defined.'
+    status: '${undefined}'
   }, {
     title: 'hack attempt',
     code: 'eval("console.log("hello world");")',
