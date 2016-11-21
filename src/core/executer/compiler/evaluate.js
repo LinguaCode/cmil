@@ -55,4 +55,5 @@ exports.code = (sessionId, sourceCode) => {
   }
 };
 
+
 exports.inputOperation = (sessionId, inputValue) => `${getter.inputVariable(sessionId)}=${tools.valueRender(inputValue)}`;

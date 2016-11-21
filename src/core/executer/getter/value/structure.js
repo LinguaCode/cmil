@@ -27,9 +27,10 @@ exports.conditionType = sessionId => {
 
 exports.conditionIdentifier = sessionId => {
   let condition = value(sessionId, 'condition');
-  let identifierRegExp = new RegExp(`${sessionId}\\.\\D+\\d+`);
+  let identifierRegExp = new RegExp(`global\\[sessionId\\]\\.\\D+\\d+`);
   let identifier = identifierRegExp.exec(condition)[0];
-  return identifier;
+  const identifierParsed = identifier.replace('global[sessionId]', `global[${sessionId}]`);
+  return identifierParsed;
 };
 
 exports.operations = sessionId => {
