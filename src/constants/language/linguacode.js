@@ -27,7 +27,7 @@ module.exports = (sessionId, isCondition) => {
     command: COMMAND.AND_2,
     definition: '&&'
   }, {
-    command: `${COMMAND.OUTPUT}\\s+(.*);`,
+    command: `${COMMAND.OUTPUT}\\s*\((.*)\);`,
     definition: `output = $1;`
   }, {
     command: `${COMMAND.IF}\\s+([^\\r\\n]*[^\\${COMMAND.THEN}])( ${COMMAND.THEN})*`,
