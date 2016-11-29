@@ -2,7 +2,7 @@ module.exports = [{
   group: 'etc',
   sources: [{
     title: 'empty',
-  },{
+  }, {
     title: '"" + 1',
     code: 'տպել("" + 1)',
     output: '1'
@@ -491,7 +491,7 @@ module.exports = [{
         title: '5 attempts',
         code: 'a = 0\nմինչ a < 5\n    տպել(a)\n    a = a + 1',
         output: '0\n1\n2\n3\n4'
-      },{
+      }, {
         title: '4 attempts: {if: true}',
         code: 'b = 1\nմինչ b < 4\n    եթե b == 2\n        տպել("asdasd")\n    b = b + 1',
         output: 'asdasd'
@@ -615,6 +615,53 @@ module.exports = [{
           output: 'X\nY\na\na\na\nY\na\na\na\nZ'
         }]
       }]
+    }]
+  }, {
+    group: 'math',
+    sources: [{
+      title: 'pow',
+      code: 'X = 2\nY = 5\nZ = աստիճան(X,Y)\nտպել(Z)',
+      output: '32'
+    }, {
+      title: 'round',
+      code: 'X = 2.5\nZ = կլորացում(X)\nտպել(Z)',
+      output: '3'
+    }, {
+      title: 'abs',
+      code: 'X = -5\nZ = մոդուլ(X)\nտպել(Z)',
+      output: '5'
+    }, {
+      title: 'sin',
+      code: 'X = 1\nZ = sin(X)\nտպել(Z)',
+      output: '0.8414709848078965'
+    }, {
+      title: 'cos',
+      code: 'X = 1\nZ = cos(X)\nտպել(Z)',
+      output: '0.5403023058681398'
+    }, {
+      title: 'tan',
+      code: 'X = 1\nZ = tan(X)\nտպել(Z)',
+      output: '1.5574077246549023'
+    },{
+      title: 'ctg',
+      code: 'X = 1\nZ = ctg(X)\nտպել(Z)',
+      output: '0.6420926159343306'
+    },{
+      title: 'arcsin',
+      code: 'X = 1\nZ = arcsin(X)\nտպել(Z)',
+      output: '1.5707963267948966'
+    },{
+      title: 'arccos',
+      code: 'X = 0.5\nZ = arccos(X)\nտպել(Z)',
+      output: '1.0471975511965979'
+    },{
+      title: 'arctan',
+      code: 'X = 1\nZ = arctan(X)\nտպել(Z)',
+      output: '0.7853981633974483'
+    },{
+      title: 'arcctg',
+      code: 'X = 0.5\nZ = arcctg(X)\nտպել(Z)',
+      output: '1.1071487177940904'
     }]
   }]
 }];
