@@ -54,5 +54,40 @@ module.exports = [{
 }, {
   command: COMMAND.FUNCTION,
   definition: 'ֆունկցիա'
-}
-];
+}, {
+  command: COMMAND.POW,
+  definition: 'աստիճան'
+}, {
+  command: COMMAND.ROUND,
+  definition: 'կլորացում'
+}, {
+  command: COMMAND.ABS,
+  definition: 'մոդուլ'
+}, {
+  command: COMMAND.SIN,
+  definition: 'sin'
+}, {
+  command: COMMAND.COS,
+  definition: 'cos'
+}, {
+  command: COMMAND.TAN,
+  definition: 'tan'
+}, {
+  command: COMMAND.CTG,
+  definition: 'ctg'
+}, {
+  command: COMMAND.ARCSIN,
+  definition: 'arcsin'
+}, {
+  command: COMMAND.ARCCOS,
+  definition: 'arccos'
+}, {
+  command: COMMAND.ARCTAN,
+  definition: 'arctan'
+}, {
+  command: COMMAND.ARCCTG,
+  definition: 'arcctg'
+}, {
+  command: COMMAND.SQR,
+  definition: 'քառակուսի'
+},];

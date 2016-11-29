@@ -1,5 +1,6 @@
 module.exports = [{
-  title: 'undefined variable',
-  code: 'մինչ 1 < 4\n    տպել(123)',
-  status: 'timeout'
+  title: 'operations_sum_of_string_and_number',
+  code: 'տպել(«խնդրում ենք մուտքագրել ձեր ծննդյան տարեթիվը»)\nգրել(տարեթիվ)\nտարիք = 2016 - տարեթիվ\nտպել(«Ձեր տարիքը » + տարիք + « է»)',
+  inputs: [1995],
+  output: 'խնդրում ենք մուտքագրել ձեր ծննդյան տարեթիվը\nՁեր տարիքը 21 է'
 }];

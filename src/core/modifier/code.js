@@ -4,12 +4,14 @@ let core = function (data, lng, command, definition) {
     .split('\n')
     .map((line) => {
       for (let i = 0; i < TRANSLATION[lng].length; i++) { //languages
-        re = new RegExp(TRANSLATION[lng][i][command], 'ig');
+        const translation = TRANSLATION[lng][i][command];
+        re = new RegExp(translation, 'ig');
         while ((reStr = re.exec(line)) !== null) { //in line
-          if (tools.isPartOfCode(line, reStr.index)) {
-            line = line.substring(0, reStr.index) +
+          const index = reStr.index;
+          if (tools.isPartOfCode(line, index) && !tools.isPartOfCommand(line, translation, index)) {
+            line = line.substring(0, index) +
               TRANSLATION[lng][i][definition].replace(/\\/g, '') +
-              line.substring(reStr.index + reStr[0].length);
+              line.substring(index + reStr[0].length);
           }
         }
       }
