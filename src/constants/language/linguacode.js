@@ -33,8 +33,29 @@ module.exports = (sessionId, isCondition) => {
     command: `${COMMAND.POW}\\s*\\(([^\\)\(]+)\\)(.*);`,
     definition: `Math.pow($1);`
   }, {
+    command: `${COMMAND.SQRT}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.pow($1, 1/2);`
+  }, {
+    command: `${COMMAND.SQR}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.pow($1, 2);`
+  }, {
     command: `${COMMAND.ROUND}\\s*\\(([^\\)\(]+)\\)(.*);`,
     definition: `Math.round($1);`
+  }, {
+    command: `${COMMAND.FLOOR}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.floor($1);`
+  }, {
+    command: `${COMMAND.CEIL}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.ceil($1);`
+  }, {
+    command: `${COMMAND.LG}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.log10($1);`
+  }, {
+    command: `${COMMAND.LN}\\s*\\(([^\\)\(]+)\\)(.*);`,
+    definition: `Math.log($1);`
+  }, {
+    command: `${COMMAND.LOG}\\s*\\((([^\\)\(]+),([^\\)\(]+))\\)(.*);`,
+    definition: `Math.log($3)/Math.log($2);`
   }, {
     command: `${COMMAND.ABS}\\s*\\(([^\\)\(]+)\\)(.*);`,
     definition: `Math.abs($1);`

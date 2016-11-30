@@ -58,8 +58,20 @@ module.exports = [{
   command: COMMAND.POW,
   definition: 'աստիճան'
 }, {
+  command: COMMAND.SQR,
+  definition: 'քառակուսի'
+}, {
+  command: COMMAND.SQRT,
+  definition: 'արմատ'
+}, {
   command: COMMAND.ROUND,
   definition: 'կլորացում'
+}, {
+  command: COMMAND.FLOOR,
+  definition: 'ամբողջացնել_ներքեւ'
+}, {
+  command: COMMAND.CEIL,
+  definition: 'ամբողջացնել_վերեւ'
 }, {
   command: COMMAND.ABS,
   definition: 'մոդուլ'
@@ -88,6 +100,12 @@ module.exports = [{
   command: COMMAND.ARCCTG,
   definition: 'arcctg'
 }, {
-  command: COMMAND.SQR,
-  definition: 'քառակուսի'
+  command: COMMAND.LOG,
+  definition: 'log'
+}, {
+  command: COMMAND.LN,
+  definition: 'ln'
+}, {
+  command: COMMAND.LG,
+  definition: 'lg'
 },];
