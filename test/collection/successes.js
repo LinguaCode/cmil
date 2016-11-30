@@ -623,9 +623,37 @@ module.exports = [{
       code: 'X = 2\nY = 5\nZ = աստիճան(X,Y)\nտպել(Z)',
       output: '32'
     }, {
+      title: 'sqrt',
+      code: 'X = 9\nZ = արմատ(X)\nտպել(Z)',
+      output: '3'
+    }, {
+      title: 'sqr',
+      code: 'X = 9\nZ = քառակուսի(X)\nտպել(Z)',
+      output: '81'
+    }, {
       title: 'round',
       code: 'X = 2.5\nZ = կլորացում(X)\nտպել(Z)',
       output: '3'
+    }, {
+      title: 'floor',
+      code: 'X = 3.5\nZ = ամբողջացնել_ներքեւ(X)\nտպել(Z)',
+      output: '3'
+    }, {
+      title: 'log',
+      code: 'X = 2\nY = 64\nZ = log(X,Y)\nտպել(Z)',
+      output: '6'
+    }, {
+      title: 'lg',
+      code: 'X = 1000\nZ = lg(X)\nտպել(Z)',
+      output: '3'
+    }, {
+      title: 'ln',
+      code: 'X = 5\nZ = ln(5)\nտպել(Z)',
+      output: '1.6094379124341003'
+    }, {
+      title: 'ceil',
+      code: 'X = 3.4\nZ = ամբողջացնել_վերեւ(X)\nտպել(Z)',
+      output: '4'
     }, {
       title: 'abs',
       code: 'X = -5\nZ = մոդուլ(X)\nտպել(Z)',
@@ -642,23 +670,23 @@ module.exports = [{
       title: 'tan',
       code: 'X = 1\nZ = tan(X)\nտպել(Z)',
       output: '1.5574077246549023'
-    },{
+    }, {
       title: 'ctg',
       code: 'X = 1\nZ = ctg(X)\nտպել(Z)',
       output: '0.6420926159343306'
-    },{
+    }, {
       title: 'arcsin',
       code: 'X = 1\nZ = arcsin(X)\nտպել(Z)',
       output: '1.5707963267948966'
-    },{
+    }, {
       title: 'arccos',
       code: 'X = 0.5\nZ = arccos(X)\nտպել(Z)',
       output: '1.0471975511965979'
-    },{
+    }, {
       title: 'arctan',
       code: 'X = 1\nZ = arctan(X)\nտպել(Z)',
       output: '0.7853981633974483'
-    },{
+    }, {
       title: 'arcctg',
       code: 'X = 0.5\nZ = arcctg(X)\nտպել(Z)',
       output: '1.1071487177940904'
