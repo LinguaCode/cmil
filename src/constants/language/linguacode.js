@@ -57,6 +57,9 @@ module.exports = (sessionId, isCondition) => {
     command: `${COMMAND.LOG}\\s*\\((([^\\)\(]+),([^\\)\(]+))\\)(.*);`,
     definition: `Math.log($3)/Math.log($2);`
   }, {
+    command: `${COMMAND.RANDOM}\\s*\\((([^\\)\(]+),*([^\\)\(]+)*)\\)(.*);`,
+    definition: `((min,max)=>{if(typeof(max)=='undefined') {max=min;min=0}\nreturn Math.floor(Math.random()*(max-min+1)+min)})($2,eval('$3'))`
+  }, {
     command: `${COMMAND.ABS}\\s*\\(([^\\)\(]+)\\)(.*);`,
     definition: `Math.abs($1);`
   }, {
