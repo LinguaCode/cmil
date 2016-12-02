@@ -690,6 +690,14 @@ module.exports = [{
       title: 'arcctg',
       code: 'X = 0.5\nZ = arcctg(X)\nտպել(Z)',
       output: '1.1071487177940904'
+    }, {
+      title: 'random: single argument',
+      code: 'X = 1000\nZ = պատահականություն(X)\nտպել(Z >= 0 եւ Z <= 1000)',
+      output: '${true}'
+    }, {
+      title: 'random: double argument',
+      code: 'X = 1000\nY = 1005\nZ = պատահականություն(X,Y)\nտպել(Z >= 1000 եւ Z <= 1005)',
+      output: '${true}'
     }]
   }]
 }];

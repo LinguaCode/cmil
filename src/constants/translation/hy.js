@@ -108,4 +108,7 @@ module.exports = [{
 }, {
   command: COMMAND.LG,
   definition: 'lg'
-},];
+}, {
+  command: COMMAND.RANDOM,
+  definition: 'պատահականություն'
+}];
