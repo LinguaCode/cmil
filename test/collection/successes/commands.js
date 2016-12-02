@@ -1,15 +1,15 @@
 module.exports = [{
-  group: 'etc',
+  group: 'commands',
   sources: [{
-    title: 'empty',
+    group: 'etc',
+    sources: [{
+      title: 'empty',
+    }, {
+      title: '"" + 1',
+      code: 'տպել("" + 1)',
+      output: '1'
+    }]
   }, {
-    title: '"" + 1',
-    code: 'տպել("" + 1)',
-    output: '1'
-  }]
-}, {
-  group: 'hy',
-  sources: [{
     group: 'output',
     sources: [{
       title: 'output: «text»',
