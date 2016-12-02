@@ -23,3 +23,6 @@ exports.ARCTAN = '#arctan';
 exports.ARCCTG = '#arcctg';
 
 exports.RANDOM = '#random';
+
+exports.PI = '#pi';
+exports.E = '#e';

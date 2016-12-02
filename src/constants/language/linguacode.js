@@ -27,6 +27,12 @@ module.exports = (sessionId, isCondition) => {
     command: COMMAND.AND_2,
     definition: '&&'
   }, {
+    command: COMMAND.PI,
+    definition: 'Math.PI'
+  }, {
+    command: COMMAND.E,
+    definition: 'Math.E'
+  }, {
     command: `${COMMAND.OUTPUT}\\s*\\((.*)\\)(.*);`,
     definition: `output = $1;`
   }, {
