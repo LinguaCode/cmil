@@ -54,5 +54,67 @@ module.exports = [{
 }, {
   command: COMMAND.FUNCTION,
   definition: 'ֆունկցիա'
-}
-];
+}, {
+  command: COMMAND.POW,
+  definition: 'աստիճան'
+}, {
+  command: COMMAND.SQR,
+  definition: 'քառակուսի'
+}, {
+  command: COMMAND.SQRT,
+  definition: 'արմատ'
+}, {
+  command: COMMAND.ROUND,
+  definition: 'կլորացում'
+}, {
+  command: COMMAND.FLOOR,
+  definition: 'ամբողջացնել_ներքեւ'
+}, {
+  command: COMMAND.CEIL,
+  definition: 'ամբողջացնել_վերեւ'
+}, {
+  command: COMMAND.ABS,
+  definition: 'մոդուլ'
+}, {
+  command: COMMAND.SIN,
+  definition: 'sin'
+}, {
+  command: COMMAND.COS,
+  definition: 'cos'
+}, {
+  command: COMMAND.TAN,
+  definition: 'tan'
+}, {
+  command: COMMAND.CTG,
+  definition: 'ctg'
+}, {
+  command: COMMAND.ARCSIN,
+  definition: 'arcsin'
+}, {
+  command: COMMAND.ARCCOS,
+  definition: 'arccos'
+}, {
+  command: COMMAND.ARCTAN,
+  definition: 'arctan'
+}, {
+  command: COMMAND.ARCCTG,
+  definition: 'arcctg'
+}, {
+  command: COMMAND.LOG,
+  definition: 'log'
+}, {
+  command: COMMAND.LN,
+  definition: 'ln'
+}, {
+  command: COMMAND.LG,
+  definition: 'lg'
+}, {
+  command: COMMAND.RANDOM,
+  definition: 'պատահականություն'
+}, {
+  command: COMMAND.PI,
+  definition: 'pi'
+}, {
+  command: COMMAND.E,
+  definition: 'e'
+}];

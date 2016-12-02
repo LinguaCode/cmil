@@ -22,6 +22,11 @@ exports.AND_1 = '#and';
 exports.AND_2 = '#and';
 exports.NOT = '#not';
 
+//math
+const MATH = require('./math');
+
+exports = Object.assign(exports, MATH);
+
 exports.FUNCTION = '#function';
 
 //conditions regular expressions

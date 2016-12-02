@@ -2,7 +2,7 @@ module.exports = [{
   group: 'hy',
   sources: [{
     title: 'undefined variable',
-    code: 'տպել X',
+    code: 'տպել(X)',
     status: '${undefined}'
   }, {
     title: 'hack attempt',
@@ -12,24 +12,24 @@ module.exports = [{
     group: 'wrong size of the indent',
     sources: [{
       title: 'error in 2nd line',
-      code: 'եթե 1 < 2\n     տպել 617',
+      code: 'եթե 1 < 2\n     տպել(617)',
       status: 'Space error in 2 line.'
     }, {
       title: 'error in 3rd line',
-      code: 'x = 12\nեթե 1 < 2\n     տպել 617',
+      code: 'x = 12\nեթե 1 < 2\n     տպել(617)',
       status: 'Space error in 3 line.'
     }]
   }, {
     title: 'Syntax error',
-    code: 'տպել 1x',
+    code: 'տպել(1x)',
     status: 'Syntax error'
   }, {
     title: 'Big loop: overload',
-    code: 'կրկնել 100000 անգամ\n    տպել 1010101010',
+    code: 'կրկնել 100000 անգամ\n    տպել(1010101010)',
     status: 'timeout'
   }, {
     title: 'Infinity loop',
-    code: 'մինչ 1 < 4\n    տպել 123',
+    code: 'մինչ 1 < 4\n    տպել(123)',
     status: 'timeout'
   }]
 }];
