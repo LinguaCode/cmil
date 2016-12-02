@@ -1,3 +1,3 @@
 exports.concat = sourceCode => ` ${sourceCode} `;
 
-exports.cut = sourceCode => sourceCode.replace(/^\s+/, '').replace(/\s+$/, '');
+exports.cut = sourceCode => sourceCode.replace(/^\s/, '').replace(/\s$/, '');

@@ -10,10 +10,13 @@ exports.parser = function (sessionId, sourceCode, db, isCondition) {
     let isGlobal = db === 'global';
     re = new RegExp(isGlobal ? `[^\\\\](${replaceObject[i].command})` : replaceObject[i].command, 'g');
     while ((reStr = re.exec(sourceCode)) !== null) { //in line
-      correctResult = reStr[1] ? reStr[1] : reStr[0];
+      const isContainInnerReplacements = /\$\d+/.test(replaceObject[i].definition);
+      correctResult = isContainInnerReplacements || !reStr[1] ? reStr[0] : reStr[1];
       let indexOfResult = isGlobal ? reStr.index + 1 : reStr.index;
       if (tools.isPartOfCode(sourceCode, indexOfResult)) {
-        toReplace = replaceObject[i].definition.replace('$1', correctResult);
+        toReplace = isContainInnerReplacements ?
+          correctResult.replace(new RegExp(replaceObject[i].command), replaceObject[i].definition) :
+          replaceObject[i].definition;
       } else if (scopes.indexOf(correctResult) !== -1) {
         toReplace = `\\${correctResult}`;
       } else {
