@@ -6,8 +6,10 @@ exports._get = sourceCode => {
   let listOfVariables = [];
   let regStr;
   const regExpArr = [
-    /[<>\-(+=*\/%\s]([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!][^\u00AB\u00BB()%+\-*\/=#'"\s]*)[\-+=*\/%\s><)!]/g,
-    /[<>\-(+=*\/%\s]([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!][^\u00AB\u00BB()%+\-*\/=#'"\s]*)$/g
+    /[<>\-(+=*\/%\s,]([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!,][^\u00AB\u00BB()%+\-*\/=#'"\s,]*)[\-+=*\/%\s><,)!]/g,
+    /^([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!,][^\u00AB\u00BB()%+\-*\/=#'"\s,]*)[\-+=*\/%\s><,)!]/g,
+    /[<>\-(+=*\/%\s,]([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!,][^\u00AB\u00BB()%+\-*\/=#'"\s,]*)$/g,
+    /^([^\d\u00AB\u00BB()%+\-*\/=#"'><\s!,][^\u00AB\u00BB()%+\-*\/=#'"\s,]*)$/g
   ];
 
   sourceCode
@@ -19,7 +21,7 @@ exports._get = sourceCode => {
             listOfVariables.push(regStr[1]);
           }
         }
-      });
+      })
     });
 
   return _.uniq(listOfVariables);
@@ -34,8 +36,8 @@ exports.variablesToObjectChild = (sessionId, sourceCode, listOfVariables) => {
       for (let i = 0; i < listOfVariables.length; i++) {
         const currentVariable = listOfVariables[i];
 
-        const beforeVariableRegExp = '[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s]';
-        const afterVariableRegExp = '[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)]';
+        const beforeVariableRegExp = '[\\<\\>\\-\\(\\+\\=\\*\\/\\%\\s\\,]';
+        const afterVariableRegExp = '[\\-\\+\\=\\*\\/\\%\\s\\!\\>\\<\\)\\,]';
         let regExp = new RegExp(`(?!\\.)${beforeVariableRegExp}(${currentVariable})${afterVariableRegExp}`, 'g');
 
         let regIndexOfVariable;

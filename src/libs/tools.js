@@ -120,7 +120,7 @@ exports.isPartOfCode = function (input, index) {
 
   if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore && !((quotes.es6.isOpen.before && quotes.es6.isOpen.after) || (!quotes.es6.isOpen.before && !quotes.es6.isOpen.after))) {
     return true;
-  } else if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter && !quotes.es6.isOpen.before && !quotes.single.isOpen.before && !quotes.double.isOpen.before) {
+  } else if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter && !(quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore) && !quotes.es6.isOpen.before && !quotes.single.isOpen.before && !quotes.double.isOpen.before) {
     return false;
   }
 
@@ -167,6 +167,17 @@ exports.isPartOfCode = function (input, index) {
   }
 
   return true;
+};
+
+exports.isPartOfCommand = function (line, instance, index) {
+  const previousSymbol = line[index - 1];
+  const nextSymbol = line[instance.length + index];
+  const regExp = /[^\u00AB\u00BB()%+\-*\/=#'"\s,]/;
+
+  const isAnyPartBefore = previousSymbol && regExp.test(previousSymbol);
+  const isAnyPartAfter = nextSymbol && regExp.test(nextSymbol);
+
+  return isAnyPartBefore || isAnyPartAfter;
 };
 
 /**
