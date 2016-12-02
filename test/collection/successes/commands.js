@@ -698,6 +698,14 @@ module.exports = [{
       title: 'random: double argument',
       code: 'X = 1000\nY = 1005\nZ = պատահականություն(X,Y)\nտպել(Z >= 1000 եւ Z <= 1005)',
       output: '${true}'
+    }, {
+      title: 'pi',
+      code: 'տպել(pi)',
+      output: '3.141592653589793'
+    }, {
+      title: 'e',
+      code: 'տպել(e)',
+      output: '2.718281828459045'
     }]
   }]
 }];

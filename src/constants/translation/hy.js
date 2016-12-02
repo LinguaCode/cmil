@@ -111,4 +111,10 @@ module.exports = [{
 }, {
   command: COMMAND.RANDOM,
   definition: 'պատահականություն'
+}, {
+  command: COMMAND.PI,
+  definition: 'pi'
+}, {
+  command: COMMAND.E,
+  definition: 'e'
 }];

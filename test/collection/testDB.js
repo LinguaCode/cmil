@@ -1,5 +1,5 @@
 module.exports = [{
-  title: 'random: single argument',
-  code: 'X = 1000\nZ = պատահականություն(X)\nտպել(Z >= 0 եւ Z <= 1000)',
-  output: '${true}'
+  title: 'true: 1st condition',
+  code: 'եթե 4 > 2\n    տպել(«4 > 2»)\nայլապես եթե 4 > 6\n    տպել(«4 > 6»)\nայլապես\n    տպել(«4 == 4»)',
+  output: '4 > 2'
 }];
