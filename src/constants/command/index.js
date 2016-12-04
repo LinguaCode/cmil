@@ -18,16 +18,14 @@ exports.BREAK = '#break';
 exports.CONTINUE = '#continue';
 
 exports.OR = '#or';
-exports.AND_1 = '#and';
-exports.AND_2 = '#and';
+exports.AND = '#and';
 exports.NOT = '#not';
+
+exports.FUNCTION = '#function';
 
 //math
 const MATH = require('./math');
-
 exports = Object.assign(exports, MATH);
-
-exports.FUNCTION = '#function';
 
 //conditions regular expressions
 exports.IF_WHILE_REPEAT = `${exports.IF}|${exports.WHILE}|${exports.REPEAT}`;

@@ -33,9 +33,9 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
   }
 
   //initializations of objects
-  let parentIndexes = {};
-  let parentConditionType = {};
-  let parentConditionValue = {};
+  let parentIndexes = Object.create(null);
+  let parentConditionType = Object.create(null);
+  let parentConditionValue = Object.create(null);
 
   //previous parent: START
   let parentIndexPrevious = index;
