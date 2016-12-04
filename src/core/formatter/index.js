@@ -1,43 +1,71 @@
 exports.codeSemicolon = sourceCode => `${sourceCode.replace('\n', ';\n')};`;
 
-exports.parser = function (sessionId, sourceCode, db, isCondition) {
-  let re, reStr;
-  let correctResult;
-  let toReplace;
-  let scopes = ['\'', '"', '«', '»'];
-  let replaceObject = LANGUAGES[db](sessionId, isCondition).replace;
-  for (let i = 0; i < replaceObject.length; i++) { //languages
-    let isGlobal = db === 'global';
-    re = new RegExp(isGlobal ? `[^\\\\](${replaceObject[i].command})` : replaceObject[i].command, 'g');
-    while ((reStr = re.exec(sourceCode)) !== null) { //in line
-      const isContainInnerReplacements = /\$\d+/.test(replaceObject[i].definition);
-      correctResult = isContainInnerReplacements || !reStr[1] ? reStr[0] : reStr[1];
-      let indexOfResult = isGlobal ? reStr.index + 1 : reStr.index;
-      if (tools.isPartOfCode(sourceCode, indexOfResult)) {
-        toReplace = isContainInnerReplacements ?
-          correctResult.replace(new RegExp(replaceObject[i].command), replaceObject[i].definition) :
-          replaceObject[i].definition;
-      } else if (scopes.indexOf(correctResult) !== -1) {
-        toReplace = `\\${correctResult}`;
-      } else {
-        toReplace = replaceObject[i].command;
-      }
+const parse = {
+  scopes: function (sourceCode) {
+    const scopes = ['\'', '"', '«', '»'];
+    const es6Scope = '`';
 
-      sourceCode = sourceCode.substring(0, indexOfResult) + toReplace + sourceCode.substring(reStr.index + reStr[0].length);
+    for (let i = 0; i < scopes.length; i++) {
+      const scope = scopes[i];
+
+      const re = new RegExp(`([^\\\\]${scope}|^${scope})`, 'g');
+
+      let reStr;
+      while ((reStr = re.exec(sourceCode)) !== null) {
+        const index = reStr.index;
+
+        const isPartOfCode = tools.isPartOfCode(sourceCode, index);
+        const toReplace = isPartOfCode ? es6Scope : `\\${scope}`;
+
+        sourceCode = sourceCode.replace(re, toReplace);
+      }
     }
+    return sourceCode;
+  },
+
+  syntax: function (sessionId, sourceCode, db) {
+    const commands = SYNTAX[db];
+    for (let i = 0; i < commands.length; i++) {
+      const instance = commands[i];
+
+      const re = new RegExp(instance.command, 'g');
+
+      let reStr;
+      while ((reStr = re.exec(sourceCode)) !== null) {
+        const correctResult = reStr[0];
+        const indexOfResult = reStr.index;
+        const isPartOfCode = tools.isPartOfCode(sourceCode, indexOfResult);
+
+        if (isPartOfCode) {
+          const isContainInnerReplacements = /\$\d+/.test(instance.definition);
+
+          const toReplace = isContainInnerReplacements ?
+            correctResult.replace(new RegExp(instance.command), instance.definition) :
+            instance.definition;
+
+          const firstPartEndIndex = indexOfResult;
+          const secondPartBeginIndex = reStr.index + reStr[0].length;
+          sourceCode = tools.partitionReplace(sourceCode, toReplace, firstPartEndIndex, secondPartBeginIndex);
+        }
+
+      }
+    }
+    return sourceCode;
   }
-  return sourceCode;
 };
 
-exports.fullParse = function (sessionId, sourceCode, isCondition) {
-  let codeParsedMain = this.parser(sessionId, sourceCode, 'global');
-  return this.parser(sessionId, codeParsedMain, 'linguacode', isCondition);
+exports.fullParse = function (sessionId, sourceCode) {
+  const codeGlobalParsed = parse.syntax(sessionId, sourceCode, 'global');
+  const codeSyntaxParsed = parse.syntax(sessionId, codeGlobalParsed, 'commands');
+  const codeScopesParsed = parse.scopes(codeSyntaxParsed);
+
+  return codeScopesParsed;
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {
-  let codeSemicoloned = this.codeSemicolon(sourceCode);
+  const codeSemicoloned = this.codeSemicolon(sourceCode);
   return this.fullParse(sessionId, codeSemicoloned);
 };
 
-let tools = require('../../libs/tools');
-let LANGUAGES = require('../../constants').LANGUAGE;
+const tools = require('../../libs/tools');
+const SYNTAX = require('../../constants').SYNTAX;
