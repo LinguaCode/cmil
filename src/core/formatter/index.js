@@ -55,7 +55,7 @@ const parse = {
 };
 
 exports.fullParse = function (sessionId, sourceCode) {
-  const codeGlobalParsed = parse.syntax(sessionId, sourceCode, 'global');
+  const codeGlobalParsed = parse.syntax(sessionId, sourceCode, 'globals');
   const codeSyntaxParsed = parse.syntax(sessionId, codeGlobalParsed, 'commands');
   const codeScopesParsed = parse.scopes(codeSyntaxParsed);
 
