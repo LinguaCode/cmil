@@ -51,15 +51,46 @@ const parse = {
       }
     }
     return sourceCode;
-  }
+  },
+
+  functions: function (sessionId, sourceCode) {
+    const db = 'functions';
+
+    const commands = SYNTAX[db];
+    for (let i = 0; i < commands.length; i++) {
+      const instance = commands[i];
+      const re = new RegExp(instance.command, 'g');
+
+      let reStr;
+      while ((reStr = re.exec(sourceCode)) !== null) {
+        const indexOfResult = reStr.index;
+        const isPartOfCode = tools.isPartOfCode(sourceCode, indexOfResult);
+
+        if (isPartOfCode) {
+          const argumentPositions = tools.argumentPositions(sourceCode, indexOfResult);
+          const indexOfBeginScope = argumentPositions.begin;
+          const indexOfEndScope = argumentPositions.end;
+          const functionArguments = tools.functionArguments(sourceCode, indexOfBeginScope, indexOfEndScope);
+          const toReplace = tools.argumentReplace(functionArguments, instance.definition);
+
+          const indexOfToReplaceFirstPartEnd = indexOfResult;
+          const indexOfToReplaceSecondPartBegin = indexOfEndScope;
+          sourceCode = tools.partitionReplace(sourceCode, toReplace, indexOfToReplaceFirstPartEnd, indexOfToReplaceSecondPartBegin);
+        }
+
+      }
+    }
+    return sourceCode;
+  },
 };
 
 exports.fullParse = function (sessionId, sourceCode) {
-  const codeGlobalParsed = parse.syntax(sessionId, sourceCode, 'globals');
-  const codeSyntaxParsed = parse.syntax(sessionId, codeGlobalParsed, 'commands');
+  const codeGlobalParsed = parse.syntax(sourceCode, 'globals');
+  const codeSyntaxParsed = parse.syntax(codeGlobalParsed, 'commands');
   const codeScopesParsed = parse.scopes(codeSyntaxParsed);
+  const codeFunctionsParsed = parse.functions(codeScopesParsed);
 
-  return codeScopesParsed;
+  return codeFunctionsParsed;
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {

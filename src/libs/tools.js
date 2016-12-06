@@ -200,7 +200,7 @@ exports.partitionReplace = (sourceCode, toReplace, firstPartEndIndex, secondPart
   return fullReplacement;
 };
 
-exports.functionArguments = (line, index) => {
+exports.argumentPositions = (line, index) => {
   const scopeOpenSymbol = '(';
   const scopeCloseSymbol = ')';
 
@@ -233,15 +233,29 @@ exports.functionArguments = (line, index) => {
     return null;
   }
 
-  const arguments = line.substring(indexOfFirstOpenScope + 1, indexOfCloseScope - 1);
-  const argumentList =
-    arguments
+  return {
+    begin: indexOfFirstOpenScope,
+    end: indexOfCloseScope
+  }
+};
+
+exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
+  const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope - 1);
+  const arguments =
+    argumentsString
       .split(',')
       .map((argument) => {
         return argument || undefined;
       });
 
-  return argumentList;
+  return arguments;
+};
+
+exports.argumentReplace = (arguments, toReplace) => {
+  for (let i = 0; i < arguments.length; i++) {
+    const argument = arguments[i];
+    toReplace = toReplace.replace(`$${i}`, argument);
+  }
 };
 
 /**
