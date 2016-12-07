@@ -1,29 +1,30 @@
 exports.codeSemicolon = sourceCode => `${sourceCode.replace('\n', ';\n')};`;
 
 const parse = {
-  scopes: function (sourceCode) {
-    const scopes = ['\'', '"', '«', '»'];
-    const es6Scope = '`';
+  quotes: function (sourceCode) {
+    const db = 'quotes';
+    const quotes = SYNTAX[db];
 
-    for (let i = 0; i < scopes.length; i++) {
-      const scope = scopes[i];
+    for (let i = 0; i < quotes.length; i++) {
+      const command = quotes[i].command;
+      const definition = quotes[i].definition;
 
-      const re = new RegExp(`([^\\\\]${scope}|^${scope})`, 'g');
+      const re = new RegExp(`([^\\\\])${command}|^${command}`, 'g');
 
       let reStr;
       while ((reStr = re.exec(sourceCode)) !== null) {
-        const index = reStr.index;
+        const index = reStr.index + 1;
 
         const isPartOfCode = tools.isPartOfCode(sourceCode, index);
-        const toReplace = isPartOfCode ? es6Scope : `\\${scope}`;
+        const toReplace = isPartOfCode ? definition : `\\${command}`;
 
-        sourceCode = sourceCode.replace(re, toReplace);
+        sourceCode = sourceCode.replace(re, `$1${toReplace}`);
       }
     }
     return sourceCode;
   },
 
-  syntax: function (sessionId, sourceCode, db) {
+  syntax: function (sourceCode, db) {
     const commands = SYNTAX[db];
     for (let i = 0; i < commands.length; i++) {
       const instance = commands[i];
@@ -53,7 +54,7 @@ const parse = {
     return sourceCode;
   },
 
-  functions: function (sessionId, sourceCode) {
+  functions: function (sourceCode) {
     const db = 'functions';
 
     const commands = SYNTAX[db];
@@ -87,8 +88,8 @@ const parse = {
 exports.fullParse = function (sessionId, sourceCode) {
   const codeGlobalParsed = parse.syntax(sourceCode, 'globals');
   const codeSyntaxParsed = parse.syntax(codeGlobalParsed, 'commands');
-  const codeScopesParsed = parse.scopes(codeSyntaxParsed);
-  const codeFunctionsParsed = parse.functions(codeScopesParsed);
+  const codeQuotesParsed = parse.quotes(codeSyntaxParsed);
+  const codeFunctionsParsed = parse.functions(codeQuotesParsed);
 
   return codeFunctionsParsed;
 };
