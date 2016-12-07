@@ -46,11 +46,11 @@ module.exports = [{
   command: '#',
   definition: '//'
 }, {
-  command: '^(?!global\\[sessionId\\])(.*)$',
+  command: '^(?!global\\[sessionId\\]\\.(do|if|main|repeat)_\\d+)(.*)$',
   definition: `
       (() => {
         let output = '';
-        $1
+        $2
         return output;
       })();`
 }];
