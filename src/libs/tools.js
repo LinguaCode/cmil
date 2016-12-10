@@ -201,29 +201,26 @@ exports.partitionReplace = (sourceCode, toReplace, firstPartEndIndex, secondPart
 };
 
 exports.argumentPositions = (line, index) => {
+  line = line.substr(index);
+  const sizeOfCroppedPart = index;
+  index = 0;
+
   const scopeOpenSymbol = '(';
   const scopeCloseSymbol = ')';
 
   const indexOfFirstOpenScope = line.indexOf(scopeOpenSymbol, index);
 
-  const regExp = new RegExp(`\\${scopeCloseSymbol}`);
-
-  let regExpResult;
   let indexOfCloseScope = indexOfFirstOpenScope;
   do {
-    regExpResult = regExp.exec(line);
-    if (regExpResult == null) {
-      break;
-    }
-
     indexOfCloseScope = line.indexOf(scopeCloseSymbol, indexOfCloseScope + 1);
-    if (indexOfCloseScope == -1) {
+    if (indexOfCloseScope == -1 || line[indexOfCloseScope] == '\\') {
       break;
     }
 
-    const countOfOpenScopeSymbols = countBefore(line, index, scopeOpenSymbol);
-    const isOpenOpenScopeSymbol = isOpen(countOfOpenScopeSymbols);
-    if (isOpenOpenScopeSymbol) {
+    const countOfOpenScopeSymbols = countBefore(line, indexOfCloseScope, scopeOpenSymbol);
+    const countOfCloseScopeSymbols = countBefore(line, indexOfCloseScope + 1, scopeCloseSymbol);
+    const isOpen = countOfOpenScopeSymbols == countOfCloseScopeSymbols;
+    if (isOpen) {
       break;
     }
   } while (true);
@@ -234,13 +231,13 @@ exports.argumentPositions = (line, index) => {
   }
 
   return {
-    begin: indexOfFirstOpenScope,
-    end: indexOfCloseScope
+    begin: sizeOfCroppedPart + indexOfFirstOpenScope,
+    end: sizeOfCroppedPart + indexOfCloseScope
   }
 };
 
 exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
-  const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope - 1);
+  const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope);
   const arguments =
     argumentsString
       .split(',')
@@ -254,8 +251,14 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
 exports.argumentReplace = (arguments, toReplace) => {
   for (let i = 0; i < arguments.length; i++) {
     const argument = arguments[i];
-    toReplace = toReplace.replace(`$${i}`, argument);
+    toReplace = toReplace.replace(`$${i + 1}`, argument);
   }
+
+  const undefinedValue = 'undefined';
+  const toReplaceRegExp = /\$\d+/g;
+  toReplace = toReplace.replace(toReplaceRegExp, undefinedValue);
+
+  return toReplace;
 };
 
 /**

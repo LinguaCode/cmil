@@ -10,15 +10,16 @@ exports.toCode = (data, lng) => {
         re = new RegExp(`[^#](${definition})|^${definition}`, 'ig');
         while ((reStr = re.exec(line)) !== null) { //in line
           const index = reStr[1] ? reStr.index + 1 : reStr.index;
+          const value = reStr[1] ? reStr[1] : reStr[0];
 
           const isPartOfCode = tools.isPartOfCode(line, index);
-          const isPartOfCommand = tools.isPartOfCommand(line, definition, index);
+          const isPartOfCommand = tools.isPartOfCommand(line, value, index);
 
           if (isPartOfCode && !isPartOfCommand) {
             const toReplace = instance.command.replace(/\\/g, '');
 
             const firstPartEndIndex = index;
-            const secondPartBeginIndex = index + definition.length;
+            const secondPartBeginIndex = index + value.length;
             line = tools.partitionReplace(line, toReplace, firstPartEndIndex, secondPartBeginIndex);
           }
         }

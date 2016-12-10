@@ -10,7 +10,7 @@ const UNDEFINED_VARIABLE = 'undefinedVariable';
 
 exports.condition = sessionId => {
   const condition = getter.condition(sessionId);
-  let formattedCondition = formatter.fullParse(sessionId, condition);
+  let formattedCondition = formatter.fullParse(sessionId, condition, true);
   let isPassed = eval(formattedCondition) === true;
   return isPassed;
 };
