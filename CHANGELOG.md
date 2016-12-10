@@ -2,8 +2,8 @@
 
   - **[add]** tests: 32 (total 184).
   - **[add]** functions: math.
-  - **[optimize]** syntax of input and output;
-  - **[optimize]** huge amount of fixes and refactorings;
+  - **[optimize]** syntax of input and output.
+  - **[optimize]** huge amount of minor fixes and refactorings.
 
 ## 0.3.1 (2016-08-19)
 
