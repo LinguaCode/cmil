@@ -1,4 +1,4 @@
-## 0.4.0
+## 0.4.0 (2016-11-12)
 
   - **[add]** tests: 32 (total 184).
   - **[add]** functions: math.
