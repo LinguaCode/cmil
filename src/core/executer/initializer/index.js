@@ -3,7 +3,7 @@ let _ = require('lodash');
 exports.execute = function (sessionId, sourceCode) {
   console.llog('compiler: initialize', 'begin');
   this.structure(sessionId, sourceCode);
-  this.session(sessionId);
+  this.mount(sessionId);
   console.llog('compiler: initialize', 'end');
 };
 
@@ -17,9 +17,14 @@ exports.structure = function (sessionId, sourceCode) {
   console.llog('compiler: initialize: structure', 'end');
 };
 
-exports.session = sessionId => {
-  console.llog('compiler: initialize: session');
-  eval(LANGUAGE.linguacode(sessionId).initialize);
+exports.mount = sessionId => {
+  console.llog('compiler: initialize: mount');
+  global[sessionId] = Object.create(null);
+};
+
+exports.unMount = sessionId => {
+  console.llog('compiler: initialize: unMount');
+  delete global[sessionId];
 };
 
 exports.output = sessionId => {
@@ -32,5 +37,4 @@ exports.condition = function (conditionIdentifier) {
   _.set(global, conditionIdentifier, undefined);
 };
 
-let LANGUAGE = require('../../../constants').LANGUAGE;
 let builder = require('../../builder');

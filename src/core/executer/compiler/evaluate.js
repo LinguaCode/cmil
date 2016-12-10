@@ -9,7 +9,8 @@ const management = require('./management');
 const UNDEFINED_VARIABLE = 'undefinedVariable';
 
 exports.condition = sessionId => {
-  let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
+  const condition = getter.condition(sessionId);
+  let formattedCondition = formatter.fullParse(sessionId, condition, true);
   let isPassed = eval(formattedCondition) === true;
   return isPassed;
 };

@@ -21,7 +21,7 @@ exports.trim = function (text) {
   return text.replace(rtrim, "");
 };
 
-let quoteAnalize = function (input, index) {
+const quoteAnalize = function (input, index) {
   let quotes = {
     es6: {
       symbol: '`',
@@ -60,17 +60,15 @@ let quoteAnalize = function (input, index) {
     }
   };
 
-  for (let i = index - 1; i >= 0; i--) {
-    quotes = counter(quotes, input, 'before', i);
-  }
-
-  for (let i = index + 1; i < input.length; i++) {
-    quotes = counter(quotes, input, 'after', i);
-  }
 
   for (let key in quotes) {
-    let count = quotes[key].count;
-    quotes[key].isOpen = {
+    const quote = quotes[key];
+    const symbol = quote.symbol;
+    const count = quote.count;
+
+    count.before = countBefore(input, index, symbol);
+    count.after = countAfter(input, index, symbol);
+    quote.isOpen = {
       before: count.before % 2 === 1,
       after: count.after % 2 === 1
     };
@@ -81,16 +79,30 @@ let quoteAnalize = function (input, index) {
   return quotes;
 };
 
-let counter = function (quotes, input, position, index) {
+const isOpen = function (count) {
+  return count % 2 === 1;
+};
 
-
-  for (let key in quotes) {
-    if (input[index] === quotes[key].symbol && input[index - 1] !== '\\') {
-      quotes[key].count[position]++;
+const countBefore = (input, index, symbol) => {
+  let count = 0;
+  for (let i = index - 1; i >= 0; i--) {
+    if (input[i] === symbol && input[i - 1] !== '\\') {
+      count++;
     }
   }
 
-  return quotes;
+  return count;
+};
+
+const countAfter = (input, index, symbol) => {
+  let count = 0;
+  for (let i = index + 1; i < input.length; i++) {
+    if (input[i] === symbol && input[i - 1] !== '\\') {
+      count++;
+    }
+  }
+
+  return count;
 };
 
 /**
@@ -178,6 +190,75 @@ exports.isPartOfCommand = function (line, instance, index) {
   const isAnyPartAfter = nextSymbol && regExp.test(nextSymbol);
 
   return isAnyPartBefore || isAnyPartAfter;
+};
+
+exports.partitionReplace = (sourceCode, toReplace, firstPartEndIndex, secondPartBeginIndex) => {
+  const firstPart = sourceCode.substring(0, firstPartEndIndex);
+  const secondPart = sourceCode.substring(secondPartBeginIndex);
+  const fullReplacement = `${firstPart}${toReplace}${secondPart}`;
+
+  return fullReplacement;
+};
+
+exports.argumentPositions = (line, index) => {
+  line = line.substr(index);
+  const sizeOfCroppedPart = index;
+  index = 0;
+
+  const scopeOpenSymbol = '(';
+  const scopeCloseSymbol = ')';
+
+  const indexOfFirstOpenScope = line.indexOf(scopeOpenSymbol, index);
+
+  let indexOfCloseScope = indexOfFirstOpenScope;
+  do {
+    indexOfCloseScope = line.indexOf(scopeCloseSymbol, indexOfCloseScope + 1);
+    if (indexOfCloseScope == -1 || line[indexOfCloseScope] == '\\') {
+      break;
+    }
+
+    const countOfOpenScopeSymbols = countBefore(line, indexOfCloseScope, scopeOpenSymbol);
+    const countOfCloseScopeSymbols = countBefore(line, indexOfCloseScope + 1, scopeCloseSymbol);
+    const isOpen = countOfOpenScopeSymbols == countOfCloseScopeSymbols;
+    if (isOpen) {
+      break;
+    }
+  } while (true);
+
+  if (indexOfCloseScope == indexOfFirstOpenScope || indexOfCloseScope === -1) {
+    //scope error
+    return null;
+  }
+
+  return {
+    begin: sizeOfCroppedPart + indexOfFirstOpenScope,
+    end: sizeOfCroppedPart + indexOfCloseScope
+  }
+};
+
+exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
+  const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope);
+  const arguments =
+    argumentsString
+      .split(',')
+      .map((argument) => {
+        return argument || undefined;
+      });
+
+  return arguments;
+};
+
+exports.argumentReplace = (arguments, toReplace) => {
+  for (let i = 0; i < arguments.length; i++) {
+    const argument = arguments[i];
+    toReplace = toReplace.replace(`$${i + 1}`, argument);
+  }
+
+  const undefinedValue = 'undefined';
+  const toReplaceRegExp = /\$\d+/g;
+  toReplace = toReplace.replace(toReplaceRegExp, undefinedValue);
+
+  return toReplace;
 };
 
 /**
