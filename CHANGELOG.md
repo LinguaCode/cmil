@@ -1,7 +1,9 @@
-## 0.3.2 (upcoming)
+## 0.4.0
 
-  - **[add]** syntax: functions.
-  - **[optimize]** convert: ES5 to ES6;
+  - **[add]** tests: 32 (total 184).
+  - **[add]** functions: math.
+  - **[optimize]** syntax of input and output;
+  - **[optimize]** huge amount of fixes and refactorings;
 
 ## 0.3.1 (2016-08-19)
 
