@@ -45,12 +45,4 @@ module.exports = [{
 }, {
   command: '#',
   definition: '//'
-}, {
-  command: '^(?!global\\[sessionId\\]\\.(do|if|main|repeat)_\\d+)(.*)$',
-  definition: `
-      (() => {
-        let output = '';
-        $2
-        return output;
-      })();`
 }];

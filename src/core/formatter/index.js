@@ -9,7 +9,7 @@ const parse = {
       const command = quotes[i].command;
       const definition = quotes[i].definition;
 
-      const re = new RegExp(`([^\\\\])${command}|^${command}`, 'g');
+      const re = new RegExp(`([^\\\\])${command}|^${command}`);
 
       let reStr;
       while ((reStr = re.exec(sourceCode)) !== null) {
@@ -66,32 +66,37 @@ const parse = {
       while ((reStr = re.exec(sourceCode)) !== null) {
         const indexOfResult = reStr.index;
         const isPartOfCode = tools.isPartOfCode(sourceCode, indexOfResult);
-
-        if (isPartOfCode) {
-          const argumentPositions = tools.argumentPositions(sourceCode, indexOfResult);
-          const indexOfBeginScope = argumentPositions.begin;
-          const indexOfEndScope = argumentPositions.end;
-          const functionArguments = tools.functionArguments(sourceCode, indexOfBeginScope, indexOfEndScope);
-          const toReplace = tools.argumentReplace(functionArguments, instance.definition);
-
-          const indexOfToReplaceFirstPartEnd = indexOfResult;
-          const indexOfToReplaceSecondPartBegin = indexOfEndScope;
-          sourceCode = tools.partitionReplace(sourceCode, toReplace, indexOfToReplaceFirstPartEnd, indexOfToReplaceSecondPartBegin);
+        if (!isPartOfCode) {
+          continue;
         }
 
+        const argumentPositions = tools.argumentPositions(sourceCode, indexOfResult);
+        const indexOfBeginScope = argumentPositions.begin;
+        const indexOfEndScope = argumentPositions.end;
+        const functionArguments = tools.functionArguments(sourceCode, indexOfBeginScope, indexOfEndScope);
+        const toReplace = tools.argumentReplace(functionArguments, instance.definition);
+
+        const indexOfToReplaceFirstPartEnd = indexOfResult;
+        const indexOfToReplaceSecondPartBegin = indexOfEndScope + 1;
+        sourceCode = tools.partitionReplace(sourceCode, toReplace, indexOfToReplaceFirstPartEnd, indexOfToReplaceSecondPartBegin);
       }
     }
     return sourceCode;
   },
 };
 
-exports.fullParse = function (sessionId, sourceCode) {
+exports.fullParse = function (sessionId, sourceCode, isCondition) {
   const codeGlobalParsed = parse.syntax(sourceCode, 'globals');
-  const codeSyntaxParsed = parse.syntax(codeGlobalParsed, 'commands');
-  const codeQuotesParsed = parse.quotes(codeSyntaxParsed);
-  const codeFunctionsParsed = parse.functions(codeQuotesParsed);
+  const codeFunctionsParsed = parse.functions(codeGlobalParsed);
 
-  return codeFunctionsParsed;
+  let codeSyntaxParsed = parse.syntax(codeFunctionsParsed, 'commands');
+  if (!isCondition) {
+    codeSyntaxParsed = parse.syntax(codeSyntaxParsed, 'source');
+  }
+
+  const codeQuotesParsed = parse.quotes(codeSyntaxParsed);
+
+  return codeQuotesParsed;
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {
