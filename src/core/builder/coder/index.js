@@ -13,7 +13,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   let indexOfOperationEnd;
   let operations;
   let inputVariable;
-  let toCompile = {};
+  let toCompile = Object.create(null);
 
   let reInputStrOld = reInput.exec(sourceCode);
 
@@ -39,7 +39,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
 
     //==toCompile==
     //toCompile.operations
-    toCompile = {};
+    toCompile = Object.create(null);
 
     toCompile.operations = _.compact(operations.split('\n'));
 
