@@ -36,4 +36,4 @@ npm run coverage
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
 
 ## Changelog
-Please read changelog in the [CHANGELOG.md](https://github.com/LinguaCode/core/blob/master/CHANGELOG.md).
+Pleas read changelog in the [CHANGELOG.md](https://github.com/LinguaCode/core/blob/master/CHANGELOG.md).
