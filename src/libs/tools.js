@@ -79,10 +79,6 @@ const quoteAnalize = function (input, index) {
   return quotes;
 };
 
-const isOpen = function (count) {
-  return count % 2 === 1;
-};
-
 const countBefore = (input, index, symbol) => {
   let count = 0;
   for (let i = index - 1; i >= 0; i--) {
