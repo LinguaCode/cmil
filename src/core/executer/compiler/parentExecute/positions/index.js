@@ -39,12 +39,12 @@ exports.toCompile = function (sessionId) {
   evaluated.result = preOutput(evaluated.result);
 
   setter.output(sessionId, evaluated.status, evaluated.result);
-  if (evaluated.result) {
+  /*if (evaluated.result) {
     console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
     //trig if there no any
     console.llog('compiler: Socket.IO: server: there is nothing to output (ping: toCompile)');
-  }
+  }*/
 
   controllers.controller(sessionId);
 
