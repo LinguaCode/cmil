@@ -1,5 +1,5 @@
 module.exports = [ {
-  title: 'random: single argument',
-  code: 'X = 1000\nZ = պատահականություն(X)\nտպել(Z >= 0 եւ Z <= 1000)',
-  output: '${true}'
+  title: 'hack attempt',
+  code: 'eval("console.log("hello world");")',
+  status: 'Hack attempt. Your ".*" ip address was saved in the our database.'
 }];
