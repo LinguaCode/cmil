@@ -9,10 +9,8 @@ let controller = {
     console.llog('compiler: controller', 'begin');
     console.llog(__store[sessionId].pathOfLocation);
 
-    let exKey = controller.oscillation(sessionId);
-    if (exKey) {
-      controller.directive(sessionId, exKey);
-    }
+    const exKey = controller.oscillation(sessionId);
+    controller.directive(sessionId, exKey);
 
     console.llog(__store[sessionId].pathOfLocation);
     console.llog('compiler: controller', 'end');
@@ -21,8 +19,6 @@ let controller = {
     console.llog('compiler: oscillation');
 
     let management = require('../management');
-
-    let exKey = getter.nameOfProperty(sessionId);
 
     setter.indexIncrement(sessionId);
 
@@ -43,7 +39,7 @@ let controller = {
       }
     }
 
-    return exKey;
+    return getter.nameOfProperty(sessionId);
   },
 
 

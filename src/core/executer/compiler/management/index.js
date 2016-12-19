@@ -13,7 +13,11 @@ exports.codeRun = function (sessionId, sourceCode, language) {
 
   initializer.execute(sessionId, codePrepared);
 
-  parentExecute.positions.parent(sessionId);
+  try {
+    parentExecute.positions.parent(sessionId);
+  } catch (e) {
+    console.log(e.message);
+  }
 
   console.llog('compiler: codeRun', 'end');
 };
