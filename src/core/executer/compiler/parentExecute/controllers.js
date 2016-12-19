@@ -21,6 +21,7 @@ let controller = {
     let management = require('../management');
 
     setter.indexIncrement(sessionId);
+    const exKey = getter.nameOfProperty(sessionId);
 
     if (checker.session.expired(sessionId)) {
       setter.output(sessionId, {
@@ -39,7 +40,7 @@ let controller = {
       }
     }
 
-    return getter.nameOfProperty(sessionId);
+    return exKey;
   },
 
 

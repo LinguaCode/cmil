@@ -11,7 +11,7 @@ exports.BOOLEAN_DEFINITION = require('./boolean_definition');
 exports.COMMAND = require('./command');
 
 //constants
-exports.TIMEOUT_TIME = 9999999666;
+exports.TIMEOUT_TIME = 666;
 
 exports.EVALUATED = 'evaluated';
 exports.WAITS_FOR_INPUT = 'waitsForInput';
