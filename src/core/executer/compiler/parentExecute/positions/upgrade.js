@@ -11,11 +11,7 @@ module.exports = (sessionId, typeOfObject) => {
 
   setter.upgrade(sessionId, typeOfObject);
 
-  let statusOfPassing = positions[typeOfObject](sessionId);
-  if (statusOfPassing === false) {
-    console.llog('compiler: upgrade', 'end');
-    return false;
-  }
+  positions[typeOfObject](sessionId);
 
   console.llog('compiler: upgrade', 'end');
 };
