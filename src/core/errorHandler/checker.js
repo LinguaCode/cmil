@@ -9,7 +9,8 @@ exports.hackAttempt = (sourceCode, params) => {
   for (let i = 0; i < sourceCode.length; i++) {
     const line = sourceCode[i];
     for (let j = 0; j < reservedWords.length; j++) {
-      let regExp = new RegExp(reservedWords[i], 'g');
+      const reservedWord = reservedWords[j];
+      const regExp = new RegExp(reservedWord, 'g');
       if (regExp.test(line) && tools.isPartOfCode(line, regExp.lastIndex - reservedWords[i].length)) {
         return ipAddress;
       }

@@ -13,7 +13,11 @@ exports.codeRun = function (sessionId, sourceCode, language) {
 
   initializer.execute(sessionId, codePrepared);
 
-  parentExecute.positions.parent(sessionId);
+  try {
+    parentExecute.positions.parent(sessionId);
+  } catch (e) {
+    console.log(e.message);
+  }
 
   console.llog('compiler: codeRun', 'end');
 };
@@ -25,9 +29,13 @@ exports.listener = function (sessionId, input) {
   setter.input(sessionId, input);
   initializer.output(sessionId, SUCCESS, '');
 
-  parentExecute.positions.toCompile(sessionId);
+  try {
+    parentExecute.positions.toCompile(sessionId);
+    listenerController(sessionId);
 
-  listenerController(sessionId);
+  } catch (e) {
+    console.log(e.message);
+  }
 
   console.llog('compiler: listener', 'end');
 };

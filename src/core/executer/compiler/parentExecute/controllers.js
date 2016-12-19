@@ -1,16 +1,16 @@
 let _ = require('lodash');
 
-const TIMEOUT = require('../../../../constants').STATUS.TIMEOUT;
+const constants = require('../../../../constants');
+const TIMEOUT = constants.STATUS.TIMEOUT;
+const SESSION_END = constants.STATUS.SESSION_END;
 
 let controller = {
   manage: sessionId => {
     console.llog('compiler: controller', 'begin');
     console.llog(__store[sessionId].pathOfLocation);
 
-    let exKey = controller.oscillation(sessionId);
-    if (exKey) {
-      controller.directive(sessionId, exKey);
-    }
+    const exKey = controller.oscillation(sessionId);
+    controller.directive(sessionId, exKey);
 
     console.llog(__store[sessionId].pathOfLocation);
     console.llog('compiler: controller', 'end');
@@ -20,16 +20,15 @@ let controller = {
 
     let management = require('../management');
 
-    let exKey = getter.nameOfProperty(sessionId);
-
     setter.indexIncrement(sessionId);
+    const exKey = getter.nameOfProperty(sessionId);
 
     if (checker.session.expired(sessionId)) {
       setter.output(sessionId, {
         id: TIMEOUT,
       });
       console.llog('compiler: trigger: timeout');
-      return false;
+      throw new Error(TIMEOUT);
     }
 
     if (checker.array.ended(sessionId)) {
@@ -37,7 +36,7 @@ let controller = {
 
       if (checker.session.pathOfLocationEnded(sessionId)) {
         console.llog('compiler: trigger: session ended');
-        return false;
+        throw new Error(SESSION_END);
       }
     }
 
@@ -55,19 +54,13 @@ let controller = {
     if (nameOfProperty == 'child' && exKey == 'child') {
       //child[N++]
 
-      let status;
       //execute after passing if-else
       if (currentParentObject.hasOwnProperty('parent')) {
         upgrade(sessionId, 'parent');
       }
 
       if (currentParentObject.hasOwnProperty('toCompile')) {
-        status = upgrade(sessionId, 'toCompile');
-      }
-
-      if (status === false) {
-        console.llog('compiler: directive', 'end');
-        return false;
+        upgrade(sessionId, 'toCompile');
       }
 
       if (getter.nameOfProperty(sessionId) != 'toCompile') {
