@@ -46,7 +46,6 @@ const dbAnalyzer = sources => {
       const title = source.title;
       const code = source.code || '';
       const expectedOutput = source.output || '';
-      const expectedStatus = new RegExp(source.status);
       const inputs = source.inputs;
 
       it(title, done => {
@@ -59,11 +58,9 @@ const dbAnalyzer = sources => {
         const PATH_EVALUATED = socketPathResolve(constants.EVALUATED);
         const PATH_WAITS_FOR_INPUT = socketPathResolve(constants.WAITS_FOR_INPUT);
         const PATH_SESSION_END = socketPathResolve(constants.SESSION_END);
-        const PATH_ERROR = socketPathResolve(constants.ERROR);
 
         codeSubmit(sessionId, code);
 
-        let isErrorOccurred = false;
         socket
           .on(PATH_EVALUATED, receivedData => {
             evalResult += receivedData ? `${receivedData}\n` : '';
@@ -78,8 +75,23 @@ const dbAnalyzer = sources => {
               socket.emit('evaluated', toSendData);
             }
           })
-          .on(PATH_SESSION_END, () => {
+          .on(PATH_SESSION_END, (error) => {
+            const isErrorOccurred = !!error;
             if (isErrorOccurred) {
+              const expectedErrorId = source.errorId;
+              const expectedErrorParam = source.errorParam;
+
+              const errorId = error.id;
+              const errorParam = error.param;
+
+              const errorMessage = `\nError id:\n${errorId}\nError parameter:\n${errorParam}\n\n`;
+              if (expectedErrorId == errorId && expectedErrorParam == errorParam) {
+                console.log(errorMessage);
+                done();
+              } else {
+                done(new Error(errorMessage));
+              }
+
               return;
             }
 
@@ -101,16 +113,6 @@ const dbAnalyzer = sources => {
               done(new Error(errorMessage));
             }
           })
-          .on(PATH_ERROR, message => {
-            isErrorOccurred = true;
-            const errorMessage = `\nError message:\n${message}\n\n`;
-            if (expectedStatus.test(message)) {
-              console.log(errorMessage);
-              done();
-            } else {
-              done(new Error(errorMessage));
-            }
-          });
       });
     }
   });
@@ -140,8 +142,8 @@ describe('initialize', () => {
 
 /**passed db test*/
 const dbs = ['successes', 'tutorials', 'errors'];
-//const dbs = ['testDB'];
-dbs.forEach((db)=> {
+// const dbs = ['testDB'];
+dbs.forEach((db) => {
   describe(db, () => {
     const sources = require(`./collection/${db}`);
     dbAnalyzer(sources);

@@ -24,7 +24,14 @@ exports.code = (sessionId, sourceCode) => {
   for (let i = 0; i < sourceCode.length; i++) {
     let line = sourceCode[i];
 
-    let codeFormatted = formatter.codeFormatting(sessionId, line);
+    try {
+      var codeFormatted = formatter.codeFormatting(sessionId, line);
+    } catch (errorId) {
+      throw {
+        id: errorId,
+        param: i
+      }
+    }
 
     try {
       let output = eval(codeFormatted);
@@ -49,7 +56,7 @@ exports.code = (sessionId, sourceCode) => {
 
         setter.output(sessionId, error);
         console.llog('compiler: trigger: broken variable');
-        throw new Error(UNDEFINED_VARIABLE);
+        throw error;
       }
     }
   }

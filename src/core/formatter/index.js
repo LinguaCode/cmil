@@ -1,6 +1,7 @@
 exports.codeSemicolon = sourceCode => `${sourceCode.replace('\n', ';\n')};`;
 
 const parse = {
+
   quotes: function (sourceCode) {
     const db = 'quotes';
     const quotes = SYNTAX[db];
