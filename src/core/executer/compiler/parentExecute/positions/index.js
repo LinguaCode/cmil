@@ -28,7 +28,7 @@ exports.toCompile = function (sessionId) {
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
     console.llog('compiler: toCompile', 'end');
-    throw new Error(WAITS_FOR_INPUT);
+    throw WAITS_FOR_INPUT;
   } else {
     setter.input(sessionId, undefined);
   }
