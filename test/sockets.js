@@ -1,5 +1,6 @@
 const path = require('path');
 const io = require('socket.io-client');
+const _ = require('lodash');
 const cacheWiper = require('node-cache-wiper');
 
 const constants = require('../src/constants');
@@ -78,14 +79,8 @@ const dbAnalyzer = sources => {
           .on(PATH_SESSION_END, (error) => {
             const isErrorOccurred = !!error;
             if (isErrorOccurred) {
-              const expectedErrorId = source.errorId;
-              const expectedErrorParam = source.errorParam;
-
-              const errorId = error.id;
-              const errorParam = error.param;
-
-              const errorMessage = `\nError id:\n${errorId}\nError parameter:\n${errorParam}\n\n`;
-              if (expectedErrorId == errorId && expectedErrorParam == errorParam) {
+              const errorMessage = `\nError:\n${error}\n\n`;
+              if (errorCheck(source, error)) {
                 console.log(errorMessage);
                 done();
               } else {
@@ -116,6 +111,27 @@ const dbAnalyzer = sources => {
       });
     }
   });
+};
+
+const errorCheck = (expected, result) => {
+  const expectedErrorId = expected.errorId;
+  const expectedErrorParam = expected.errorParam;
+  const expectedErrorParamVariable = _.get(expectedErrorParam, 'variable');
+  const expectedErrorParamLine = _.get(expectedErrorParam, 'line');
+  const expectedErrorParamIp = _.get(expectedErrorParam, 'ip');
+
+  const errorId = result.id;
+  const errorParam = result.param;
+  const errorParamVariable = _.get(errorParam, 'variable');
+  const errorParamLine = _.get(errorParam, 'line');
+  const errorParamIp = _.get(errorParam, 'ip');
+
+  const isErrorIdsEqual = expectedErrorId == errorId;
+  const isErrorParamVariable = expectedErrorParamVariable == errorParamVariable;
+  const isErrorParamLine = expectedErrorParamLine == errorParamLine;
+  const isErrorParamIp = expectedErrorParamIp == errorParamIp;
+
+  return isErrorIdsEqual && isErrorParamLine && isErrorParamVariable && isErrorParamIp;
 };
 
 /**=== TESTS ===*/
