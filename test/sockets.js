@@ -1,5 +1,6 @@
 const path = require('path');
 const io = require('socket.io-client');
+const _ = require('lodash');
 const cacheWiper = require('node-cache-wiper');
 
 const constants = require('../src/constants');
@@ -46,7 +47,6 @@ const dbAnalyzer = sources => {
       const title = source.title;
       const code = source.code || '';
       const expectedOutput = source.output || '';
-      const expectedStatus = new RegExp(source.status);
       const inputs = source.inputs;
 
       it(title, done => {
@@ -59,11 +59,9 @@ const dbAnalyzer = sources => {
         const PATH_EVALUATED = socketPathResolve(constants.EVALUATED);
         const PATH_WAITS_FOR_INPUT = socketPathResolve(constants.WAITS_FOR_INPUT);
         const PATH_SESSION_END = socketPathResolve(constants.SESSION_END);
-        const PATH_ERROR = socketPathResolve(constants.ERROR);
 
         codeSubmit(sessionId, code);
 
-        let isErrorOccurred = false;
         socket
           .on(PATH_EVALUATED, receivedData => {
             evalResult += receivedData ? `${receivedData}\n` : '';
@@ -78,8 +76,17 @@ const dbAnalyzer = sources => {
               socket.emit('evaluated', toSendData);
             }
           })
-          .on(PATH_SESSION_END, () => {
+          .on(PATH_SESSION_END, (error) => {
+            const isErrorOccurred = !!error;
             if (isErrorOccurred) {
+              const errorMessage = `\nError:\n${error}\n\n`;
+              if (errorCheck(source, error)) {
+                console.log(errorMessage);
+                done();
+              } else {
+                done(new Error(errorMessage));
+              }
+
               return;
             }
 
@@ -101,19 +108,30 @@ const dbAnalyzer = sources => {
               done(new Error(errorMessage));
             }
           })
-          .on(PATH_ERROR, message => {
-            isErrorOccurred = true;
-            const errorMessage = `\nError message:\n${message}\n\n`;
-            if (expectedStatus.test(message)) {
-              console.log(errorMessage);
-              done();
-            } else {
-              done(new Error(errorMessage));
-            }
-          });
       });
     }
   });
+};
+
+const errorCheck = (expected, result) => {
+  const expectedErrorId = expected.errorId;
+  const expectedErrorParam = expected.errorParam;
+  const expectedErrorParamVariable = _.get(expectedErrorParam, 'variable');
+  const expectedErrorParamLine = _.get(expectedErrorParam, 'line');
+  const expectedErrorParamIp = _.get(expectedErrorParam, 'ip');
+
+  const errorId = result.id;
+  const errorParam = result.param;
+  const errorParamVariable = _.get(errorParam, 'variable');
+  const errorParamLine = _.get(errorParam, 'line');
+  const errorParamIp = _.get(errorParam, 'ip');
+
+  const isErrorIdsEqual = expectedErrorId == errorId;
+  const isErrorParamVariable = expectedErrorParamVariable == errorParamVariable;
+  const isErrorParamLine = expectedErrorParamLine == errorParamLine;
+  const isErrorParamIp = expectedErrorParamIp == errorParamIp;
+
+  return isErrorIdsEqual && isErrorParamLine && isErrorParamVariable && isErrorParamIp;
 };
 
 /**=== TESTS ===*/
@@ -140,8 +158,8 @@ describe('initialize', () => {
 
 /**passed db test*/
 const dbs = ['successes', 'tutorials', 'errors'];
-//const dbs = ['testDB'];
-dbs.forEach((db)=> {
+// const dbs = ['testDB'];
+dbs.forEach((db) => {
   describe(db, () => {
     const sources = require(`./collection/${db}`);
     dbAnalyzer(sources);

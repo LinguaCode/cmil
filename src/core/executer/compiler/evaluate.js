@@ -5,10 +5,10 @@ const formatter = require('../../formatter');
 const getter = require('../getter');
 const setter = require('../setter');
 const management = require('./management');
-const constants = require('../../../constants');
+const STATUS = require('../../../constants').STATUS;
 
-const UNDEFINED_VARIABLE = constants.STATUS.UNDEFINED_VARIABLE;
-const SUCCESS = constants.STATUS.SUCCESS;
+const UNDEFINED_VARIABLE = STATUS.UNDEFINED_VARIABLE;
+const SUCCESS = STATUS.SUCCESS;
 
 exports.condition = sessionId => {
   const condition = getter.condition(sessionId);
@@ -22,9 +22,19 @@ exports.code = (sessionId, sourceCode) => {
   let evalStatus = SUCCESS;
 
   for (let i = 0; i < sourceCode.length; i++) {
+    const lineNumber = i + 1;
     let line = sourceCode[i];
 
-    let codeFormatted = formatter.codeFormatting(sessionId, line);
+    try {
+      var codeFormatted = formatter.codeFormatting(sessionId, line);
+    } catch (errorId) {
+      throw {
+        id: errorId,
+        param: {
+          line: lineNumber
+        }
+      }
+    }
 
     try {
       let output = eval(codeFormatted);
@@ -44,12 +54,15 @@ exports.code = (sessionId, sourceCode) => {
       if (undefinedVariable) {
         const error = {
           id: UNDEFINED_VARIABLE,
-          param: undefinedVariable
+          param: {
+            variable: undefinedVariable,
+            line: lineNumber
+          }
         };
 
         setter.output(sessionId, error);
         console.llog('compiler: trigger: broken variable');
-        throw new Error(UNDEFINED_VARIABLE);
+        throw error;
       }
     }
   }
