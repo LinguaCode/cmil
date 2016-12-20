@@ -4,7 +4,10 @@ module.exports = [{
     title: 'undefined variable',
     code: 'տպել(X)',
     errorId: 'undefinedVariable',
-    errorParam: 'x',
+    errorParam: {
+      variable: 'x',
+      line: 1
+    },
   }, {
     title: 'Big loop: overload',
     code: 'կրկնել 100000 անգամ\n    տպել(1010101010)',

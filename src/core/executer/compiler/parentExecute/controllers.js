@@ -1,8 +1,8 @@
 let _ = require('lodash');
 
-const constants = require('../../../../constants');
-const TIMEOUT = constants.STATUS.TIMEOUT;
-const SESSION_END = constants.STATUS.SESSION_END;
+const STATUS = require('../../../../constants').STATUS;
+const TIMEOUT = STATUS.TIMEOUT;
+const SESSION_END = STATUS.SESSION_END;
 
 let controller = {
   manage: sessionId => {

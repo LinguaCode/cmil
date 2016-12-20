@@ -1,5 +1,5 @@
-const constants = require('../constants');
-const FUNCTION_ARGUMENT_SCOPE_ERROR = constants.STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR;
+const STATUS = require('../constants').STATUS;
+const FUNCTION_ARGUMENT_SCOPE_ERROR = STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR;
 
 const quotationMarks = {
   begin: '«',
