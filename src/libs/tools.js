@@ -1,3 +1,6 @@
+const constants = require('../constants');
+const FUNCTION_ARGUMENT_SCOPE_ERROR = constants.STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR;
+
 const quotationMarks = {
   begin: '«',
   end: '»'
@@ -223,7 +226,7 @@ exports.argumentPositions = (line, index) => {
 
   if (indexOfCloseScope == indexOfFirstOpenScope || indexOfCloseScope === -1) {
     //scope error
-    return null;
+    throw FUNCTION_ARGUMENT_SCOPE_ERROR;
   }
 
   return {

@@ -24,11 +24,11 @@ let controller = {
     const exKey = getter.nameOfProperty(sessionId);
 
     if (checker.session.expired(sessionId)) {
-      setter.output(sessionId, {
-        id: TIMEOUT,
-      });
+      const error = {
+        id: TIMEOUT
+      };
       console.llog('compiler: trigger: timeout');
-      throw new Error(TIMEOUT);
+      throw error;
     }
 
     if (checker.array.ended(sessionId)) {
@@ -36,7 +36,7 @@ let controller = {
 
       if (checker.session.pathOfLocationEnded(sessionId)) {
         console.llog('compiler: trigger: session ended');
-        throw new Error(SESSION_END);
+        throw SESSION_END;
       }
     }
 
