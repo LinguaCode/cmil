@@ -1,4 +1,4 @@
-let modify = require('../../../modifier/modify');
+const modify = require('../../../modifier/modify');
 
 const SUCCESS = require('../../../../constants').STATUS.SUCCESS;
 
@@ -13,7 +13,11 @@ exports.codeRun = function (sessionId, sourceCode, language) {
 
   initializer.execute(sessionId, codePrepared);
 
-  parentExecute.positions.parent(sessionId);
+  try {
+    parentExecute.positions.parent(sessionId);
+  } catch (error) {
+    errorExtract(sessionId, error);
+  }
 
   console.llog('compiler: codeRun', 'end');
 };
@@ -25,9 +29,13 @@ exports.listener = function (sessionId, input) {
   setter.input(sessionId, input);
   initializer.output(sessionId, SUCCESS, '');
 
-  parentExecute.positions.toCompile(sessionId);
+  try {
+    parentExecute.positions.toCompile(sessionId);
+    listenerController(sessionId);
 
-  listenerController(sessionId);
+  } catch (error) {
+    errorExtract(sessionId, error);
+  }
 
   console.llog('compiler: listener', 'end');
 };
@@ -44,8 +52,16 @@ function listenerController(sessionId) {
   }
 }
 
-let parentExecute = require('../parentExecute');
-let initializer = require('../../initializer');
-let setter = require('../../setter');
-let getter = require('../../getter');
-let checker = require('../../checker');
+
+const errorExtract = function (sessionId, error) {
+  const isError = typeof(error) === 'object';
+  if (isError) {
+    setter.output(sessionId, error);
+  }
+};
+
+const parentExecute = require('../parentExecute');
+const initializer = require('../../initializer');
+const setter = require('../../setter');
+const getter = require('../../getter');
+const checker = require('../../checker');

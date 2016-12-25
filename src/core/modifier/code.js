@@ -1,33 +1,33 @@
-let core = function (data, lng, command, definition) {
+exports.toCode = (data, lng) => {
   let re, reStr;
   return data
     .split('\n')
-    .map((line) => {
-      line = tail.concat(line);
+    .map(line => {
+      for (let i = 0; i < TRANSLATION[lng].length; i++) {
+        const instance = TRANSLATION[lng][i];
 
-      for (let i = 0; i < TRANSLATION[lng].length; i++) { //languages
-        const translation = TRANSLATION[lng][i][command];
-        re = new RegExp(`[^#](${translation})`, 'ig');
+        const definition = instance.definition;
+        re = new RegExp(`[^#](${definition})|^${definition}`, 'ig');
         while ((reStr = re.exec(line)) !== null) { //in line
-          const index = reStr.index;
-          if (translation == 'e') {
-            console.log();
-          }
-          if (tools.isPartOfCode(line, index) && !tools.isPartOfCommand(line, translation, index +1)) {
-            line = line.substring(0, index +1) +
-              TRANSLATION[lng][i][definition].replace(/\\/g, '') +
-              line.substring(index + reStr[0].length);
+          const index = reStr[1] ? reStr.index + 1 : reStr.index;
+          const value = reStr[1] ? reStr[1] : reStr[0];
+
+          const isPartOfCode = tools.isPartOfCode(line, index);
+          const isPartOfCommand = tools.isPartOfCommand(line, value, index);
+
+          if (isPartOfCode && !isPartOfCommand) {
+            const toReplace = instance.command.replace(/\\/g, '');
+
+            const firstPartEndIndex = index;
+            const secondPartBeginIndex = index + value.length;
+            line = tools.partitionReplace(line, toReplace, firstPartEndIndex, secondPartBeginIndex);
           }
         }
       }
 
-      return tail.cut(line);
+      return line;
     })
     .join('\n');
-};
-
-exports.toCode = (data, lng) => {
-  return core(data, lng, 'definition', 'command');
 };
 
 let tools = require('../../libs/tools');

@@ -89,7 +89,7 @@ const postExecute = sessionId => {
 };
 
 io.on('connection', socket => {
-  ipAddress = socket.handshake.address;
+  ipAddress = /:([0-9.]+)/.exec(socket.handshake.address)[1];
   console.llog(`Socket.IO: server: New connection from ${ipAddress}`);
 
   sockets.init(socket);

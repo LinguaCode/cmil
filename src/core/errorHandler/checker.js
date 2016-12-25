@@ -3,15 +3,18 @@ const reservedWords = require('./reservedWords');
 const tools = require('../../libs/tools');
 
 exports.hackAttempt = (sourceCode, params) => {
-  let ipAddress = params.ipAddress;
+  const ip = params.ipAddress;
 
   sourceCode = sourceCode.split('\n');
   for (let i = 0; i < sourceCode.length; i++) {
     const line = sourceCode[i];
     for (let j = 0; j < reservedWords.length; j++) {
-      let regExp = new RegExp(reservedWords[i], 'g');
+      const reservedWord = reservedWords[j];
+      const regExp = new RegExp(reservedWord, 'g');
       if (regExp.test(line) && tools.isPartOfCode(line, regExp.lastIndex - reservedWords[i].length)) {
-        return ipAddress;
+        return {
+          ip
+        };
       }
     }
   }
@@ -25,7 +28,9 @@ exports.indentError = sourceCode => {
     let levelsTemp = tools.codeDepthLevels.line(listOfCommands[i]);
     if (levelsTemp == -1) {
       const lineNumber = i + 1;
-      return lineNumber;
+      return {
+        line: lineNumber
+      };
     }
   }
 

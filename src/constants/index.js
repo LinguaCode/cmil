@@ -1,7 +1,7 @@
 let requireDir = require('require-dir');
 
 //collections of files of constants
-exports.LANGUAGE = requireDir('./language');
+exports.SYNTAX = requireDir('./syntax');
 exports.TRANSLATION = requireDir('./translation');
 
 //files of constants

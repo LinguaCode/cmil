@@ -1,6 +1,7 @@
-const SYNTAX_ERROR = 'syntaxError';
-const HACK_ATTEMPT = 'hackAttempt';
-const INDENT_ERROR = 'indentError';
+const STATUS = require('../../constants').STATUS;
+const SYNTAX_ERROR = STATUS.SYNTAX_ERROR;
+const HACK_ATTEMPT = STATUS.HACK_ATTEMPT;
+const INDENT_ERROR = STATUS.INDENT_ERROR;
 
 const check = exports.check = require('./checker');
 
@@ -34,4 +35,3 @@ exports.evalResult = error => {
     id: errorId
   };
 };
-
