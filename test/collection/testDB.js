@@ -1,5 +1,9 @@
 module.exports = [{
-  title: 'true: 1st condition',
-  code: 'եթե 4 > 2\n    տպել(«4 > 2»)\nայլապես եթե 4 > 6\n    տպել(«4 > 6»)\nայլապես\n    տպել(«4 == 4»)',
-  output: '4 > 2'
+  group: 'restrictions',
+  sources: [{
+    title: 'hack attempt',
+    code: 'eval("console.log("hello world");")',
+    errorId: 'hackAttempt',
+    errorParam: '127.0.0.1'
+  }]
 }];

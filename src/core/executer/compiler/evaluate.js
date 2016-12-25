@@ -5,23 +5,36 @@ const formatter = require('../../formatter');
 const getter = require('../getter');
 const setter = require('../setter');
 const management = require('./management');
+const STATUS = require('../../../constants').STATUS;
 
-const UNDEFINED_VARIABLE = 'undefinedVariable';
+const UNDEFINED_VARIABLE = STATUS.UNDEFINED_VARIABLE;
+const SUCCESS = STATUS.SUCCESS;
 
 exports.condition = sessionId => {
-  let formattedCondition = formatter.fullParse(sessionId, getter.condition(sessionId), true);
+  const condition = getter.condition(sessionId);
+  let formattedCondition = formatter.fullParse(sessionId, condition, true);
   let isPassed = eval(formattedCondition) === true;
   return isPassed;
 };
 
 exports.code = (sessionId, sourceCode) => {
   let evalResult = '';
-  let evalStatus = 'success';
+  let evalStatus = SUCCESS;
 
   for (let i = 0; i < sourceCode.length; i++) {
+    const lineNumber = i + 1;
     let line = sourceCode[i];
 
-    let codeFormatted = formatter.codeFormatting(sessionId, line);
+    try {
+      var codeFormatted = formatter.codeFormatting(sessionId, line);
+    } catch (errorId) {
+      throw {
+        id: errorId,
+        param: {
+          line: lineNumber
+        }
+      }
+    }
 
     try {
       let output = eval(codeFormatted);
@@ -29,23 +42,28 @@ exports.code = (sessionId, sourceCode) => {
         evalResult += `${output}\n`;
       }
 
+      evalStatus = SUCCESS;
+    } catch (error) {
+      evalResult = '';
+      evalStatus = errorHandler.evalResult(error);
+    }
+
+    if (evalStatus == SUCCESS) {
       const undefinedVariable = errorCheck.undefinedVariable(sessionId, codeFormatted);
 
       if (undefinedVariable) {
         const error = {
           id: UNDEFINED_VARIABLE,
-          param: undefinedVariable
+          param: {
+            variable: undefinedVariable,
+            line: lineNumber
+          }
         };
 
         setter.output(sessionId, error);
         console.llog('compiler: trigger: broken variable');
-        return false;
+        throw error;
       }
-
-      evalStatus = 'success';
-    } catch (error) {
-      evalResult = '';
-      evalStatus = errorHandler.evalResult(error);
     }
   }
 

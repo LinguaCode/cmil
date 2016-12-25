@@ -20,6 +20,7 @@ exports.toCompile = function (sessionId) {
   let input = getter.input(sessionId);
   console.llog('compiler: toCompile', 'begin');
 
+  //TODO: remove "input" variable check ?
   if (!input && checker.needToInput(sessionId)) {
     setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
@@ -27,28 +28,23 @@ exports.toCompile = function (sessionId) {
     console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
     console.llog('compiler: toCompile', 'end');
-    return false;
+    throw WAITS_FOR_INPUT;
   } else {
     setter.input(sessionId, undefined);
   }
 
-  let toCompile = controllers.prepareToCompile(sessionId, input);
-  let evaluated = evaluate.code(sessionId, toCompile);
-
-  if (evaluated === false) {
-    console.llog('compiler: toCompile', 'end');
-    return false;
-  }
+  const toCompile = controllers.prepareToCompile(sessionId, input);
+  const evaluated = evaluate.code(sessionId, toCompile);
 
   evaluated.result = preOutput(evaluated.result);
 
   setter.output(sessionId, evaluated.status, evaluated.result);
-  if (evaluated.result) {
+  /*if (evaluated.result) {
     console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
     //trig if there no any
     console.llog('compiler: Socket.IO: server: there is nothing to output (ping: toCompile)');
-  }
+  }*/
 
   controllers.controller(sessionId);
 
@@ -60,12 +56,7 @@ exports.child = function (sessionId) {
 
   let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
 
-  let sessionContinue = upgrade(sessionId, firstKeyOfObject);
-
-  if (checker.needToUpgrade(sessionId) && sessionContinue === false) {
-    console.llog('compiler: child', 'end');
-    return false;
-  }
+  upgrade(sessionId, firstKeyOfObject);
 
   if (getter.nameOfProperty(sessionId) == 'child') {
     controllers.controller(sessionId);
@@ -94,11 +85,7 @@ exports.parent = function (sessionId) {
     }
   } else if (isParentAllow) {
 
-    let statusOfPassing = upgrade(sessionId, 'child');
-    if (statusOfPassing === false) {
-      console.llog('compiler: parent', 'end');
-      return false;
-    }
+    upgrade(sessionId, 'child');
 
     if (!checker.session.pathOfLocationEnded(sessionId)) {
 

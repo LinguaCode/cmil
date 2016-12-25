@@ -16,11 +16,8 @@ module.exports = [{
   command: COMMAND.OR,
   definition: 'կամ'
 }, {
-  command: COMMAND.AND_1,
-  definition: 'և'
-}, {
-  command: COMMAND.AND_2,
-  definition: 'եւ'
+  command: COMMAND.AND,
+  definition: 'և|եւ'
 }, {
   command: COMMAND.INPUT,
   definition: 'գրել'
@@ -68,10 +65,10 @@ module.exports = [{
   definition: 'կլորացում'
 }, {
   command: COMMAND.FLOOR,
-  definition: 'ամբողջացնել_ներքեւ'
+  definition: 'ամբողջացնել_ներքև|ամբողջացնել_ներքեւ'
 }, {
   command: COMMAND.CEIL,
-  definition: 'ամբողջացնել_վերեւ'
+  definition: 'ամբողջացնել_վերև|ամբողջացնել_վերեւ'
 }, {
   command: COMMAND.ABS,
   definition: 'մոդուլ'
