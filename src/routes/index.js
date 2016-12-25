@@ -90,6 +90,7 @@ const postExecute = sessionId => {
 
 io.on('connection', socket => {
   ipAddress = /:([0-9.]+)/.exec(socket.handshake.address)[1];
+  ipAddress = ipAddress == 1 ? '127.0.0.1' : ipAddress;
   console.llog(`Socket.IO: server: New connection from ${ipAddress}`);
 
   sockets.init(socket);
