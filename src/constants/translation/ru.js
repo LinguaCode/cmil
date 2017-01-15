@@ -2,13 +2,10 @@ const COMMAND = require('../command');
 
 module.exports = [{
   command: COMMAND.INPUT,
-  definition: 'ввести'
+  definition: 'ввод'
 }, {
   command: COMMAND.OUTPUT,
   definition: 'вывести'
-}, {
-  command: COMMAND.DO,
-  definition: 'сделать'
 }, {
   command: COMMAND.IF,
   definition: 'если'
@@ -16,21 +13,105 @@ module.exports = [{
   command: COMMAND.ELSE,
   definition: 'иначе'
 }, {
-  command: COMMAND.BREAK,
-  definition: 'прервать'
+  command: COMMAND.THEN,
+  definition: 'тогда'
 }, {
-  command: COMMAND.CONTINUE,
-  definition: 'продолжить'
+  command: COMMAND.OR,
+  definition: 'или'
+}, {
+  command: COMMAND.AND,
+  definition: 'и'
+}, {
+  command: COMMAND.NOT,
+  definition: 'не'
+}, {
+  command: COMMAND.FALSE,
+  definition: 'ложь'
+}, {
+  command: COMMAND.TRUE,
+  definition: 'правда'
+}, {
+  command: COMMAND.DO,
+  definition: 'сделать'
 }, {
   command: COMMAND.WHILE,
   definition: 'пока'
 }, {
   command: COMMAND.REPEAT,
-  definition: 'повторить'
+  definition: 'повторять'
 }, {
   command: COMMAND.TIMES,
   definition: 'раз'
 }, {
+  command: COMMAND.BREAK,
+  definition: 'прервать'
+}, {
+  command: COMMAND.CONTINUE,
+  definition: 'продолжать'
+}, {
   command: COMMAND.FUNCTION,
   definition: 'функция'
+}, {
+  command: COMMAND.RANDOM,
+  definition: 'random'
+}, {
+  command: COMMAND.POW,
+  definition: 'степень'
+}, {
+  command: COMMAND.SQR,
+  definition: 'квадрат'
+}, {
+  command: COMMAND.SQRT,
+  definition: 'корень'
+}, {
+  command: COMMAND.ROUND,
+  definition: 'округлить'
+}, {
+  command: COMMAND.FLOOR,
+  definition: 'округлить_вниз'
+}, {
+  command: COMMAND.CEIL,
+  definition: 'округлить_вверх'
+}, {
+  command: COMMAND.ABS,
+  definition: 'модуль'
+}, {
+  command: COMMAND.SIN,
+  definition: 'sin'
+}, {
+  command: COMMAND.COS,
+  definition: 'cos'
+}, {
+  command: COMMAND.TAN,
+  definition: 'tan'
+}, {
+  command: COMMAND.CTG,
+  definition: 'ctg'
+}, {
+  command: COMMAND.ARCSIN,
+  definition: 'arcsin'
+}, {
+  command: COMMAND.ARCCOS,
+  definition: 'arccos'
+}, {
+  command: COMMAND.ARCTAN,
+  definition: 'arctan'
+}, {
+  command: COMMAND.ARCCTG,
+  definition: 'arcctg'
+}, {
+  command: COMMAND.LOG,
+  definition: 'log'
+}, {
+  command: COMMAND.LN,
+  definition: 'ln'
+}, {
+  command: COMMAND.LG,
+  definition: 'lg'
+}, {
+  command: COMMAND.PI,
+  definition: 'pi'
+}, {
+  command: COMMAND.E,
+  definition: 'e'
 }];

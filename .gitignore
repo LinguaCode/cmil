@@ -25,3 +25,6 @@ test/database/testDB.js
 
 # Deploy
 deploy.bat
+
+# Yarn
+yarn.lock

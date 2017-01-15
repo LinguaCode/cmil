@@ -1,29 +1,8 @@
 const COMMAND = require('../command');
 
 module.exports = [{
-  command: COMMAND.THEN,
-  definition: 'ապա'
-}, {
-  command: COMMAND.NOT,
-  definition: 'ոչ'
-}, {
-  command: COMMAND.FALSE,
-  definition: 'սխալ'
-}, {
-  command: COMMAND.TRUE,
-  definition: 'ճիշտ'
-}, {
-  command: COMMAND.OR,
-  definition: 'կամ'
-}, {
-  command: COMMAND.AND,
-  definition: 'և|եւ'
-}, {
   command: COMMAND.INPUT,
   definition: 'գրել'
-}, {
-  command: COMMAND.DO,
-  definition: 'կատարել'
 }, {
   command: COMMAND.OUTPUT,
   definition: 'տպել'
@@ -34,11 +13,26 @@ module.exports = [{
   command: COMMAND.ELSE,
   definition: 'այլապես'
 }, {
-  command: COMMAND.BREAK,
-  definition: 'ընդհատել'
+  command: COMMAND.THEN,
+  definition: 'ապա'
 }, {
-  command: COMMAND.CONTINUE,
-  definition: 'շարունակել'
+  command: COMMAND.OR,
+  definition: 'կամ'
+}, {
+  command: COMMAND.AND,
+  definition: 'և|եւ'
+}, {
+  command: COMMAND.NOT,
+  definition: 'ոչ'
+}, {
+  command: COMMAND.FALSE,
+  definition: 'սխալ'
+}, {
+  command: COMMAND.TRUE,
+  definition: 'ճիշտ'
+}, {
+  command: COMMAND.DO,
+  definition: 'կատարել'
 }, {
   command: COMMAND.WHILE,
   definition: 'մինչ'
@@ -49,8 +43,17 @@ module.exports = [{
   command: COMMAND.TIMES,
   definition: 'անգամ'
 }, {
+  command: COMMAND.BREAK,
+  definition: 'ընդհատել'
+}, {
+  command: COMMAND.CONTINUE,
+  definition: 'շարունակել'
+}, {
   command: COMMAND.FUNCTION,
   definition: 'ֆունկցիա'
+}, {
+  command: COMMAND.RANDOM,
+  definition: 'պատահականություն'
 }, {
   command: COMMAND.POW,
   definition: 'աստիճան'
@@ -105,9 +108,6 @@ module.exports = [{
 }, {
   command: COMMAND.LG,
   definition: 'lg'
-}, {
-  command: COMMAND.RANDOM,
-  definition: 'պատահականություն'
 }, {
   command: COMMAND.PI,
   definition: 'pi'
