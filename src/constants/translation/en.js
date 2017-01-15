@@ -2,79 +2,79 @@ const COMMAND = require('../command');
 
 module.exports = [{
   command: COMMAND.INPUT,
-  definition: 'գրել'
+  definition: 'input'
 }, {
   command: COMMAND.OUTPUT,
-  definition: 'տպել'
+  definition: 'print'
 }, {
   command: COMMAND.IF,
-  definition: 'եթե'
+  definition: 'if'
 }, {
   command: COMMAND.ELSE,
-  definition: 'այլապես'
+  definition: 'else'
 }, {
   command: COMMAND.THEN,
-  definition: 'ապա'
+  definition: 'then'
 }, {
   command: COMMAND.OR,
-  definition: 'կամ'
+  definition: 'or'
 }, {
   command: COMMAND.AND,
-  definition: 'և|եւ'
+  definition: 'and'
 }, {
   command: COMMAND.NOT,
-  definition: 'ոչ'
+  definition: 'not'
 }, {
   command: COMMAND.FALSE,
-  definition: 'սխալ'
+  definition: 'false'
 }, {
   command: COMMAND.TRUE,
-  definition: 'ճիշտ'
+  definition: 'true'
 }, {
   command: COMMAND.DO,
-  definition: 'կատարել'
+  definition: 'do'
 }, {
   command: COMMAND.WHILE,
-  definition: 'մինչ'
+  definition: 'while'
 }, {
   command: COMMAND.REPEAT,
-  definition: 'կրկնել'
+  definition: 'repeat'
 }, {
   command: COMMAND.TIMES,
-  definition: 'անգամ'
+  definition: 'times'
 }, {
   command: COMMAND.BREAK,
-  definition: 'ընդհատել'
+  definition: 'break'
 }, {
   command: COMMAND.CONTINUE,
-  definition: 'շարունակել'
+  definition: 'continue'
 }, {
   command: COMMAND.FUNCTION,
-  definition: 'ֆունկցիա'
+  definition: 'function'
 }, {
   command: COMMAND.RANDOM,
-  definition: 'պատահականություն'
+  definition: 'random'
 }, {
   command: COMMAND.POW,
-  definition: 'աստիճան'
+  definition: 'pow'
 }, {
   command: COMMAND.SQR,
-  definition: 'քառակուսի'
+  definition: 'sqr'
 }, {
   command: COMMAND.SQRT,
-  definition: 'արմատ'
+  definition: 'sqrt'
 }, {
   command: COMMAND.ROUND,
-  definition: 'կլորացում'
+  definition: 'round'
 }, {
   command: COMMAND.FLOOR,
-  definition: 'ամբողջացնել_ներքև|ամբողջացնել_ներքեւ'
+  definition: 'floor'
 }, {
   command: COMMAND.CEIL,
-  definition: 'ամբողջացնել_վերև|ամբողջացնել_վերեւ'
+  definition: 'ceil'
 }, {
   command: COMMAND.ABS,
-  definition: 'մոդուլ'
+  definition: 'abs'
 }, {
   command: COMMAND.SIN,
   definition: 'sin'
