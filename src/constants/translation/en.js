@@ -5,7 +5,7 @@ module.exports = [{
   definition: 'input'
 }, {
   command: COMMAND.OUTPUT,
-  definition: 'print'
+  definition: 'output'
 }, {
   command: COMMAND.IF,
   definition: 'if'
