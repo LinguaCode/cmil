@@ -3,7 +3,7 @@ const io = require('socket.io-client');
 const _ = require('lodash');
 const cacheWiper = require('node-cache-wiper');
 
-const constants = require('../src/constants');
+const constants = require('linguacode-constants');
 const ENVIRONMENT = constants.ENVIRONMENT;
 
 const serverPath = path.join(constants.SOURCE_FILE_PATH, constants.SERVER_FILE_NAME);
@@ -79,7 +79,7 @@ const dbAnalyzer = sources => {
           .on(PATH_SESSION_END, (error) => {
             const isErrorOccurred = !!error;
             if (isErrorOccurred) {
-              const errorMessage = `\nError:\n${error}\n\n`;
+              const errorMessage = `\nError:\n${JSON.stringify(error)}\n\n`;
               if (errorCheck(source, error)) {
                 console.log(errorMessage);
                 done();
