@@ -1,4 +1,4 @@
-const STATUS = require('../constants').STATUS;
+const STATUS = require('linguacode-constants').STATUS;
 const FUNCTION_ARGUMENT_SCOPE_ERROR = STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR;
 
 const quotationMarks = {
@@ -24,7 +24,7 @@ exports.trim = function (text) {
   return text.replace(rtrim, "");
 };
 
-const quoteAnalize = function (input, index) {
+const quoteAnalyze = function (input, index) {
   let quotes = {
     es6: {
       symbol: '`',
@@ -114,7 +114,7 @@ const countAfter = (input, index, symbol) => {
  * @returns {Boolean} Returns true if index in input is between text or comment else no.
  */
 exports.isPartOfCode = function (input, index) {
-  let quotes = quoteAnalize(input, index);
+  let quotes = quoteAnalyze(input, index);
 
   let currentSymbol = input[index];
 

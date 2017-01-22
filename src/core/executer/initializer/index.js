@@ -19,7 +19,7 @@ exports.structure = function (sessionId, sourceCode) {
 
 exports.mount = sessionId => {
   console.llog('compiler: initialize: mount');
-  global[sessionId] = Object.create(null);
+  global[sessionId] = {};
 };
 
 exports.unMount = sessionId => {

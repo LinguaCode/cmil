@@ -3,7 +3,7 @@ const io = require('./io');
 const https = require('https');
 const express = require('express');
 const logger = require('lingua-logger');
-const ENVIRONMENT = require('./constants').ENVIRONMENT;
+const ENVIRONMENT = require('linguacode-constants').ENVIRONMENT;
 
 let app = express();
 

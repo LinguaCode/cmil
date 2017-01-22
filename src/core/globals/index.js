@@ -29,9 +29,9 @@ var globals = () => {
    * @param {Object} __store - sourceCode controlling.
    * @param {Object} __translator - translation globals controlling.
    */
-  global.__store = Object.create(null);
-  global.__language = Object.create(null);
-  global.__translator = Object.create(null);
+  global.__store = {};
+  global.__language = {};
+  global.__translator = {};
 
 };
 
@@ -70,7 +70,7 @@ var store = sessionId => {
    * @param {String} __store[sessionId].pathOfLocation - dynamic path of the operation.
    */
   __store[sessionId] = {
-    structure: Object.create(null),
+    structure: {},
     pathOfLocation: '',
     output: '',
     status: 'success'

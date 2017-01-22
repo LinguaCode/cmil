@@ -1,4 +1,4 @@
-const COMMAND = require('../../constants').COMMAND;
+const COMMAND = require('linguacode-constants').COMMAND;
 
 const coder = require('./coder');
 
@@ -33,9 +33,9 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
   }
 
   //initializations of objects
-  let parentIndexes = Object.create(null);
-  let parentConditionType = Object.create(null);
-  let parentConditionValue = Object.create(null);
+  let parentIndexes = {};
+  let parentConditionType = {};
+  let parentConditionValue = {};
 
   //previous parent: START
   let parentIndexPrevious = index;
@@ -43,7 +43,7 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
   parentConditionType.previous = executions(parentLine, COMMAND.CONDITION_TYPE);
   parentConditionValue.previous = executions(parentLine, COMMAND.CONDITION_VALUE);
   parentIndexes.previous = parentIndexPrevious;
-  //previous parent: END
+  //previous parent: END-
 
   //next parent: START
   let nextParentIndex = operations.nextParentIndexInitialize(listOfLevels, parentIndexPrevious);
