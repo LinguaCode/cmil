@@ -1,6 +1,6 @@
 let _ = require('lodash');
 
-const STATUS = require('../../../../constants').STATUS;
+const STATUS = require('linguacode-constants').STATUS;
 const TIMEOUT = STATUS.TIMEOUT;
 const SESSION_END = STATUS.SESSION_END;
 

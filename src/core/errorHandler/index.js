@@ -1,4 +1,4 @@
-const STATUS = require('../../constants').STATUS;
+const STATUS = require('linguacode-constants').STATUS;
 const SYNTAX_ERROR = STATUS.SYNTAX_ERROR;
 const HACK_ATTEMPT = STATUS.HACK_ATTEMPT;
 const INDENT_ERROR = STATUS.INDENT_ERROR;

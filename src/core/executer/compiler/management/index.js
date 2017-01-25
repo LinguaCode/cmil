@@ -1,6 +1,6 @@
 const modify = require('../../../modifier/modify');
 
-const SUCCESS = require('../../../../constants').STATUS.SUCCESS;
+const SUCCESS = require('linguacode-constants').STATUS.SUCCESS;
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   console.llog('compiler: codeRun', 'begin');

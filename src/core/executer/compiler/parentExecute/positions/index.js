@@ -1,4 +1,4 @@
-const constants = require('../../../../../constants');
+const constants = require('linguacode-constants');
 const WAITS_FOR_INPUT = constants.STATUS.WAITS_FOR_INPUT;
 const BOOLEAN_DEFINITION = constants.BOOLEAN_DEFINITION;
 
