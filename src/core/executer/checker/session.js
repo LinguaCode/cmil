@@ -1,5 +1,5 @@
 const moment = require('moment');
-const constants = require('../../../constants');
+const constants = require('linguacode-constants');
 const getter = require('../getter');
 const STATUS = constants.STATUS;
 

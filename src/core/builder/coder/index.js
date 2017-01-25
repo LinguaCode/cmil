@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const COMMAND = require('../../../constants').COMMAND;
+const COMMAND = require('linguacode-constants').COMMAND;
 const tools = require('../../../libs/tools');
 const variables = exports.variables = require('./variables');
 
@@ -13,7 +13,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   let indexOfOperationEnd;
   let operations;
   let inputVariable;
-  let toCompile = Object.create(null);
+  let toCompile = {};
 
   let reInputStrOld = reInput.exec(sourceCode);
 
@@ -39,7 +39,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
 
     //==toCompile==
     //toCompile.operations
-    toCompile = Object.create(null);
+    toCompile = {};
 
     toCompile.operations = _.compact(operations.split('\n'));
 

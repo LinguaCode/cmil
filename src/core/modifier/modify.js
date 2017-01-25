@@ -7,7 +7,7 @@
 
 const tools = require('../../libs/tools');
 const uglify = require('./uglify');
-const code = require('./code');
+const translator = require('linguacode-translator');
 
 /**
  * Changes sourceCode into a lower case, except String type texts.
@@ -56,7 +56,8 @@ exports.codeNotSensitive = sourceCode => {
 exports.execute = (sourceCode, language) => {
   console.llog('modify: main');
   const uglifiedSourceCode = uglify.execute(sourceCode);
-  const convertedSourceCode = code.toCode(uglifiedSourceCode, language);
+
+  const convertedSourceCode = translator.toCode(uglifiedSourceCode, language);
 
   return this.codeNotSensitive(convertedSourceCode);
 };

@@ -1,8 +1,7 @@
 const io = require('../io');
-const code = require('../core/modifier/code');
 const errorHandler = require('../core/errorHandler');
 const compiler = require('../core/executer/compiler');
-const STATUS = require('../constants').STATUS;
+const STATUS = require('linguacode-constants').STATUS;
 const sender = require('../core/sender');
 const formatter = require('../core/formatter');
 const setter = require('../core/executer/setter');
@@ -84,7 +83,7 @@ const postExecute = sessionId => {
   const error = isSucceed ? '' : status;
 
   if (checker.session.ended(sessionId)) {
-     return sender.sessionEnd(sessionId, error);
+    return sender.sessionEnd(sessionId, error);
   }
 };
 

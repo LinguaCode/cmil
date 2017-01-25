@@ -5,7 +5,7 @@ const formatter = require('../../formatter');
 const getter = require('../getter');
 const setter = require('../setter');
 const management = require('./management');
-const STATUS = require('../../../constants').STATUS;
+const STATUS = require('linguacode-constants').STATUS;
 
 const UNDEFINED_VARIABLE = STATUS.UNDEFINED_VARIABLE;
 const SUCCESS = STATUS.SUCCESS;
