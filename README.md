@@ -1,3 +1,4 @@
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/linguacode/localized.svg)](https://crowdin.com/project/linguacode)
 [![Build Status](https://travis-ci.org/LinguaCode/core.svg?branch=master)](https://travis-ci.org/LinguaCode/core)
 [![Coverage Status](https://coveralls.io/repos/github/LinguaCode/core/badge.svg?branch=master&v=6)](https://coveralls.io/github/LinguaCode/core?branch=master)
 [![Code Climate](https://codeclimate.com/github/LinguaCode/core/badges/gpa.svg?v=1)](https://codeclimate.com/github/LinguaCode/core)
