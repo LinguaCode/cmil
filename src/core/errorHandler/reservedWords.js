@@ -18,7 +18,7 @@ module.exports = [
   'function',
   'if',
   'import',
-  /*'in',*/
+  'in',
   'instanceof',
   'new',
   'return',
