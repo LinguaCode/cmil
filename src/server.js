@@ -19,7 +19,6 @@ const certPath = process.env.CERT_FILE_PATH = process.env.CERT_FILE_PATH || './s
 const privateKeyFilePath = `${certPath}linguacode_me_private.key`;
 
 let isCertFilesExist;
-
 try {
   fs.accessSync(privateKeyFilePath, fs.F_OK);
   isCertFilesExist = true;

@@ -9,7 +9,7 @@ exports.execute = (sessionId, sourceCode) => {
   console.llog('builder: main', 'begin');
 
   let variables = coder.variables._get(sourceCode);
-   setter.variables(sessionId, variables);
+  setter.variables(sessionId, variables);
 
   let varToObj = coder.variables.variablesToObjectChild(sessionId, sourceCode, variables);
   let listOfCommands = varToObj.split('\n');
