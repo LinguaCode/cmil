@@ -16,7 +16,7 @@ require('./routes');
 let server;
 
 const certPath = process.env.CERT_FILE_PATH = process.env.CERT_FILE_PATH || './src/config/keys/';
-const privateKeyFilePath = `${certPath}linguacode_me_private.key`;
+const privateKeyFilePath = `${certPath}private.key`;
 
 let isCertFilesExist;
 try {
@@ -27,17 +27,15 @@ try {
 }
 
 if (environment == ENVIRONMENT.PRODUCTION && isCertFilesExist) {
-  const privateKey = fs.readFileSync(`${certPath}linguacode_me_private.key`, 'utf8');
-  const certificate = fs.readFileSync(`${certPath}3_user_linguacode.me.crt`, 'utf8');
+  const privateKey = fs.readFileSync(`${certPath}private.key`, 'utf8');
+  const certificate = fs.readFileSync(`${certPath}certificate.crt`, 'utf8');
 
   let certificates = (function () {
     let i, len, results;
     results = [];
     let certFileList = [
-      'root.crt',
-      '1_cross_Intermediate.crt',
-      '2_issuer_Intermediate.crt',
-      '3_user_linguacode.me.crt'
+      'ca_bundle.crt',
+      'certificate.crt',
     ];
     for (i = 0, len = certFileList.length; i < len; i++) {
       let file = certFileList[i];
