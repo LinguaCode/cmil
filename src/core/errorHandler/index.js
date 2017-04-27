@@ -32,6 +32,7 @@ exports.evalResult = error => {
       SYNTAX_ERROR : SYNTAX_ERROR;
 
   return {
-    id: errorId
+    id: errorId,
+    param: {}
   };
 };

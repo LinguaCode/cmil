@@ -80,7 +80,10 @@ const postExecute = sessionId => {
     sender.evaluate(sessionId, output.result);
   }
 
-  const error = isSucceed ? '' : status;
+  const error = isSucceed ? {
+    id: '',
+    param: {}
+  } : status;
 
   if (checker.session.ended(sessionId)) {
     return sender.sessionEnd(sessionId, error);
