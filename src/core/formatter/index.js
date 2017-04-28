@@ -67,9 +67,7 @@ const parse = {
       while ((reStr = re.exec(sourceCode)) !== null) {
         const indexOfResult = reStr.index;
         const isPartOfCode = tools.isPartOfCode(sourceCode, indexOfResult);
-        if (!isPartOfCode) {
-          continue;
-        }
+        if (!isPartOfCode) continue;
 
         const argumentPositions = tools.argumentPositions(sourceCode, indexOfResult);
         const indexOfBeginScope = argumentPositions.begin;

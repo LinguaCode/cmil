@@ -21,7 +21,7 @@ const sockets = {
     preExecute(sessionId);
 
     //TODO: add error handler: unsupported language
-    const language = receivedData.language || 'hy';
+    const language = receivedData.language || 'hy-AM';
 
     setter.language(sessionId, language);
 
