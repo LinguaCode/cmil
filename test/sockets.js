@@ -1,8 +1,10 @@
+//packages
 const path = require('path');
 const io = require('socket.io-client');
 const _ = require('lodash');
 const cacheWiper = require('node-cache-wiper');
 
+//constants
 const constants = require('linguacode-constants');
 const ENVIRONMENT = constants.ENVIRONMENT;
 
@@ -14,7 +16,7 @@ let server = require(currentPathOfTheServer);
 process.env.NODE_ENV = ENVIRONMENT.TEST;
 
 /**Initialize the variables*/
-const socket = io.connect('http://localhost:3005');
+const socket = io.connect('https://localhost:3005');
 let compileId = 0;
 let socketId;
 
@@ -77,7 +79,7 @@ const dbAnalyzer = sources => {
             }
           })
           .on(PATH_SESSION_END, (error) => {
-            const isErrorOccurred = !!error;
+            const isErrorOccurred = !!error.id;
             if (isErrorOccurred) {
               const errorMessage = `\nError:\n${JSON.stringify(error)}\n\n`;
               if (errorCheck(source, error)) {
@@ -142,9 +144,7 @@ describe('initialize', () => {
   it('socketId', done => {
     socket
       .on('connect', () => {
-        if (isDonePassedOnce) {
-          return;
-        }
+        if (isDonePassedOnce) return;
 
         isDonePassedOnce = true;
         socketId = setSocketId(socket.io.engine.id);
@@ -152,7 +152,6 @@ describe('initialize', () => {
       })
       .on('error', done);
   });
-
 
 });
 
@@ -175,7 +174,6 @@ describe('disconnect', () => {
   });
 
 });
-
 
 describe('production test', () => {
 
