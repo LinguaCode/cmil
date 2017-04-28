@@ -25,7 +25,8 @@ let controller = {
 
     if (checker.session.expired(sessionId)) {
       const error = {
-        id: TIMEOUT
+        id: TIMEOUT,
+        param: {}
       };
       console.llog('compiler: trigger: timeout');
       throw error;
