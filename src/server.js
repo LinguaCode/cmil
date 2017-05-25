@@ -1,3 +1,5 @@
+const crash = require('./crash');
+
 const fs = require('fs');
 const io = require('./io');
 const spdy = require('spdy');
