@@ -1,4 +1,4 @@
-const crash = require('./crash');
+require('./crashReporter');
 
 const fs = require('fs');
 const io = require('./io');
