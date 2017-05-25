@@ -10,7 +10,7 @@ const {
   EMAIL_TO,
 } = process.env;
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: MAIL_HOST,
   port: MAIL_PORT,
   secure: MAIL_SECURE,
