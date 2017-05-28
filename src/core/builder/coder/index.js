@@ -8,11 +8,11 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
 
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];
-  let reInput = new RegExp(`${COMMAND.INPUT}\\s*\\((global\\[sessionId\\].(${variables.join('|')}))\\)`, 'g');
+  let reInput = new RegExp(`${COMMAND.INPUT}\\s+(global\\[sessionId\\]\\.(${variables.join('|')}))`, 'g');
   let indexOfOperationBegin;
   let indexOfOperationEnd;
   let operations;
-  let inputVariable;
+  let   inputVariable;
   let toCompile = {};
 
   let reInputStrOld = reInput.exec(sourceCode);
