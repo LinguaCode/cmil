@@ -2,7 +2,7 @@ module.exports = [{
   group: 'logic',
   sources: [{
     title: 'undefined variable',
-    code: 'ելք(X)',
+    code: 'ելք X',
     errorId: 'undefinedVariable',
     errorParam: {
       variable: 'x',
@@ -10,11 +10,11 @@ module.exports = [{
     },
   }, {
     title: 'Big loop: overload',
-    code: 'կրկնել 100000 անգամ\n    ելք(1010101010)',
+    code: 'կրկնել 100000 անգամ\n    ելք 1010101010',
     errorId: 'timeout'
   }, {
     title: 'Infinity loop',
-    code: 'մինչ 1 < 4\n    ելք(123)',
+    code: 'մինչ 1 < 4\n    ելք 123',
     errorId: 'timeout'
   }]
 }];
