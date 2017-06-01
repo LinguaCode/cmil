@@ -20,7 +20,11 @@ const sockets = {
     //TODO: add error handler: unsupported language
     const language = receivedData.language || 'hy-AM';
 
-    setter.data(sessionId, {language, ip});
+    setter.data(sessionId, {
+      sourceCode,
+      language,
+      ip
+    });
 
     sender.submitSuccess(sessionId);
     console.llog('Socket.IO: server: sourceCode has been successfully received!');
