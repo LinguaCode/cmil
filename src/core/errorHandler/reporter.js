@@ -85,6 +85,6 @@ process.on('uncaughtException', (systemError) => {
   });
 });
 
-const paramHTML = (title, value) => {
+const paramHTML = (title, value = '') => {
   return `<b>${title}:</b>${/\n/.test(value) ? '<br/>' : ' '}${value.replace(/\n/ig, '<br/>')}<br/><br/>`;
 };
