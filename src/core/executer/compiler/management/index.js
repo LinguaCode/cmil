@@ -25,6 +25,12 @@ exports.codeRun = function (sessionId, sourceCode, language) {
 exports.listener = function (sessionId, input) {
   console.llog('compiler: listener', 'begin');
 
+
+  //TODO: test: remove it
+  if (!getter.data(sessionId)) {
+    throw new Error(sessionId);
+  }
+
   setter.sessionTime(sessionId);
   setter.data(sessionId, {input});
   initializer.output(sessionId, SUCCESS, '');
