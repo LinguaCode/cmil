@@ -28,8 +28,6 @@ exports.listener = function (sessionId, input) {
 
   //TODO: test: remove it
   if (!getter.data(sessionId)) {
-    console.log(typeof getter.data(sessionId))
-    console.log(getter.data(sessionId))
     throw new Error(sessionId);
   }
 
