@@ -28,7 +28,7 @@ exports.output = sessionId => {
 };
 
 exports.data = (sessionId, name) => {
-    return _.get(global, '__store[sessionId][name]');
+    return _.get(global, `__store[${sessionId}][${name}]`);
 };
 
 let path = require('../path');
