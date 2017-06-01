@@ -3,7 +3,7 @@ const reservedWords = require('./reservedWords');
 const tools = require('../../libs/tools');
 
 exports.hackAttempt = (sourceCode, params) => {
-  const ip = params.ipAddress;
+  const {ip} = params;
 
   sourceCode = sourceCode.split('\n');
   for (let i = 0; i < sourceCode.length; i++) {
@@ -38,7 +38,7 @@ exports.indentError = sourceCode => {
 };
 
 exports.undefinedVariable = (sessionId, toCompile) => {
-  let variables = getter.variables(sessionId);
+  let variables = getter.data(sessionId, 'variables');
   for (let i = 0; i < variables.length; i++) {
     const variableName = variables[i];
     const variableRealName = `global\\[sessionId\\].${variableName}`;

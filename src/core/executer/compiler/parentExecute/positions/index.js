@@ -17,7 +17,7 @@ let preOutput = function (outputText) {
 };
 
 exports.toCompile = function (sessionId) {
-  let input = getter.input(sessionId);
+  let input = getter.data(sessionId, 'input');
   console.llog('compiler: toCompile', 'begin');
 
   //TODO: remove "input" variable check ?
@@ -30,7 +30,7 @@ exports.toCompile = function (sessionId) {
     console.llog('compiler: toCompile', 'end');
     throw WAITS_FOR_INPUT;
   } else {
-    setter.input(sessionId, undefined);
+    setter.data(sessionId, {input: undefined});
   }
 
   const toCompile = controllers.prepareToCompile(sessionId, input);

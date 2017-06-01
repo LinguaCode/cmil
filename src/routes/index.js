@@ -8,29 +8,25 @@ const setter = require('../core/executer/setter');
 const checker = require('../core/executer/checker');
 const getter = require('../core/executer/getter');
 
-let ipAddress;
-
 const preExecute = sessionId => {
   require('../core/globals')(sessionId);
 };
 
 const sockets = {
-  submit: receivedData => {
-    const sourceCode = receivedData.sourceCode;
-    const sessionId = receivedData.sessionId;
+  submit: (ip, receivedData) => {
+    const {sourceCode, sessionId} = receivedData;
     preExecute(sessionId);
 
     //TODO: add error handler: unsupported language
     const language = receivedData.language || 'hy-AM';
 
-    setter.language(sessionId, language);
+    setter.data(sessionId, {language, ip});
 
     sender.submitSuccess(sessionId);
     console.llog('Socket.IO: server: sourceCode has been successfully received!');
 
-    const error = errorHandler.analyze(sourceCode, {ipAddress: ipAddress});
+    const error = errorHandler.analyze(sourceCode, {ip});
     if (error) {
-
       //TODO: Arman: put here mail logging system
       console.llog('Socket.IO: server: output text has been successfully send! (Hack attempt)');
 
@@ -56,7 +52,11 @@ const sockets = {
 
   init: function (socket) {
 
-    socket.on('submit', this.submit);
+    const ip = ipExtract(socket.handshake.address);
+
+    console.llog(`Socket.IO: server: New connection from ${ip}`);
+
+    socket.on('submit', this.submit.bind(this, ip));
 
     socket.on('disconnect', this.disconnect);
 
@@ -91,9 +91,12 @@ const postExecute = sessionId => {
 };
 
 io.on('connection', socket => {
-  ipAddress = /:([0-9.]+)/.exec(socket.handshake.address)[1];
-  ipAddress = ipAddress == 1 ? '127.0.0.1' : ipAddress;
-  console.llog(`Socket.IO: server: New connection from ${ipAddress}`);
 
   sockets.init(socket);
 });
+
+
+const ipExtract = (address) => {
+  ipAddress = /:([0-9.]+)/.exec(address)[1];
+  return ipAddress == 1 ? '127.0.0.1' : ipAddress;
+};
