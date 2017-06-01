@@ -156,8 +156,8 @@ describe('initialize', () => {
 });
 
 /**passed db test*/
-const dbs = ['successes', 'tutorials', 'errors'];
-//const dbs = ['testDB'];
+//const dbs = ['successes', 'tutorials', 'errors'];
+const dbs = ['testDB'];
 dbs.forEach((db) => {
   describe(db, () => {
     const sources = require(`./collection/${db}`);
@@ -186,7 +186,7 @@ describe('production test', () => {
 
     setTimeout(() => {
       done();
-    })
+    }, 0)
   });
 
   it('without cert files', done => {
@@ -199,7 +199,7 @@ describe('production test', () => {
 
     setTimeout(() => {
       done();
-    })
+    }, 0)
   });
 
 });

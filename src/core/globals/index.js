@@ -72,8 +72,13 @@ var store = sessionId => {
   __store[sessionId] = {
     structure: {},
     pathOfLocation: '',
+    input: '',
     output: '',
-    status: 'success'
+    status: 'success',
+    sourceCode: '',
+    ip: '',
+    language: '',
+    variables: []
   };
 };
 

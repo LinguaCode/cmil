@@ -9,7 +9,7 @@ exports.execute = (sessionId, sourceCode) => {
   console.llog('builder: main', 'begin');
 
   let variables = coder.variables._get(sourceCode);
-  setter.variables(sessionId, variables);
+  setter.data(sessionId, {variables});
 
   let varToObj = coder.variables.variablesToObjectChild(sessionId, sourceCode, variables);
   let listOfCommands = varToObj.split('\n');
@@ -37,6 +37,11 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
         toCompile = components.toCompile(sessionId, listOfCommands, variables, toCompileIndexStart, _parent.index.previous);
       } else {
         toCompile = [];
+      }
+
+      //TODO: test: remove it
+      if (!_parent.conditions.type.previous.substring) {
+        throw new Error(sessionId);
       }
 
       let conditionType = _parent.conditions.type.previous.substring(1);

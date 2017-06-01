@@ -29,27 +29,20 @@ exports.output = function (sessionId, status, output) {
 };
 
 /**
- * Sets list of variables for current application.
- * Use case: to check for undefined variable.
- * */
-exports.variables = (sessionId, variables) => __store[sessionId].variables = variables;
-
-/**
  * Initialize the session time start.
  * Use case: to check for timeout.
  * */
-exports.sessionTime = sessionId => __store[sessionId].time = new Date();
-
-/**
- * Sets input text.
- * Input text receives from client.
- * */
-exports.input = (sessionId, input) => __store[sessionId].input = input;
+exports.sessionTime = sessionId => __store[sessionId].sessionTime = new Date();
 
 /**
  * Sets session language.
  * Standard: ISO 639-1.
  * */
-exports.language = (sessionId, language) => __language[sessionId] = language;
+
+exports.data = (sessionId, data) => {
+  for (let key in data) {
+    __store[sessionId][key] = data[key];
+  }
+};
 
 let getter = require('../getter');

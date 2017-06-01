@@ -1,6 +1,6 @@
-require('./crashReporter');
+require('./core/errorHandler/reporter');
 
-const fs = require('fs');
+   fs = require('fs');
 const io = require('./io');
 const spdy = require('spdy');
 const express = require('express');

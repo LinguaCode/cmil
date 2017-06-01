@@ -40,7 +40,7 @@ exports.ended = sessionId => {
 };
 
 exports.expired = sessionId => {
-  const sessionTime = moment(getter.sessionTime(sessionId));
+  const sessionTime = moment(getter.data(sessionId, 'sessionTime'));
   const now = moment();
   const timeDifferenceBySeconds = now.diff(sessionTime);
   const timeOutCondition = !process.env.TIMEOUT_IGNORE ?

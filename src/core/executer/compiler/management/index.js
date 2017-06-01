@@ -26,7 +26,7 @@ exports.listener = function (sessionId, input) {
   console.llog('compiler: listener', 'begin');
 
   setter.sessionTime(sessionId);
-  setter.input(sessionId, input);
+  setter.data(sessionId, {input});
   initializer.output(sessionId, SUCCESS, '');
 
   try {
