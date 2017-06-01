@@ -28,6 +28,7 @@ exports.output = sessionId => {
 };
 
 exports.data = (sessionId, name) => {
+  console.log(_.get(global, `__store`));
     return _.get(global, `__store[${sessionId}][${name}]`);
 };
 
