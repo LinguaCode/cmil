@@ -9,7 +9,7 @@
 [![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
 [![Beerpay](https://img.shields.io/beerpay/LinguaCode/core.svg?maxAge=2592000?style=flat-square)](https://beerpay.io/LinguaCode/core)
 
-# CMIL - Clarified Multilingual intermediate language
+# CMIL - Clarified Multilingual Intermediate language
 
 The goal of CMIL is to create a common programming language, which will be designed for people of all nationalities and all ages, which will easily learn basic programming knowledge in purpose of to later switching to professional programming languages.
 Arman Yeghiazaryan is the author and the legal owner of the standard of CMIL. All copies of the standard outside the site of https://linguacode.me will be considered illegal and the author of the copy is liable to legal punishment.
