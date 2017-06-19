@@ -9,7 +9,12 @@
 [![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
 [![Beerpay](https://img.shields.io/beerpay/LinguaCode/core.svg?maxAge=2592000?style=flat-square)](https://beerpay.io/LinguaCode/core)
 
-# LinguaCode - multilingual programming language
+# CMIL - Clarified Multilingual intermediate language
+
+The goal of CMIL is to create a common programming language, which will be designed for people of all nationalities and all ages, which will easily learn basic programming knowledge in purpose of to later switching to professional programming languages.
+Arman Yeghiazaryan is the author and the legal owner of the standard of CMIL. All copies of the standard outside the site of https://linguacode.me will be considered illegal and the author of the copy is liable to legal punishment.
+
+# LinguaCode - Social Coding Platform For Everyone
 **LinguaCode** is a social coding platform and is designed especially for children, where they can learn programming and share their codes with their native language and without the necessity of knowing English.
 
 Due to our solution children can not only get acquainted and study the basic elements of programming, but can also easily pass to professional programming languages. Knowing English is very important, but a language must not be a barrier for learning programming. 
