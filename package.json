@@ -1,6 +1,6 @@
 {
-  "name": "core",
-  "version": "0.3.10",
+  "name": "cmil",
+  "version": "0.3.11",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
