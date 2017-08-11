@@ -81,7 +81,7 @@ exports.controller = controller.manage;
 exports.prepareToCompile = function (sessionId, inputValue) {
   let codeToCompile = _.cloneDeep(getter.operations(sessionId));
   let inputOperation = '';
-  if (inputValue) {
+  if (inputValue !== '') {
     inputOperation = evaluate.inputOperation(sessionId, inputValue);
     codeToCompile.unshift(inputOperation);
   }
