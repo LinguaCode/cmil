@@ -33,7 +33,7 @@ exports._if = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
     countOfCommands += content.listOfCommands.length + 1;
     nextParentConditionType = parentOfIfCommand.conditions.type.next;
 
-  } while (parentOfIfCommand.isNextParentExist && (nextParentConditionType == COMMAND.ELSE || nextParentConditionType == COMMAND.ELIF));
+  } while (parentOfIfCommand.isNextParentExist && nextParentConditionType == COMMAND.ELSE);
 
   countOfCommands--;
 

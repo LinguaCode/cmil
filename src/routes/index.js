@@ -95,7 +95,6 @@ const postExecute = sessionId => {
 };
 
 io.on('connection', socket => {
-
   sockets.init(socket);
 });
 
