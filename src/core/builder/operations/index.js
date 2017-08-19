@@ -48,7 +48,7 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
       let conditionResult = conditions.conditionals[`_${conditionType}`](sessionId, listOfCommands, listOfLevels, _parent, variables);
       let parent = conditionResult.child;
 
-      if (toCompile.length != 0) {
+      if (!toCompile.length) {
         parentOfParents.push({toCompile: toCompile});
       }
 
