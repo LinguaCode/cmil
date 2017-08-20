@@ -27,7 +27,8 @@ const setSessionId = () => `${socketId}_${compileId}`;
 const codeSubmit = (sessionId, sourceCode) => {
   const sendData = {
     sessionId,
-    sourceCode
+    sourceCode,
+    language: 'en'
   };
 
   socket.emit('submit', sendData);
@@ -156,8 +157,8 @@ describe('initialize', () => {
 });
 
 /**passed db test*/
-//const dbs = ['successes', 'tutorials', 'errors'];
-const dbs = ['testDB'];
+const dbs = ['successes', /*'tutorials',*/ 'errors'];
+//const dbs = ['testDB'];
 dbs.forEach((db) => {
   describe(db, () => {
     const sources = require(`./collection/${db}`);
@@ -175,6 +176,7 @@ describe('disconnect', () => {
 
 });
 
+/*
 describe('production test', () => {
 
   it('with cert files', done => {
@@ -234,3 +236,4 @@ describe('timeout ignore', () => {
   });
 
 });
+*/

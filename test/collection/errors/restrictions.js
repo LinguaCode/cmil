@@ -1,4 +1,4 @@
-module.exports = [{
+module.exports = [/*{
   group: 'restrictions',
   sources: [{
     title: 'hack attempt',
@@ -8,4 +8,4 @@ module.exports = [{
       ip: '127.0.0.1'
     }
   }]
-}];
+}*/];
