@@ -21,7 +21,6 @@ exports.toCompile = function (sessionId) {
   console.llog('compiler: toCompile', 'begin');
 
   //TODO: remove "input" variable check ?
-  console.log(typeof input);
   if ((typeof input === 'undefined' || input === '') && checker.needToInput(sessionId)) {
     setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
@@ -97,7 +96,8 @@ exports.parent = function (sessionId) {
 
   } else {
     let conditionIdentifier = getter.conditionIdentifier(sessionId);
-    initializer.condition(conditionIdentifier);
+    //TODO: Find out why do we need to init condition ?
+    //initializer.condition(conditionIdentifier);
     controllers.controller(sessionId);
   }
 

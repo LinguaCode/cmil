@@ -5,6 +5,10 @@ const setter = require('../../executer/setter');
 const conditions = require('./conditions');
 const components = require('../components');
 
+//statuses
+const STATUS = require('linguacode-constants').STATUS;
+const INDENT_ERROR = STATUS.INDENT_ERROR;
+
 exports.execute = (sessionId, sourceCode) => {
   console.llog('builder: main', 'begin');
 
@@ -39,9 +43,18 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
         toCompile = [];
       }
 
-      //TODO: test: remove it
-      if (!_parent.conditions.type.previous.substring) {
-        throw new Error(sessionId);
+      //indent error checker
+      if (!_parent.conditions.type.previous) {
+        const error = {
+          id: INDENT_ERROR,
+          param: {
+            line: i + 1
+          }
+        };
+
+        setter.output(sessionId, error);
+        console.llog('compiler: trigger: builder: indent error');
+        throw error;
       }
 
       let conditionType = _parent.conditions.type.previous.substring(1);

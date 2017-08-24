@@ -100,6 +100,6 @@ io.on('connection', socket => {
 
 
 const ipExtract = (address) => {
-  ipAddress = /:([0-9.]+)/.exec(address)[1];
+  const ipAddress = /:([0-9.]+)/.exec(address)[1];
   return ipAddress == 1 ? '127.0.0.1' : ipAddress;
 };

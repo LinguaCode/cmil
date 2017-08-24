@@ -11,12 +11,20 @@ exports.codeRun = function (sessionId, sourceCode, language) {
   let codePrepared = modify.execute(sourceCode, language);
   //initialize
 
-  initializer.execute(sessionId, codePrepared);
-
+  let isErrorOccurredOnBuildStage = false;
   try {
-    parentExecute.positions.parent(sessionId);
+    initializer.execute(sessionId, codePrepared);
   } catch (error) {
+    isErrorOccurredOnBuildStage = true;
     errorExtract(sessionId, error);
+  }
+
+  if (!isErrorOccurredOnBuildStage) {
+    try {
+      parentExecute.positions.parent(sessionId);
+    } catch (error) {
+      errorExtract(sessionId, error);
+    }
   }
 
   console.llog('compiler: codeRun', 'end');
