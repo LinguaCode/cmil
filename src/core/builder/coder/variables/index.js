@@ -1,15 +1,21 @@
 const _ = require('lodash');
 const tail = require('./tail');
 const tools = require('../../../../libs/tools');
+const constants = require('../../../../libs/constants');
+
+const variableNameRegExpContent = tools.regExpContentExtract(/([^\d\u00AB\u00BB()%+\-*\/=@"'><\s!,][^\u00AB\u00BB()%+\-*\/=@'"\s,]*)/);
+const preTailOfVariableNameRegExpContent = tools.regExpContentExtract(constants.preTailOfVariableNameRegExp);
+const postTailOfVariableNameRegExpContent = tools.regExpContentExtract(constants.postTailOfVariableNameRegExp);
 
 exports._get = sourceCode => {
+
   let listOfVariables = [];
   let regStr;
   const regExpArr = [
-    /[<>\-(+=*\/%\s,]([^\d\u00AB\u00BB()%+\-*\/=@"'><\s!,][^\u00AB\u00BB()%+\-*\/=@'"><\s,]*)[\-+=*\/%\s><,)!]/g,
-    /^([^\d\u00AB\u00BB()%+\-*\/=@"'><\s!,][^\u00AB\u00BB()%+\-*\/=@'"\s,]*)[\-+=*\/%\s><,)!]/g,
-    /[<>\-(+=*\/%\s,]([^\d\u00AB\u00BB()%+\-*\/=@"'><\s!,][^\u00AB\u00BB()%+\-*\/=@'"><\s,]*)$/g,
-    /^([^\d\u00AB\u00BB()%+\-*\/=@"'><\s!,][^\u00AB\u00BB()%+\-*\/=@'"\s,]*)$/g
+    new RegExp(`${preTailOfVariableNameRegExpContent}${variableNameRegExpContent}${postTailOfVariableNameRegExpContent}`, 'g'),
+    new RegExp(`^${variableNameRegExpContent}${postTailOfVariableNameRegExpContent}`, 'g'),
+    new RegExp(`${preTailOfVariableNameRegExpContent}${variableNameRegExpContent}$`, 'g'),
+    new RegExp(`^${variableNameRegExpContent}$`, 'g')
   ];
 
   sourceCode

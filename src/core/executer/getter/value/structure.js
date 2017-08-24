@@ -1,4 +1,6 @@
 let _ = require('lodash');
+const tools = require('../../../../libs/tools');
+const constants = require('../../../../libs/constants');
 
 const OPERATIONS = 'operations';
 const INPUT_COMMAND = 'inputVariable';
@@ -27,7 +29,9 @@ exports.conditionType = sessionId => {
 
 exports.conditionIdentifier = sessionId => {
   let condition = value(sessionId, 'condition');
-  let identifierRegExp = new RegExp(`global\\[sessionId\\]\\.\\D+\\d+`);
+  const variableNameRegExpContent = tools.regExpContentExtract(constants.variableNameRegExp);
+
+  let identifierRegExp = new RegExp(`global\\[sessionId\\]\\.${variableNameRegExpContent}`);
   let identifier = identifierRegExp.exec(condition)[0];
   const identifierParsed = identifier.replace('global[sessionId]', `global[${sessionId}]`);
   return identifierParsed;

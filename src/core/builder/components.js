@@ -8,9 +8,7 @@ const executions = (source, constant) => {
   const regexp = new RegExp(constant);
   let result = regexp.exec(source);
 
-  if (!result) {
-    return true;
-  }
+  if (!result) return null;
 
   if (constant == COMMAND.CONDITION_VALUE) {
     const regValueOfConditionRepeatTimes = new RegExp(COMMAND.CONDITION_OF_REPEAT_TIMES_VALUE);

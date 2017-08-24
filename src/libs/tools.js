@@ -278,18 +278,17 @@ exports.argumentReplace = (arguments, toReplace) => {
 exports.codeDepthLevels = {
 
   line: function (str) {
-    let spaces, level;
-    spaces = 0;
+    let spaces = 0, level;
+
     for (let i = 0; i < str.length; i++) {
-      if (str[i] !== ' ') {
-        break;
-      }
+      if (str[i] !== ' ') break;
       spaces++;
     }
-    if (spaces % 4 !== 0) {
-      return -1;
-    }
+
+    if (spaces % 4 !== 0) return -1;
+
     level = spaces / 4;
+
     return level;
   },
 
@@ -333,3 +332,5 @@ exports.valueRender = function (inputText) {
   }
   return `'${inputText}'`;
 };
+
+exports.regExpContentExtract = (regExp) => regExp.toString().slice(1, -1);
