@@ -111,7 +111,7 @@ const dbAnalyzer = sources => {
               return done(new Error(errorMessage));
             }
 
-            done(new Error('Test formatting error, fix the test collection instance data.'));
+            //done(new Error('Test formatting error, fix the test collection instance data.'));
           })
       });
     }
@@ -163,7 +163,6 @@ describe('initialize', () => {
 const dbs = ['testDB'];
 dbs.forEach((db) => {
   describe(db, function() {
-    this.timeout(5000);
     const sources = require(`./collection/${db}`);
     dbAnalyzer(sources);
   });

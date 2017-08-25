@@ -237,6 +237,11 @@ exports.argumentPositions = (line, index) => {
 
 exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
   const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope);
+
+  if (argumentsString[argumentsString.length - 1] == ')') {
+    return [argumentsString];
+  }
+
   const arguments =
     argumentsString
       .split(',')
