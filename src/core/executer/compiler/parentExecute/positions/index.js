@@ -97,7 +97,7 @@ exports.parent = function (sessionId) {
   } else {
     let conditionIdentifier = getter.conditionIdentifier(sessionId);
     //TODO: Find out why do we need to init condition ?
-    //initializer.condition(conditionIdentifier);
+    initializer.condition(conditionIdentifier);
     controllers.controller(sessionId);
   }
 

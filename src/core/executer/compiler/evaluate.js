@@ -13,7 +13,9 @@ const SUCCESS = STATUS.SUCCESS;
 exports.condition = sessionId => {
   const condition = getter.condition(sessionId);
   let formattedCondition = formatter.fullParse(sessionId, condition, true);
-  let isPassed = eval(formattedCondition) === true;
+
+  //if "else"=> return null
+  let isPassed = eval(formattedCondition) !== false;
   return isPassed;
 };
 
