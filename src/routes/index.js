@@ -75,7 +75,7 @@ const postExecute = sessionId => {
   const isSucceed = status === STATUS.SUCCESS;
   const isWaitsForInput = status === STATUS.WAITS_FOR_INPUT;
 
-  if ((!output.result && isSucceed) || isWaitsForInput) {
+  if (isWaitsForInput) {
     if (output.result) {
       sender.evaluate(sessionId, output.result);
     }
