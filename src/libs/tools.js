@@ -242,12 +242,24 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
     return [argumentsString];
   }
 
-  const arguments =
-    argumentsString
-      .split(',')
-      .map((argument) => {
-        return argument || undefined;
-      });
+  let indexOfComma = 0;
+  const commas = [-1];
+  do {
+    const argumentPositions = argumentsString.indexOf('(', indexOfComma + 1) !== -1 ?
+      this.argumentPositions(argumentsString, indexOfComma) :
+      {end: -1};
+    indexOfComma = argumentsString.indexOf(',', indexOfComma + 1);
+    if (indexOfComma === -1) break;
+    if (indexOfComma > argumentPositions.end) {
+      commas.push(indexOfComma);
+    }
+  } while (true);
+  commas.push(argumentsString.length);
+
+  const arguments = [];
+  for (let i = 0; i < commas.length - 1; i++) {
+    arguments.push(argumentsString.slice(commas[i] + 1, commas[i + 1]));
+  }
 
   return arguments;
 };
