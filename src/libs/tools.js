@@ -238,19 +238,22 @@ exports.argumentPositions = (line, index) => {
 exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
   const argumentsString = line.substring(indexOfBeginScope + 1, indexOfEndScope);
 
-  if (argumentsString[argumentsString.length - 1] == ')') {
+  /*if (argumentsString[argumentsString.length - 1] == ')') {
     return [argumentsString];
-  }
+  }*/
 
-  let indexOfComma = 0;
+  let indexOfComma = -1;
   const commas = [-1];
   do {
-    const argumentPositions = argumentsString.indexOf('(', indexOfComma + 1) !== -1 ?
+    const indexOfCommaNext = argumentsString.indexOf(',', indexOfComma + 1);
+    const indexOfOpenScope = argumentsString.indexOf('(', indexOfComma + 1);
+    const noInnerFunctions = indexOfOpenScope === -1 || indexOfOpenScope > indexOfCommaNext;
+    const argumentPositions = !noInnerFunctions ?
       this.argumentPositions(argumentsString, indexOfComma) :
       {end: -1};
-    indexOfComma = argumentsString.indexOf(',', indexOfComma + 1);
+    indexOfComma = indexOfCommaNext;
     if (indexOfComma === -1) break;
-    if (indexOfComma > argumentPositions.end) {
+    if (indexOfComma > argumentPositions.end || noInnerFunctions) {
       commas.push(indexOfComma);
     }
   } while (true);
