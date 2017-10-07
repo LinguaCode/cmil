@@ -212,9 +212,7 @@ exports.argumentPositions = (line, index) => {
   let indexOfCloseScope = indexOfFirstOpenScope;
   do {
     indexOfCloseScope = line.indexOf(scopeCloseSymbol, indexOfCloseScope + 1);
-    if (indexOfCloseScope == -1 || line[indexOfCloseScope] == '\\') {
-      break;
-    }
+    if (indexOfCloseScope == -1 || line[indexOfCloseScope] == '\\') break;
 
     const countOfOpenScopeSymbols = countBefore(line, indexOfCloseScope, scopeOpenSymbol);
     const countOfCloseScopeSymbols = countBefore(line, indexOfCloseScope + 1, scopeCloseSymbol);
@@ -248,12 +246,17 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
     const indexOfCommaNext = argumentsString.indexOf(',', indexOfComma + 1);
     const indexOfOpenScope = argumentsString.indexOf('(', indexOfComma + 1);
     const noInnerFunctions = indexOfOpenScope === -1 || indexOfOpenScope > indexOfCommaNext;
-    const argumentPositions = !noInnerFunctions ?
+    let argumentPositions;
+    try {
+    argumentPositions = !noInnerFunctions && indexOfComma !== -1 ?
       this.argumentPositions(argumentsString, indexOfComma) :
       {end: -1};
+    } catch (errorId) {
+      break;
+    }
     indexOfComma = indexOfCommaNext;
     if (indexOfComma === -1) break;
-    if (indexOfComma > argumentPositions.end || noInnerFunctions) {
+    if ((indexOfComma > argumentPositions.end && argumentPositions.end !== -1) || noInnerFunctions) {
       commas.push(indexOfComma);
     }
   } while (true);
