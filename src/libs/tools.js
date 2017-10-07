@@ -256,7 +256,7 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
     }
     indexOfComma = indexOfCommaNext;
     if (indexOfComma === -1) break;
-    if ((indexOfComma > argumentPositions.end && argumentPositions.end !== -1) || noInnerFunctions) {
+    if ((indexOfComma > argumentPositions.end || noInnerFunctions) && argumentPositions.end !== -1) {
       commas.push(indexOfComma);
     }
   } while (true);
