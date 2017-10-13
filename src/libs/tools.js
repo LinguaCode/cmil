@@ -104,6 +104,18 @@ const countAfter = (input, index, symbol) => {
   return count;
 };
 
+
+const hasInnerFunctionsDeterminer = (argumentsString, indexOfOpenScope) => {
+  if (indexOfOpenScope === -1) return false;
+
+  let index = indexOfOpenScope - 1;
+  while (argumentsString[index] == " ") {
+    index--;
+  }
+
+  return !/[+\-*/%(]/.test(argumentsString[index]);
+};
+
 /**
  * Checks if the index is between text or comment.
  * @example
@@ -217,9 +229,7 @@ exports.argumentPositions = (line, index) => {
     const countOfOpenScopeSymbols = countBefore(line, indexOfCloseScope, scopeOpenSymbol);
     const countOfCloseScopeSymbols = countBefore(line, indexOfCloseScope + 1, scopeCloseSymbol);
     const isOpen = countOfOpenScopeSymbols == countOfCloseScopeSymbols;
-    if (isOpen) {
-      break;
-    }
+    if (isOpen) break;
   } while (true);
 
   if (indexOfCloseScope == indexOfFirstOpenScope || indexOfCloseScope === -1) {
@@ -242,22 +252,49 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
 
   let indexOfComma = -1;
   const commas = [-1];
-  do {
+  commaLoop: do {
     const indexOfCommaNext = argumentsString.indexOf(',', indexOfComma + 1);
-    const indexOfOpenScope = argumentsString.indexOf('(', indexOfComma + 1);
-    const noInnerFunctions = indexOfOpenScope === -1 || indexOfOpenScope > indexOfCommaNext;
+
+    let indexOfLastFunction = indexOfComma;
     let argumentPositions;
-    try {
-    argumentPositions = !noInnerFunctions && indexOfComma !== -1 ?
-      this.argumentPositions(argumentsString, indexOfComma) :
-      {end: -1};
-    } catch (errorId) {
-      break;
+    let indexOfCloseScope;
+
+    do {
+      const indexOfOpenScope = argumentsString.indexOf('(', indexOfLastFunction + 1);
+      indexOfCloseScope = argumentsString.indexOf(')', indexOfLastFunction + 1);
+      const hasInnerFunctions = hasInnerFunctionsDeterminer(argumentsString, indexOfOpenScope);
+
+      try {
+        if (hasInnerFunctions) {
+          argumentPositions = this.argumentPositions(argumentsString, indexOfLastFunction + 1)
+        } else {
+          argumentPositions = argumentPositions || {end: -1};
+          break;
+        }
+      } catch (errorId) {
+        break commaLoop;
+      }
+
+      indexOfLastFunction = argumentPositions.end;
+    } while (true);
+
+    const indexOfCommaPrevious = indexOfComma;
+    if (
+      (argumentPositions.begin && (indexOfCommaNext > argumentPositions.end || indexOfCommaNext < argumentPositions.begin)) ||
+      (argumentPositions.end === -1 && indexOfCloseScope === -1 && indexOfCommaNext !== -1)
+    ) {
+      commas.push(indexOfCommaNext);
+      indexOfComma = indexOfCommaNext;
+    } else {
+      indexOfComma = indexOfCommaNext !== -1 ? argumentsString.indexOf(',', indexOfCommaNext + 1) : indexOfCommaNext;
     }
-    indexOfComma = indexOfCommaNext;
-    if (indexOfComma === -1) break;
-    if ((indexOfComma > argumentPositions.end || noInnerFunctions) && argumentPositions.end !== -1) {
-      commas.push(indexOfComma);
+
+    if (indexOfCommaNext === -1 ? true : argumentsString.indexOf(',', indexOfCommaNext + 1) === -1) {
+      if (commas.indexOf(indexOfCommaPrevious) === -1) {
+        commas.push(indexOfCommaPrevious);
+      }
+
+      break;
     }
   } while (true);
   commas.push(argumentsString.length);

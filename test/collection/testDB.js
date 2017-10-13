@@ -2,8 +2,8 @@ module.exports = [{
   group: 'restrictions',
   sources: [{
     title: 'if-else: wrong answer',
-    code: "input x\ninput y\nA=(square(x)-4)/(square_root(y)+2)+power(2,sin(square_root(square(x)-1)))\noutput A",
-    inputs: [1, 2],
-    output: '8.88440488015187'
+    code: "input a\ninput b\ninput x\nif a < 3  then\n    Y = power(e, cos(x + a +b)) * tan(a + square(b))\nelse\n    Y = log(3, 4 + square(a) + square(b))\noutput Y",
+    inputs: [1,2,3],
+    output: '${false}'
   }]
 }];
