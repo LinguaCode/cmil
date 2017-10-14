@@ -104,7 +104,6 @@ const countAfter = (input, index, symbol) => {
   return count;
 };
 
-
 const hasInnerFunctionsDeterminer = (argumentsString, indexOfOpenScope) => {
   if (indexOfOpenScope === -1) return false;
 
@@ -113,7 +112,28 @@ const hasInnerFunctionsDeterminer = (argumentsString, indexOfOpenScope) => {
     index--;
   }
 
-  return !/[+\-*/%(]/.test(argumentsString[index]);
+  return index === -1 ? false : !/[+\-*/%(]/.test(argumentsString[index]);
+};
+
+const openScopeIndexDeterminer = (indexOfLastFunction, argumentsString) => {
+  let indexOfOpenScope = argumentsString.indexOf('(', indexOfLastFunction + 1);
+
+  if (indexOfOpenScope === -1) return -1;
+
+  while (indexOfOpenScope !== -1) {
+    if (hasInnerFunctionsDeterminer(argumentsString, indexOfOpenScope)) return indexOfOpenScope;
+    indexOfOpenScope = argumentsString.indexOf('(', indexOfOpenScope + 1);
+  }
+
+  return -1;
+};
+
+const isCommaInFunctions = (indexOfComma, functionArgumentRanges) => {
+  for (let i = 0; i < functionArgumentRanges.length; i++) {
+    if (indexOfComma > functionArgumentRanges[i].begin && indexOfComma < functionArgumentRanges[i].end) return true;
+  }
+
+  return false;
 };
 
 /**
@@ -219,7 +239,7 @@ exports.argumentPositions = (line, index) => {
   const scopeOpenSymbol = '(';
   const scopeCloseSymbol = ')';
 
-  const indexOfFirstOpenScope = line.indexOf(scopeOpenSymbol, index);
+  const indexOfFirstOpenScope = openScopeIndexDeterminer(index, line);
 
   let indexOfCloseScope = indexOfFirstOpenScope;
   do {
@@ -252,21 +272,25 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
 
   let indexOfComma = -1;
   const commas = [-1];
+
+  let argumentPositions;
+  const functionArgumentRanges = [];
+
   commaLoop: do {
     const indexOfCommaNext = argumentsString.indexOf(',', indexOfComma + 1);
 
     let indexOfLastFunction = indexOfComma;
-    let argumentPositions;
     let indexOfCloseScope;
 
     do {
-      const indexOfOpenScope = argumentsString.indexOf('(', indexOfLastFunction + 1);
+      const indexOfOpenScope = openScopeIndexDeterminer(indexOfLastFunction, argumentsString);
       indexOfCloseScope = argumentsString.indexOf(')', indexOfLastFunction + 1);
       const hasInnerFunctions = hasInnerFunctionsDeterminer(argumentsString, indexOfOpenScope);
 
       try {
         if (hasInnerFunctions) {
-          argumentPositions = this.argumentPositions(argumentsString, indexOfLastFunction + 1)
+          argumentPositions = this.argumentPositions(argumentsString, indexOfLastFunction + 1);
+          functionArgumentRanges.push(argumentPositions);
         } else {
           argumentPositions = argumentPositions || {end: -1};
           break;
@@ -279,8 +303,12 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
     } while (true);
 
     const indexOfCommaPrevious = indexOfComma;
+
+    const tempIndexOfComma = indexOfCommaNext !== -1 ? indexOfCommaNext : indexOfComma;
+    const isCommaInInnerFunction = argumentPositions.begin && tempIndexOfComma !== -1 && (isCommaInFunctions(tempIndexOfComma, functionArgumentRanges));
+
     if (
-      (argumentPositions.begin && (indexOfCommaNext > argumentPositions.end || indexOfCommaNext < argumentPositions.begin)) ||
+      (indexOfCommaNext !== -1 && !isCommaInInnerFunction) ||
       (argumentPositions.end === -1 && indexOfCloseScope === -1 && indexOfCommaNext !== -1)
     ) {
       commas.push(indexOfCommaNext);
@@ -290,7 +318,7 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
     }
 
     if (indexOfCommaNext === -1 ? true : argumentsString.indexOf(',', indexOfCommaNext + 1) === -1) {
-      if (commas.indexOf(indexOfCommaPrevious) === -1) {
+      if (commas.indexOf(indexOfCommaPrevious) === -1 && !isCommaInInnerFunction) {
         commas.push(indexOfCommaPrevious);
       }
 
