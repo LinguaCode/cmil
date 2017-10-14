@@ -2,8 +2,8 @@ module.exports = [{
   group: 'restrictions',
   sources: [{
     title: 'if-else: wrong answer',
-    code: "input a\ninput b\ninput x\nif a < 3  then\n    Y = power(e, cos(x + a +b)) * tan(a + square(b))\nelse\n    Y = log(3, 4 + square(a) + square(b))\noutput Y",
-    inputs: [1,2,3],
+    code: "@input x\n@input y\nA = arctan((3 * x + 4) / (square(y) + 4)) + square_root(power(square(x), 3))\noutput A",
+    inputs: [5,2],
     output: '${false}'
   }]
 }];
