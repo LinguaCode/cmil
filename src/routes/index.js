@@ -42,7 +42,9 @@ const sockets = {
     postExecute(sessionId);
   },
 
-  disconnect: () => console.llog('Socket.IO: server: One of connections closed.'),
+  disconnect: () => {
+    console.llog('Socket.IO: server: One of connections closed.')
+  },
 
   evaluated: receivedData => {
     let inputText = receivedData.inputText;
@@ -95,6 +97,7 @@ const postExecute = sessionId => {
 };
 
 io.on('connection', socket => {
+  /*console.log(socket.client.id);*/
   sockets.init(socket);
 });
 

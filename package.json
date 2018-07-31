@@ -22,6 +22,8 @@
   "dependencies": {
     "dotenv": "4.0.0",
     "express": "4.15.2",
+    "express-useragent": "^1.0.12",
+    "helmet": "^3.13.0",
     "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
     "linguacode-constants": "https://github.com/linguacode/linguacode-constants",
     "linguacode-translator": "https://github.com/LinguaCode/linguacode-translator",
