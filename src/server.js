@@ -9,6 +9,9 @@ const path = require('path');
 const userAgent = require('express-useragent');
 const helmet = require('helmet');
 
+const cors = require('cors');
+const http = require('http');
+
 //constants
 const ONE_YEAR = 31536000000;
 
@@ -58,6 +61,20 @@ const certificate = fs.readFileSync(certificateFilePath, 'utf8');*/
 
 /*const server = spdy.createServer(credentials, app);*/
 
+// use it before all route definitions
+const whitelist = ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:3005'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(helmet({
   hsts: {
@@ -68,11 +85,15 @@ app.use(helmet({
 }));
 app.use(userAgent.express());
 
-app.listen(port, () => {
+const server = http.createServer(app);
+
+server.listen(port, () => {
   console.log(`Server: http://localhost:${port} is listen.`);
 });
 
-app.on('listening', () => {
+io.attach(server);
+
+server.on('listening', () => {
   const address = app.address();
   const fullAddress = `port ${address.port}`;
   console.llog(`Listening on ${fullAddress}`);
@@ -81,7 +102,5 @@ app.on('listening', () => {
 app.get('*', (req, res, next) => {
   res.status(200).sendFile(path.join(__dirname, '/index.html'));
 });
-
-io.attach(app);
 
 module.exports = app;

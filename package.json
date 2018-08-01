@@ -21,6 +21,7 @@
   "license": "SEE LICENSE IN LICENSE file",
   "bugs": "https://github.com/LinguaCode/core/issues",
   "dependencies": {
+    "cors": "^2.8.4",
     "dotenv": "4.0.0",
     "express": "4.15.2",
     "express-useragent": "^1.0.12",
