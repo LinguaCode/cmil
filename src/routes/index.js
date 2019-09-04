@@ -97,12 +97,12 @@ const postExecute = sessionId => {
 };
 
 io.on('connection', socket => {
-  /*console.log(socket.client.id);*/
+  //console.log(socket.client.id);
   sockets.init(socket);
 });
 
 
 const ipExtract = (address) => {
   const ipAddress = /:([0-9.]+)/.exec(address)[1];
-  return ipAddress == 1 ? '127.0.0.1' : ipAddress;
+  return ipAddress === 1 ? '127.0.0.1' : ipAddress;
 };

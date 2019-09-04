@@ -50,7 +50,7 @@ exports.code = (sessionId, sourceCode) => {
       evalStatus = errorHandler.evalResult(error);
     }
 
-    if (evalStatus == SUCCESS) {
+    if (evalStatus === SUCCESS) {
       const undefinedVariable = errorCheck.undefinedVariable(sessionId, codeFormatted);
 
       if (undefinedVariable) {
