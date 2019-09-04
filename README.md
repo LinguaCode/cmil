@@ -43,8 +43,3 @@ npm run coverage
 
 ## Changelog
 Pleas read changelog in the [CHANGELOG.md](https://github.com/LinguaCode/cmil/blob/master/CHANGELOG.md).
-
-## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
-
-[![Beerpay](https://beerpay.io/LinguaCode/cmil/badge.svg?style=beer-square)](https://beerpay.io/LinguaCode/cmil)  [![Beerpay](https://beerpay.io/LinguaCode/cmil/make-wish.svg?style=flat-square)](https://beerpay.io/LinguaCode/cmil?focus=wish)
