@@ -9,7 +9,7 @@ let preOutput = function (outputText) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
       const booleanDefinition = BOOLEAN_DEFINITION[key];
-      outputText = outputText.replace(regExp, `\${${booleanDefinition}}`);
+      outputText = outputText.replace(regExp, `<${booleanDefinition}/>`);
     }
   }
 

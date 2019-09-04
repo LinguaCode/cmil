@@ -1,6 +1,6 @@
 {
   "name": "cmil",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "Multilinguage programming platform especially for kids",
   "main": "src/server.js",
   "scripts": {
@@ -32,6 +32,7 @@
     "lodash": "4.17.2",
     "moment": "2.16.0",
     "nodemailer": "4.0.1",
+    "opn": "^5.4.0",
     "require-dir": "0.3.1",
     "socket.io": "1.5.1",
     "spdy": "3.4.4"
