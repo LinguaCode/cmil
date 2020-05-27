@@ -36,7 +36,7 @@ const conditionNameInit = exports.conditionNameInit = (sessionId, conditionType)
   console.llog('builder: conditionNameInit');
 
   const randomIndex = _.random(9999);
-  const sessionName = `global['${sessionId}'].`;
+  const sessionName = `global[sessionId].`;
   const repeatVarWithIndex = `${conditionType}_${randomIndex}`;
   return sessionName + repeatVarWithIndex;
 };
