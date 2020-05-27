@@ -45,12 +45,12 @@ exports.inputVariable = sessionId => {
   return value(sessionId, INPUT_COMMAND);
 };
 
-exports.object = sessionId => {
+const object = exports.object = sessionId => {
   return _.get(current(sessionId), path.location(sessionId));
 };
 
 exports.firstKeyOfObject = sessionId => {
-  let thisElement = this.object(sessionId);
+  let thisElement = object(sessionId);
   let keys = Object.keys(thisElement);
 
   return keys[0];

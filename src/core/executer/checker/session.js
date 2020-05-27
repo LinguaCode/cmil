@@ -6,7 +6,7 @@ const STATUS = constants.STATUS;
 const isErrorOccurredCheck = outputStatus => {
   let isErrorOccurred = true;
   for (var key in STATUS) {
-    if (outputStatus == STATUS[key]) {
+    if (outputStatus === STATUS[key]) {
       isErrorOccurred = false;
       break;
     }
@@ -18,7 +18,7 @@ const isErrorOccurredCheck = outputStatus => {
 exports.pathOfLocationEnded = sessionId => {
   const pathOfLocation = __store[sessionId].pathOfLocation;
   const lastChildIndex = pathOfLocation.indexOf('.');
-  return lastChildIndex == -1;
+  return lastChildIndex === -1;
 };
 
 exports.ended = sessionId => {
@@ -31,7 +31,7 @@ exports.ended = sessionId => {
   };
 
   for (let key in is) {
-    if (is[key] == true) {
+    if (is[key] === true) {
       return true;
     }
   }

@@ -41,6 +41,7 @@ exports.listener = function (sessionId, input) {
 
   setter.sessionTime(sessionId);
   setter.data(sessionId, {input});
+
   initializer.output(sessionId, SUCCESS, '');
 
   try {

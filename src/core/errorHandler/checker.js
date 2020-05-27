@@ -2,9 +2,7 @@ const _ = require('lodash');
 const reservedWords = require('./reservedWords');
 const tools = require('../../libs/tools');
 
-exports.hackAttempt = (sourceCode, params) => {
-  const {ip} = params;
-
+exports.hackAttempt = (sourceCode) => {
   sourceCode = sourceCode.split('\n');
   for (let i = 0; i < sourceCode.length; i++) {
     const line = sourceCode[i];
@@ -12,9 +10,7 @@ exports.hackAttempt = (sourceCode, params) => {
       const reservedWord = reservedWords[j];
       const regExp = new RegExp(reservedWord, 'g');
       if (regExp.test(line) && tools.isPartOfCode(line, regExp.lastIndex - reservedWords[i].length)) {
-        return {
-          ip
-        };
+        return {};
       }
     }
   }
@@ -26,7 +22,7 @@ exports.indentError = sourceCode => {
   let listOfCommands = sourceCode.split('\n');
   for (let i = 0; i < listOfCommands.length; i++) {
     let levelsTemp = tools.codeDepthLevels.line(listOfCommands[i]);
-    if (levelsTemp == -1) {
+    if (levelsTemp === -1) {
       const lineNumber = i + 1;
       return {
         line: lineNumber

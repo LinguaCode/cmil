@@ -1,17 +1,23 @@
-const io = require('../../io');
+const getter = require('../executer/getter');
 
 exports.evaluate = (sessionId, output) => {
-  io.emit(`${sessionId}_evaluated`, output)
+  const {codeSubmitter} = getter.data(sessionId) || {};
+  codeSubmitter.triggerOutput(output);
 };
 
 exports.sessionEnd = (sessionId, errorMessage) => {
-  io.emit(`${sessionId}_sessionEnd`, errorMessage)
+  const {codeSubmitter} = getter.data(sessionId) || {};
+  console.log('WOW')
+  codeSubmitter.triggerSessionEnd(errorMessage);
 };
 
-exports.waitsForInput = sessionId => {
-  io.emit(`${sessionId}_waitsForInput`)
+exports.waitsForInput = (sessionId) => {
+  const {codeSubmitter} = getter.data(sessionId) || {};
+  codeSubmitter.triggerInputRequest();
 };
 
-exports.submitSuccess = sessionId => {
-  io.emit(`${sessionId}_submitSuccess`)
-};
+/*
+exports.submitSuccess = (sessionId) => {
+  const codeSubmitter = getter.data(sessionId) || {};
+  codeSubmitter.triggerSubmitSuccess();
+};*/

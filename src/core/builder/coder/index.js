@@ -12,7 +12,7 @@ exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
   let indexOfOperationBegin;
   let indexOfOperationEnd;
   let operations;
-  let   inputVariable;
+  let inputVariable;
   let toCompile = {};
 
   let reInputStrOld = reInput.exec(sourceCode);

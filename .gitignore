@@ -28,3 +28,6 @@ deploy.bat
 
 # Yarn
 yarn.lock
+
+#Build folder
+build
