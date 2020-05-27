@@ -63,28 +63,16 @@ class CodeSubmit {
     return this;
   }
 
-  _output(outputCallback) {
-    this.outputCallback = outputCallback;
-
-    return this;
-  };
-
-  _onInputRequest(inputCallback) {
-    const inputEmitter = (inputValue) => {
+  get inputEmitter() {
+    return (inputValue) => {
       let sessionId = this.sessionId;
       console.llog(`CMIL: input: '${inputValue}' text successfully received!`);
 
       compiler.listener(sessionId, inputValue);
 
       postExecute(sessionId);
-    };
-
-    this.inputCallback = () => {
-      inputCallback(inputEmitter);
-    };
-
-    return this;
-  };
+    }
+  }
 
   execute() {
     const sourceCode = this.sourceCode;
@@ -116,12 +104,12 @@ class CodeSubmit {
   };
 
   onInputRequest(inputCallback) {
-    this._onInputRequest(inputCallback);
+    this.inputCallback = inputCallback;
 
     return this;
   };
   onOutput(outputCallback) {
-    this._output(outputCallback);
+    this.outputCallback = outputCallback;
 
     return this;
   };
