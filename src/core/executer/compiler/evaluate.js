@@ -76,4 +76,7 @@ exports.code = (sessionId, sourceCode) => {
 };
 
 
-exports.inputOperation = (sessionId, inputValue) => `${getter.inputVariable(sessionId)}=${tools.valueRender(inputValue)}`;
+exports.inputOperation = (sessionId, inputValue) => {
+  const firstPart = getter.inputVariable(sessionId);
+  return `${firstPart}=${tools.valueRender(inputValue)}`;
+};

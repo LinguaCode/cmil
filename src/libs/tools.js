@@ -108,7 +108,7 @@ const hasInnerFunctionsDeterminer = (argumentsString, indexOfOpenScope) => {
   if (indexOfOpenScope === -1) return false;
 
   let index = indexOfOpenScope - 1;
-  while (argumentsString[index] == " ") {
+  while (argumentsString[index] === ' ') {
     index--;
   }
 
@@ -231,7 +231,7 @@ exports.partitionReplace = (sourceCode, toReplace, firstPartEndIndex, secondPart
   return fullReplacement;
 };
 
-exports.argumentPositions = (line, index) => {
+const argumentPositionsExtractor = exports.argumentPositions = (line, index) => {
   line = line.substr(index);
   const sizeOfCroppedPart = index;
   index = 0;
@@ -289,7 +289,7 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
 
       try {
         if (hasInnerFunctions) {
-          argumentPositions = this.argumentPositions(argumentsString, indexOfLastFunction + 1);
+          argumentPositions = argumentPositionsExtractor(argumentsString, indexOfLastFunction + 1);
           functionArgumentRanges.push(argumentPositions);
         } else {
           argumentPositions = argumentPositions || {end: -1};
@@ -327,17 +327,17 @@ exports.functionArguments = (line, indexOfBeginScope, indexOfEndScope) => {
   } while (true);
   commas.push(argumentsString.length);
 
-  const arguments = [];
+  const _arguments = [];
   for (let i = 0; i < commas.length - 1; i++) {
-    arguments.push(argumentsString.slice(commas[i] + 1, commas[i + 1]));
+    _arguments.push(argumentsString.slice(commas[i] + 1, commas[i + 1]));
   }
 
-  return arguments;
+  return _arguments;
 };
 
-exports.argumentReplace = (arguments, toReplace) => {
-  for (let i = 0; i < arguments.length; i++) {
-    const argument = arguments[i];
+exports.argumentReplace = (_arguments, toReplace) => {
+  for (let i = 0; i < _arguments.length; i++) {
+    const argument = _arguments[i];
     toReplace = toReplace.replace(`$${i + 1}`, argument);
   }
 

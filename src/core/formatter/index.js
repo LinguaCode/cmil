@@ -95,7 +95,9 @@ exports.fullParse = function (sessionId, sourceCode, isCondition) {
 
   const codeQuotesParsed = parse.quotes(codeSyntaxParsed);
 
-  return codeQuotesParsed;
+  const globalVariableParsed = codeQuotesParsed.replace(/global\[sessionId\]/g, `global['${sessionId}']`);
+
+  return globalVariableParsed;
 };
 
 exports.codeFormatting = function (sessionId, sourceCode) {

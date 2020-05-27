@@ -18,12 +18,20 @@ module.exports = sessionId => {
   translator(sessionId);
   store(sessionId);
   language(sessionId);
+
+
 };
 
 /**
  * Global variable initialize.
  */
-var globals = () => {
+var globals = (sessionId) => {
+  const isBrowser = typeof window !== 'undefined';
+  if (isBrowser) {
+    //in-browser support
+    window.global = {};
+  }
+
   /**
    * @param {Object} __language - get and set the language.
    * @param {Object} __store - sourceCode controlling.
@@ -32,7 +40,15 @@ var globals = () => {
   global.__store = {};
   global.__language = {};
   global.__translator = {};
+  global[sessionId] = {};
 
+  if (isBrowser) {
+    //in-browser support
+    window.__store = global.__store;
+    window.__language = global.__language;
+    window.__translator = global.__translator;
+    window.global[sessionId] = {};
+  }
 };
 
 /**
@@ -76,7 +92,6 @@ var store = sessionId => {
     output: '',
     status: 'success',
     sourceCode: '',
-    ip: '',
     language: '',
     variables: []
   };

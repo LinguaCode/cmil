@@ -19,7 +19,7 @@ const translator = require('linguacode-translator');
  * @param {String} sourceCode
  * @returns {String} Returns lower cased sourceCode, except String type texts.
  */
-exports.codeNotSensitive = sourceCode => {
+const codeNotSensitive = exports.codeNotSensitive = sourceCode => {
   sourceCode = sourceCode
     .split('\n')
     .map((line) => {
@@ -59,5 +59,5 @@ exports.execute = (sourceCode, language) => {
 
   const convertedSourceCode = translator.toCode(uglifiedSourceCode, language);
 
-  return this.codeNotSensitive(convertedSourceCode);
+  return codeNotSensitive(convertedSourceCode);
 };
