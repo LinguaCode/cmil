@@ -25,7 +25,7 @@
     "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
     "linguacode-constants": "https://github.com/linguacode/linguacode-constants",
     "linguacode-translator": "https://github.com/LinguaCode/linguacode-translator",
-    "lodash": "4.17.2",
+    "lodash": "4.17.15",
     "moment": "2.16.0"
   },
   "devDependencies": {
