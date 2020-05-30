@@ -31,7 +31,7 @@ const postExecute = (sessionId) => {
   }
 
   const error = isSucceed ? {
-    id: '',
+    errorId: undefined,
     param: {}
   } : status;
 
