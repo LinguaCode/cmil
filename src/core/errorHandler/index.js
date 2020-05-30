@@ -13,7 +13,7 @@ exports.analyze = (sourceCode, params) => {
     const errorParam = check[errorId](sourceCode, params);
     if (errorParam) {
       return {
-        id: errorId,
+        errorId,
         param: errorParam
       };
     }
@@ -31,7 +31,7 @@ exports.evalResult = error => {
       SYNTAX_ERROR : SYNTAX_ERROR;
 
   return {
-    id: errorId,
+    errorId,
     param: {}
   };
 };

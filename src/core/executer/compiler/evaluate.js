@@ -31,7 +31,7 @@ exports.code = (sessionId, sourceCode) => {
       var codeFormatted = formatter.codeFormatting(sessionId, line);
     } catch (errorId) {
       throw {
-        id: errorId,
+        errorId,
         param: {
           line: lineNumber
         }
@@ -55,7 +55,7 @@ exports.code = (sessionId, sourceCode) => {
 
       if (undefinedVariable) {
         const error = {
-          id: UNDEFINED_VARIABLE,
+          errorId: UNDEFINED_VARIABLE,
           param: {
             variable: undefinedVariable,
             line: lineNumber

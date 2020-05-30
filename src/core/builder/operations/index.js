@@ -46,7 +46,7 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
       //indent error checker
       if (!_parent.conditions.type.previous) {
         const error = {
-          id: INDENT_ERROR,
+          errorId: INDENT_ERROR,
           param: {
             line: i + 1
           }
