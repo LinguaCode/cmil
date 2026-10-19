@@ -1,6 +1,6 @@
 const modify = require('../../../modifier/modify');
 
-const STATUS = require('linguacode-constants').STATUS;
+const STATUS = require('../../../../constants').STATUS;
 const SUCCESS = STATUS.SUCCESS;
 const TIMEOUT = STATUS.TIMEOUT;
 

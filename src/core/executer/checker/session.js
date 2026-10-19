@@ -1,4 +1,4 @@
-const constants = require('linguacode-constants');
+const constants = require('../../../constants');
 const getter = require('../getter');
 const STATUS = constants.STATUS;
 

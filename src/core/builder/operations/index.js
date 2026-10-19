@@ -6,7 +6,7 @@ const conditions = require('./conditions');
 const components = require('../components');
 
 //statuses
-const STATUS = require('linguacode-constants').STATUS;
+const STATUS = require('../../../constants').STATUS;
 const INDENT_ERROR = STATUS.INDENT_ERROR;
 
 exports.execute = (sessionId, sourceCode) => {
