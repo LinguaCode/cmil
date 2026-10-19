@@ -9,6 +9,16 @@ module.exports = [{
       line: 1
     },
   }, {
+    title: 'output before an error',
+    code: 'output 1\noutput X',
+    errorId: 'undefinedVariable',
+    errorParam: {
+      variable: 'x',
+      line: 2
+    },
+    output: '1',
+    todo: 'needs the new interpreter'
+  }, {
     title: 'undefined variable in a block',
     code: 'x = 1\nif x == 1\n    output y',
     errorId: 'undefinedVariable',
