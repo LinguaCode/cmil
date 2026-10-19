@@ -1,3 +1,11 @@
+## Unreleased
+
+  - **[change]** API: `codeSubmit.input(value)` replaces the `inputEmitter` getter.
+  - **[change]** API: the state of `CodeSubmit` is private; only its methods are public.
+  - **[change]** API: an unknown language ends the session with `unknownLanguage` and `param.language` instead of throwing an error.
+  - **[add]** API: `stop()` ends a session, for example one waiting for input; `onSessionEnd` isn't called.
+  - **[add]** API: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language.
+
 ## 0.5.0-alpha.0 (2026-10-19)
 
   - **[add]** releases: pushing a version tag, or running the release workflow on `master`, creates the GitHub Release, with its CHANGELOG section as notes, and publishes it to npm as `cmil` with npm trusted publishing from the first release candidate on; until then cmil installs from GitHub.

@@ -5,6 +5,7 @@ import path from 'node:path';
 import {describe, it} from 'node:test';
 
 import translations from '../src/translations/index.ts';
+import {languages} from '../src/index.ts';
 
 const LANGUAGES_PATH = path.join(import.meta.dirname, '../src/translations/languages');
 
@@ -18,6 +19,7 @@ describe('translations', () => {
       .sort();
 
     assert.deepStrictEqual(Object.keys(translations).sort(), files);
+    assert.deepStrictEqual([...languages].sort(), files);
   });
 
   Object.keys(translations).forEach(language => {

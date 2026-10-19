@@ -3,6 +3,7 @@ import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
 import * as translator from '../src/translator/index.ts';
+import {translate} from '../src/index.ts';
 
 const conversions = [
   {
@@ -31,5 +32,25 @@ describe('translator', () => {
 
   it('rejects an unknown language', () => {
     assert.throws(() => translator.toCode('x', 'xx'), /Language was not specified/);
+  });
+
+  describe('translate', () => {
+    const program = 'input name\nif name == "Ani" then\n    output "output " + name\nelse\n    output name';
+
+    it('translates commands and keeps texts and names', () => {
+      assert.strictEqual(
+        translate(program, 'en', 'hy-AM'),
+        'մուտքագրել name\nեթե name == "Ani" ապա\n    տպել "output " + name\nայլապես\n    տպել name'
+      );
+    });
+
+    it('translates back to the same program', () => {
+      assert.strictEqual(translate(translate(program, 'en', 'ru'), 'ru', 'en'), program);
+    });
+
+    it('rejects an unknown language', () => {
+      assert.throws(() => translate(program, 'en', 'xx'), /Unknown language: xx/);
+      assert.throws(() => translate(program, 'constructor', 'en'), /Unknown language: constructor/);
+    });
   });
 });

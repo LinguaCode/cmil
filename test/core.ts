@@ -15,7 +15,7 @@ const run = (code: string, inputs: (string | number)[] = [], language = 'en') =>
 
     codeSubmit
       .onOutput(chunk => chunks.push(chunk))
-      .onInputRequest(() => codeSubmit.inputEmitter(inputs.shift()))
+      .onInputRequest(() => codeSubmit.input(inputs.shift()))
       .onSessionEnd(result => resolve({chunks, result}))
       .execute();
   });
@@ -133,7 +133,58 @@ describe('core', () => {
     });
   });
 
-  it('an unknown language is rejected', () => {
-    assert.throws(() => new CodeSubmit('output 1', 'xx').execute(), /Language was not specified/);
+  describe('api', () => {
+    //a session that records everything it reports
+    const record = (code: string, language = 'en') => {
+      const events: string[] = [];
+      const codeSubmit = new CodeSubmit(code, language)
+        .onOutput(output => events.push(`output ${output}`))
+        .onInputRequest(() => events.push('input'))
+        .onSessionEnd(result => events.push(`end ${JSON.stringify(result)}`));
+      return {codeSubmit, events};
+    };
+
+    it('an unknown language ends the session with unknownLanguage', async () => {
+      for (const language of ['xx', 'constructor']) {
+        const {result} = await run('output 1', [], language);
+        assert.deepStrictEqual(result, {errorId: 'unknownLanguage', param: {language}});
+      }
+    });
+
+    it('input before the program asks for it is ignored', () => {
+      const {codeSubmit, events} = record('input name\noutput name');
+      codeSubmit.input('early').execute().input('Ani');
+      assert.deepStrictEqual(events, ['input', 'output Ani', 'end {"param":{}}']);
+    });
+
+    it('stop while waiting for input ends the session without onSessionEnd', () => {
+      const {codeSubmit, events} = record('input name\noutput name');
+      codeSubmit.execute().stop().input('Ani');
+      assert.deepStrictEqual(events, ['input']);
+    });
+
+    it('stop from a callback ends the session', () => {
+      const events: string[] = [];
+      const codeSubmit = new CodeSubmit('output 1\ninput name\noutput name', 'en');
+      codeSubmit
+        .onOutput(output => {
+          events.push(`output ${output}`);
+          codeSubmit.stop();
+        })
+        .onInputRequest(() => events.push('input'))
+        .onSessionEnd(() => events.push('end'))
+        .execute();
+      assert.deepStrictEqual(events, ['output 1']);
+    });
+
+    it('stop can be called before execute and more than once', () => {
+      const {codeSubmit, events} = record('output 1');
+      codeSubmit.stop().stop().execute().stop();
+      assert.deepStrictEqual(events, ['output 1', 'end {"param":{}}']);
+    });
+
+    it('the state of a session is private', () => {
+      assert.deepStrictEqual(Object.keys(new CodeSubmit('output 1', 'en')), []);
+    });
   });
 });

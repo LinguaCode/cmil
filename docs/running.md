@@ -12,7 +12,7 @@ CMIL interprets programs itself: a program never runs as JavaScript, so it can o
 
 The values are in `src/constants/index.ts`.
 
-A program runs synchronously, so for up to 666 ms it holds the thread that called `execute()` or `inputEmitter`. Run sessions off the main thread, so a long program doesn't block a server or a page.
+A program runs synchronously, so for up to 666 ms it holds the thread that called `execute()` or `input()`. Run sessions off the main thread, so a long program doesn't block a server or a page.
 
 ## On a server
 
@@ -24,7 +24,7 @@ import {parentPort, workerData} from 'node:worker_threads';
 import CodeSubmit from 'cmil';
 
 const codeSubmit = new CodeSubmit(workerData.sourceCode, workerData.language);
-parentPort.on('message', input => codeSubmit.inputEmitter(input));
+parentPort.on('message', input => codeSubmit.input(input));
 
 codeSubmit
   .onOutput(text => parentPort.postMessage({type: 'output', text}))
