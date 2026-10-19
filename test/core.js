@@ -8,26 +8,31 @@ const CodeSubmit = require('../src');
  * Runs a program and answers every input request synchronously from inputs.
  * Resolves with the output chunks and the result of the session end.
  */
-const run = (code, inputs = [], language = 'en') => new Promise(resolve => {
-  const chunks = [];
-  const codeSubmit = new CodeSubmit(code, language);
+const run = (code, inputs = [], language = 'en') =>
+  new Promise(resolve => {
+    const chunks = [];
+    const codeSubmit = new CodeSubmit(code, language);
 
-  codeSubmit
-    .onOutput(chunk => chunks.push(chunk))
-    .onInputRequest(() => codeSubmit.inputEmitter(inputs.shift()))
-    .onSessionEnd(result => resolve({chunks, result}))
-    .execute();
-});
+    codeSubmit
+      .onOutput(chunk => chunks.push(chunk))
+      .onInputRequest(() => codeSubmit.inputEmitter(inputs.shift()))
+      .onSessionEnd(result => resolve({chunks, result}))
+      .execute();
+  });
 
 describe('core', () => {
   describe('loops', () => {
     it('break leaves the innermost loop', async () => {
-      const {chunks} = await run('repeat 3 times\n    a = 0\n    while 1 < 2\n        a = a + 1\n        if a == 2\n            break\n    output a');
+      const {chunks} = await run(
+        'repeat 3 times\n    a = 0\n    while 1 < 2\n        a = a + 1\n        if a == 2\n            break\n    output a'
+      );
       assert.deepStrictEqual(chunks, ['2\n2\n2']);
     });
 
     it('continue skips to the next iteration', async () => {
-      const {chunks} = await run('a = 0\ndo\n    a = a + 1\n    if a == 2\n        continue\n    output a\nwhile a < 4');
+      const {chunks} = await run(
+        'a = 0\ndo\n    a = a + 1\n    if a == 2\n        continue\n    output a\nwhile a < 4'
+      );
       assert.deepStrictEqual(chunks, ['1\n3\n4']);
     });
 

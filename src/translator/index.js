@@ -2,13 +2,13 @@ var check = require('./check');
 var tool = require('./tool');
 var TRANSLATION = require('../translations');
 
-var languageValidation = function(lng) {
+var languageValidation = function (lng) {
   if (!TRANSLATION[lng]) {
     throw new Error('Language was not specified.');
   }
 };
 
-var toCode = exports.toCode = function (data, lng) {
+var toCode = (exports.toCode = function (data, lng) {
   languageValidation(lng);
 
   data = data || '';
@@ -22,7 +22,8 @@ var toCode = exports.toCode = function (data, lng) {
 
         var definition = instance.definition;
         re = new RegExp('[^@](' + definition + ')|^' + definition, 'ig');
-        while ((reStr = re.exec(line)) !== null) { //in line
+        while ((reStr = re.exec(line)) !== null) {
+          //in line
           var index = reStr[1] ? reStr.index + 1 : reStr.index;
           var value = reStr[1] ? reStr[1] : reStr[0];
 
@@ -43,9 +44,9 @@ var toCode = exports.toCode = function (data, lng) {
       return line;
     })
     .join('\n');
-};
+});
 
-var toText = exports.toText = function (data, lng) {
+var toText = (exports.toText = function (data, lng) {
   languageValidation(lng);
 
   data = data || '';
@@ -60,7 +61,8 @@ var toText = exports.toText = function (data, lng) {
 
         var command = instance.command;
         re = new RegExp(command, 'ig');
-        while ((reStr = re.exec(line)) !== null) { //in line
+        while ((reStr = re.exec(line)) !== null) {
+          //in line
           var index = reStr.index;
           var value = reStr[0];
 
@@ -81,7 +83,7 @@ var toText = exports.toText = function (data, lng) {
       return line.slice(1, -1);
     })
     .join('\n');
-};
+});
 
 exports.translate = function (source, languageInitial, languageDestination) {
   var code = toCode(source, languageInitial);
