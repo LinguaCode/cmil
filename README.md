@@ -33,9 +33,9 @@ npm install github:LinguaCode/cmil --allow-git=root
 ```
 
 #### Usage
-CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`.
+CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`. It's an ES module with TypeScript types; CommonJS code can use `const CodeSubmit = require('cmil')`.
 ```js
-const CodeSubmit = require('cmil');
+import CodeSubmit from 'cmil';
 
 const codeSubmit = new CodeSubmit('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
 
@@ -62,7 +62,9 @@ cd cmil
 npm install
 npm test
 ```
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
+CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`npm run build`), and `npm run typecheck` checks the types.
+
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, math functions and errors.

@@ -34,7 +34,7 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
 The commands of LinguaCode are translated in this repository, one file per language in [`src/translations/languages`](src/translations/languages).
 
 1. Fork this repository.
-2. To add a language, copy `src/translations/languages/en.js` to a file named after the language code, for example `it.js`, or `pt-PT.js` for a regional variant, and add it to `src/translations/index.js`. To improve a language, edit its existing file.
+2. To add a language, copy `src/translations/languages/en.ts` to a file named after the language code, for example `it.ts`, or `pt-PT.ts` for a regional variant, and add it to `src/translations/index.ts`. To improve a language, edit its existing file.
 3. Translate the `definition` of every command. Separate alternative spellings with `|`, for example `'և|եւ|ու'`.
 4. Run `npm test`, which checks that every language defines every command, and open a pull request.
 5. Take this :pizza: piece of pizza from us in return for help :blush:.

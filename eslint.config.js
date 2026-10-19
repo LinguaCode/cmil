@@ -1,18 +1,21 @@
-const js = require('@eslint/js');
-const globals = require('globals');
-const prettier = require('eslint-config-prettier');
+import js from '@eslint/js';
+import {defineConfig} from 'eslint/config';
+import prettier from 'eslint-config-prettier';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
-module.exports = [
+export default defineConfig([
   {
-    ignores: ['coverage/']
+    ignores: ['coverage/', 'dist/']
   },
   js.configs.recommended,
+  tseslint.configs.recommended,
   {
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: globals.node
     }
   },
   prettier
-];
+]);
