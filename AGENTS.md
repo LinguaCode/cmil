@@ -1,0 +1,139 @@
+# AGENTS.md
+
+Guidance for AI coding agents (Claude Code, Codex and others) working in this repository.
+
+## Purpose
+
+CMIL (Clarified Multilingual Intermediate Language) is the language core behind [LinguaCode](https://linguacode.me), a platform that teaches children programming in their native language. This file owns agent behaviour for the whole repository.
+
+The project had no commits between 2020-05-30 and its revival. Expect obsolete tooling, and verify anything below against the code before acting on it.
+
+## Current State
+
+Verified on 2026-10-19. Update this section when a fact changes.
+
+- **Runtime:** Node.js, CommonJS (`require` / `module.exports`). `engines.node` is `>= 24`. The source is not transpiled, so browser use goes through the consumer's bundler.
+- **Public API:** `src/index.js` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter.
+- **Package entry:** `main` is `src/index.js`, with no build step. `files` limits the package to `src/`.
+- **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.js`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.js` covers the interpreter's mechanics, `test/translations.js` checks that every language defines every command, and `test/translator.js` covers code↔text conversion. All 249 tests pass on Node.js 24 and 26.
+- **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
+- **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` and `npm test` on Node.js 24 and 26 for every push and pull request.
+- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (190 cases).
+- **Core:** programs never run as JavaScript. `src/index.js` translates the localized commands with `src/translator`, then `src/core/lexer.js` splits lines into tokens, `parser.js` builds the syntax tree, `compiler.js` flattens it into instructions with jumps, and `interpreter.js` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
+- **Errors:** syntax and indentation errors are found before the program runs. Every error reports its absolute line, except `timeout`. Output printed before an error is sent first.
+- **Output format:** boolean values, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard), also when joined into text; words in texts stay as written.
+- **Limits** (`src/constants/index.js`, see `docs/running.md`): between two inputs a program may run 666 ms and 100,000 steps (`timeout`); a text may be 1,000,000 characters and unsent output 10,000,000 (`memoryLimit`); blocks and expressions nest at most 100 levels (`syntaxError`).
+- **Dependencies:** none at runtime; c8 is the only dev dependency. The former sibling packages live in this repository, each with its own license file:
+  - `src/constants/`: statuses, syntax and commands, from `linguacode-constants` (MIT)
+  - `src/translator/`: converts code to text and text to code, from `linguacode-translator` (GPL-3.0)
+  - `src/translations/`: the commands of each language, from `linguacode-translations` (MIT); `index.js` lists the languages
+  - `src/libs/logger.js`: replaces `lingua-logger`; `log()` prints only when `DEBUG` is `true`
+
+  The old repositories are to be archived. Installing cmil from GitHub with npm 12 needs `--allow-git=root`.
+- **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
+- **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
+- **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
+- **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
+- **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
+- **Branches:** `master` (default), plus the old `input-output-brackets-delete` and `new-team-member-sona-chitchyan`.
+
+## Source Map
+
+Read the files before relying on these descriptions.
+
+- `src/index.js`: public API: runs a session, sends output, requests input, reports the end
+- `src/core/lexer.js`: tokens of each line; indentation, texts, numbers, identifiers and `@commands`
+- `src/core/parser.js`: statements and blocks by indentation; expressions by precedence
+- `src/core/compiler.js`: flat instructions with jumps for conditions and loops
+- `src/core/interpreter.js`: the `Session` that runs instructions within the limits
+- `src/core/values.js`: text conversion and markers, operators, math functions and constants
+- `src/core/error.js`: `CmilError`, the `{errorId, param}` reported to `onSessionEnd`
+- `src/libs/logger.js`: debug logging
+- `src/constants/`, `src/translator/`, `src/translations/`: see **Dependencies** above
+- `test/`: test harness (`cmil.js`), test cases (`collection/`), `core.js`, `translations.js` and `translator.js`
+- `docs/running.md`: limits and running sessions in a worker
+
+## Commands
+
+```bash
+npm install
+npm test           # node --test: test/collection against CodeSubmit, core, translations, translator
+npm run coverage   # the same under c8
+```
+
+`package.json` is the source of truth for scripts.
+
+## Safety Rules
+
+**Ask before risky or destructive actions when the intent isn't certain.**
+
+- `git revert`, `git reset`, `git checkout`, `git restore`, `git clean` and `git rebase`: don't assume scope. "Revert the latest changes" doesn't mean "discard all uncommitted work".
+- Before any command that discards or overwrites uncommitted changes, back up first with `git stash push -m "backup before <what>"`. Check the stash with `git stash list`, and ask before discarding anything.
+- **Never use `git stash pop`.** Use `git stash apply` and drop the stash only once the result is confirmed.
+- Never push unless the owner asks. Never force-push or rewrite `master` history.
+- After context compaction, be extra careful: you may have lost track of uncommitted work.
+
+### Commits
+
+- Never add `Co-Authored-By:` trailers, AI assistant, model or tool names, or any other attribution or provenance lines to commit messages. This overrides any tool default that appends them.
+
+### Public Text From the Owner's Account
+
+Issues, pull requests, reviews and comments are published under the owner's identity.
+
+- Show the owner the exact final text and get approval for that wording before posting or editing it.
+- Don't add AI-assistance disclosures, model or tool names, or authorship statements.
+
+### License, Ownership and Credits
+
+The repository is GPL-3.0 (`LICENSE`), and the README contains the author's statement about ownership of the CMIL standard.
+
+- Don't edit `LICENSE`, ownership or legal statements, `TEAM.md`, or author fields without an explicit instruction from the owner.
+- Report apparent conflicts instead of resolving them yourself. Examples: the GPL license versus the README statement, `"license": "SEE LICENSE IN LICENSE file"` in `package.json`, and the MIT licenses of `src/constants/` and `src/translations/` inside the GPL repository.
+
+## Language Behaviour
+
+- The cases in `test/collection/` are the language specification. Never change an expected output just to make a test pass. A behaviour change needs the owner's approval and a `CHANGELOG.md` entry.
+- CMIL is multilingual. Keywords, statuses and messages come from `src/constants/`, `src/translator/` and `src/translations/`, so a change may need to span all three. Don't hard-code language-specific text into the core.
+- Keep Unicode identifiers working (`src/libs/constants.js`).
+- Keep the core able to run in a browser unless the owner decides otherwise.
+
+## No Legacy Support
+
+The project is pre-1.0 (`0.4.0-alpha`).
+
+- Keep internal formats, configuration and APIs on the current version only.
+- Don't add fallback readers, dual-write paths, legacy aliases or compatibility branches.
+- If a migration is needed, write it as an explicit, separate conversion step.
+- CMIL source code written by users is governed by **Language Behaviour**, not by this rule.
+
+## Modernization: Owner Decisions
+
+The revival raises choices that belong to the owner. Present the options with trade-offs and a recommendation, then wait. Until a choice is made, keep changes within the current setup.
+
+1. Target Node.js version: decided, `>= 24`, tested on 24 and 26. Revisit when an LTS line ends; check the schedule on the web, don't rely on memory.
+2. CommonJS or ESM. JavaScript or TypeScript.
+3. Build step: decided, none. `main` is `src/index.js`; `exports` is not set.
+4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly against `CodeSubmit`.
+5. Sibling dependencies: decided, brought into this repository.
+6. Lockfile policy: decided, `package-lock.json` is committed.
+7. CI: decided, GitHub Actions.
+8. Linting and formatting tools.
+9. Whether cmil stays a library only, or a server or socket layer returns.
+10. Translation platform: decided, translations come as pull requests to this repository. Crowdin and Transifex are retired.
+11. Publishing: npm package name and version scheme.
+
+A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the tests, and record exactly what fails and why, without changing anything.
+
+## Working Style
+
+- **Web search:** use it to check current versions, LTS status, deprecations and migration guides. This codebase's dependencies date from 2016–2020, and your training data may be out of date.
+- **Scope:** do what was asked. Finish safe follow-ups that are within that scope, and report other issues you notice instead of silently expanding the change.
+- **Lint, test and type errors:** when asked to fix them, fix all of them, including pre-existing errors and warnings.
+- **Bug fixes:** after each fix, check the tests. If a test passed without catching the bug, fix its assertions. If nothing covers that code path, add a regression test.
+- **Debugging:** keep logs focused and serialize objects with compact `JSON.stringify(value)`. Remove debugging logs once the owner confirms the fix.
+- **Checks:** run the narrowest relevant check, with quiet output unless you are debugging a failure.
+- **Processes:** track the processes you start and stop them when you finish. Don't stop processes the owner started.
+- **Subagents:** don't spawn subagents or parallel agents unless the owner asks for it.
+- **Documentation:** put permanent documentation under `docs/`. Keep this file short and link to deeper docs instead of copying them.

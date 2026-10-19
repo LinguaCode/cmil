@@ -20,17 +20,8 @@ src/config/keys/*.key
 # Coverage folder
 coverage/
 
-# test DB
-test/database/testDB.js
-
 # Deploy
 deploy.bat
 
 # Yarn
 yarn.lock
-
-#Build folder
-build
-
-#the disaster of everything:
-package-lock.json

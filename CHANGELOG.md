@@ -1,3 +1,27 @@
+## Unreleased
+
+  - **[change]** output: `true`, `false`, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard, since 2019-09-04); tests updated from `${true}` / `${false}`.
+  - **[fix]** tests: tutorials use the current Armenian commands `տպել` (output) and `մուտքագրել` (input) instead of `ելք` and `մուտք`, renamed in linguacode-translations on 2017-05-28.
+  - **[fix]** tests: run in-process against `CodeSubmit`, the Socket.IO server they relied on was removed in 0.4.0-alpha.
+  - **[fix]** errors: `undefinedVariable` is detected again.
+  - **[change]** runtime: requires Node.js 24 or newer.
+  - **[change]** package: `main` is `src/index.js`, the Babel build is removed, so installing from GitHub works without a build.
+  - **[change]** tests: the Node.js test runner replaces Mocha, c8 replaces istanbul (`npm run coverage`).
+  - **[add]** CI: GitHub Actions on Node.js 24 and 26, replacing Travis CI, Coveralls and Code Climate.
+  - **[add]** `package-lock.json` is committed.
+  - **[optimize]** dependencies: moment removed; a development install has 55 packages instead of about 400, with no known vulnerabilities instead of 58.
+  - **[change]** packages: linguacode-constants, linguacode-translator and linguacode-translations are part of cmil (`src/constants`, `src/translator`, `src/translations`), and `src/libs/logger.js` replaces lingua-logger, with no git dependencies or install scripts.
+  - **[add]** tests: every language defines every command; the translator converts code to text and back.
+  - **[change]** core: programs run in cmil's own interpreter (lexer, parser, compiler and interpreter in `src/core`) instead of being converted to JavaScript and evaluated, so neither a program nor an input value can run JavaScript.
+  - **[change]** errors: syntax and indentation errors are found before a program runs; every error except `timeout` reports its line, counted from the top of the program; output printed before an error is sent.
+  - **[change]** output: words in texts stay as written; only boolean values, `NaN` and `Infinity` become markers, also when joined into text.
+  - **[add]** errors: `memoryLimit`, when a text is longer than 1,000,000 characters or unsent output than 10,000,000.
+  - **[change]** limits: between two inputs a program may run 100,000 steps besides 666 ms (`timeout`); blocks and expressions nest at most 100 levels.
+  - **[change]** math functions with a wrong number of arguments end with `functionArgumentSyntaxError` instead of returning `<NaN/>`.
+  - **[add]** commands: `break` and `continue` work in loops.
+  - **[fix]** sessions: several programs can run at the same time; one waiting for input keeps its state.
+  - **[optimize]** dependencies: none at runtime, lodash is no longer needed, so installing cmil adds only cmil; the tests run about five times faster.
+
 ## 0.4.0 (2016-11-12)
 
   - **[add]** tests: 32 (total 184).

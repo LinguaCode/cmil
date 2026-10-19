@@ -8,6 +8,14 @@ module.exports = [{
       title: '"" + 1',
       code: 'output "" + 1',
       output: '1'
+    }, {
+      title: 'boolean words in text stay text',
+      code: 'output "it is true that null is nothing"',
+      output: 'it is true that null is nothing'
+    }, {
+      title: 'boolean joined into text',
+      code: 'output "x: " + (5 > 3)',
+      output: 'x: <true/>'
     }]
   }, {
     group: 'output',
@@ -400,88 +408,88 @@ module.exports = [{
         sources: [{
           title: '>',
           code: 'output 4 > 2',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: '<',
           code: 'output 2 < 4',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: '==',
           code: 'output 4 == 4',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: '>=',
           code: 'output 4 >= 2',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: '<=',
           code: 'output 2 <= 4',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: '!=',
           code: 'output 4 != 2',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: 'not()',
           code: 'output not(4 < 2)',
-          output: '${true}'
+          output: '<true/>'
         }]
       }, {
         group: 'boolean',
         sources: [{
           title: 'AND: true result',
           code: 'output 4 > 2 and 4 != 2',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: 'AND: false result',
           code: 'output 4 > 2 and 4 == 2',
-          output: '${false}'
+          output: '<false/>'
         }, {
           title: 'OR: true result',
           code: 'output 4 > 2 or 4 == 2',
-          output: '${true}'
+          output: '<true/>'
         }, {
           title: 'OR: false result',
           code: 'output 4 < 2 or 4 == 2',
-          output: '${false}'
+          output: '<false/>'
         }]
       }]
     }, {
       title: 'true value',
       code: 'output true',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'false value',
       code: 'output false',
-      output: '${false}'
+      output: '<false/>'
     }, {
       title: 'true condition',
       code: 'output 4 > 2',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'false condition',
       code: 'output 4 < 2',
-      output: '${false}'
+      output: '<false/>'
     }, {
       title: 'and: result: true',
       code: 'output true and true',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'and։ result: false',
       code: 'output true and false',
-      output: '${false}'
+      output: '<false/>'
     }, {
       title: 'or։ result: true',
       code: 'output true or false',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'or։ result: false',
       code: 'output false or false',
-      output: '${false}'
+      output: '<false/>'
     }, {
       title: 'mixed',
       code: 'output 5 < 1 and (1 < 7 or (1 >= 3 or 9 == 9))',
-      output: '${false}'
+      output: '<false/>'
     }]
   }, {
     group: 'loops',
@@ -693,11 +701,11 @@ module.exports = [{
     }, {
       title: 'random: single argument',
       code: 'X = 1000\nZ = random(X)\noutput Z >= 0 and Z <= 1000',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'random: double argument',
       code: 'X = 1000\nY = 1005\nZ = random(X,Y)\noutput Z >= 1000 and Z <= 1005',
-      output: '${true}'
+      output: '<true/>'
     }, {
       title: 'pi',
       code: 'output pi',

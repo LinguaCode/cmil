@@ -1,52 +1,12 @@
-//packages
-const STATUS = require('linguacode-constants').STATUS;
-
 //tools
-const errorHandler = require('./core/errorHandler');
-const compiler = require('./core/executer/compiler');
-const sender = require('./core/sender');
-const setter = require('./core/executer/setter');
-const checker = require('./core/executer/checker');
-const getter = require('./core/executer/getter');
-const logger = require('lingua-logger');
-//console.llog = console.log;
-
-const preExecute = sessionId => {
-  require('./core/globals')(sessionId);
-};
-
-const postExecute = (sessionId) => {
-  const output = getter.output(sessionId);
-  const status = output.status;
-  const isSucceed = status === STATUS.SUCCESS;
-  const isWaitsForInput = status === STATUS.WAITS_FOR_INPUT;
-
-  if (isWaitsForInput) {
-    if (output.result) {
-      sender.evaluate(sessionId, output.result);
-    }
-    sender.waitsForInput(sessionId);
-  } else if (isSucceed) {
-    sender.evaluate(sessionId, output.result);
-  }
-
-  const error = isSucceed ? {
-    errorId: undefined,
-    param: {}
-  } : status;
-
-  if (!isWaitsForInput && checker.session.ended(sessionId)) {
-    return sender.sessionEnd(sessionId, error);
-  }
-};
-
-const randomStringGenerate = (length) => {
-  const randomStringChunk = () => Math.random().toString(36).slice(2);
-  const randomStringGenerate = () => randomStringChunk() + randomStringChunk() + randomStringChunk() + randomStringChunk();
-  const randomString = randomStringGenerate();
-
-  return length ? randomString.slice(0, length) : randomString;
-};
+const translator = require('./translator');
+const lexer = require('./core/lexer');
+const parser = require('./core/parser');
+const compiler = require('./core/compiler');
+const Session = require('./core/interpreter');
+const CmilError = require('./core/error');
+const STATUS = require('./constants').STATUS;
+const logger = require('./libs/logger');
 
 class CodeSubmit {
   constructor(sourceCode, language) {
@@ -57,48 +17,96 @@ class CodeSubmit {
     this.sourceCode = sourceCode;
     this.language = language;
 
-    const sessionId = randomStringGenerate();
-    this.sessionId = sessionId;
+    this.session = null;
+    this.isRunning = false;
+    this.isWaitingForInput = false;
+    this.isInputReceived = false;
 
     return this;
   }
 
   get inputEmitter() {
     return (inputValue) => {
-      let sessionId = this.sessionId;
-      console.llog(`CMIL: input: '${inputValue}' text successfully received!`);
+      logger.log(`CMIL: input: '${inputValue}' received`);
+      if (!this.isWaitingForInput) return;
 
-      compiler.listener(sessionId, inputValue);
+      //an empty input is requested again
+      if (inputValue === '' || inputValue === undefined) {
+        if (this.inputCallback) this.inputCallback();
+        return;
+      }
 
-      postExecute(sessionId);
-    }
+      this.isWaitingForInput = false;
+      try {
+        this.session.setInput(inputValue);
+      } catch (error) {
+        return this.end(error);
+      }
+
+      //an input given inside the input request callback is taken by the running loop
+      this.isInputReceived = true;
+      if (!this.isRunning) this.run();
+    };
   }
 
   execute() {
-    const sourceCode = this.sourceCode;
-    const language = this.language;
-    const sessionId = this.sessionId;
-    preExecute(sessionId);
-
-    //TODO: add error handler: unsupported language
-
-    const error = errorHandler.analyze(sourceCode);
-    if (error) {
-      //TODO: Implement hack attempt detection
-      console.llog('Output text has been successfully send! (Hack attempt)');
-
-      setter.output(sessionId, error);
-    } else {
-      compiler.codeRun(sessionId, sourceCode, language);
+    let program;
+    try {
+      const code = translator.toCode(this.sourceCode || '', this.language);
+      program = compiler.compile(parser.parse(lexer.tokenize(code)));
+    } catch (error) {
+      if (error instanceof CmilError) return this.end(error);
+      throw error;
     }
 
-    setter.data(sessionId, {
-      sourceCode,
-      language,
-      codeSubmitter: this,
-    });
+    this.session = new Session(program);
+    this.run();
 
-    postExecute(sessionId);
+    return this;
+  };
+
+  run() {
+    this.isRunning = true;
+
+    for (;;) {
+      let status;
+      try {
+        status = this.session.run();
+      } catch (error) {
+        this.isRunning = false;
+        this.sendOutput();
+        if (error instanceof CmilError) return this.end(error);
+        throw error;
+      }
+
+      this.sendOutput();
+
+      if (status === STATUS.SESSION_END) {
+        this.isRunning = false;
+        return this.end();
+      }
+
+      this.isWaitingForInput = true;
+      this.isInputReceived = false;
+      if (this.inputCallback) this.inputCallback();
+
+      if (!this.isInputReceived) {
+        this.isRunning = false;
+        return this;
+      }
+    }
+  };
+
+  sendOutput() {
+    const output = this.session.takeOutput();
+    if (output.length && this.outputCallback) {
+      this.outputCallback(output.join('\n'));
+    }
+  };
+
+  end(error) {
+    const result = error ? {errorId: error.errorId, param: error.param} : {errorId: undefined, param: {}};
+    if (this.endCallback) this.endCallback(result);
 
     return this;
   };
@@ -117,16 +125,6 @@ class CodeSubmit {
     this.endCallback = onSessionEndCallback;
 
     return this;
-  };
-
-  triggerInputRequest() {
-    this.inputCallback();
-  };
-  triggerSessionEnd(error) {
-    this.endCallback(error);
-  };
-  triggerOutput(outputText) {
-    this.outputCallback(outputText);
   };
 }
 

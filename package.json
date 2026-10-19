@@ -2,39 +2,26 @@
   "name": "cmil",
   "version": "0.4.0-alpha.2",
   "description": "Multilanguage programming platform especially for kids",
-  "main": "build/index.js",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "build": "babel src -d build",
     "start": "node src/index.js",
-    "serve": "nodemon src/index.js",
-    "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && start coverage/lcov-report/index.html",
-    "coveralls": "istanbul cover ./node_modules/.bin/_mocha && ./node_modules/.bin/istanbul-coveralls"
+    "test": "node --test --test-timeout=5000 \"test/*.js\"",
+    "coverage": "c8 --reporter=text --reporter=html npm test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LinguaCode/core"
+    "url": "git+https://github.com/LinguaCode/cmil.git"
   },
   "engines": {
-    "node": ">= 7.9.0"
+    "node": ">= 24"
   },
   "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.com)",
   "license": "SEE LICENSE IN LICENSE file",
-  "bugs": "https://github.com/LinguaCode/core/issues",
-  "dependencies": {
-    "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
-    "linguacode-constants": "https://github.com/linguacode/linguacode-constants",
-    "linguacode-translator": "https://github.com/LinguaCode/linguacode-translator",
-    "lodash": "^4.17.15",
-    "moment": "^2.26.0"
-  },
+  "bugs": "https://github.com/LinguaCode/cmil/issues",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "coveralls": "2.11.15",
-    "istanbul": "0.4.5",
-    "istanbul-coveralls": "1.0.3",
-    "mocha": "3.3.0",
-    "node-cache-wiper": "git+https://github.com/otanim/node-cache-wiper.git"
+    "c8": "^12.0.0"
   }
 }
