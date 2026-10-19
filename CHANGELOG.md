@@ -1,4 +1,4 @@
-## Unreleased
+## 0.6.0-alpha.0 (2026-10-19)
 
   - **[change]** API: `codeSubmit.input(value)` replaces the `inputEmitter` getter.
   - **[change]** API: the state of `CodeSubmit` is private; only its methods are public.
