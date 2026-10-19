@@ -1,10 +1,11 @@
+const logger = require('../../../libs/logger');
 const _ = require('lodash');
 const COMMAND = require('../../../constants').COMMAND;
 const tools = require('../../../libs/tools');
 const variables = exports.variables = require('./variables');
 
 exports.splitToCompilableParts = (sessionId, sourceCode, variables) => {
-  console.llog('builder: splitToCompilableParts');
+  logger.log('builder: splitToCompilableParts');
 
   sourceCode = sourceCode.join('\n');
   let toCompiles = [];

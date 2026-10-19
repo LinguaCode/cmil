@@ -1,8 +1,9 @@
+const logger = require('../../../../libs/logger');
 let tools = require('../../../../libs/tools');
 let _ = require('lodash');
 
 exports.repeatCondition = (sessionId, countOfRepeats) => {
-  console.llog('builder: repeatCondition');
+  logger.log('builder: repeatCondition');
 
   const conditionName = conditionNameInit(sessionId, 'repeat');
   const operation = `${conditionName} = typeof(${conditionName}) == "undefined" ? 0 : ${conditionName} + 1`;
@@ -10,7 +11,7 @@ exports.repeatCondition = (sessionId, countOfRepeats) => {
 };
 
 exports.doCondition = (sessionId, condition) => {
-  console.llog('builder: doCondition');
+  logger.log('builder: doCondition');
 
   const conditionName = conditionNameInit(sessionId, 'do');
   condition = `${conditionName} = typeof(${conditionName}) == "undefined" ? true : ${condition}`;
@@ -18,7 +19,7 @@ exports.doCondition = (sessionId, condition) => {
 };
 
 exports.ifCondition = (sessionId, condition) => {
-  console.llog('builder: ifCondition');
+  logger.log('builder: ifCondition');
 
   const conditionName = conditionNameInit(sessionId, 'if');
   condition = `${conditionName} = ${condition}`;
@@ -26,14 +27,14 @@ exports.ifCondition = (sessionId, condition) => {
 };
 
 exports.mainCondition = (sessionId) => {
-  console.llog('builder: mainCondition');
+  logger.log('builder: mainCondition');
 
   const conditionName = conditionNameInit(sessionId, 'main');
   return `${conditionName} = typeof(${conditionName}) == "undefined" ? true : false`;
 };
 
 const conditionNameInit = exports.conditionNameInit = (sessionId, conditionType) => {
-  console.llog('builder: conditionNameInit');
+  logger.log('builder: conditionNameInit');
 
   const randomIndex = _.random(9999);
   const sessionName = `global[sessionId].`;

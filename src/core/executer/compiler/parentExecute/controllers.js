@@ -1,3 +1,4 @@
+const logger = require('../../../../libs/logger');
 let _ = require('lodash');
 
 const STATUS = require('../../../../constants').STATUS;
@@ -6,17 +7,17 @@ const SESSION_END = STATUS.SESSION_END;
 
 let controller = {
   manage: sessionId => {
-    console.llog('compiler: controller', 'begin');
-    console.llog(__store[sessionId].pathOfLocation);
+    logger.log('compiler: controller', 'begin');
+    logger.log(__store[sessionId].pathOfLocation);
 
     const exKey = controller.oscillation(sessionId);
     controller.directive(sessionId, exKey);
 
-    console.llog(__store[sessionId].pathOfLocation);
-    console.llog('compiler: controller', 'end');
+    logger.log(__store[sessionId].pathOfLocation);
+    logger.log('compiler: controller', 'end');
   },
   oscillation: sessionId => {
-    console.llog('compiler: oscillation');
+    logger.log('compiler: oscillation');
 
     let management = require('../management');
 
@@ -28,7 +29,7 @@ let controller = {
         errorId: TIMEOUT,
         param: {}
       };
-      console.llog('compiler: trigger: timeout');
+      logger.log('compiler: trigger: timeout');
       throw error;
     }
 
@@ -36,7 +37,7 @@ let controller = {
       setter.downgrade(sessionId);
 
       if (checker.session.pathOfLocationEnded(sessionId)) {
-        console.llog('compiler: trigger: session ended');
+        logger.log('compiler: trigger: session ended');
         throw SESSION_END;
       }
     }
@@ -46,7 +47,7 @@ let controller = {
 
 
   directive: function (sessionId, exKey) {
-    console.llog('compiler: directive', 'begin');
+    logger.log('compiler: directive', 'begin');
 
     let currentParentObject = getter.object(sessionId);
     let nameOfProperty = getter.nameOfProperty(sessionId);
@@ -71,7 +72,7 @@ let controller = {
       positions.toCompile(sessionId);
     }
 
-    console.llog('compiler: directive', 'end');
+    logger.log('compiler: directive', 'end');
   },
 
 };

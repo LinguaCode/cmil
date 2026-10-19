@@ -8,8 +8,7 @@ const sender = require('./core/sender');
 const setter = require('./core/executer/setter');
 const checker = require('./core/executer/checker');
 const getter = require('./core/executer/getter');
-const logger = require('lingua-logger');
-//console.llog = console.log;
+const logger = require('./libs/logger');
 
 const preExecute = sessionId => {
   require('./core/globals')(sessionId);
@@ -66,7 +65,7 @@ class CodeSubmit {
   get inputEmitter() {
     return (inputValue) => {
       let sessionId = this.sessionId;
-      console.llog(`CMIL: input: '${inputValue}' text successfully received!`);
+      logger.log(`CMIL: input: '${inputValue}' text successfully received!`);
 
       compiler.listener(sessionId, inputValue);
 
@@ -85,7 +84,7 @@ class CodeSubmit {
     const error = errorHandler.analyze(sourceCode);
     if (error) {
       //TODO: Implement hack attempt detection
-      console.llog('Output text has been successfully send! (Hack attempt)');
+      logger.log('Output text has been successfully send! (Hack attempt)');
 
       setter.output(sessionId, error);
     } else {

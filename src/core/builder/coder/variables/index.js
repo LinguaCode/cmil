@@ -1,3 +1,4 @@
+const logger = require('../../../../libs/logger');
 const _ = require('lodash');
 const tail = require('./tail');
 const tools = require('../../../../libs/tools');
@@ -34,7 +35,7 @@ exports._get = sourceCode => {
 };
 
 exports.variablesToObjectChild = (sessionId, sourceCode, listOfVariables) => {
-  console.llog('builder: variablesToObjectChild', 'begin');
+  logger.log('builder: variablesToObjectChild', 'begin');
   let codeTailed = sourceCode
     .split('\n')
     .map((line) => {
@@ -68,6 +69,6 @@ exports.variablesToObjectChild = (sessionId, sourceCode, listOfVariables) => {
     })
     .join('\n');
 
-  console.llog('builder: variablesToObjectChild', 'end');
+  logger.log('builder: variablesToObjectChild', 'end');
   return codeTailed;
 };

@@ -1,3 +1,4 @@
+const logger = require('../../../libs/logger');
 const tools = require('../../../libs/tools');
 const errorHandler = require('../../errorHandler');
 const errorCheck = require('../../errorHandler/checker');
@@ -71,7 +72,7 @@ exports.code = (sessionId, sourceCode) => {
         };
 
         setter.output(sessionId, error);
-        console.llog('compiler: trigger: broken variable');
+        logger.log('compiler: trigger: broken variable');
         throw error;
       }
     }
