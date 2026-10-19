@@ -25,6 +25,3 @@ deploy.bat
 
 # Yarn
 yarn.lock
-
-#the disaster of everything:
-package-lock.json
