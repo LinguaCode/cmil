@@ -62,7 +62,7 @@ cd cmil
 npm install
 npm test
 ```
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Screenshot
 
