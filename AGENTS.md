@@ -30,9 +30,9 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Lockfiles:** `package-lock.json` and `yarn.lock` are both gitignored.
 - **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`). Every `execute()` resets these stores, so concurrent sessions overwrite each other.
 - **Coverage script:** `npm run coverage` ends with `start coverage/lcov-report/index.html`, which only works on Windows.
-- **Dead services:** `.travis.yml` (Travis CI), `.codeclimate.yml` (Code Climate) and the `coveralls` script (Coveralls through istanbul 0.4) target retired or obsolete services. There is no CI. The README keeps only the Crowdin and license badges.
+- **Dead services:** `.travis.yml` (Travis CI), `.codeclimate.yml` (Code Climate) and the `coveralls` script (Coveralls through istanbul 0.4) target retired or obsolete services. There is no CI. The README keeps only the license badge.
 - **Old repository name:** `package.json` `repository` and `bugs` still point to the old name `LinguaCode/core`. GitHub redirects it.
-- **Inconsistent translation platform:** `CONTRIBUTING.md` sends translators to Transifex, while the README badge points to Crowdin.
+- **Translations:** translators send pull requests to `LinguaCode/linguacode-translations` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
 - **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default), plus the old `input-output-brackets-delete`.
 
@@ -118,7 +118,7 @@ The revival raises choices that belong to the owner. Present the options with tr
 7. CI (for example GitHub Actions), its badges, and what replaces Travis CI, Coveralls and Code Climate. The dead README badges are already removed.
 8. Linting and formatting tools.
 9. Whether cmil stays a library only, or a server or socket layer returns.
-10. Translation platform (Transifex or Crowdin).
+10. Translation platform: decided, translations come as pull requests to `linguacode-translations`. Crowdin and Transifex are retired.
 11. Publishing: npm package name and version scheme.
 
 A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the build and the tests, and record exactly what fails and why, without changing anything.
