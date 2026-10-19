@@ -1,4 +1,3 @@
-const moment = require('moment');
 const constants = require('linguacode-constants');
 const getter = require('../getter');
 const STATUS = constants.STATUS;
@@ -40,11 +39,11 @@ exports.ended = sessionId => {
 };
 
 exports.expired = sessionId => {
-  const sessionTime = moment(getter.data(sessionId, 'sessionTime'));
-  const now = moment();
-  const timeDifferenceBySeconds = now.diff(sessionTime);
+  const now = Date.now();
+  const sessionTime = getter.data(sessionId, 'sessionTime') || now;
+  const timeDifferenceByMilliseconds = now - sessionTime;
   const timeOutCondition = !process.env.TIMEOUT_IGNORE ?
-  timeDifferenceBySeconds > constants.TIMEOUT_TIME : false;
+  timeDifferenceByMilliseconds > constants.TIMEOUT_TIME : false;
 
   return timeOutCondition;
 };
