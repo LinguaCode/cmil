@@ -52,7 +52,7 @@ const run = (source: Case, language: string) =>
           return reject(new Error(`Input requested, but no inputs left.\nOutput so far:\n${output}`));
         }
 
-        setImmediate(() => codeSubmit.inputEmitter(inputs.shift()));
+        setImmediate(() => codeSubmit.input(inputs.shift()));
       })
       .onSessionEnd(error => {
         resolve({
@@ -140,7 +140,7 @@ describe('sessions', () => {
         .onSessionEnd(() => {})
         .execute();
 
-      waiting.inputEmitter('Ani');
+      waiting.input('Ani');
     }));
 });
 

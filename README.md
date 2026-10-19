@@ -41,7 +41,7 @@ const codeSubmit = new CodeSubmit('output "What is your name?"\ninput name\noutp
 
 codeSubmit
   .onOutput(output => console.log(output))
-  .onInputRequest(() => codeSubmit.inputEmitter('Ani'))
+  .onInputRequest(() => codeSubmit.input('Ani'))
   .onSessionEnd(error => {
     if (error.errorId) {
       console.error(error.errorId, error.param);
@@ -50,8 +50,11 @@ codeSubmit
   .execute();
 ```
 - `onOutput(callback)`: receives the text printed by the program.
-- `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.inputEmitter(value)`.
-- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout` or `memoryLimit`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
+- `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.input(value)`.
+- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout`, `memoryLimit` or `unknownLanguage`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
+- `stop()`: ends the session, for example when the learner leaves; it takes no more input, and `onSessionEnd` isn't called.
+
+`import {languages} from 'cmil'` lists the language codes.
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 

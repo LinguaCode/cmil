@@ -135,6 +135,7 @@ Another count of arguments, or a missing `)`, is a `functionArgumentSyntaxError`
 | `undefinedVariable` | a variable is read before it is stored | `variable`, `line` |
 | `memoryLimit` | a text grows too long | `line` |
 | `timeout` | the program runs too long between two inputs | none |
+| `unknownLanguage` | the session's language isn't one of the languages | `language` |
 
 The limits are in [running.md](running.md).
 

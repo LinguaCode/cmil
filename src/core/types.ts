@@ -57,4 +57,5 @@ export type Program = {
 export type ErrorParam = {
   line?: number;
   variable?: string;
+  language?: string;
 };
