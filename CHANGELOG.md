@@ -1,6 +1,7 @@
 ## Unreleased
 
   - **[add]** lint: ESLint and Prettier (`npm run lint`, `npm run format`), checked in CI.
+  - **[add]** documentation: the language reference in `docs/language.md`, replacing the placeholder `DOCUMENTATION.md`.
   - **[change]** output: `true`, `false`, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard, since 2019-09-04); tests updated from `${true}` / `${false}`.
   - **[fix]** tests: tutorials use the current Armenian commands `տպել` (output) and `մուտքագրել` (input) instead of `ելք` and `մուտք`, renamed in linguacode-translations on 2017-05-28.
   - **[fix]** tests: run in-process against `CodeSubmit`, the Socket.IO server they relied on was removed in 0.4.0-alpha.

@@ -64,6 +64,10 @@ npm test
 ```
 `npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
+## Documentation
+- [The CMIL language](docs/language.md): commands, values, operators, math functions and errors.
+- [Running CMIL programs](docs/running.md): limits, and running sessions in a worker.
+
 ## Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
