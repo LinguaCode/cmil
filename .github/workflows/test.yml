@@ -19,6 +19,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
+      # npm ci also builds dist through the prepare script
       - run: npm ci
       - run: npm run lint
+      - run: npm run typecheck
       - run: npm test
+      - name: Run the built package
+        run: >-
+          node --input-type=module -e "import CodeSubmit from 'cmil';
+          new CodeSubmit('output 1', 'en').onOutput(console.log).onInputRequest(() => {})
+          .onSessionEnd(result => { if (result.errorId) process.exit(1); }).execute();"

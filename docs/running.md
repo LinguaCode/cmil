@@ -10,7 +10,7 @@ CMIL interprets programs itself: a program never runs as JavaScript, so it can o
 | Output waiting to be sent | 10,000,000 characters | `memoryLimit` |
 | Nesting of blocks or expressions | 100 levels | `syntaxError` |
 
-The values are in `src/constants/index.js`.
+The values are in `src/constants/index.ts`.
 
 A program runs synchronously, so for up to 666 ms it holds the thread that called `execute()` or `inputEmitter`. Run sessions off the main thread, so a long program doesn't block a server or a page.
 
@@ -18,10 +18,10 @@ A program runs synchronously, so for up to 666 ms it holds the thread that calle
 
 Run each session in a [worker thread](https://nodejs.org/api/worker_threads.html). `resourceLimits` caps its memory as an extra layer of protection.
 
-`session-worker.js`:
+`session-worker.mjs`:
 ```js
-const {parentPort, workerData} = require('node:worker_threads');
-const CodeSubmit = require('cmil');
+import {parentPort, workerData} from 'node:worker_threads';
+import CodeSubmit from 'cmil';
 
 const codeSubmit = new CodeSubmit(workerData.sourceCode, workerData.language);
 parentPort.on('message', input => codeSubmit.inputEmitter(input));
@@ -38,9 +38,9 @@ codeSubmit
 
 The server:
 ```js
-const {Worker} = require('node:worker_threads');
+import {Worker} from 'node:worker_threads';
 
-const worker = new Worker('./session-worker.js', {
+const worker = new Worker(new URL('./session-worker.mjs', import.meta.url), {
   workerData: {sourceCode: 'input name\noutput "Hello, " + name', language: 'en'},
   resourceLimits: {maxOldGenerationSizeMb: 64}
 });
