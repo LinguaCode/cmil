@@ -1,4 +1,3 @@
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/linguacode/localized.svg)](https://crowdin.com/project/linguacode)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 # CMIL - Clarified Multilingual Intermediate Language
