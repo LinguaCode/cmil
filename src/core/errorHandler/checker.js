@@ -37,7 +37,7 @@ exports.undefinedVariable = (sessionId, toCompile) => {
   let variables = getter.data(sessionId, 'variables');
   for (let i = 0; i < variables.length; i++) {
     const variableName = variables[i];
-    const variableRealName = `global\\[sessionId\\].${variableName}`;
+    const variableRealName = _.escapeRegExp(`global['${sessionId}'].${variableName}`);
     let regExp = new RegExp(`${variableRealName}(?![ ]*\\=)`);
     if (regExp.test(toCompile)) {
       let variableReal = global[sessionId][variableName];
