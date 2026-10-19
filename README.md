@@ -1,13 +1,5 @@
-[![Crowdin](https://d322cqt584bo4o.cloudfront.net/linguacode/localized.svg)](https://crowdin.com/project/linguacode)
-[![Build Status](https://travis-ci.org/LinguaCode/cmil.svg?branch=master)](https://travis-ci.org/LinguaCode/cmil)
-[![Coverage Status](https://coveralls.io/repos/github/LinguaCode/cmil/badge.svg?branch=master&v=6)](https://coveralls.io/github/LinguaCode/cmil?branch=master)
-[![Code Climate](https://codeclimate.com/github/LinguaCode/cmil/badges/gpa.svg?v=1)](https://codeclimate.com/github/LinguaCode/cmil)
-[![Dependency Status](https://david-dm.org/LinguaCode/cmil.svg)](https://david-dm.org/LinguaCode/cmil)
-[![devDependency Status](https://david-dm.org/LinguaCode/cmil/dev-status.svg)](https://david-dm.org/LinguaCode/cmil#info=devDependencies)
-[![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
-
-[![Gratipay Team](https://img.shields.io/gratipay/team/LinguaCode.svg?maxAge=2592000&)](https://gratipay.com/LinguaCode/)
-[![Beerpay](https://img.shields.io/beerpay/LinguaCode/cmil.svg?maxAge=2592000?style=flat-square)](https://beerpay.io/LinguaCode/cmil)
+[![test](https://github.com/LinguaCode/cmil/actions/workflows/test.yml/badge.svg)](https://github.com/LinguaCode/cmil/actions/workflows/test.yml)
+[![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 # CMIL - Clarified Multilingual Intermediate Language
 
@@ -24,22 +16,57 @@ With LinguaCode one can not only study programming, but also learn languages.
 ## How to make contributions?
 Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/LinguaCode/cmil/blob/master/CONTRIBUTING.md).
 
-## How to get started ?
-#### Start
-`npm start`
+AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/blob/master/AGENTS.md).
 
-#### Run tests
-`npm run test`
+## How to get started?
+#### Requirements
+[Node.js](https://nodejs.org) 24 or newer.
 
-#### Run test coverage
+#### Install
+CMIL isn't published to npm. Install it from GitHub:
 ```
-npm install istanbul -g
-npm run coverage
+npm install github:LinguaCode/cmil
 ```
+npm 12 refuses git dependencies by default, so with npm 12 add `--allow-git=root`:
+```
+npm install github:LinguaCode/cmil --allow-git=root
+```
+
+#### Usage
+CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`.
+```js
+const CodeSubmit = require('cmil');
+
+const codeSubmit = new CodeSubmit('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
+
+codeSubmit
+  .onOutput(output => console.log(output))
+  .onInputRequest(() => codeSubmit.inputEmitter('Ani'))
+  .onSessionEnd(error => {
+    if (error.errorId) {
+      console.error(error.errorId, error.param);
+    }
+  })
+  .execute();
+```
+- `onOutput(callback)`: receives the text printed by the program.
+- `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.inputEmitter(value)`.
+- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout` or `memoryLimit`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
+
+CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
+
+#### Development
+```
+git clone https://github.com/LinguaCode/cmil.git
+cd cmil
+npm install
+npm test
+```
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`.
 
 ## Screenshot
 
 ![0.0.1](/screenshots/demonstration_0.0.1.gif)
 
 ## Changelog
-Pleas read changelog in the [CHANGELOG.md](https://github.com/LinguaCode/cmil/blob/master/CHANGELOG.md).
+Please read the changelog in the [CHANGELOG.md](https://github.com/LinguaCode/cmil/blob/master/CHANGELOG.md).

@@ -20,7 +20,17 @@ module.exports = [{
   }, {
     title: 'Syntax error',
     code: 'output 1x',
-    errorId: 'syntaxError'
+    errorId: 'syntaxError',
+    errorParam: {
+      line: 1
+    }
+  }, {
+    title: 'Syntax error before the last line',
+    code: 'output 1x\noutput 2',
+    errorId: 'syntaxError',
+    errorParam: {
+      line: 1
+    }
   }, {
     title: 'Function argument scope error',
     code: 'a = square(5\noutput a',
