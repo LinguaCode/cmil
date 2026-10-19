@@ -27,15 +27,13 @@ CMIL isn't published to npm. Install it from GitHub:
 ```
 npm install github:LinguaCode/cmil
 ```
-npm 12 refuses git dependencies and blocks the install script of linguacode-translations by default, so with npm 12 run:
+npm 12 refuses git dependencies by default, so with npm 12 add `--allow-git=root`:
 ```
-npm install github:LinguaCode/cmil --allow-git=all
-npm install-scripts approve linguacode-translations
-npm rebuild linguacode-translations --allow-git=all
+npm install github:LinguaCode/cmil --allow-git=root
 ```
 
 #### Usage
-CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](https://github.com/LinguaCode/linguacode-translations/tree/master/languages), for example `en`, `ru` or `hy-AM`.
+CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`.
 ```js
 const CodeSubmit = require('cmil');
 
