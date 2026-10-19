@@ -36,7 +36,7 @@ The commands of LinguaCode are translated in this repository, one file per langu
 1. Fork this repository.
 2. To add a language, copy `src/translations/languages/en.ts` to a file named after the language code, for example `it.ts`, or `pt-PT.ts` for a regional variant, and add it to `src/translations/index.ts`. To improve a language, edit its existing file.
 3. Translate the `definition` of every command. Separate alternative spellings with `|`, for example `'և|եւ|ու'`.
-4. Run `npm test`, which checks that every language defines every command, and open a pull request.
+4. Run `npm test`, which checks that every language defines every command and gives every word only one command, and open a pull request.
 5. Take this :pizza: piece of pizza from us in return for help :blush:.
 
 ## License

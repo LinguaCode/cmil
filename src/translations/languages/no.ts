@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'tak'
   },
   {
     command: COMMAND.ABS,

@@ -5,6 +5,8 @@
   - **[change]** API: an unknown language ends the session with `unknownLanguage` and `param.language` instead of throwing an error.
   - **[add]** API: `stop()` ends a session, for example one waiting for input; `onSessionEnd` isn't called.
   - **[add]** API: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language.
+  - **[fix]** translations: a word means one command in every language, which the tests check. pt-PT: the constant e is `euler`, since `e` means and; sl: do is `naredi`, since `ne` means not; th: and is `และ`, since `แล้ว` means then.
+  - **[fix]** translations: words left in English are translated: false in el (`ψευδές`), nl (`onwaar`), ro (`fals`), sk (`nepravda`) and sl (`ni_res`); true in ca (`cert`); input in da (`indtast`) and fi (`syötä`); absolute value in ca (`valor_absolut`); square in vi (`bình_phương`); ceil in 20 languages, matching each language's floor.
 
 ## 0.5.0-alpha.0 (2026-10-19)
 

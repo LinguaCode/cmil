@@ -36,7 +36,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'false'
+    definition: 'onwaar'
   },
   {
     command: COMMAND.TRUE,
@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'plafond'
   },
   {
     command: COMMAND.ABS,

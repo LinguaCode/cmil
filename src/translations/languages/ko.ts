@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: '천장'
   },
   {
     command: COMMAND.ABS,

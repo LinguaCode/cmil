@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: 'true'
+    definition: 'cert'
   },
   {
     command: COMMAND.DO,
@@ -96,11 +96,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'sostre'
   },
   {
     command: COMMAND.ABS,
-    definition: 'absolute_value'
+    definition: 'valor_absolut'
   },
   {
     command: COMMAND.SIN,

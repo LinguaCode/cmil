@@ -36,7 +36,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'false'
+    definition: 'ni_res'
   },
   {
     command: COMMAND.TRUE,
@@ -44,7 +44,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.DO,
-    definition: 'ne'
+    definition: 'naredi'
   },
   {
     command: COMMAND.WHILE,
@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'strop'
   },
   {
     command: COMMAND.ABS,
