@@ -11,8 +11,7 @@ module.exports = [{
     }, {
       title: 'boolean words in text stay text',
       code: 'output "it is true that null is nothing"',
-      output: 'it is true that null is nothing',
-      todo: 'needs the new interpreter'
+      output: 'it is true that null is nothing'
     }, {
       title: 'boolean joined into text',
       code: 'output "x: " + (5 > 3)',

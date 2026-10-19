@@ -1,7 +1,6 @@
 //packages
 const assert = require('node:assert');
 const {describe, it, before, after} = require('node:test');
-const _ = require('lodash');
 
 const CodeSubmit = require('../src');
 
@@ -55,7 +54,7 @@ const errorCheck = (source, output, error) => {
   assert.strictEqual(error.errorId, source.errorId, message);
 
   ['variable', 'line'].forEach(param => {
-    assert.strictEqual(_.get(error.param, param), _.get(source.errorParam, param), `${param}: ${message}`);
+    assert.strictEqual(error.param?.[param], source.errorParam?.[param], `${param}: ${message}`);
   });
 
   //output printed before the error, checked when the case defines it
@@ -96,7 +95,7 @@ collections.forEach(({name, language}) => {
 
 /**sessions keep their own state*/
 describe('sessions', () => {
-  it('a session waiting for input survives another session', {todo: 'needs the new interpreter'}, () => new Promise((resolve, reject) => {
+  it('a session waiting for input survives another session', () => new Promise((resolve, reject) => {
     const outputs = [];
 
     const waiting = new CodeSubmit('input name\noutput "A got " + name', 'en');
@@ -124,8 +123,8 @@ describe('sessions', () => {
   }));
 });
 
-/**without the timeout check, a long-running loop exhausts the call stack of the recursive executer*/
-describe('stack exhaustion', () => {
+/**without the time limit, the step limit still ends a long-running loop*/
+describe('step limit', () => {
   before(() => {
     process.env.TIMEOUT_IGNORE = true;
   });
