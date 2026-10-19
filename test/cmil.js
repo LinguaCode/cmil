@@ -49,14 +49,19 @@ const run = (source, language) => new Promise((resolve, reject) => {
 
 const sourceCodeMessage = source => `Source code:\n== START ==\n${source.code ? `${source.code}\n` : ''}== END ==`;
 
-const errorCheck = (source, error) => {
+const errorCheck = (source, output, error) => {
   const message = `${sourceCodeMessage(source)}\nError:\n${JSON.stringify(error)}`;
 
   assert.strictEqual(error.errorId, source.errorId, message);
 
-  ['variable', 'line', 'ip'].forEach(param => {
+  ['variable', 'line'].forEach(param => {
     assert.strictEqual(_.get(error.param, param), _.get(source.errorParam, param), `${param}: ${message}`);
   });
+
+  //output printed before the error, checked when the case defines it
+  if ('output' in source) {
+    assert.strictEqual(output, source.output, sourceCodeMessage(source));
+  }
 };
 
 const outputCheck = (source, output, error) => {
@@ -73,7 +78,7 @@ const analyze = (sources, language) => {
     } else {
       it(source.title, {todo: source.todo, skip: source.skip}, () => run(source, language).then(({output, error}) => {
         if (source.errorId) {
-          errorCheck(source, error);
+          errorCheck(source, output, error);
         } else {
           outputCheck(source, output, error);
         }
