@@ -1,5 +1,1 @@
-module.exports = [].concat(
-  require('./syntax'),
-  require('./logic'),
-  require('./restrictions')
-);
+module.exports = [].concat(require('./syntax'), require('./logic'), require('./restrictions'));

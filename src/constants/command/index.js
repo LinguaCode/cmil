@@ -2,7 +2,7 @@ exports.INPUT = '@input';
 exports.OUTPUT = '@output';
 
 exports.IF = '@if';
-exports.ELSE = '@else'
+exports.ELSE = '@else';
 exports.THEN = '@then';
 
 exports.FALSE = '@false';

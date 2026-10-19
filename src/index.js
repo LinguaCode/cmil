@@ -26,7 +26,7 @@ class CodeSubmit {
   }
 
   get inputEmitter() {
-    return (inputValue) => {
+    return inputValue => {
       logger.log(`CMIL: input: '${inputValue}' received`);
       if (!this.isWaitingForInput) return;
 
@@ -63,7 +63,7 @@ class CodeSubmit {
     this.run();
 
     return this;
-  };
+  }
 
   run() {
     this.isRunning = true;
@@ -95,37 +95,37 @@ class CodeSubmit {
         return this;
       }
     }
-  };
+  }
 
   sendOutput() {
     const output = this.session.takeOutput();
     if (output.length && this.outputCallback) {
       this.outputCallback(output.join('\n'));
     }
-  };
+  }
 
   end(error) {
     const result = error ? {errorId: error.errorId, param: error.param} : {errorId: undefined, param: {}};
     if (this.endCallback) this.endCallback(result);
 
     return this;
-  };
+  }
 
   onInputRequest(inputCallback) {
     this.inputCallback = inputCallback;
 
     return this;
-  };
+  }
   onOutput(outputCallback) {
     this.outputCallback = outputCallback;
 
     return this;
-  };
+  }
   onSessionEnd(onSessionEndCallback) {
     this.endCallback = onSessionEndCallback;
 
     return this;
-  };
+  }
 }
 
 module.exports = CodeSubmit;

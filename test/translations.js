@@ -12,7 +12,10 @@ const commandsOf = language => translations[language].map(instance => instance.c
 
 describe('translations', () => {
   it('index lists every language file', () => {
-    const files = fs.readdirSync(LANGUAGES_PATH).map(file => path.basename(file, '.js')).sort();
+    const files = fs
+      .readdirSync(LANGUAGES_PATH)
+      .map(file => path.basename(file, '.js'))
+      .sort();
 
     assert.deepStrictEqual(Object.keys(translations).sort(), files);
   });

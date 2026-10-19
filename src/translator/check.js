@@ -35,7 +35,7 @@ var quoteAnalyze = function (input, index) {
       }
     },
     single: {
-      symbol: '\'',
+      symbol: "'",
       count: {
         before: 0,
         after: 0
@@ -63,7 +63,6 @@ var quoteAnalyze = function (input, index) {
       }
     }
   };
-
 
   for (var key in quotes) {
     var quote = quotes[key];
@@ -108,14 +107,30 @@ var isNotPartOfText = function (input, index) {
   var isAnyQuotationMarkEnd = quotationMarkIndexes.endOfAfter !== -1;
   var isAnyQuotationMarks = isAnyQuotationMarkBegin && isAnyQuotationMarkEnd;
 
-  if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore && !((quotes.es6.isOpen.before && quotes.es6.isOpen.after) || (!quotes.es6.isOpen.before && !quotes.es6.isOpen.after))) return true;
-  if (isAnyQuotationMarks && quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter && !(quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore) && !quotes.es6.isOpen.before && !quotes.single.isOpen.before && !quotes.double.isOpen.before) return false;
+  if (
+    isAnyQuotationMarks &&
+    quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore &&
+    !((quotes.es6.isOpen.before && quotes.es6.isOpen.after) || (!quotes.es6.isOpen.before && !quotes.es6.isOpen.after))
+  )
+    return true;
+  if (
+    isAnyQuotationMarks &&
+    quotationMarkIndexes.begin < quotationMarkIndexes.endOfAfter &&
+    !(quotationMarkIndexes.begin < quotationMarkIndexes.endOfBefore) &&
+    !quotes.es6.isOpen.before &&
+    !quotes.single.isOpen.before &&
+    !quotes.double.isOpen.before
+  )
+    return false;
 
   //check if the symbol was <text quote>
   if (currentSymbol === quotes.single.symbol) {
     if (quotes.double.isOpen.after && quotes.double.isOpen.before) return false;
 
-    if ((quotes.single.isOpen.after && !quotes.single.isOpen.before) || (quotes.es6.isOpen.before && !quotes.single.isOpen.after)) {
+    if (
+      (quotes.single.isOpen.after && !quotes.single.isOpen.before) ||
+      (quotes.es6.isOpen.before && !quotes.single.isOpen.after)
+    ) {
       return true;
     }
   } else if (currentSymbol === quotes.double.symbol) {
@@ -124,14 +139,13 @@ var isNotPartOfText = function (input, index) {
     if (
       (quotes.double.isOpen.after && !quotes.double.isOpen.before) ||
       (quotes.es6.isOpen.before && !quotes.double.isOpen.after)
-    ) return true;
+    )
+      return true;
   }
-
 
   if (currentSymbol === quotes.es6.symbol) {
     return !quotes.single.isOpen.before || (quotes.single.isOpen.before && !quotes.single.isOpen.after);
   }
-
 
   if (currentSymbol === quotationMarks.begin) {
     return !quotes.es6.isOpen.after;
@@ -141,9 +155,12 @@ var isNotPartOfText = function (input, index) {
     var indexOfNextES6 = input.indexOf(quotes.es6.symbol, index + 1);
     var isIndexOfNextMarkEndLowerThanIndexOfNextES6 = isNextMarkEndExists && indexOfNextMarkEnd < indexOfNextES6;
     return (
-      !quotes.es6.isOpen.before || !quotes.es6.isOpen.after || (
-        quotes.es6.isOpen.before && quotes.es6.isOpen.after && isNextMarkEndExists && !isIndexOfNextMarkEndLowerThanIndexOfNextES6
-      )
+      !quotes.es6.isOpen.before ||
+      !quotes.es6.isOpen.after ||
+      (quotes.es6.isOpen.before &&
+        quotes.es6.isOpen.after &&
+        isNextMarkEndExists &&
+        !isIndexOfNextMarkEndLowerThanIndexOfNextES6)
     );
   }
 
@@ -171,7 +188,7 @@ exports.isPartOfCode = function (line, index) {
 exports.isPartOfCommand = function (line, instance, index) {
   var previousSymbol = line[index - 1];
   var nextSymbol = line[instance.length + index];
-  var regExp = /[^\u00AB\u00BB()%+\-*\/=#'"\s,]/;
+  var regExp = /[^\u00AB\u00BB()%+\-*/=#'"\s,]/;
 
   var isAnyPartBefore = previousSymbol && regExp.test(previousSymbol);
   var isAnyPartAfter = nextSymbol && regExp.test(nextSymbol);
