@@ -19,6 +19,8 @@ Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/Lin
 AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/blob/master/AGENTS.md).
 
 ## How to get started?
+Try CMIL in your browser, in any of its 32 languages, at the [CMIL playground](https://linguacode.otanim.com).
+
 #### Requirements
 [Node.js](https://nodejs.org) 24 or newer.
 
