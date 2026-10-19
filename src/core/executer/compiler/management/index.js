@@ -1,6 +1,8 @@
 const modify = require('../../../modifier/modify');
 
-const SUCCESS = require('linguacode-constants').STATUS.SUCCESS;
+const STATUS = require('linguacode-constants').STATUS;
+const SUCCESS = STATUS.SUCCESS;
+const TIMEOUT = STATUS.TIMEOUT;
 
 exports.codeRun = function (sessionId, sourceCode, language) {
   console.llog('compiler: codeRun', 'begin');
@@ -69,12 +71,21 @@ function listenerController(sessionId) {
 
 
 const errorExtract = function (sessionId, error) {
+  //the recursive executer can exhaust the call stack before the timeout check of a long-running loop
+  if (errorHandler.isStackExhausted(error)) {
+    error = {
+      errorId: TIMEOUT,
+      param: {}
+    };
+  }
+
   const isError = typeof(error) === 'object';
   if (isError) {
     setter.output(sessionId, error);
   }
 };
 
+const errorHandler = require('../../../errorHandler');
 const parentExecute = require('../parentExecute');
 const initializer = require('../../initializer');
 const setter = require('../../setter');

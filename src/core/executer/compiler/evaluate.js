@@ -30,6 +30,10 @@ exports.code = (sessionId, sourceCode) => {
     try {
       var codeFormatted = formatter.codeFormatting(sessionId, line);
     } catch (errorId) {
+      if (errorHandler.isStackExhausted(errorId)) {
+        throw errorId;
+      }
+
       throw {
         errorId,
         param: {
@@ -46,6 +50,10 @@ exports.code = (sessionId, sourceCode) => {
 
       evalStatus = SUCCESS;
     } catch (error) {
+      if (errorHandler.isStackExhausted(error)) {
+        throw error;
+      }
+
       evalResult = '';
       evalStatus = errorHandler.evalResult(error);
     }

@@ -87,3 +87,22 @@ collections.forEach(({name, language}) => {
     analyze(require(`./collection/${name}`), language);
   });
 });
+
+/**without the timeout check, a long-running loop exhausts the call stack of the recursive executer*/
+describe('stack exhaustion', function () {
+  this.timeout(5000);
+
+  before(() => {
+    process.env.TIMEOUT_IGNORE = true;
+  });
+
+  after(() => {
+    delete process.env.TIMEOUT_IGNORE;
+  });
+
+  analyze([{
+    title: 'Infinity loop: timeout ignored',
+    code: 'while 1 < 4\n    output 123',
+    errorId: 'timeout'
+  }], 'en');
+});

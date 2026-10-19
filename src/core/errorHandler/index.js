@@ -22,6 +22,8 @@ exports.analyze = (sourceCode, params) => {
   return null;
 };
 
+exports.isStackExhausted = error => error instanceof Error && /maximum call stack|too much recursion/i.test(error.message);
+
 exports.evalResult = error => {
   const errorMessage = error.message;
   const unexpectedIdentifier = /Unexpected identifier/i;
