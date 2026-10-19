@@ -51,7 +51,9 @@ codeSubmit
 ```
 - `onOutput(callback)`: receives the text printed by the program.
 - `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.inputEmitter(value)`.
-- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable` or `timeout`) and `param` holds details such as `line` or `variable`.
+- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout` or `memoryLimit`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
+
+CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 
 #### Development
 ```
@@ -60,7 +62,7 @@ cd cmil
 npm install
 npm test
 ```
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`. `npm run coverage` also writes a coverage report into `coverage/`.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations. `npm run coverage` also writes a coverage report into `coverage/`.
 
 ## Screenshot
 

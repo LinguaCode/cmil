@@ -16,13 +16,15 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Public API:** `src/index.js` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter.
 - **Package entry:** `main` is `src/index.js`, with no build step. `files` limits the package to `src/`.
 - **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.js`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. `test/translations.js` checks that every language defines every command, and `test/translator.js` covers code↔text conversion. All 217 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.js`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.js` covers the interpreter's mechanics, `test/translations.js` checks that every language defines every command, and `test/translator.js` covers code↔text conversion. All 249 tests pass on Node.js 24 and 26.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` and `npm test` on Node.js 24 and 26 for every push and pull request.
-- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (CHANGELOG 0.4.0: 184 tests; 179 are active now, the hack attempt case is commented out).
-- **Output format:** `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>` and so on (LML standard), also inside string output.
-- **Timeout:** a session ends with `timeout` after `TIMEOUT_TIME` (666 ms, `src/constants`). The executer recurses on every loop iteration, so a fast engine can exhaust the call stack first; that is reported as `timeout` too.
-- **Dependencies:** lodash is the only runtime dependency. The former sibling packages live in this repository, each with its own license file:
+- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (190 cases).
+- **Core:** programs never run as JavaScript. `src/index.js` translates the localized commands with `src/translator`, then `src/core/lexer.js` splits lines into tokens, `parser.js` builds the syntax tree, `compiler.js` flattens it into instructions with jumps, and `interpreter.js` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
+- **Errors:** syntax and indentation errors are found before the program runs. Every error reports its absolute line, except `timeout`. Output printed before an error is sent first.
+- **Output format:** boolean values, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard), also when joined into text; words in texts stay as written.
+- **Limits** (`src/constants/index.js`, see `docs/running.md`): between two inputs a program may run 666 ms and 100,000 steps (`timeout`); a text may be 1,000,000 characters and unsent output 10,000,000 (`memoryLimit`); blocks and expressions nest at most 100 levels (`syntaxError`).
+- **Dependencies:** none at runtime; c8 is the only dev dependency. The former sibling packages live in this repository, each with its own license file:
   - `src/constants/`: statuses, syntax and commands, from `linguacode-constants` (MIT)
   - `src/translator/`: converts code to text and text to code, from `linguacode-translator` (GPL-3.0)
   - `src/translations/`: the commands of each language, from `linguacode-translations` (MIT); `index.js` lists the languages
@@ -30,7 +32,7 @@ Verified on 2026-10-19. Update this section when a fact changes.
 
   The old repositories are to be archived. Installing cmil from GitHub with npm 12 needs `--allow-git=root`.
 - **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
-- **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`). Every `execute()` resets these stores, so concurrent sessions overwrite each other.
+- **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
 - **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
@@ -40,24 +42,23 @@ Verified on 2026-10-19. Update this section when a fact changes.
 
 Read the files before relying on these descriptions.
 
-- `src/index.js`: public API and session lifecycle (pre-execute, execute, post-execute)
-- `src/core/errorHandler/`: checks run before execution (`checker.js`, `reservedWords.js`)
-- `src/core/builder/`: builds the executable structure (`coder/`, `operations/`, `operations/conditions/`)
-- `src/core/executer/`: compiler and evaluation, session getters, setters and checkers, the input listener
-- `src/core/sender/`: passes output, input requests and session end to the `CodeSubmit` callbacks
-- `src/core/globals/`: per-session global stores
-- `src/core/formatter/`, `src/core/modifier/` (`modify.js`, `uglify.js`)
-- `src/libs/constants.js`: Unicode-aware identifier regexes and syntax constants
-- `src/libs/tools.js`: parsing helpers for quotes, arguments, scopes and code depth
+- `src/index.js`: public API: runs a session, sends output, requests input, reports the end
+- `src/core/lexer.js`: tokens of each line; indentation, texts, numbers, identifiers and `@commands`
+- `src/core/parser.js`: statements and blocks by indentation; expressions by precedence
+- `src/core/compiler.js`: flat instructions with jumps for conditions and loops
+- `src/core/interpreter.js`: the `Session` that runs instructions within the limits
+- `src/core/values.js`: text conversion and markers, operators, math functions and constants
+- `src/core/error.js`: `CmilError`, the `{errorId, param}` reported to `onSessionEnd`
 - `src/libs/logger.js`: debug logging
 - `src/constants/`, `src/translator/`, `src/translations/`: see **Dependencies** above
-- `test/`: test harness (`cmil.js`), test cases (`collection/`), `translations.js` and `translator.js`
+- `test/`: test harness (`cmil.js`), test cases (`collection/`), `core.js`, `translations.js` and `translator.js`
+- `docs/running.md`: limits and running sessions in a worker
 
 ## Commands
 
 ```bash
 npm install
-npm test           # node --test: test/collection against CodeSubmit, translations, translator
+npm test           # node --test: test/collection against CodeSubmit, core, translations, translator
 npm run coverage   # the same under c8
 ```
 
