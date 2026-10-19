@@ -23,13 +23,9 @@
   "bugs": "https://github.com/LinguaCode/core/issues",
   "dependencies": {
     "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
-    "linguacode-translator": "https://github.com/LinguaCode/linguacode-translator",
     "lodash": "^4.18.1"
   },
   "devDependencies": {
     "c8": "^12.0.0"
-  },
-  "allowScripts": {
-    "github:LinguaCode/linguacode-translations#dfc1dad134636bc83d12ff4ee5d4ca9a90023bb6": true
   }
 }
