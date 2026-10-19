@@ -53,6 +53,7 @@ Read the files before relying on these descriptions.
 - `src/libs/logger.js`: debug logging
 - `src/constants/`, `src/translator/`, `src/translations/`: see **Dependencies** above
 - `test/`: test harness (`cmil.js`), test cases (`collection/`), `core.js`, `translations.js` and `translator.js`
+- `docs/language.md`: the language reference; keep it in line with `test/collection`
 - `docs/running.md`: limits and running sessions in a worker
 
 ## Commands
