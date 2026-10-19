@@ -1,3 +1,4 @@
+[![test](https://github.com/LinguaCode/cmil/actions/workflows/test.yml/badge.svg)](https://github.com/LinguaCode/cmil/actions/workflows/test.yml)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 # CMIL - Clarified Multilingual Intermediate Language
@@ -19,22 +20,24 @@ AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/bl
 
 ## How to get started?
 #### Requirements
-[Node.js](https://nodejs.org), tested on Node.js 24 LTS and 22.
+[Node.js](https://nodejs.org) 24 or newer.
 
 #### Install
-CMIL isn't published to npm. Clone the repository, install its dependencies and build it:
+CMIL isn't published to npm. Install it from GitHub:
 ```
-git clone https://github.com/LinguaCode/cmil.git
-cd cmil
-npm install
-npm run build
+npm install github:LinguaCode/cmil
 ```
-`npm run build` compiles `src/` with Babel into `build/`, the entry point of the package.
+npm 12 refuses git dependencies and blocks the install script of linguacode-translations by default, so with npm 12 run:
+```
+npm install github:LinguaCode/cmil --allow-git=all
+npm install-scripts approve linguacode-translations
+npm rebuild linguacode-translations --allow-git=all
+```
 
 #### Usage
 CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](https://github.com/LinguaCode/linguacode-translations/tree/master/languages), for example `en`, `ru` or `hy-AM`.
 ```js
-const CodeSubmit = require('./build');
+const CodeSubmit = require('cmil');
 
 const codeSubmit = new CodeSubmit('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
 
@@ -52,10 +55,14 @@ codeSubmit
 - `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.inputEmitter(value)`.
 - `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable` or `timeout`) and `param` holds details such as `line` or `variable`.
 
-#### Run tests
-`npm test`
-
-The tests run every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`.
+#### Development
+```
+git clone https://github.com/LinguaCode/cmil.git
+cd cmil
+npm install
+npm test
+```
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`. `npm run coverage` also writes a coverage report into `coverage/`.
 
 ## Screenshot
 

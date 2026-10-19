@@ -5,6 +5,12 @@
   - **[fix]** tests: run in-process against `CodeSubmit`, the Socket.IO server they relied on was removed in 0.4.0-alpha.
   - **[fix]** errors: `undefinedVariable` is detected again.
   - **[fix]** errors: a long-running loop that exhausts the call stack before the timeout check (seen on Node.js 24) ends with `timeout` instead of an empty error.
+  - **[change]** runtime: requires Node.js 24 or newer.
+  - **[change]** package: `main` is `src/index.js`, the Babel build is removed, so installing from GitHub works without a build.
+  - **[change]** tests: the Node.js test runner replaces Mocha, c8 replaces istanbul (`npm run coverage`).
+  - **[add]** CI: GitHub Actions on Node.js 24 and 26, replacing Travis CI, Coveralls and Code Climate.
+  - **[add]** `package-lock.json` is committed.
+  - **[optimize]** dependencies: moment removed, lodash 4.18; installs 61 packages instead of about 400, with no known vulnerabilities instead of 58.
 
 ## 0.4.0 (2016-11-12)
 
