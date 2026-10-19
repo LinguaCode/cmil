@@ -3,6 +3,8 @@ name: release
 on:
   push:
     tags: ['v*']
+  # run on master to tag the package version there and release it
+  workflow_dispatch:
 
 permissions:
   # create the GitHub Release
@@ -24,40 +26,46 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-      - name: Check the tag
+      - name: Check the version
         run: |
           version=$(node -p "require('./package.json').version")
-          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ]; then
+            if [ "$GITHUB_REF_NAME" != master ]; then
+              echo "Run the release on master, not on $GITHUB_REF_NAME."
+              exit 1
+            fi
+          elif [ "$GITHUB_REF_NAME" != "v$version" ]; then
             echo "The tag $GITHUB_REF_NAME doesn't match the package version $version."
             exit 1
           fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
       - name: Create the GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version=${GITHUB_REF_NAME#v}
+          tag="v$VERSION"
           # the notes are this version's section of the CHANGELOG
-          awk -v heading="## $version " 'index($0, heading) == 1 { found = 1; next } found && /^## / { exit } found' CHANGELOG.md > notes.md
+          awk -v heading="## $VERSION " 'index($0, heading) == 1 { found = 1; next } found && /^## / { exit } found' CHANGELOG.md > notes.md
           if ! grep -q '[^[:space:]]' notes.md; then
-            echo "CHANGELOG.md has no section for $version."
+            echo "CHANGELOG.md has no section for $VERSION."
             exit 1
           fi
-          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
-            echo "The release $GITHUB_REF_NAME already exists."
-          elif [[ "$version" == *-* ]]; then
-            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --notes-file notes.md --prerelease
+          # a missing tag is created on this commit; the tag isn't pushed, so it doesn't start this workflow again
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "The release $tag already exists."
+          elif [[ "$VERSION" == *-* ]]; then
+            gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes-file notes.md --prerelease
           else
-            gh release create "$GITHUB_REF_NAME" --verify-tag --title "$GITHUB_REF_NAME" --notes-file notes.md
+            gh release create "$tag" --target "$GITHUB_SHA" --title "$tag" --notes-file notes.md
           fi
       # the first version on npm is published by hand, before trusted publishing can be set up
       - name: Publish to npm
         run: |
-          version=${GITHUB_REF_NAME#v}
           # cmil is on npm from the first release candidate: alpha and beta versions stay on GitHub
-          if [[ "$version" == *-* && "$version" != *-rc.* ]]; then
-            echo "cmil@$version is a pre-release before the release candidates, so it isn't published to npm."
-          elif [ -n "$(npm view "cmil@$version" version 2>/dev/null)" ]; then
-            echo "cmil@$version is already on npm."
+          if [[ "$VERSION" == *-* && "$VERSION" != *-rc.* ]]; then
+            echo "cmil@$VERSION is a pre-release before the release candidates, so it isn't published to npm."
+          elif [ -n "$(npm view "cmil@$VERSION" version 2>/dev/null)" ]; then
+            echo "cmil@$VERSION is already on npm."
           else
             npm publish --tag latest
           fi
