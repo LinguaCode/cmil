@@ -10,7 +10,9 @@
   - **[change]** tests: the Node.js test runner replaces Mocha, c8 replaces istanbul (`npm run coverage`).
   - **[add]** CI: GitHub Actions on Node.js 24 and 26, replacing Travis CI, Coveralls and Code Climate.
   - **[add]** `package-lock.json` is committed.
-  - **[optimize]** dependencies: moment removed, lodash 4.18; installs 61 packages instead of about 400, with no known vulnerabilities instead of 58.
+  - **[optimize]** dependencies: moment removed, lodash 4.18; installs 56 packages instead of about 400, with no known vulnerabilities instead of 58.
+  - **[change]** packages: linguacode-constants, linguacode-translator and linguacode-translations are part of cmil (`src/constants`, `src/translator`, `src/translations`), and `src/libs/logger.js` replaces lingua-logger. lodash is the only dependency, with no git dependencies or install scripts.
+  - **[add]** tests: every language defines every command; the translator converts code to text and back.
 
 ## 0.4.0 (2016-11-12)
 

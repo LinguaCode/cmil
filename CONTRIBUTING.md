@@ -20,8 +20,8 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
    See all project repositories at https://github.com/LinguaCode.
 3. Diagnose a bug by creating an issue.
 3. Suggest an improvement by creating an issue.
-4. Close resolved issues ([here's the list](https://github.com/LinguaCode/core/issues))
-5. [Test the code](https://github.com/LinguaCode/core/blob/master/README.md).
+4. Close resolved issues ([here's the list](https://github.com/LinguaCode/cmil/issues))
+5. [Test the code](https://github.com/LinguaCode/cmil/blob/master/README.md).
 6. Fix a bug/resolve an issue.
 7. Write a test.
 8. Add a comment to the code.
@@ -31,14 +31,14 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
 12. Improve the translator's core.
 
 ## How to translate
-The commands of LinguaCode are translated in the [linguacode-translations](https://github.com/LinguaCode/linguacode-translations) repository, one file per language in its `languages` folder.
+The commands of LinguaCode are translated in this repository, one file per language in [`src/translations/languages`](src/translations/languages).
 
-1. Fork [linguacode-translations](https://github.com/LinguaCode/linguacode-translations).
-2. To add a language, copy `languages/en.js` to a file named after the language code, for example `languages/it.js`, or `languages/pt-PT.js` for a regional variant. To improve a language, edit its existing file.
+1. Fork this repository.
+2. To add a language, copy `src/translations/languages/en.js` to a file named after the language code, for example `it.js`, or `pt-PT.js` for a regional variant, and add it to `src/translations/index.js`. To improve a language, edit its existing file.
 3. Translate the `definition` of every command. Separate alternative spellings with `|`, for example `'և|եւ|ու'`.
-4. Open a pull request.
+4. Run `npm test`, which checks that every language defines every command, and open a pull request.
 5. Take this :pizza: piece of pizza from us in return for help :blush:.
 
 ## License
-LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/core/blob/master/LICENSE).
+LinguaCode is [licensed under GPLv3](https://github.com/LinguaCode/cmil/blob/master/LICENSE).
 

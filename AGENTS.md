@@ -16,25 +16,23 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Public API:** `src/index.js` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter.
 - **Package entry:** `main` is `src/index.js`, with no build step. `files` limits the package to `src/`.
 - **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
-- **Tests:** the Node.js test runner (`npm test`, `node --test`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. All 180 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.js`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. `test/translations.js` checks that every language defines every command, and `test/translator.js` covers code↔text conversion. All 217 tests pass on Node.js 24 and 26.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` and `npm test` on Node.js 24 and 26 for every push and pull request.
 - **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (CHANGELOG 0.4.0: 184 tests; 179 are active now, the hack attempt case is commented out).
 - **Output format:** `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>` and so on (LML standard), also inside string output.
-- **Timeout:** a session ends with `timeout` after `TIMEOUT_TIME` (666 ms, `linguacode-constants`). The executer recurses on every loop iteration, so a fast engine can exhaust the call stack first; that is reported as `timeout` too.
-- **Dependencies from GitHub URLs**, unpublished and unchanged since 2016–2017. The owner controls all of them:
-  - `linguacode-constants`: statuses, syntax, commands and paths
-  - `linguacode-translator`: converts code to text and text to code
-  - `lingua-logger`: the `console.llog` calls in `src/` rely on it
+- **Timeout:** a session ends with `timeout` after `TIMEOUT_TIME` (666 ms, `src/constants`). The executer recurses on every loop iteration, so a fast engine can exhaust the call stack first; that is reported as `timeout` too.
+- **Dependencies:** lodash is the only runtime dependency. The former sibling packages live in this repository, each with its own license file:
+  - `src/constants/`: statuses, syntax and commands, from `linguacode-constants` (MIT)
+  - `src/translator/`: converts code to text and text to code, from `linguacode-translator` (GPL-3.0)
+  - `src/translations/`: the commands of each language, from `linguacode-translations` (MIT); `index.js` lists the languages
+  - `src/libs/logger.js`: replaces `lingua-logger`; `log()` prints only when `DEBUG` is `true`
 
-  Translation files live in `LinguaCode/linguacode-translations`. Its `main` points to a missing `./src/index.js`, so current Node.js prints a `DEP0128` warning on load, and its postinstall generates `languageList.js`, without which it can't load.
-
-  npm 12 refuses git dependencies and blocks unapproved install scripts by default. `.npmrc` sets `allow-git=all`, and `allowScripts` in `package.json` approves that postinstall, pinned to the locked commit: after the lockfile moves `linguacode-translations` to another commit, run `npm install-scripts approve linguacode-translations` again. Projects that install cmil need the same steps (see the README).
+  The old repositories are to be archived. Installing cmil from GitHub with npm 12 needs `--allow-git=root`.
 - **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
 - **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`). Every `execute()` resets these stores, so concurrent sessions overwrite each other.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
-- **Old repository name:** `package.json` `repository` and `bugs` still point to the old name `LinguaCode/core`. GitHub redirects it.
-- **Translations:** translators send pull requests to `LinguaCode/linguacode-translations` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
+- **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
 - **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default), plus the old `input-output-brackets-delete`.
 
@@ -51,13 +49,15 @@ Read the files before relying on these descriptions.
 - `src/core/formatter/`, `src/core/modifier/` (`modify.js`, `uglify.js`)
 - `src/libs/constants.js`: Unicode-aware identifier regexes and syntax constants
 - `src/libs/tools.js`: parsing helpers for quotes, arguments, scopes and code depth
-- `test/`: test harness (`cmil.js`) and test cases (`collection/`)
+- `src/libs/logger.js`: debug logging
+- `src/constants/`, `src/translator/`, `src/translations/`: see **Dependencies** above
+- `test/`: test harness (`cmil.js`), test cases (`collection/`), `translations.js` and `translator.js`
 
 ## Commands
 
 ```bash
 npm install
-npm test           # node --test: test/collection against CodeSubmit
+npm test           # node --test: test/collection against CodeSubmit, translations, translator
 npm run coverage   # the same under c8
 ```
 
@@ -89,12 +89,12 @@ Issues, pull requests, reviews and comments are published under the owner's iden
 The repository is GPL-3.0 (`LICENSE`), and the README contains the author's statement about ownership of the CMIL standard.
 
 - Don't edit `LICENSE`, ownership or legal statements, `TEAM.md`, or author fields without an explicit instruction from the owner.
-- Report apparent conflicts instead of resolving them yourself. Examples: the GPL license versus the README statement, and `"license": "SEE LICENSE IN LICENSE file"` in `package.json`.
+- Report apparent conflicts instead of resolving them yourself. Examples: the GPL license versus the README statement, `"license": "SEE LICENSE IN LICENSE file"` in `package.json`, and the MIT licenses of `src/constants/` and `src/translations/` inside the GPL repository.
 
 ## Language Behaviour
 
 - The cases in `test/collection/` are the language specification. Never change an expected output just to make a test pass. A behaviour change needs the owner's approval and a `CHANGELOG.md` entry.
-- CMIL is multilingual. Keywords, statuses and messages come from `linguacode-constants`, `linguacode-translator` and `linguacode-translations`, so a change may need to span those repositories. Don't hard-code language-specific text into the core.
+- CMIL is multilingual. Keywords, statuses and messages come from `src/constants/`, `src/translator/` and `src/translations/`, so a change may need to span all three. Don't hard-code language-specific text into the core.
 - Keep Unicode identifiers working (`src/libs/constants.js`).
 - Keep the core able to run in a browser unless the owner decides otherwise.
 
@@ -115,12 +115,12 @@ The revival raises choices that belong to the owner. Present the options with tr
 2. CommonJS or ESM. JavaScript or TypeScript.
 3. Build step: decided, none. `main` is `src/index.js`; `exports` is not set.
 4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly against `CodeSubmit`.
-5. Sibling dependencies: keep GitHub URLs, publish them to npm, or bring them into this repository. GitHub URLs need the npm 12 opt-ins described in **Current State**.
+5. Sibling dependencies: decided, brought into this repository.
 6. Lockfile policy: decided, `package-lock.json` is committed.
 7. CI: decided, GitHub Actions.
 8. Linting and formatting tools.
 9. Whether cmil stays a library only, or a server or socket layer returns.
-10. Translation platform: decided, translations come as pull requests to `linguacode-translations`. Crowdin and Transifex are retired.
+10. Translation platform: decided, translations come as pull requests to this repository. Crowdin and Transifex are retired.
 11. Publishing: npm package name and version scheme.
 
 A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the tests, and record exactly what fails and why, without changing anything.
