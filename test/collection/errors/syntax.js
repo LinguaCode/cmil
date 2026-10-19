@@ -22,6 +22,14 @@ module.exports = [{
     code: 'output 1x',
     errorId: 'syntaxError'
   }, {
+    title: 'Syntax error before the last line',
+    code: 'output 1x\noutput 2',
+    errorId: 'syntaxError',
+    errorParam: {
+      line: 1
+    },
+    todo: 'needs the new interpreter'
+  }, {
     title: 'Function argument scope error',
     code: 'a = square(5\noutput a',
     errorId: 'functionArgumentSyntaxError',

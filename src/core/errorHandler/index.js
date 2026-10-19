@@ -4,7 +4,7 @@ const INDENT_ERROR = STATUS.INDENT_ERROR;
 
 const check = exports.check = require('./checker');
 
-const pipeline = [/*HACK_ATTEMPT,*/ INDENT_ERROR];
+const pipeline = [INDENT_ERROR];
 
 exports.analyze = (sourceCode, params) => {
   for (let i = 0; i < pipeline.length; i++) {

@@ -71,7 +71,7 @@ const analyze = (sources, language) => {
         analyze(source.sources, language);
       });
     } else {
-      it(source.title, () => run(source, language).then(({output, error}) => {
+      it(source.title, {todo: source.todo, skip: source.skip}, () => run(source, language).then(({output, error}) => {
         if (source.errorId) {
           errorCheck(source, error);
         } else {
@@ -87,6 +87,36 @@ collections.forEach(({name, language}) => {
   describe(name, () => {
     analyze(require(`./collection/${name}`), language);
   });
+});
+
+/**sessions keep their own state*/
+describe('sessions', () => {
+  it('a session waiting for input survives another session', {todo: 'needs the new interpreter'}, () => new Promise((resolve, reject) => {
+    const outputs = [];
+
+    const waiting = new CodeSubmit('input name\noutput "A got " + name', 'en');
+    waiting
+      .onOutput(text => outputs.push(text))
+      .onInputRequest(() => {})
+      .onSessionEnd(error => {
+        try {
+          assert.strictEqual(error.errorId, undefined, JSON.stringify(error));
+          assert.deepStrictEqual(outputs, ['B runs', 'A got Ani']);
+          resolve();
+        } catch (assertionError) {
+          reject(assertionError);
+        }
+      })
+      .execute();
+
+    new CodeSubmit('output "B runs"', 'en')
+      .onOutput(text => outputs.push(text))
+      .onInputRequest(() => {})
+      .onSessionEnd(() => {})
+      .execute();
+
+    waiting.inputEmitter('Ani');
+  }));
 });
 
 /**without the timeout check, a long-running loop exhausts the call stack of the recursive executer*/

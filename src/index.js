@@ -83,8 +83,7 @@ class CodeSubmit {
 
     const error = errorHandler.analyze(sourceCode);
     if (error) {
-      //TODO: Implement hack attempt detection
-      logger.log('Output text has been successfully send! (Hack attempt)');
+      logger.log('CMIL: error before execution');
 
       setter.output(sessionId, error);
     } else {
