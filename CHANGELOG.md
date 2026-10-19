@@ -1,6 +1,7 @@
 ## Unreleased
 
   - **[change]** output: `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>`, `<NaN/>`, `<null/>`, `<Infinity/>` and `<undefined/>` (LML standard, since 2019-09-04); tests updated from `${true}` / `${false}`.
+  - **[fix]** tests: tutorials use the current Armenian commands `տպել` (output) and `մուտքագրել` (input) instead of `ելք` and `մուտք`, renamed in linguacode-translations on 2017-05-28.
 
 ## 0.4.0 (2016-11-12)
 
