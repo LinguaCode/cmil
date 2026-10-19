@@ -4,7 +4,7 @@
 # CMIL - Clarified Multilingual Intermediate Language
 
 The goal of CMIL is to create a common programming language, which will be designed for people of all nationalities and all ages, which will easily learn basic programming knowledge in purpose of to later switching to professional programming languages.
-Arman Yeghiazaryan is the author and the legal owner of the standard of CMIL. All copies of the standard outside the site of https://linguacode.me will be considered illegal and the author of the copy is liable to legal punishment.
+Arman Yeghiazaryan is the author of the CMIL language. The code and documentation in this repository are free software under the [GPL-3.0](LICENSE) license, except `src/constants` and `src/translations`, which are under the MIT license.
 
 # LinguaCode - Social Coding Platform For Everyone
 **LinguaCode** is a social coding platform and is designed especially for children, where they can learn programming and share their codes with their native language and without the necessity of knowing English.
@@ -23,13 +23,8 @@ AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/bl
 [Node.js](https://nodejs.org) 24 or newer.
 
 #### Install
-CMIL isn't published to npm. Install it from GitHub:
 ```
-npm install github:LinguaCode/cmil
-```
-npm 12 refuses git dependencies by default, so with npm 12 add `--allow-git=root`:
-```
-npm install github:LinguaCode/cmil --allow-git=root
+npm install cmil
 ```
 
 #### Usage

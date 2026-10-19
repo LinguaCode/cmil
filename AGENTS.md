@@ -4,7 +4,7 @@ Guidance for AI coding agents (Claude Code, Codex and others) working in this re
 
 ## Purpose
 
-CMIL (Clarified Multilingual Intermediate Language) is the language core behind [LinguaCode](https://linguacode.me), a platform that teaches children programming in their native language. This file owns agent behaviour for the whole repository.
+CMIL (Clarified Multilingual Intermediate Language) is the language core behind LinguaCode, a platform that teaches children programming in their native language. This file owns agent behaviour for the whole repository.
 
 The project had no commits between 2020-05-30 and its revival. Expect obsolete tooling, and verify anything below against the code before acting on it.
 
@@ -14,7 +14,8 @@ Verified on 2026-10-19. Update this section when a fact changes.
 
 - **Runtime:** Node.js, TypeScript with `strict`, published as ES modules. `engines.node` is `>= 24`. Imports between sources end in `.ts`; `tsc` rewrites them to `.js` in the build. Keep the syntax erasable (`erasableSyntaxOnly`: no enums, namespaces or parameter properties), because Node.js runs the sources directly in the tests. Browser use goes through the consumer's bundler.
 - **Public API:** `src/index.ts` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter, as the default and as a named export, plus the types of its callbacks. The `'module.exports'` export lets CommonJS code `require('cmil')` the class.
-- **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` and on installs from GitHub. `dist/` is gitignored, and `files` limits the package to it. There is no `npm start`.
+- **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/`, `src/translations/` and `src/translator/`. There is no `npm start`.
+- **Publishing:** cmil is published to npm as `cmil`. `.github/workflows/publish.yml` publishes each GitHub Release whose tag is `v` plus the package version, with npm trusted publishing (no token) under the `latest` tag, and skips a version that is already on npm.
 - **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, and `test/translator.ts` covers code↔text conversion. All 249 tests pass on Node.js 24 and 26.
 - **Types:** `npm run typecheck` checks `src/` and `test/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
@@ -31,13 +32,13 @@ Verified on 2026-10-19. Update this section when a fact changes.
   - `src/translations/`: the commands of each language, from `linguacode-translations` (MIT); `index.ts` lists the languages
   - `src/libs/logger.ts`: replaces `lingua-logger`; `log()` prints only when `DEBUG` is `true`
 
-  The old repositories are to be archived. Installing cmil from GitHub with npm 12 needs `--allow-git=root`.
+  The old repositories are to be archived.
 - **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
-- **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
-- **Branches:** `master` (default), plus the old `input-output-brackets-delete`.
+- **Version and changelog:** the version is `0.5.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
+- **Branches:** `master` (default).
 
 ## Source Map
 
@@ -95,10 +96,10 @@ Issues, pull requests, reviews and comments are published under the owner's iden
 
 ### License, Ownership and Credits
 
-The repository is GPL-3.0 (`LICENSE`), and the README contains the author's statement about ownership of the CMIL standard.
+The repository is GPL-3.0 only (`LICENSE`, `"license": "GPL-3.0-only"`), except `src/constants/` and `src/translations/`, which stay MIT by the owner's decision. The README names the author of CMIL and states the licenses.
 
 - Don't edit `LICENSE`, ownership or legal statements, `TEAM.md`, or author fields without an explicit instruction from the owner.
-- Report apparent conflicts instead of resolving them yourself. Examples: the GPL license versus the README statement, `"license": "SEE LICENSE IN LICENSE file"` in `package.json`, and the MIT licenses of `src/constants/` and `src/translations/` inside the GPL repository.
+- Report apparent conflicts instead of resolving them yourself.
 
 ## Language Behaviour
 
@@ -109,7 +110,7 @@ The repository is GPL-3.0 (`LICENSE`), and the README contains the author's stat
 
 ## No Legacy Support
 
-The project is pre-1.0 (`0.4.0-alpha`).
+The project is pre-1.0 (`0.5.0-alpha`).
 
 - Keep internal formats, configuration and APIs on the current version only.
 - Don't add fallback readers, dual-write paths, legacy aliases or compatibility branches.
@@ -122,15 +123,15 @@ The revival raises choices that belong to the owner. Present the options with tr
 
 1. Target Node.js version: decided, `>= 24`, tested on 24 and 26. Revisit when an LTS line ends; check the schedule on the web, don't rely on memory.
 2. CommonJS or ESM. JavaScript or TypeScript: decided, TypeScript with `strict`, published as ESM; `require('cmil')` keeps working for CommonJS.
-3. Build step: decided, `tsc` into `dist/`, run by `prepare` on install, so installing from GitHub builds the package.
+3. Build step: decided, `tsc` into `dist/`, run by `prepare` in a clone and before publishing.
 4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly against `CodeSubmit`.
 5. Sibling dependencies: decided, brought into this repository.
 6. Lockfile policy: decided, `package-lock.json` is committed.
 7. CI: decided, GitHub Actions.
 8. Linting and formatting: decided, ESLint and Prettier.
-9. Whether cmil stays a library only, or a server or socket layer returns.
+9. Library or server: decided, cmil stays a library only; `docs/running.md` shows how to run sessions in a worker.
 10. Translation platform: decided, translations come as pull requests to this repository. Crowdin and Transifex are retired.
-11. Publishing: npm package name and version scheme.
+11. Publishing: decided, npm as `cmil` (the `@linguacode` npm scope belongs to someone else), semver with pre-1.0 alpha versions, published from GitHub Releases under the `latest` tag.
 
 A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the tests, and record exactly what fails and why, without changing anything.
 

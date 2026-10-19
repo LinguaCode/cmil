@@ -1,5 +1,9 @@
-## Unreleased
+## 0.5.0-alpha.0 (2026-10-19)
 
+  - **[add]** package: published to npm as `cmil` (`npm install cmil`); each GitHub Release is published by GitHub Actions with npm trusted publishing.
+  - **[change]** package: `license` is `GPL-3.0-only`.
+  - **[fix]** package: includes the license files of `src/constants`, `src/translations` and `src/translator`.
+  - **[change]** README: names the author of CMIL and states the licenses, instead of restricting copies of the standard; links to the old website are removed.
   - **[change]** source: TypeScript with `strict`, checked in CI (`npm run typecheck`); the package ships type declarations.
   - **[change]** package: an ES module (`import CodeSubmit from 'cmil'`); CommonJS code can still `require('cmil')`. `npm install`, also from GitHub, builds `dist/` through `prepare`; `npm start` is removed.
   - **[fix]** languages: a language name like `constructor` is rejected with "Language was not specified." instead of failing with a `TypeError`.
@@ -10,12 +14,12 @@
   - **[fix]** tests: run in-process against `CodeSubmit`, the Socket.IO server they relied on was removed in 0.4.0-alpha.
   - **[fix]** errors: `undefinedVariable` is detected again.
   - **[change]** runtime: requires Node.js 24 or newer.
-  - **[change]** package: `main` is `src/index.js`, the Babel build is removed, so installing from GitHub works without a build.
+  - **[change]** package: the Babel build is removed.
   - **[change]** tests: the Node.js test runner replaces Mocha, c8 replaces istanbul (`npm run coverage`).
   - **[add]** CI: GitHub Actions on Node.js 24 and 26, replacing Travis CI, Coveralls and Code Climate.
   - **[add]** `package-lock.json` is committed.
-  - **[optimize]** dependencies: moment removed; a development install has 55 packages instead of about 400, with no known vulnerabilities instead of 58.
-  - **[change]** packages: linguacode-constants, linguacode-translator and linguacode-translations are part of cmil (`src/constants`, `src/translator`, `src/translations`), and `src/libs/logger.js` replaces lingua-logger, with no git dependencies or install scripts.
+  - **[optimize]** dependencies: moment removed; a development install has 140 packages instead of about 400, with no known vulnerabilities instead of 58.
+  - **[change]** packages: linguacode-constants, linguacode-translator and linguacode-translations are part of cmil (`src/constants`, `src/translator`, `src/translations`), and `src/libs/logger.ts` replaces lingua-logger, with no git dependencies or install scripts.
   - **[add]** tests: every language defines every command; the translator converts code to text and back.
   - **[change]** core: programs run in cmil's own interpreter (lexer, parser, compiler and interpreter in `src/core`) instead of being converted to JavaScript and evaluated, so neither a program nor an input value can run JavaScript.
   - **[change]** errors: syntax and indentation errors are found before a program runs; every error except `timeout` reports its line, counted from the top of the program; output printed before an error is sent.
