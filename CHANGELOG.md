@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[change]** output: `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>`, `<NaN/>`, `<null/>`, `<Infinity/>` and `<undefined/>` (LML standard, since 2019-09-04); tests updated from `${true}` / `${false}`.
+
 ## 0.4.0 (2016-11-12)
 
   - **[add]** tests: 32 (total 184).

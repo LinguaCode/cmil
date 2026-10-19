@@ -108,6 +108,6 @@ module.exports = [{
   }, {
     title: 'boolean_operators_executing_priority',
     code: 'ելք 5 <= 1 և (3 == 2 կամ 1 < 7) կամ 9 != 9',
-    output: '${false}'
+    output: '<false/>'
   }]
 }];
