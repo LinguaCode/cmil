@@ -18,7 +18,8 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
 - **Tests:** the Node.js test runner (`npm test` runs `test/*.js`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.js` covers the interpreter's mechanics, `test/translations.js` checks that every language defines every command, and `test/translator.js` covers code↔text conversion. All 249 tests pass on Node.js 24 and 26.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
-- **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` and `npm test` on Node.js 24 and 26 for every push and pull request.
+- **Lint and format:** ESLint (`eslint.config.js`, recommended rules) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
+- **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci`, `npm run lint` and `npm test` on Node.js 24 and 26 for every push and pull request.
 - **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (190 cases).
 - **Core:** programs never run as JavaScript. `src/index.js` translates the localized commands with `src/translator`, then `src/core/lexer.js` splits lines into tokens, `parser.js` builds the syntax tree, `compiler.js` flattens it into instructions with jumps, and `interpreter.js` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
 - **Errors:** syntax and indentation errors are found before the program runs. Every error reports its absolute line, except `timeout`. Output printed before an error is sent first.
@@ -60,6 +61,8 @@ Read the files before relying on these descriptions.
 npm install
 npm test           # node --test: test/collection against CodeSubmit, core, translations, translator
 npm run coverage   # the same under c8
+npm run lint       # ESLint and Prettier check
+npm run format     # Prettier rewrite
 ```
 
 `package.json` is the source of truth for scripts.
@@ -119,7 +122,7 @@ The revival raises choices that belong to the owner. Present the options with tr
 5. Sibling dependencies: decided, brought into this repository.
 6. Lockfile policy: decided, `package-lock.json` is committed.
 7. CI: decided, GitHub Actions.
-8. Linting and formatting tools.
+8. Linting and formatting: decided, ESLint and Prettier.
 9. Whether cmil stays a library only, or a server or socket layer returns.
 10. Translation platform: decided, translations come as pull requests to this repository. Crowdin and Transifex are retired.
 11. Publishing: npm package name and version scheme.
