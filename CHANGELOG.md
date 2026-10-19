@@ -4,7 +4,7 @@
   - **[change]** API: the state of `CodeSubmit` is private; only its methods are public.
   - **[change]** API: an unknown language ends the session with `unknownLanguage` and `param.language` instead of throwing an error.
   - **[add]** API: `stop()` ends a session, for example one waiting for input; `onSessionEnd` isn't called.
-  - **[add]** API: `languages` lists the language codes.
+  - **[add]** API: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language.
 
 ## 0.5.0-alpha.0 (2026-10-19)
 

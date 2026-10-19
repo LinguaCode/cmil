@@ -54,7 +54,7 @@ codeSubmit
 - `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout`, `memoryLimit` or `unknownLanguage`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
 - `stop()`: ends the session, for example when the learner leaves; it takes no more input, and `onSessionEnd` isn't called.
 
-`import {languages} from 'cmil'` lists the language codes.
+`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('output "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`.
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 

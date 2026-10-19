@@ -25,6 +25,18 @@ export type SessionEndCallback = (result: SessionEnd) => void;
 /** The codes of the languages programs can be written in, for example 'en' or 'hy-AM'. */
 export const languages: readonly string[] = Object.freeze(Object.keys(TRANSLATION));
 
+/**
+ * Translates a program from one language into another, for example from 'en' to 'hy-AM'.
+ * Texts and names stay as written; an unknown language throws an error.
+ */
+export const translate = (sourceCode: string, from: string, to: string): string => {
+  for (const language of [from, to]) {
+    if (!Object.hasOwn(TRANSLATION, language)) throw new Error(`Unknown language: ${language}`);
+  }
+
+  return translator.translate(sourceCode, from, to);
+};
+
 class CodeSubmit {
   #sourceCode: string;
   #language: string;
