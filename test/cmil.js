@@ -1,5 +1,6 @@
 //packages
-const assert = require('assert');
+const assert = require('node:assert');
+const {describe, it, before, after} = require('node:test');
 const _ = require('lodash');
 
 const CodeSubmit = require('../src');
@@ -89,9 +90,7 @@ collections.forEach(({name, language}) => {
 });
 
 /**without the timeout check, a long-running loop exhausts the call stack of the recursive executer*/
-describe('stack exhaustion', function () {
-  this.timeout(5000);
-
+describe('stack exhaustion', () => {
   before(() => {
     process.env.TIMEOUT_IGNORE = true;
   });

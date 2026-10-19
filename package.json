@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "mocha",
-    "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && start coverage/lcov-report/index.html",
-    "coveralls": "istanbul cover ./node_modules/.bin/_mocha && ./node_modules/.bin/istanbul-coveralls"
+    "test": "node --test --test-timeout=5000 test/cmil.js",
+    "coverage": "c8 --reporter=text --reporter=html npm test"
   },
   "repository": {
     "type": "git",
@@ -26,10 +25,6 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "coveralls": "2.11.15",
-    "istanbul": "0.4.5",
-    "istanbul-coveralls": "1.0.3",
-    "mocha": "3.3.0",
-    "node-cache-wiper": "git+https://github.com/otanim/node-cache-wiper.git"
+    "c8": "^12.0.0"
   }
 }
