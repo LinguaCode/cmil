@@ -1,3 +1,4 @@
+const logger = require('../../../libs/logger');
 const tools = require('../../../libs/tools');
 
 const coder = require('../coder');
@@ -10,7 +11,7 @@ const STATUS = require('../../../constants').STATUS;
 const INDENT_ERROR = STATUS.INDENT_ERROR;
 
 exports.execute = (sessionId, sourceCode) => {
-  console.llog('builder: main', 'begin');
+  logger.log('builder: main', 'begin');
 
   let variables = coder.variables._get(sourceCode);
   setter.data(sessionId, {variables});
@@ -20,7 +21,7 @@ exports.execute = (sessionId, sourceCode) => {
   let listOfLevels = tools.codeDepthLevels.all(listOfCommands);
   listOfCommands = listOfCommands.map(command => command.replace(/^\s+/, ''));
 
-  console.llog('builder: main', 'end');
+  logger.log('builder: main', 'end');
   return [{
     condition: conditions.values.mainCondition(sessionId),
     child: exports.buildRecursion(sessionId, listOfCommands, listOfLevels, variables)
@@ -28,7 +29,7 @@ exports.execute = (sessionId, sourceCode) => {
 };
 
 exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) => {
-  console.llog('builder: buildRecursion', 'begin');
+  logger.log('builder: buildRecursion', 'begin');
 
   let toCompileIndexStart = 0;
   let parentOfParents = [];
@@ -53,7 +54,7 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
         };
 
         setter.output(sessionId, error);
-        console.llog('compiler: trigger: builder: indent error');
+        logger.log('compiler: trigger: builder: indent error');
         throw error;
       }
 
@@ -76,12 +77,12 @@ exports.buildRecursion = (sessionId, listOfCommands, listOfLevels, variables) =>
     }
   }
 
-  console.llog('builder: buildRecursion', 'end');
+  logger.log('builder: buildRecursion', 'end');
   return parentOfParents;
 };
 
 exports.nextParentIndexInitialize = (listOfLevels, currentIndex) => {
-  console.llog('builder: nextParentIndexInitialize');
+  logger.log('builder: nextParentIndexInitialize');
 
   let indexOfNext = listOfLevels.indexOf(listOfLevels[currentIndex], currentIndex + 1);
   const isNextParentExist = indexOfNext != -1;

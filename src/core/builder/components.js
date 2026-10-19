@@ -1,3 +1,4 @@
+const logger = require('../../libs/logger');
 const COMMAND = require('../../constants').COMMAND;
 
 const coder = require('./coder');
@@ -22,11 +23,11 @@ const executions = (source, constant) => {
 };
 
 exports.parent = (listOfCommands, listOfLevels, index) => {
-  console.llog('builder: parent', 'begin');
+  logger.log('builder: parent', 'begin');
 
   //checks if parent has been identified or not, if not - exit, else continue the interpretation
   if (listOfLevels.length === 1 || listOfLevels[index] === listOfLevels[index + 1]) {
-    console.llog('builder: parent', 'end');
+    logger.log('builder: parent', 'end');
     return false;
   }
 
@@ -61,7 +62,7 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
     value: parentConditionValue
   };
 
-  console.llog('builder: parent', 'end');
+  logger.log('builder: parent', 'end');
   return {
     conditions: parentConditions,
     index: parentIndexes,
@@ -71,7 +72,7 @@ exports.parent = (listOfCommands, listOfLevels, index) => {
 };
 
 exports.child = (listOfCommands, listOfLevels, parentIndex) => {
-  console.llog('builder: child', 'begin');
+  logger.log('builder: child', 'begin');
 
   const contentIndexStart = parentIndex.previous + 1;
   const contentIndexEnd = parentIndex.next;
@@ -80,7 +81,7 @@ exports.child = (listOfCommands, listOfLevels, parentIndex) => {
 
   const listOfLevelsOfTail = listOfLevels.slice(contentIndexStart, contentIndexEnd);
 
-  console.llog('builder: child', 'end');
+  logger.log('builder: child', 'end');
   return {
     listOfCommands: listOfCommandsOfTail,
     listOfLevels: listOfLevelsOfTail
@@ -88,7 +89,7 @@ exports.child = (listOfCommands, listOfLevels, parentIndex) => {
 };
 
 exports.toCompile = (sessionId, listOfCommands, variables, indexStart, indexEnd) => {
-  console.llog('builder: toCompile');
+  logger.log('builder: toCompile');
   const toCompileCommandsArr = listOfCommands.slice(indexStart, indexEnd);
   return coder.splitToCompilableParts(sessionId, toCompileCommandsArr, variables);
 };

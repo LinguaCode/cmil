@@ -22,7 +22,6 @@
   "license": "SEE LICENSE IN LICENSE file",
   "bugs": "https://github.com/LinguaCode/core/issues",
   "dependencies": {
-    "lingua-logger": "git+https://github.com/LinguaCode/lingua-logger.git",
     "lodash": "^4.18.1"
   },
   "devDependencies": {

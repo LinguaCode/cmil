@@ -1,3 +1,4 @@
+const logger = require('../../../../libs/logger');
 const COMMAND = require('../../../../constants').COMMAND;
 const components = require('../../components');
 const operations = require('../../operations');
@@ -5,7 +6,7 @@ const operations = require('../../operations');
 const values = require('./values');
 
 exports._if = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
-  console.llog('builder: _if', 'begin');
+  logger.log('builder: _if', 'begin');
 
   let _child = [];
   let previousParentIndex = parent.index.previous;
@@ -37,7 +38,7 @@ exports._if = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
 
   countOfCommands--;
 
-  console.llog('builder: _if', 'end');
+  logger.log('builder: _if', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands
@@ -45,7 +46,7 @@ exports._if = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
 };
 
 exports._repeat = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
-  console.llog('builder: _repeat', 'begin');
+  logger.log('builder: _repeat', 'begin');
 
   const content = components.child(listOfCommands, listOfLevels, parent.index);
   const _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
@@ -58,7 +59,7 @@ exports._repeat = (sessionId, listOfCommands, listOfLevels, parent, variables) =
 
   const countOfCommands = content.listOfCommands.length;
 
-  console.llog('builder: _repeat', 'end');
+  logger.log('builder: _repeat', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands
@@ -66,7 +67,7 @@ exports._repeat = (sessionId, listOfCommands, listOfLevels, parent, variables) =
 };
 
 exports._do = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
-  console.llog('builder: _do', 'begin');
+  logger.log('builder: _do', 'begin');
 
   const content = components.child(listOfCommands, listOfLevels, parent.index);
   const _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
@@ -79,7 +80,7 @@ exports._do = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
 
   const countOfCommands = content.listOfCommands.length + 1;
 
-  console.llog('builder: _do', 'end');
+  logger.log('builder: _do', 'end');
   return {
     type: 'do',
     child: _child,
@@ -88,7 +89,7 @@ exports._do = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
 };
 
 exports._while = (sessionId, listOfCommands, listOfLevels, parent, variables) => {
-  console.llog('builder: _while', 'begin');
+  logger.log('builder: _while', 'begin');
 
   const content = components.child(listOfCommands, listOfLevels, parent.index);
   const _content = operations.buildRecursion(sessionId, content.listOfCommands, content.listOfLevels, variables);
@@ -101,7 +102,7 @@ exports._while = (sessionId, listOfCommands, listOfLevels, parent, variables) =>
 
   const countOfCommands = content.listOfCommands.length;
 
-  console.llog('builder: _while', 'end');
+  logger.log('builder: _while', 'end');
   return {
     child: _child,
     countOfCommands: countOfCommands

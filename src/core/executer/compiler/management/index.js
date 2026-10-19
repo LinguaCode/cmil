@@ -1,3 +1,4 @@
+const logger = require('../../../../libs/logger');
 const modify = require('../../../modifier/modify');
 
 const STATUS = require('../../../../constants').STATUS;
@@ -5,7 +6,7 @@ const SUCCESS = STATUS.SUCCESS;
 const TIMEOUT = STATUS.TIMEOUT;
 
 exports.codeRun = function (sessionId, sourceCode, language) {
-  console.llog('compiler: codeRun', 'begin');
+  logger.log('compiler: codeRun', 'begin');
 
   setter.sessionTime(sessionId);
 
@@ -29,11 +30,11 @@ exports.codeRun = function (sessionId, sourceCode, language) {
     }
   }
 
-  console.llog('compiler: codeRun', 'end');
+  logger.log('compiler: codeRun', 'end');
 };
 
 exports.listener = function (sessionId, input) {
-  console.llog('compiler: listener', 'begin');
+  logger.log('compiler: listener', 'begin');
 
 
   //TODO: test: remove it
@@ -54,7 +55,7 @@ exports.listener = function (sessionId, input) {
     errorExtract(sessionId, error);
   }
 
-  console.llog('compiler: listener', 'end');
+  logger.log('compiler: listener', 'end');
 };
 
 function listenerController(sessionId) {

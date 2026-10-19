@@ -1,3 +1,4 @@
+const logger = require('../../../../../libs/logger');
 const setter = require('../../../setter');
 
 const checker = require('../../../checker');
@@ -5,7 +6,7 @@ const checker = require('../../../checker');
 const controllers = require('../controllers');
 
 module.exports = (sessionId, typeOfObject) => {
-  console.llog('compiler: upgrade', 'begin');
+  logger.log('compiler: upgrade', 'begin');
 
   let positions = require('./');
 
@@ -13,5 +14,5 @@ module.exports = (sessionId, typeOfObject) => {
 
   positions[typeOfObject](sessionId);
 
-  console.llog('compiler: upgrade', 'end');
+  logger.log('compiler: upgrade', 'end');
 };

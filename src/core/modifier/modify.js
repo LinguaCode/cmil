@@ -5,6 +5,7 @@
  * @requires code:toCode
  */
 
+const logger = require('../../libs/logger');
 const tools = require('../../libs/tools');
 const uglify = require('./uglify');
 const translator = require('../../translator');
@@ -54,7 +55,7 @@ const codeNotSensitive = exports.codeNotSensitive = sourceCode => {
  * - this.codeNotSensitive
  */
 exports.execute = (sourceCode, language) => {
-  console.llog('modify: main');
+  logger.log('modify: main');
   const uglifiedSourceCode = uglify.execute(sourceCode);
 
   const convertedSourceCode = translator.toCode(uglifiedSourceCode, language);

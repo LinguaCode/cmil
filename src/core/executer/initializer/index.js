@@ -1,39 +1,40 @@
+const logger = require('../../../libs/logger');
 let _ = require('lodash');
 
 exports.execute = function (sessionId, sourceCode) {
-  console.llog('compiler: initialize', 'begin');
+  logger.log('compiler: initialize', 'begin');
   this.structure(sessionId, sourceCode);
   this.mount(sessionId);
-  console.llog('compiler: initialize', 'end');
+  logger.log('compiler: initialize', 'end');
 };
 
 exports.structure = function (sessionId, sourceCode) {
-  console.llog('compiler: initialize: structure', 'begin');
+  logger.log('compiler: initialize: structure', 'begin');
   // make a tree
   __store[sessionId].structure = builder(sessionId, sourceCode);
 
   //current path of the tree
   __store[sessionId].pathOfLocation = '[0]';
-  console.llog('compiler: initialize: structure', 'end');
+  logger.log('compiler: initialize: structure', 'end');
 };
 
 exports.mount = sessionId => {
-  console.llog('compiler: initialize: mount');
+  logger.log('compiler: initialize: mount');
   global[sessionId] = {};
 };
 
 exports.unMount = sessionId => {
-  console.llog('compiler: initialize: unMount');
+  logger.log('compiler: initialize: unMount');
   delete global[sessionId];
 };
 
 exports.output = sessionId => {
-  console.llog('compiler: initialize: output');
+  logger.log('compiler: initialize: output');
   __store[sessionId].output = '';
 };
 
 exports.condition = function (conditionIdentifier) {
-  console.llog('compiler: initialize: condition');
+  logger.log('compiler: initialize: condition');
   _.set(global, conditionIdentifier, undefined);
 };
 

@@ -1,10 +1,11 @@
+const logger = require('../../../../../libs/logger');
 const constants = require('../../../../../constants');
 const WAITS_FOR_INPUT = constants.STATUS.WAITS_FOR_INPUT;
 const BOOLEAN_DEFINITION = constants.BOOLEAN_DEFINITION;
 
 let preOutput = function (outputText) {
 
-  console.llog('compiler: preOutput');
+  logger.log('compiler: preOutput');
   for (let key in BOOLEAN_DEFINITION) {
     let regExp = new RegExp(key, 'g');
     if (regExp.test(outputText)) {
@@ -18,16 +19,16 @@ let preOutput = function (outputText) {
 
 exports.toCompile = function (sessionId) {
   let input = getter.data(sessionId, 'input');
-  console.llog('compiler: toCompile', 'begin');
+  logger.log('compiler: toCompile', 'begin');
 
   //TODO: remove "input" variable check ?
   if ((typeof input === 'undefined' || input === '') && checker.needToInput(sessionId)) {
     setter.output(sessionId, WAITS_FOR_INPUT);
     //trig if there is nothing to evaluate
-    console.llog(__store[sessionId].pathOfLocation);
-    console.llog('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
+    logger.log(__store[sessionId].pathOfLocation);
+    logger.log('compiler: Socket.IO: server: waiting for client input (ping: upgrade)');
 
-    console.llog('compiler: toCompile', 'end');
+    logger.log('compiler: toCompile', 'end');
     throw WAITS_FOR_INPUT;
   } else {
     setter.data(sessionId, {input: undefined});
@@ -40,19 +41,19 @@ exports.toCompile = function (sessionId) {
 
   setter.output(sessionId, evaluated.status, evaluated.result);
   /*if (evaluated.result) {
-    console.llog('compiler: Socket.IO: server: output text has been successfully send! (output)');
+    logger.log('compiler: Socket.IO: server: output text has been successfully send! (output)');
   } else {
     //trig if there no any
-    console.llog('compiler: Socket.IO: server: there is nothing to output (ping: toCompile)');
+    logger.log('compiler: Socket.IO: server: there is nothing to output (ping: toCompile)');
   }*/
 
   controllers.controller(sessionId);
 
-  console.llog('compiler: toCompile', 'end');
+  logger.log('compiler: toCompile', 'end');
 };
 
 exports.child = function (sessionId) {
-  console.llog('compiler: child', 'begin');
+  logger.log('compiler: child', 'begin');
 
   let firstKeyOfObject = getter.firstKeyOfObject(sessionId);
 
@@ -62,11 +63,11 @@ exports.child = function (sessionId) {
     controllers.controller(sessionId);
   }
 
-  console.llog('compiler: child', 'end');
+  logger.log('compiler: child', 'end');
 };
 
 exports.parent = function (sessionId) {
-  console.llog('compiler: parent', 'begin');
+  logger.log('compiler: parent', 'begin');
 
   let isParentIfElseStatement = getter.conditionType(sessionId) == 'if';
   let isParentAllow = evaluate.condition(sessionId);
@@ -104,7 +105,7 @@ exports.parent = function (sessionId) {
     controllers.controller(sessionId);
   }
 
-  console.llog('compiler: parent', 'end');
+  logger.log('compiler: parent', 'end');
 };
 
 let upgrade = exports.upgrade = require('./upgrade');
