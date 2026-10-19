@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test --test-timeout=5000 test/cmil.js",
+    "test": "node --test --test-timeout=5000 \"test/*.js\"",
     "coverage": "c8 --reporter=text --reporter=html npm test"
   },
   "repository": {
