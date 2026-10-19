@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const COMMAND = require('linguacode-constants').COMMAND;
+const COMMAND = require('../../../constants').COMMAND;
 const tools = require('../../../libs/tools');
 const variables = exports.variables = require('./variables');
 

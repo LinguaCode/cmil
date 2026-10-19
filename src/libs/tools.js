@@ -1,4 +1,4 @@
-const STATUS = require('linguacode-constants').STATUS;
+const STATUS = require('../constants').STATUS;
 const FUNCTION_ARGUMENT_SCOPE_ERROR = STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR;
 
 const quotationMarks = {

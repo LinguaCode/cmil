@@ -1,4 +1,4 @@
-const COMMAND = require('linguacode-constants').COMMAND;
+const COMMAND = require('../../constants').COMMAND;
 
 const coder = require('./coder');
 

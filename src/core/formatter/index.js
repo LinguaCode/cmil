@@ -106,4 +106,4 @@ exports.codeFormatting = function (sessionId, sourceCode) {
 };
 
 const tools = require('../../libs/tools');
-const SYNTAX = require('linguacode-constants').SYNTAX;
+const SYNTAX = require('../../constants').SYNTAX;

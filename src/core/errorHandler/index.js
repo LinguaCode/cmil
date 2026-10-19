@@ -1,4 +1,4 @@
-const STATUS = require('linguacode-constants').STATUS;
+const STATUS = require('../../constants').STATUS;
 const SYNTAX_ERROR = STATUS.SYNTAX_ERROR;
 const INDENT_ERROR = STATUS.INDENT_ERROR;
 

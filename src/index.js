@@ -1,5 +1,5 @@
 //packages
-const STATUS = require('linguacode-constants').STATUS;
+const STATUS = require('./constants').STATUS;
 
 //tools
 const errorHandler = require('./core/errorHandler');
