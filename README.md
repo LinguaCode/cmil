@@ -23,8 +23,13 @@ AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/bl
 [Node.js](https://nodejs.org) 24 or newer.
 
 #### Install
+CMIL will be on npm from its first release candidate. Until then, install it from GitHub:
 ```
-npm install cmil
+npm install github:LinguaCode/cmil
+```
+npm 12 refuses git dependencies by default, so with npm 12 add `--allow-git=root`:
+```
+npm install github:LinguaCode/cmil --allow-git=root
 ```
 
 #### Usage

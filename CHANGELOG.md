@@ -1,6 +1,6 @@
 ## 0.5.0-alpha.0 (2026-10-19)
 
-  - **[add]** package: published to npm as `cmil` (`npm install cmil`); each GitHub Release is published by GitHub Actions with npm trusted publishing.
+  - **[add]** package: a GitHub Actions workflow publishes GitHub Releases to npm as `cmil` with npm trusted publishing, from the first release candidate on; until then cmil installs from GitHub.
   - **[change]** package: `license` is `GPL-3.0-only`.
   - **[fix]** package: includes the license files of `src/constants`, `src/translations` and `src/translator`.
   - **[change]** README: names the author of CMIL and states the licenses, instead of restricting copies of the standard; links to the old website are removed.
