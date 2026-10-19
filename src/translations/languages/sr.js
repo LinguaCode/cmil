@@ -1,0 +1,117 @@
+var COMMAND = require('../../constants').COMMAND;
+
+module.exports = [{
+  command: COMMAND.INPUT,
+  definition: 'улаз'
+}, {
+  command: COMMAND.OUTPUT,
+  definition: 'излаз'
+}, {
+  command: COMMAND.IF,
+  definition: 'ако'
+}, {
+  command: COMMAND.ELSE,
+  definition: 'још'
+}, {
+  command: COMMAND.THEN,
+  definition: 'онда'
+}, {
+  command: COMMAND.OR,
+  definition: 'или'
+}, {
+  command: COMMAND.AND,
+  definition: 'и'
+}, {
+  command: COMMAND.NOT,
+  definition: 'не'
+}, {
+  command: COMMAND.FALSE,
+  definition: 'лажне'
+}, {
+  command: COMMAND.TRUE,
+  definition: 'истина'
+}, {
+  command: COMMAND.DO,
+  definition: 'радим'
+}, {
+  command: COMMAND.WHILE,
+  definition: 'а'
+}, {
+  command: COMMAND.REPEAT,
+  definition: 'поновите'
+}, {
+  command: COMMAND.TIMES,
+  definition: 'пут'
+}, {
+  command: COMMAND.BREAK,
+  definition: 'пауза'
+}, {
+  command: COMMAND.CONTINUE,
+  definition: 'даље'
+}, {
+  command: COMMAND.FUNCTION,
+  definition: 'функција'
+}, {
+  command: COMMAND.RANDOM,
+  definition: 'случајни'
+}, {
+  command: COMMAND.POW,
+  definition: 'снага'
+}, {
+  command: COMMAND.SQR,
+  definition: 'површина'
+}, {
+  command: COMMAND.SQRT,
+  definition: 'квадратни_корен'
+}, {
+  command: COMMAND.ROUND,
+  definition: 'током_целе'
+}, {
+  command: COMMAND.FLOOR,
+  definition: 'пол'
+}, {
+  command: COMMAND.CEIL,
+  definition: 'хем'
+}, {
+  command: COMMAND.ABS,
+  definition: 'модул'
+}, {
+  command: COMMAND.SIN,
+  definition: 'sin'
+}, {
+  command: COMMAND.COS,
+  definition: 'cos'
+}, {
+  command: COMMAND.TAN,
+  definition: 'tan'
+}, {
+  command: COMMAND.CTG,
+  definition: 'ctg'
+}, {
+  command: COMMAND.ARCSIN,
+  definition: 'arcsin'
+}, {
+  command: COMMAND.ARCCOS,
+  definition: 'arccos'
+}, {
+  command: COMMAND.ARCTAN,
+  definition: 'arctan'
+}, {
+  command: COMMAND.ARCCTG,
+  definition: 'arcctg'
+}, {
+  command: COMMAND.LOG,
+  definition: 'log'
+}, {
+  command: COMMAND.LN,
+  definition: 'ln'
+}, {
+  command: COMMAND.LG,
+  definition: 'lg'
+}, {
+  command: COMMAND.PI,
+  definition: 'pi'
+}, {
+  command: COMMAND.E,
+  definition: 'е'
+}];
