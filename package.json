@@ -21,9 +21,6 @@
   "author": "Arman Yeghiazaryann <otanim617@gmail.com> (http://otanim.com)",
   "license": "SEE LICENSE IN LICENSE file",
   "bugs": "https://github.com/LinguaCode/cmil/issues",
-  "dependencies": {
-    "lodash": "^4.18.1"
-  },
   "devDependencies": {
     "c8": "^12.0.0"
   }
