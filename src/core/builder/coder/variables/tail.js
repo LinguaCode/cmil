@@ -1,1 +1,0 @@
-exports.concat = sourceCode => ` ${sourceCode} `;
