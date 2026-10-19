@@ -164,7 +164,11 @@ exports.parse = lines => {
       const rest = elseTokens.slice(1);
 
       if (isCommand(rest[0], COMMAND.IF)) {
-        branches.push({condition: condition(rest.slice(1), number, COMMAND.THEN), body: parseBody(level), line: number});
+        branches.push({
+          condition: condition(rest.slice(1), number, COMMAND.THEN),
+          body: parseBody(level),
+          line: number
+        });
       } else if (!rest.length) {
         elseBody = parseBody(level);
         break;

@@ -15,7 +15,7 @@ const marker = word => `<${BOOLEAN_DEFINITION[word]}/>`;
  * @param {Number|String|Boolean} value
  * @returns {String}
  */
-const toText = exports.toText = value => {
+const toText = (exports.toText = value => {
   if (typeof value === 'boolean') return marker(String(value));
   if (typeof value === 'number') {
     if (Number.isNaN(value)) return marker('NaN');
@@ -24,7 +24,7 @@ const toText = exports.toText = value => {
   }
 
   return String(value);
-};
+});
 
 const isNumeric = value => !isNaN(parseFloat(value)) && isFinite(value);
 
@@ -38,7 +38,7 @@ const isNumeric = value => !isNaN(parseFloat(value)) && isFinite(value);
  * @param {String|Number} input
  * @returns {Number|String}
  */
-exports.fromInput = input => isNumeric(input) ? parseFloat(input) : String(input);
+exports.fromInput = input => (isNumeric(input) ? parseFloat(input) : String(input));
 
 /**
  * Applies a binary operator; JavaScript semantics on numbers, texts and booleans.
@@ -78,7 +78,7 @@ exports.binary = (operator, left, right) => {
 
 const fixed = value => parseFloat(value.toFixed(10));
 
-const tan = value => value == Math.PI / 2 ? Infinity : value == Math.PI ? 0 : fixed(Math.tan(value));
+const tan = value => (value == Math.PI / 2 ? Infinity : value == Math.PI ? 0 : fixed(Math.tan(value)));
 
 /**
  * Math functions by their commands, with the allowed counts of arguments.
