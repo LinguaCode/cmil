@@ -4,7 +4,7 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'input'
+    definition: 'syötä'
   },
   {
     command: COMMAND.OUTPUT,
@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'katto'
   },
   {
     command: COMMAND.ABS,

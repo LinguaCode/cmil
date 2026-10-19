@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'teto'
   },
   {
     command: COMMAND.ABS,
@@ -152,7 +152,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.E,
-    definition: 'e'
+    definition: 'euler'
   }
 ];
 

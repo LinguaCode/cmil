@@ -28,7 +28,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.AND,
-    definition: 'แล้ว'
+    definition: 'และ'
   },
   {
     command: COMMAND.NOT,
@@ -96,7 +96,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ceil'
+    definition: 'เพดาน'
   },
   {
     command: COMMAND.ABS,

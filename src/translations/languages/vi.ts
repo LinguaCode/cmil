@@ -80,7 +80,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.SQR,
-    definition: 'square'
+    definition: 'bình_phương'
   },
   {
     command: COMMAND.SQRT,
