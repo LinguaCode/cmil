@@ -38,7 +38,7 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
-- **Version and changelog:** the version is `0.5.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
+- **Version and changelog:** the version is `0.6.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default).
 
 ## Source Map
@@ -111,7 +111,7 @@ The repository is GPL-3.0 only (`LICENSE`, `"license": "GPL-3.0-only"`), except 
 
 ## No Legacy Support
 
-The project is pre-1.0 (`0.5.0-alpha`).
+The project is pre-1.0 (`0.6.0-alpha`).
 
 - Keep internal formats, configuration and APIs on the current version only.
 - Don't add fallback readers, dual-write paths, legacy aliases or compatibility branches.
