@@ -26,8 +26,5 @@ deploy.bat
 # Yarn
 yarn.lock
 
-#Build folder
-build
-
 #the disaster of everything:
 package-lock.json
