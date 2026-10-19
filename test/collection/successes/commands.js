@@ -8,6 +8,15 @@ module.exports = [{
       title: '"" + 1',
       code: 'output "" + 1',
       output: '1'
+    }, {
+      title: 'boolean words in text stay text',
+      code: 'output "it is true that null is nothing"',
+      output: 'it is true that null is nothing',
+      todo: 'needs the new interpreter'
+    }, {
+      title: 'boolean joined into text',
+      code: 'output "x: " + (5 > 3)',
+      output: 'x: <true/>'
     }]
   }, {
     group: 'output',

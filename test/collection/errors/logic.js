@@ -9,6 +9,20 @@ module.exports = [{
       line: 1
     },
   }, {
+    title: 'undefined variable in a block',
+    code: 'x = 1\nif x == 1\n    output y',
+    errorId: 'undefinedVariable',
+    errorParam: {
+      variable: 'y',
+      line: 3
+    },
+    todo: 'needs the new interpreter'
+  }, {
+    title: 'too long text',
+    code: 'x = "ab"\nwhile 1 < 2\n    x = x + x',
+    errorId: 'memoryLimit',
+    skip: 'the current core grows the text until JavaScript runs out of memory'
+  }, {
     title: 'Big loop: overload',
     code: 'repeat 100000 times\n    output 1010101010',
     errorId: 'timeout'
