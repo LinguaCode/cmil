@@ -10,18 +10,16 @@ The project had no commits between 2020-05-30 and its revival. Expect obsolete t
 
 ## Current State
 
-Verified on 2026-10-19 against `master`. Update this section when a fact changes.
+Verified on 2026-10-19. Update this section when a fact changes.
 
 - **Runtime:** Node.js, CommonJS (`require` / `module.exports`). `engines.node` is `>= 7.9.0`.
 - **Public API:** `src/index.js` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter.
-- **Package entry:** `main` is `build/index.js`, the Babel 6 output of `npm run build` (`babel-cli`, `babel-preset-env`). `build/` is gitignored.
+- **Package entry:** `main` is `build/index.js`, the Babel 6 output of `npm run build` (`babel-cli`, `babel-preset-env`). `build/` is gitignored and there is no `prepare` script, so installing the package from GitHub gives no `build/`.
 - **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
-- **Tests:** Mocha 3 (`npm test`, options in `test/mocha.opts`). The suite can't run as it is:
-  - `test/sockets.js` requires `socket.io-client`, which isn't declared in `package.json`, so loading fails with `MODULE_NOT_FOUND`.
-  - It then loads a Socket.IO server from `src/server.js` (path built from `linguacode-constants`). That server was removed in the 2020-05-27 commit "potraying as npm package + minor fixes".
-  - The HTTPS certificates for `https://localhost:3005` live in the gitignored `src/config/keys/`.
-  - Only `test/collection/testDB.js`, a single debugging case, is enabled. `successes`, `errors` and `tutorials` are commented out.
-- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (CHANGELOG 0.4.0: 184 tests).
+- **Tests:** Mocha 3 (`npm test`, options in `test/mocha.opts`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. All 180 tests pass on Node.js 20, 22 and 24.
+- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (CHANGELOG 0.4.0: 184 tests; 179 are active now, the hack attempt case is commented out).
+- **Output format:** `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>` and so on (LML standard), also inside string output.
+- **Timeout:** a session ends with `timeout` after `TIMEOUT_TIME` (666 ms, `linguacode-constants`). The executer recurses on every loop iteration, so a fast engine can exhaust the call stack first; that is reported as `timeout` too.
 - **Dependencies from GitHub URLs**, unpublished and unchanged since 2016–2017. The owner controls all of them:
   - `linguacode-constants`: statuses, syntax, commands and paths
   - `linguacode-translator`: converts code to text and text to code
@@ -30,9 +28,9 @@ Verified on 2026-10-19 against `master`. Update this section when a fact changes
 
   Translation files live in `LinguaCode/linguacode-translations`. Its `main` points to a missing `./src/index.js`, so current Node.js prints a `DEP0128` warning on load.
 - **Lockfiles:** `package-lock.json` and `yarn.lock` are both gitignored.
-- **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`).
+- **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`). Every `execute()` resets these stores, so concurrent sessions overwrite each other.
 - **Coverage script:** `npm run coverage` ends with `start coverage/lcov-report/index.html`, which only works on Windows.
-- **Dead services:** CI and badges point to services that are retired or obsolete: Travis CI (`.travis.yml`, travis-ci.org), Coveralls through istanbul 0.4, Code Climate (`.codeclimate.yml`), david-dm, Gratipay and Beerpay.
+- **Dead services:** `.travis.yml` (Travis CI), `.codeclimate.yml` (Code Climate) and the `coveralls` script (Coveralls through istanbul 0.4) target retired or obsolete services. There is no CI. The README keeps only the Crowdin and license badges.
 - **Old repository name:** `package.json` `repository` and `bugs` still point to the old name `LinguaCode/core`. GitHub redirects it.
 - **Inconsistent translation platform:** `CONTRIBUTING.md` sends translators to Transifex, while the README badge points to Crowdin.
 - **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
@@ -51,14 +49,14 @@ Read the files before relying on these descriptions.
 - `src/core/formatter/`, `src/core/modifier/` (`modify.js`, `uglify.js`)
 - `src/libs/constants.js`: Unicode-aware identifier regexes and syntax constants
 - `src/libs/tools.js`: parsing helpers for quotes, arguments, scopes and code depth
-- `test/`: Mocha harness (`sockets.js`) and test cases (`collection/`)
+- `test/`: Mocha harness (`cmil.js`) and test cases (`collection/`)
 
 ## Commands
 
 ```bash
 npm install
 npm run build   # Babel 6 -> build/
-npm test        # Mocha; currently fails, see Current State
+npm test        # Mocha: test/collection against CodeSubmit
 ```
 
 `package.json` is the source of truth for scripts.
@@ -114,10 +112,10 @@ The revival raises choices that belong to the owner. Present the options with tr
 1. Target Node.js version and `engines`. Check the current LTS on the web; don't rely on memory.
 2. CommonJS or ESM. JavaScript or TypeScript.
 3. Whether to keep a build step (Babel 6 is obsolete), and what `main` / `exports` point to.
-4. Test harness: run `test/collection/` directly against the `CodeSubmit` API, or restore a server. Upgrade Mocha or move to another runner.
+4. Test runner: upgrade Mocha or move to another runner. The harness itself is decided: it runs `test/collection/` directly against `CodeSubmit`.
 5. Sibling dependencies: keep GitHub URLs, publish them to npm, or bring them into this repository.
 6. Lockfile policy (both lockfiles are currently gitignored).
-7. CI (for example GitHub Actions), and which badges and services to drop or replace.
+7. CI (for example GitHub Actions), its badges, and what replaces Travis CI, Coveralls and Code Climate. The dead README badges are already removed.
 8. Linting and formatting tools.
 9. Whether cmil stays a library only, or a server or socket layer returns.
 10. Translation platform (Transifex or Crowdin).
