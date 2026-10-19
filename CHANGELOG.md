@@ -1,6 +1,6 @@
 ## 0.5.0-alpha.0 (2026-10-19)
 
-  - **[add]** releases: pushing a version tag creates the GitHub Release, with its CHANGELOG section as notes, and publishes it to npm as `cmil` with npm trusted publishing from the first release candidate on; until then cmil installs from GitHub.
+  - **[add]** releases: pushing a version tag, or running the release workflow on `master`, creates the GitHub Release, with its CHANGELOG section as notes, and publishes it to npm as `cmil` with npm trusted publishing from the first release candidate on; until then cmil installs from GitHub.
   - **[change]** package: `license` is `GPL-3.0-only`.
   - **[fix]** package: includes the license files of `src/constants`, `src/translations` and `src/translator`.
   - **[change]** README: names the author of CMIL and states the licenses, instead of restricting copies of the standard; links to the old website are removed.
