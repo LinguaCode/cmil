@@ -16,8 +16,7 @@ module.exports = [{
       variable: 'x',
       line: 2
     },
-    output: '1',
-    todo: 'needs the new interpreter'
+    output: '1'
   }, {
     title: 'undefined variable in a block',
     code: 'x = 1\nif x == 1\n    output y',
@@ -25,13 +24,14 @@ module.exports = [{
     errorParam: {
       variable: 'y',
       line: 3
-    },
-    todo: 'needs the new interpreter'
+    }
   }, {
     title: 'too long text',
     code: 'x = "ab"\nwhile 1 < 2\n    x = x + x',
     errorId: 'memoryLimit',
-    skip: 'the current core grows the text until JavaScript runs out of memory'
+    errorParam: {
+      line: 3
+    }
   }, {
     title: 'Big loop: overload',
     code: 'repeat 100000 times\n    output 1010101010',
