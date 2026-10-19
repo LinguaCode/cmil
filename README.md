@@ -56,7 +56,7 @@ codeSubmit
 - `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout`, `memoryLimit` or `unknownLanguage`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
 - `stop()`: ends the session, for example when the learner leaves; it takes no more input, and `onSessionEnd` isn't called.
 
-`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('output "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`.
+`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('output "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`. Texts, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 
@@ -69,7 +69,7 @@ npm test
 ```
 CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`npm run build`), and `npm run typecheck` checks the types.
 
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the translator and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the keyword scanner, `translate()` and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, math functions and errors.

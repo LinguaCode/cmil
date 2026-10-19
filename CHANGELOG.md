@@ -1,3 +1,11 @@
+## Unreleased
+
+  - **[fix]** commands: a command next to an operator is recognized, like `pi` and `e` in `if 1<pi` and `output 2>e`, which failed with `undefinedVariable`.
+  - **[change]** commands: the lexer finds the words of each language itself, replacing the regex translator of `linguacode-translator` and its license file. A command is a whole word in any case, and the words of a two-word command, like Greek `στη συνέχεια`, may be separated by any spaces.
+  - **[change]** commands: the `@output` form of the commands is removed; `@` is a `syntaxError`.
+  - **[change]** API: `translate()` keeps spacing, texts and comments, and renames a name that is a command in the other language with a trailing `_`, the same everywhere in the program, like `i` in Catalan, where it means and.
+  - **[add]** tests: every word of every language is found as its command, and every spec program translated into every language runs the same.
+
 ## 0.6.0-alpha.0 (2026-10-19)
 
   - **[change]** API: `codeSubmit.input(value)` replaces the `inputEmitter` getter.

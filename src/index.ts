@@ -1,8 +1,8 @@
 //tools
-import * as translator from './translator/index.ts';
 import * as lexer from './core/lexer.ts';
 import * as parser from './core/parser.ts';
 import * as compiler from './core/compiler.ts';
+import {translateSource} from './core/words.ts';
 import Session from './core/interpreter.ts';
 import CmilError from './core/error.ts';
 import {STATUS} from './constants/index.ts';
@@ -27,14 +27,15 @@ export const languages: readonly string[] = Object.freeze(Object.keys(TRANSLATIO
 
 /**
  * Translates a program from one language into another, for example from 'en' to 'hy-AM'.
- * Texts and names stay as written; an unknown language throws an error.
+ * Texts, comments and spacing stay as written, and so do names, except a name that is a command
+ * in the other language, which gets a trailing _. An unknown language throws an error.
  */
 export const translate = (sourceCode: string, from: string, to: string): string => {
   for (const language of [from, to]) {
     if (!Object.hasOwn(TRANSLATION, language)) throw new Error(`Unknown language: ${language}`);
   }
 
-  return translator.translate(sourceCode, from, to);
+  return translateSource(sourceCode, from, to);
 };
 
 class CodeSubmit {
@@ -95,8 +96,7 @@ class CodeSubmit {
 
     let program: Program;
     try {
-      const code = translator.toCode(this.#sourceCode || '', this.#language);
-      program = compiler.compile(parser.parse(lexer.tokenize(code)));
+      program = compiler.compile(parser.parse(lexer.tokenize(this.#sourceCode || '', this.#language)));
     } catch (error) {
       if (error instanceof CmilError) return this.#end(error);
       throw error;
