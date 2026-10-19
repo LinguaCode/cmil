@@ -7,7 +7,7 @@
 
 const tools = require('../../libs/tools');
 const uglify = require('./uglify');
-const translator = require('linguacode-translator');
+const translator = require('../../translator');
 
 /**
  * Changes sourceCode into a lower case, except String type texts.
