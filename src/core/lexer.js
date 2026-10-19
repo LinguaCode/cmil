@@ -8,7 +8,7 @@ const STATUS = require('../constants').STATUS;
 const QUOTES = {
   '«': '»',
   '"': '"',
-  '\'': '\''
+  "'": "'"
 };
 
 //the Armenian one dot leader is the decimal point on Armenian keyboards

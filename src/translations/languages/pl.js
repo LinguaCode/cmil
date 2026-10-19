@@ -1,117 +1,156 @@
 var COMMAND = require('../../constants').COMMAND;
 
-module.exports = [{
-  command: COMMAND.INPUT,
-  definition: 'wejście'
-}, {
-  command: COMMAND.OUTPUT,
-  definition: 'wyjście'
-}, {
-  command: COMMAND.IF,
-  definition: 'jeśli'
-}, {
-  command: COMMAND.ELSE,
-  definition: 'jeszcze'
-}, {
-  command: COMMAND.THEN,
-  definition: 'wtedy'
-}, {
-  command: COMMAND.OR,
-  definition: 'lub'
-}, {
-  command: COMMAND.AND,
-  definition: 'i'
-}, {
-  command: COMMAND.NOT,
-  definition: 'nie'
-}, {
-  command: COMMAND.FALSE,
-  definition: 'fałszywe'
-}, {
-  command: COMMAND.TRUE,
-  definition: 'prawda'
-}, {
-  command: COMMAND.DO,
-  definition: 'robić'
-}, {
-  command: COMMAND.WHILE,
-  definition: 'a'
-}, {
-  command: COMMAND.REPEAT,
-  definition: 'powtórzyć'
-}, {
-  command: COMMAND.TIMES,
-  definition: 'raz'
-}, {
-  command: COMMAND.BREAK,
-  definition: 'przerwa'
-}, {
-  command: COMMAND.CONTINUE,
-  definition: 'dalej'
-}, {
-  command: COMMAND.FUNCTION,
-  definition: 'funkcja'
-}, {
-  command: COMMAND.RANDOM,
-  definition: 'losowy'
-}, {
-  command: COMMAND.POW,
-  definition: 'moc'
-}, {
-  command: COMMAND.SQR,
-  definition: 'powierzchnia'
-}, {
-  command: COMMAND.SQRT,
-  definition: 'pierwiastek_kwadratowy'
-}, {
-  command: COMMAND.ROUND,
-  definition: 'przez_cały'
-}, {
-  command: COMMAND.FLOOR,
-  definition: 'podłoga'
-}, {
-  command: COMMAND.CEIL,
-  definition: 'hem'
-}, {
-  command: COMMAND.ABS,
-  definition: 'całkowita_wartość'
-}, {
-  command: COMMAND.SIN,
-  definition: 'sin'
-}, {
-  command: COMMAND.COS,
-  definition: 'cos'
-}, {
-  command: COMMAND.TAN,
-  definition: 'tan'
-}, {
-  command: COMMAND.CTG,
-  definition: 'ctg'
-}, {
-  command: COMMAND.ARCSIN,
-  definition: 'arcsin'
-}, {
-  command: COMMAND.ARCCOS,
-  definition: 'arccos'
-}, {
-  command: COMMAND.ARCTAN,
-  definition: 'arctan'
-}, {
-  command: COMMAND.ARCCTG,
-  definition: 'arcctg'
-}, {
-  command: COMMAND.LOG,
-  definition: 'log'
-}, {
-  command: COMMAND.LN,
-  definition: 'ln'
-}, {
-  command: COMMAND.LG,
-  definition: 'lg'
-}, {
-  command: COMMAND.PI,
-  definition: 'pi'
-}, {
-  command: COMMAND.E,
-  definition: 'e'
-}];
+module.exports = [
+  {
+    command: COMMAND.INPUT,
+    definition: 'wejście'
+  },
+  {
+    command: COMMAND.OUTPUT,
+    definition: 'wyjście'
+  },
+  {
+    command: COMMAND.IF,
+    definition: 'jeśli'
+  },
+  {
+    command: COMMAND.ELSE,
+    definition: 'jeszcze'
+  },
+  {
+    command: COMMAND.THEN,
+    definition: 'wtedy'
+  },
+  {
+    command: COMMAND.OR,
+    definition: 'lub'
+  },
+  {
+    command: COMMAND.AND,
+    definition: 'i'
+  },
+  {
+    command: COMMAND.NOT,
+    definition: 'nie'
+  },
+  {
+    command: COMMAND.FALSE,
+    definition: 'fałszywe'
+  },
+  {
+    command: COMMAND.TRUE,
+    definition: 'prawda'
+  },
+  {
+    command: COMMAND.DO,
+    definition: 'robić'
+  },
+  {
+    command: COMMAND.WHILE,
+    definition: 'a'
+  },
+  {
+    command: COMMAND.REPEAT,
+    definition: 'powtórzyć'
+  },
+  {
+    command: COMMAND.TIMES,
+    definition: 'raz'
+  },
+  {
+    command: COMMAND.BREAK,
+    definition: 'przerwa'
+  },
+  {
+    command: COMMAND.CONTINUE,
+    definition: 'dalej'
+  },
+  {
+    command: COMMAND.FUNCTION,
+    definition: 'funkcja'
+  },
+  {
+    command: COMMAND.RANDOM,
+    definition: 'losowy'
+  },
+  {
+    command: COMMAND.POW,
+    definition: 'moc'
+  },
+  {
+    command: COMMAND.SQR,
+    definition: 'powierzchnia'
+  },
+  {
+    command: COMMAND.SQRT,
+    definition: 'pierwiastek_kwadratowy'
+  },
+  {
+    command: COMMAND.ROUND,
+    definition: 'przez_cały'
+  },
+  {
+    command: COMMAND.FLOOR,
+    definition: 'podłoga'
+  },
+  {
+    command: COMMAND.CEIL,
+    definition: 'hem'
+  },
+  {
+    command: COMMAND.ABS,
+    definition: 'całkowita_wartość'
+  },
+  {
+    command: COMMAND.SIN,
+    definition: 'sin'
+  },
+  {
+    command: COMMAND.COS,
+    definition: 'cos'
+  },
+  {
+    command: COMMAND.TAN,
+    definition: 'tan'
+  },
+  {
+    command: COMMAND.CTG,
+    definition: 'ctg'
+  },
+  {
+    command: COMMAND.ARCSIN,
+    definition: 'arcsin'
+  },
+  {
+    command: COMMAND.ARCCOS,
+    definition: 'arccos'
+  },
+  {
+    command: COMMAND.ARCTAN,
+    definition: 'arctan'
+  },
+  {
+    command: COMMAND.ARCCTG,
+    definition: 'arcctg'
+  },
+  {
+    command: COMMAND.LOG,
+    definition: 'log'
+  },
+  {
+    command: COMMAND.LN,
+    definition: 'ln'
+  },
+  {
+    command: COMMAND.LG,
+    definition: 'lg'
+  },
+  {
+    command: COMMAND.PI,
+    definition: 'pi'
+  },
+  {
+    command: COMMAND.E,
+    definition: 'e'
+  }
+];

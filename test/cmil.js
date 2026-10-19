@@ -5,46 +5,51 @@ const {describe, it, before, after} = require('node:test');
 const CodeSubmit = require('../src');
 
 /**Collections of the test cases and the language of their source codes*/
-const collections = [{
-  name: 'successes',
-  language: 'en'
-}, {
-  name: 'errors',
-  language: 'en'
-}, {
-  name: 'tutorials',
-  language: 'hy-AM'
-}];
+const collections = [
+  {
+    name: 'successes',
+    language: 'en'
+  },
+  {
+    name: 'errors',
+    language: 'en'
+  },
+  {
+    name: 'tutorials',
+    language: 'hy-AM'
+  }
+];
 
 /**
  * Executes the source code of the test case via CodeSubmit.
  * Resolves with the collected output and the error of the session end.
  */
-const run = (source, language) => new Promise((resolve, reject) => {
-  const inputs = (source.inputs || []).slice();
-  let output = '';
+const run = (source, language) =>
+  new Promise((resolve, reject) => {
+    const inputs = (source.inputs || []).slice();
+    let output = '';
 
-  const codeSubmit = new CodeSubmit(source.code || '', language);
+    const codeSubmit = new CodeSubmit(source.code || '', language);
 
-  codeSubmit
-    .onOutput(receivedData => {
-      output += receivedData ? `${receivedData}\n` : '';
-    })
-    .onInputRequest(() => {
-      if (!inputs.length) {
-        return reject(new Error(`Input requested, but no inputs left.\nOutput so far:\n${output}`));
-      }
+    codeSubmit
+      .onOutput(receivedData => {
+        output += receivedData ? `${receivedData}\n` : '';
+      })
+      .onInputRequest(() => {
+        if (!inputs.length) {
+          return reject(new Error(`Input requested, but no inputs left.\nOutput so far:\n${output}`));
+        }
 
-      setImmediate(() => codeSubmit.inputEmitter(inputs.shift()));
-    })
-    .onSessionEnd(error => {
-      resolve({
-        output: output.slice(0, -1),
-        error
-      });
-    })
-    .execute();
-});
+        setImmediate(() => codeSubmit.inputEmitter(inputs.shift()));
+      })
+      .onSessionEnd(error => {
+        resolve({
+          output: output.slice(0, -1),
+          error
+        });
+      })
+      .execute();
+  });
 
 const sourceCodeMessage = source => `Source code:\n== START ==\n${source.code ? `${source.code}\n` : ''}== END ==`;
 
@@ -75,13 +80,15 @@ const analyze = (sources, language) => {
         analyze(source.sources, language);
       });
     } else {
-      it(source.title, {todo: source.todo, skip: source.skip}, () => run(source, language).then(({output, error}) => {
-        if (source.errorId) {
-          errorCheck(source, output, error);
-        } else {
-          outputCheck(source, output, error);
-        }
-      }));
+      it(source.title, {todo: source.todo, skip: source.skip}, () =>
+        run(source, language).then(({output, error}) => {
+          if (source.errorId) {
+            errorCheck(source, output, error);
+          } else {
+            outputCheck(source, output, error);
+          }
+        })
+      );
     }
   });
 };
@@ -95,32 +102,33 @@ collections.forEach(({name, language}) => {
 
 /**sessions keep their own state*/
 describe('sessions', () => {
-  it('a session waiting for input survives another session', () => new Promise((resolve, reject) => {
-    const outputs = [];
+  it('a session waiting for input survives another session', () =>
+    new Promise((resolve, reject) => {
+      const outputs = [];
 
-    const waiting = new CodeSubmit('input name\noutput "A got " + name', 'en');
-    waiting
-      .onOutput(text => outputs.push(text))
-      .onInputRequest(() => {})
-      .onSessionEnd(error => {
-        try {
-          assert.strictEqual(error.errorId, undefined, JSON.stringify(error));
-          assert.deepStrictEqual(outputs, ['B runs', 'A got Ani']);
-          resolve();
-        } catch (assertionError) {
-          reject(assertionError);
-        }
-      })
-      .execute();
+      const waiting = new CodeSubmit('input name\noutput "A got " + name', 'en');
+      waiting
+        .onOutput(text => outputs.push(text))
+        .onInputRequest(() => {})
+        .onSessionEnd(error => {
+          try {
+            assert.strictEqual(error.errorId, undefined, JSON.stringify(error));
+            assert.deepStrictEqual(outputs, ['B runs', 'A got Ani']);
+            resolve();
+          } catch (assertionError) {
+            reject(assertionError);
+          }
+        })
+        .execute();
 
-    new CodeSubmit('output "B runs"', 'en')
-      .onOutput(text => outputs.push(text))
-      .onInputRequest(() => {})
-      .onSessionEnd(() => {})
-      .execute();
+      new CodeSubmit('output "B runs"', 'en')
+        .onOutput(text => outputs.push(text))
+        .onInputRequest(() => {})
+        .onSessionEnd(() => {})
+        .execute();
 
-    waiting.inputEmitter('Ani');
-  }));
+      waiting.inputEmitter('Ani');
+    }));
 });
 
 /**without the time limit, the step limit still ends a long-running loop*/
@@ -133,9 +141,14 @@ describe('step limit', () => {
     delete process.env.TIMEOUT_IGNORE;
   });
 
-  analyze([{
-    title: 'Infinity loop: timeout ignored',
-    code: 'while 1 < 4\n    output 123',
-    errorId: 'timeout'
-  }], 'en');
+  analyze(
+    [
+      {
+        title: 'Infinity loop: timeout ignored',
+        code: 'while 1 < 4\n    output 123',
+        errorId: 'timeout'
+      }
+    ],
+    'en'
+  );
 });
