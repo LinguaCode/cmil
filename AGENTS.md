@@ -12,11 +12,13 @@ The project had no commits between 2020-05-30 and its revival. Expect obsolete t
 
 Verified on 2026-10-19. Update this section when a fact changes.
 
-- **Runtime:** Node.js, CommonJS (`require` / `module.exports`). `engines.node` is `>= 7.9.0`.
+- **Runtime:** Node.js, CommonJS (`require` / `module.exports`). `engines.node` is `>= 24`. The source is not transpiled, so browser use goes through the consumer's bundler.
 - **Public API:** `src/index.js` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `onOutput()`, `onInputRequest()`, `onSessionEnd()` and the `inputEmitter` getter.
-- **Package entry:** `main` is `build/index.js`, the Babel 6 output of `npm run build` (`babel-cli`, `babel-preset-env`). `build/` is gitignored and there is no `prepare` script, so installing the package from GitHub gives no `build/`.
+- **Package entry:** `main` is `src/index.js`, with no build step. `files` limits the package to `src/`.
 - **`npm start`** runs `node src/index.js`, which only defines the class. It starts nothing.
-- **Tests:** Mocha 3 (`npm test`, options in `test/mocha.opts`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. All 180 tests pass on Node.js 20, 22 and 24.
+- **Tests:** the Node.js test runner (`npm test`, `node --test`). `test/cmil.js` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a stack exhaustion regression test that sets `TIMEOUT_IGNORE`. All 180 tests pass on Node.js 24 and 26.
+- **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
+- **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` and `npm test` on Node.js 24 and 26 for every push and pull request.
 - **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (CHANGELOG 0.4.0: 184 tests; 179 are active now, the hack attempt case is commented out).
 - **Output format:** `true`, `false`, `NaN`, `null`, `Infinity` and `undefined` are printed as `<true/>`, `<false/>` and so on (LML standard), also inside string output.
 - **Timeout:** a session ends with `timeout` after `TIMEOUT_TIME` (666 ms, `linguacode-constants`). The executer recurses on every loop iteration, so a fast engine can exhaust the call stack first; that is reported as `timeout` too.
@@ -24,13 +26,13 @@ Verified on 2026-10-19. Update this section when a fact changes.
   - `linguacode-constants`: statuses, syntax, commands and paths
   - `linguacode-translator`: converts code to text and text to code
   - `lingua-logger`: the `console.llog` calls in `src/` rely on it
-  - `node-cache-wiper`: a dev dependency from `otanim/node-cache-wiper`
 
-  Translation files live in `LinguaCode/linguacode-translations`. Its `main` points to a missing `./src/index.js`, so current Node.js prints a `DEP0128` warning on load.
-- **Lockfiles:** `package-lock.json` and `yarn.lock` are both gitignored.
+  Translation files live in `LinguaCode/linguacode-translations`. Its `main` points to a missing `./src/index.js`, so current Node.js prints a `DEP0128` warning on load, and its postinstall generates `languageList.js`, without which it can't load.
+
+  npm 12 refuses git dependencies and blocks unapproved install scripts by default. `.npmrc` sets `allow-git=all`, and `allowScripts` in `package.json` approves that postinstall, pinned to the locked commit: after the lockfile moves `linguacode-translations` to another commit, run `npm install-scripts approve linguacode-translations` again. Projects that install cmil need the same steps (see the README).
+- **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
 - **Session state** is kept on `global` (`__store`, `__language`, `__translator`, `global[sessionId]`), with `window` shims so the core can also run in a browser (`src/core/globals/index.js`). Every `execute()` resets these stores, so concurrent sessions overwrite each other.
-- **Coverage script:** `npm run coverage` ends with `start coverage/lcov-report/index.html`, which only works on Windows.
-- **Dead services:** `.travis.yml` (Travis CI), `.codeclimate.yml` (Code Climate) and the `coveralls` script (Coveralls through istanbul 0.4) target retired or obsolete services. There is no CI. The README keeps only the license badge.
+- **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Old repository name:** `package.json` `repository` and `bugs` still point to the old name `LinguaCode/core`. GitHub redirects it.
 - **Translations:** translators send pull requests to `LinguaCode/linguacode-translations` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
 - **Version and changelog:** the version is `0.4.0-alpha.2`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
@@ -49,14 +51,14 @@ Read the files before relying on these descriptions.
 - `src/core/formatter/`, `src/core/modifier/` (`modify.js`, `uglify.js`)
 - `src/libs/constants.js`: Unicode-aware identifier regexes and syntax constants
 - `src/libs/tools.js`: parsing helpers for quotes, arguments, scopes and code depth
-- `test/`: Mocha harness (`cmil.js`) and test cases (`collection/`)
+- `test/`: test harness (`cmil.js`) and test cases (`collection/`)
 
 ## Commands
 
 ```bash
 npm install
-npm run build   # Babel 6 -> build/
-npm test        # Mocha: test/collection against CodeSubmit
+npm test           # node --test: test/collection against CodeSubmit
+npm run coverage   # the same under c8
 ```
 
 `package.json` is the source of truth for scripts.
@@ -109,19 +111,19 @@ The project is pre-1.0 (`0.4.0-alpha`).
 
 The revival raises choices that belong to the owner. Present the options with trade-offs and a recommendation, then wait. Until a choice is made, keep changes within the current setup.
 
-1. Target Node.js version and `engines`. Check the current LTS on the web; don't rely on memory.
+1. Target Node.js version: decided, `>= 24`, tested on 24 and 26. Revisit when an LTS line ends; check the schedule on the web, don't rely on memory.
 2. CommonJS or ESM. JavaScript or TypeScript.
-3. Whether to keep a build step (Babel 6 is obsolete), and what `main` / `exports` point to.
-4. Test runner: upgrade Mocha or move to another runner. The harness itself is decided: it runs `test/collection/` directly against `CodeSubmit`.
-5. Sibling dependencies: keep GitHub URLs, publish them to npm, or bring them into this repository.
-6. Lockfile policy (both lockfiles are currently gitignored).
-7. CI (for example GitHub Actions), its badges, and what replaces Travis CI, Coveralls and Code Climate. The dead README badges are already removed.
+3. Build step: decided, none. `main` is `src/index.js`; `exports` is not set.
+4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly against `CodeSubmit`.
+5. Sibling dependencies: keep GitHub URLs, publish them to npm, or bring them into this repository. GitHub URLs need the npm 12 opt-ins described in **Current State**.
+6. Lockfile policy: decided, `package-lock.json` is committed.
+7. CI: decided, GitHub Actions.
 8. Linting and formatting tools.
 9. Whether cmil stays a library only, or a server or socket layer returns.
 10. Translation platform: decided, translations come as pull requests to `linguacode-translations`. Crowdin and Transifex are retired.
 11. Publishing: npm package name and version scheme.
 
-A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the build and the tests, and record exactly what fails and why, without changing anything.
+A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the tests, and record exactly what fails and why, without changing anything.
 
 ## Working Style
 
