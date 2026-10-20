@@ -10,7 +10,7 @@ The project had no commits between 2020-05-30 and its revival. Expect obsolete t
 
 ## Current State
 
-Verified on 2026-10-19. Update this section when a fact changes.
+Verified on 2026-10-20. Update this section when a fact changes.
 
 - **Runtime:** Node.js, TypeScript with `strict`, published as ES modules. `engines.node` is `>= 24`. Imports between sources end in `.ts`; `tsc` rewrites them to `.js` in the build. Keep the syntax erasable (`erasableSyntaxOnly`: no enums, namespaces or parameter properties), because Node.js runs the sources directly in the tests. Browser use goes through the consumer's bundler.
 - **Public API:** `src/index.ts` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `input(value)`, `stop()`, `onOutput()`, `onInputRequest()` and `onSessionEnd()`, as the default and as a named export, plus `languages` (the language codes), `translate(sourceCode, from, to)` (a program in another language: names that are commands there get a trailing `_`; an unknown language throws) and the types of its callbacks. Its state is in `#` private fields. An unknown language ends the session with `unknownLanguage`. The `'module.exports'` export lets CommonJS code `require('cmil')` the class.
@@ -38,7 +38,7 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`), or suggest a word with the issue form `.github/ISSUE_TEMPLATE/translation.yml`. `docs/translations.md` is generated from the translations by `npm run translations-table` (`scripts/translations-table.ts`, which also holds each language's name and each command's meaning). A word's optional `note` asks native speakers to check it. Crowdin and Transifex are no longer used.
-- **Version and changelog:** the version is `0.6.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
+- **Version and changelog:** the version is `0.7.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default).
 
 ## Source Map
