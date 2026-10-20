@@ -145,7 +145,7 @@ const sources: Source[] = [
       {
         title: 'boolean_operators_executing_priority',
         code: 'տպել 5 <= 1 և (3 == 2 կամ 1 < 7) կամ 9 != 9',
-        output: '<false/>'
+        output: 'սխալ'
       }
     ]
   }

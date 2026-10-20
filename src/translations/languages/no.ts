@@ -52,6 +52,10 @@ const translation: Translation = {
     indentError: 'Innrykksfeil på linje {line}: rykk inn blokker med 4 mellomrom.',
     argumentError: 'Linje {line}: en matematisk funksjon har feil argumenter.',
     undefinedVariable: 'Linje {line}: {variable} har ingen verdi ennå.',
+    typeError: 'Linje {line}: {operator} virker ikke med disse verdiene.',
+    conditionError: 'Linje {line}: en betingelse må være sann eller usann.',
+    divisionByZero: 'Linje {line}: deling på null.',
+    mathError: 'Linje {line}: {operator} har ikke noe resultat for denne verdien.',
     memoryLimit: 'Linje {line}: en tekst ble for lang.',
     timeout: 'Programmet kjørte for lenge uten å be om inndata.',
     unknownLanguage: 'Ukjent språk: {language}.'

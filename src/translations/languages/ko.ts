@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: '{line}번째 줄 들여쓰기 오류: 블록은 4칸씩 들여 쓰세요.',
     argumentError: '{line}번째 줄: 수학 함수의 인수가 잘못되었습니다.',
     undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
+    typeError: '{line}번째 줄: {operator}은(는) 이 값들과 함께 쓸 수 없습니다.',
+    conditionError: '{line}번째 줄: 조건은 참이나 거짓이어야 합니다.',
+    divisionByZero: '{line}번째 줄: 0으로 나눌 수 없습니다.',
+    mathError: '{line}번째 줄: 이 값에서는 {operator}의 결과가 없습니다.',
     memoryLimit: '{line}번째 줄: 텍스트가 너무 길어졌습니다.',
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
     unknownLanguage: '알 수 없는 언어: {language}'

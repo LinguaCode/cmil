@@ -1,1 +1,4 @@
-export {default} from './commands.ts';
+import commands from './commands.ts';
+import values from './values.ts';
+
+export default [...commands, ...values];

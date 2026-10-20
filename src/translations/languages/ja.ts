@@ -50,6 +50,10 @@ const translation: Translation = {
     indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',
     argumentError: '{line} 行目: 数学関数の引数が正しくありません。',
     undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
+    typeError: '{line} 行目: {operator} はこれらの値には使えません。',
+    conditionError: '{line} 行目: 条件は真か偽でなければなりません。',
+    divisionByZero: '{line} 行目: 0 で割ることはできません。',
+    mathError: '{line} 行目: この値では {operator} の結果がありません。',
     memoryLimit: '{line} 行目: テキストが長くなりすぎました。',
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
     unknownLanguage: '不明な言語: {language}'

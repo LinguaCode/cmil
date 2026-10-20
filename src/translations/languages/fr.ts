@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: "Erreur d'indentation à la ligne {line} : indentez les blocs de 4 espaces.",
     argumentError: 'Ligne {line} : une fonction mathématique a de mauvais arguments.',
     undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
+    typeError: 'Ligne {line} : {operator} ne fonctionne pas avec ces valeurs.',
+    conditionError: 'Ligne {line} : une condition doit être vraie ou fausse.',
+    divisionByZero: 'Ligne {line} : division par zéro.',
+    mathError: 'Ligne {line} : {operator} n’a pas de résultat pour cette valeur.',
     memoryLimit: 'Ligne {line} : un texte est devenu trop long.',
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
     unknownLanguage: 'Langue inconnue : {language}.'

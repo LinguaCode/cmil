@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Error de sagnat a la línia {line}: sagna els blocs amb 4 espais.',
     argumentError: 'Línia {line}: una funció matemàtica té arguments incorrectes.',
     undefinedVariable: 'Línia {line}: {variable} encara no té valor.',
+    typeError: 'Línia {line}: {operator} no funciona amb aquests valors.',
+    conditionError: 'Línia {line}: una condició ha de ser certa o falsa.',
+    divisionByZero: 'Línia {line}: divisió per zero.',
+    mathError: 'Línia {line}: {operator} no té resultat per a aquest valor.',
     memoryLimit: 'Línia {line}: un text ha esdevingut massa llarg.',
     timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",
     unknownLanguage: 'Llengua desconeguda: {language}.'

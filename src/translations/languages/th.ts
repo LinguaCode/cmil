@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'ย่อหน้าผิดในบรรทัดที่ {line}: ให้ย่อหน้าบล็อกทีละ 4 ช่อง',
     argumentError: 'บรรทัดที่ {line}: ฟังก์ชันคณิตศาสตร์มีอาร์กิวเมนต์ไม่ถูกต้อง',
     undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
+    typeError: 'บรรทัดที่ {line}: {operator} ใช้กับค่าเหล่านี้ไม่ได้',
+    conditionError: 'บรรทัดที่ {line}: เงื่อนไขต้องเป็นจริงหรือเท็จ',
+    divisionByZero: 'บรรทัดที่ {line}: หารด้วยศูนย์',
+    mathError: 'บรรทัดที่ {line}: {operator} ไม่มีผลลัพธ์สำหรับค่านี้',
     memoryLimit: 'บรรทัดที่ {line}: ข้อความยาวเกินไป',
     timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',
     unknownLanguage: 'ไม่รู้จักภาษา: {language}'

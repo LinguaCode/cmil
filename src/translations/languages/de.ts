@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Einrückungsfehler in Zeile {line}: Blöcke um 4 Leerzeichen einrücken.',
     argumentError: 'Zeile {line}: Eine Mathefunktion hat falsche Argumente.',
     undefinedVariable: 'Zeile {line}: {variable} hat noch keinen Wert.',
+    typeError: 'Zeile {line}: {operator} funktioniert mit diesen Werten nicht.',
+    conditionError: 'Zeile {line}: Eine Bedingung muss wahr oder falsch sein.',
+    divisionByZero: 'Zeile {line}: Division durch null.',
+    mathError: 'Zeile {line}: {operator} hat für diesen Wert kein Ergebnis.',
     memoryLimit: 'Zeile {line}: Ein Text wurde zu lang.',
     timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',
     unknownLanguage: 'Unbekannte Sprache: {language}.'

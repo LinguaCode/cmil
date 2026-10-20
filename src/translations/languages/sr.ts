@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Грешка увлачења у реду {line}: увлачите блокове за 4 размака.',
     argumentError: 'Ред {line}: математичка функција има погрешне аргументе.',
     undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
+    typeError: 'Ред {line}: {operator} не ради са овим вредностима.',
+    conditionError: 'Ред {line}: услов мора бити тачан или нетачан.',
+    divisionByZero: 'Ред {line}: дељење нулом.',
+    mathError: 'Ред {line}: {operator} нема резултат за ову вредност.',
     memoryLimit: 'Ред {line}: текст је постао предугачак.',
     timeout: 'Програм је радио предуго, а није тражио унос.',
     unknownLanguage: 'Непознат језик: {language}.'

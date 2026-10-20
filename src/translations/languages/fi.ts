@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Sisennysvirhe rivillä {line}: sisennä lohkot 4 välilyönnillä.',
     argumentError: 'Rivi {line}: matemaattisella funktiolla on väärät argumentit.',
     undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
+    typeError: 'Rivi {line}: {operator} ei toimi näillä arvoilla.',
+    conditionError: 'Rivi {line}: ehdon täytyy olla tosi tai epätosi.',
+    divisionByZero: 'Rivi {line}: jako nollalla.',
+    mathError: 'Rivi {line}: {operator} ei anna tulosta tälle arvolle.',
     memoryLimit: 'Rivi {line}: teksti kasvoi liian pitkäksi.',
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
     unknownLanguage: 'Tuntematon kieli: {language}.'

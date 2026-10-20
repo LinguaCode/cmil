@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Eroare de indentare pe linia {line}: indentează blocurile cu 4 spații.',
     argumentError: 'Linia {line}: o funcție matematică are argumente greșite.',
     undefinedVariable: 'Linia {line}: {variable} nu are încă o valoare.',
+    typeError: 'Linia {line}: {operator} nu funcționează cu aceste valori.',
+    conditionError: 'Linia {line}: o condiție trebuie să fie adevărată sau falsă.',
+    divisionByZero: 'Linia {line}: împărțire la zero.',
+    mathError: 'Linia {line}: {operator} nu are rezultat pentru această valoare.',
     memoryLimit: 'Linia {line}: un text a devenit prea lung.',
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',
     unknownLanguage: 'Limbă necunoscută: {language}.'

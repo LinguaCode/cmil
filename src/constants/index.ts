@@ -65,6 +65,10 @@ export const ERROR = {
   INDENT_ERROR: 'indentError',
   ARGUMENT_ERROR: 'argumentError',
   UNDEFINED_VARIABLE: 'undefinedVariable',
+  TYPE_ERROR: 'typeError',
+  CONDITION_ERROR: 'conditionError',
+  DIVISION_BY_ZERO: 'divisionByZero',
+  MATH_ERROR: 'mathError',
   MEMORY_LIMIT: 'memoryLimit',
   TIMEOUT: 'timeout',
   UNKNOWN_LANGUAGE: 'unknownLanguage'
@@ -87,3 +91,6 @@ export const MAX_OUTPUT_LENGTH = 10000000;
 
 //nesting of blocks and of expressions
 export const MAX_NESTING = 100;
+
+//the significant digits numbers are printed and compared with, so 0.1 + 0.2 is 0.3
+export const NUMBER_PRECISION = 12;

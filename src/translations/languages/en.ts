@@ -47,6 +47,10 @@ const translation: Translation = {
     indentError: 'Indentation error on line {line}: indent blocks by 4 spaces.',
     argumentError: 'Line {line}: a math function has the wrong arguments.',
     undefinedVariable: 'Line {line}: {variable} has no value yet.',
+    typeError: "Line {line}: {operator} doesn't work with these values.",
+    conditionError: 'Line {line}: a condition must be true or false.',
+    divisionByZero: 'Line {line}: division by zero.',
+    mathError: 'Line {line}: {operator} has no result for this value.',
     memoryLimit: 'Line {line}: a text grew too long.',
     timeout: 'The program ran too long without asking for input.',
     unknownLanguage: 'Unknown language: {language}.'

@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Gabim kryeradhe në rreshtin {line}: kryeradhi blloqet me 4 hapësira.',
     argumentError: 'Rreshti {line}: një funksion matematik ka argumente të gabuara.',
     undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
+    typeError: 'Rreshti {line}: {operator} nuk punon me këto vlera.',
+    conditionError: 'Rreshti {line}: një kusht duhet të jetë i vërtetë ose i rremë.',
+    divisionByZero: 'Rreshti {line}: pjesëtim me zero.',
+    mathError: 'Rreshti {line}: {operator} nuk ka rezultat për këtë vlerë.',
     memoryLimit: 'Rreshti {line}: një tekst u bë shumë i gjatë.',
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
     unknownLanguage: 'Gjuhë e panjohur: {language}.'
