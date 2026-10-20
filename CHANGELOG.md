@@ -1,4 +1,4 @@
-## Unreleased
+## 0.12.0-alpha.0 (2026-10-20)
 
   - **[change]** words: `print` is `արտածել` in Armenian instead of `տպել`, which says more exactly what it does: it outputs.
 
