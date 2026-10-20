@@ -2,6 +2,7 @@
 
   - **[change]** input: `input` only reads, so `input name` is its only form; the question is printed before it, like `print "Your name?"`. Anything between `input` and the name, like the prompt of `input "Your name?" name`, is a `syntaxError`, and the input step has no `prompt`.
   - **[add]** API: `new Session(code, language, {random})` gives the numbers `random()` is made from, from 0 up to 1 like `Math.random()`, the default; sessions given the same numbers make the same random numbers.
+  - **[change]** words: `into` and `out of` no longer agree with the name of the list or say "this": `out of` is `de_la_liste` in French instead of `du`, `dalla_lista` in Italian instead of `dalla`, `da_lista` in Portuguese instead of `da`, `de_la_llista` in Catalan instead of `del` and `από_τη_λίστα` in Greek instead of `έξω_από`; in Hungarian `into` is `listához` instead of `ehhez` and `out of` `listából` instead of `ebből`, and in Georgian `into` is `სიაში` instead of `შიგ`. They still need a native review.
 
 ## 0.10.0-alpha.0 (2026-10-20)
 

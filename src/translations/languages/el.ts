@@ -27,7 +27,7 @@ const translation: Translation = {
     add: ['πρόσθεσε'],
     into: ['στο_τέλος'],
     remove: ['αφαίρεσε'],
-    outOf: ['έξω_από'],
+    outOf: ['από_τη_λίστα'],
     function: ['συνάρτηση'],
     return: ['επίστρεψε'],
     random: ['τυχαία'],

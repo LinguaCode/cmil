@@ -27,7 +27,7 @@ const translation: Translation = {
     add: ['adicionar'],
     into: ['à_lista'],
     remove: ['remover'],
-    outOf: ['da'],
+    outOf: ['da_lista'],
     function: ['função'],
     return: ['devolver'],
     random: ['aleatória'],
