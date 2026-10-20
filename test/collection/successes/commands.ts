@@ -23,7 +23,7 @@ const sources: Source[] = [
           {
             title: 'boolean joined into text',
             code: 'output "x: " + (5 > 3)',
-            output: 'x: <true/>'
+            output: 'x: true'
           }
         ]
       },
@@ -545,37 +545,37 @@ const sources: Source[] = [
                   {
                     title: '>',
                     code: 'output 4 > 2',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: '<',
                     code: 'output 2 < 4',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: '==',
                     code: 'output 4 == 4',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: '>=',
                     code: 'output 4 >= 2',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: '<=',
                     code: 'output 2 <= 4',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: '!=',
                     code: 'output 4 != 2',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: 'not()',
                     code: 'output not(4 < 2)',
-                    output: '<true/>'
+                    output: 'true'
                   }
                 ]
               },
@@ -585,22 +585,22 @@ const sources: Source[] = [
                   {
                     title: 'AND: true result',
                     code: 'output 4 > 2 and 4 != 2',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: 'AND: false result',
                     code: 'output 4 > 2 and 4 == 2',
-                    output: '<false/>'
+                    output: 'false'
                   },
                   {
                     title: 'OR: true result',
                     code: 'output 4 > 2 or 4 == 2',
-                    output: '<true/>'
+                    output: 'true'
                   },
                   {
                     title: 'OR: false result',
                     code: 'output 4 < 2 or 4 == 2',
-                    output: '<false/>'
+                    output: 'false'
                   }
                 ]
               }
@@ -609,47 +609,47 @@ const sources: Source[] = [
           {
             title: 'true value',
             code: 'output true',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'false value',
             code: 'output false',
-            output: '<false/>'
+            output: 'false'
           },
           {
             title: 'true condition',
             code: 'output 4 > 2',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'false condition',
             code: 'output 4 < 2',
-            output: '<false/>'
+            output: 'false'
           },
           {
             title: 'and: result: true',
             code: 'output true and true',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'and։ result: false',
             code: 'output true and false',
-            output: '<false/>'
+            output: 'false'
           },
           {
             title: 'or։ result: true',
             code: 'output true or false',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'or։ result: false',
             code: 'output false or false',
-            output: '<false/>'
+            output: 'false'
           },
           {
             title: 'mixed',
             code: 'output 5 < 1 and (1 < 7 or (1 >= 3 or 9 == 9))',
-            output: '<false/>'
+            output: 'false'
           }
         ]
       },
@@ -868,7 +868,7 @@ const sources: Source[] = [
           {
             title: 'ln',
             code: 'X = 5\nZ = ln(5)\noutput Z',
-            output: '1.6094379124341003'
+            output: '1.60943791243'
           },
           {
             title: 'ceil',
@@ -883,62 +883,62 @@ const sources: Source[] = [
           {
             title: 'sin',
             code: 'X = 1\nZ = sin(X)\noutput Z',
-            output: '0.8414709848'
+            output: '0.841470984808'
           },
           {
             title: 'cos',
             code: 'X = 1\nZ = cos(X)\noutput Z',
-            output: '0.5403023059'
+            output: '0.540302305868'
           },
           {
             title: 'tan',
             code: 'X = 1\nZ = tan(X)\noutput Z',
-            output: '1.5574077247'
+            output: '1.55740772465'
           },
           {
             title: 'ctg',
             code: 'X = 1\nZ = ctg(X)\noutput Z',
-            output: '0.6420926159157376'
+            output: '0.642092615934'
           },
           {
             title: 'arcsin',
             code: 'X = 1\nZ = arcsin(X)\noutput Z',
-            output: '1.5707963267948966'
+            output: '1.57079632679'
           },
           {
             title: 'arccos',
             code: 'X = 0.5\nZ = arccos(X)\noutput Z',
-            output: '1.0471975511965979'
+            output: '1.0471975512'
           },
           {
             title: 'arctan',
             code: 'X = 1\nZ = arctan(X)\noutput Z',
-            output: '0.7853981633974483'
+            output: '0.785398163397'
           },
           {
             title: 'arcctg',
             code: 'X = 0.5\nZ = arcctg(X)\noutput Z',
-            output: '1.1071487177940904'
+            output: '1.10714871779'
           },
           {
             title: 'random: single argument',
             code: 'X = 1000\nZ = random(X)\noutput Z >= 0 and Z <= 1000',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'random: double argument',
             code: 'X = 1000\nY = 1005\nZ = random(X,Y)\noutput Z >= 1000 and Z <= 1005',
-            output: '<true/>'
+            output: 'true'
           },
           {
             title: 'pi',
             code: 'output pi',
-            output: '3.141592653589793'
+            output: '3.14159265359'
           },
           {
             title: 'e',
             code: 'output e',
-            output: '2.718281828459045'
+            output: '2.71828182846'
           }
         ]
       }

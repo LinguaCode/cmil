@@ -54,6 +54,10 @@ const translation: Translation = {
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
     argumentError: '{line}-ე ხაზი: მათემატიკურ ფუნქციას არასწორი არგუმენტები აქვს.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
+    typeError: '{line}-ე ხაზი: {operator} არ მუშაობს ამ მნიშვნელობებთან.',
+    conditionError: '{line}-ე ხაზი: პირობა უნდა იყოს ჭეშმარიტი ან მცდარი.',
+    divisionByZero: '{line}-ე ხაზი: ნულზე გაყოფა.',
+    mathError: '{line}-ე ხაზი: {operator}-ს ამ მნიშვნელობისთვის შედეგი არ აქვს.',
     memoryLimit: '{line}-ე ხაზი: ტექსტი ზედმეტად გრძელი გახდა.',
     timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',
     unknownLanguage: 'უცნობი ენა: {language}.'

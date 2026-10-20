@@ -5,7 +5,7 @@
  * Instructions:
  * - output {expression}, input {name}, assign {name, expression}
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
- * - repeatStart {slot}, repeatTest {slot, expression, target}: the counter of a repeat loop
+ * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
  */
 import type {Instruction, Program, Statement} from './types.ts';
 
@@ -89,8 +89,8 @@ export const compile = (statements: Statement[]): Program => {
       }
       case 'repeat': {
         const slot = slots++;
-        emit({op: 'repeatStart', slot, line});
-        const test = emit({op: 'repeatTest', slot, expression: node.count, target: UNPATCHED, line});
+        emit({op: 'repeatStart', slot, expression: node.count, line});
+        const test = emit({op: 'repeatTest', slot, target: UNPATCHED, line});
         const body = loop(test, () => block(node.body));
         emit({op: 'jump', target: test});
         patch(test, here());

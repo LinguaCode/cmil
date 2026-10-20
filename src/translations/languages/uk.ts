@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Помилка відступу в рядку {line}: робіть відступи блоків у 4 пробіли.',
     argumentError: 'Рядок {line}: математична функція має неправильні аргументи.',
     undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
+    typeError: 'Рядок {line}: {operator} не працює з цими значеннями.',
+    conditionError: 'Рядок {line}: умова має бути істинною або хибною.',
+    divisionByZero: 'Рядок {line}: ділення на нуль.',
+    mathError: 'Рядок {line}: {operator} не має результату для цього значення.',
     memoryLimit: 'Рядок {line}: текст став задовгим.',
     timeout: 'Програма працювала задовго, не запитуючи введення.',
     unknownLanguage: 'Невідома мова: {language}.'

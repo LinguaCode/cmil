@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Chyba odsadenia na riadku {line}: odsadzujte bloky o 4 medzery.',
     argumentError: 'Riadok {line}: matematická funkcia má zlé argumenty.',
     undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
+    typeError: 'Riadok {line}: {operator} s týmito hodnotami nefunguje.',
+    conditionError: 'Riadok {line}: podmienka musí byť pravdivá alebo nepravdivá.',
+    divisionByZero: 'Riadok {line}: delenie nulou.',
+    mathError: 'Riadok {line}: {operator} pre túto hodnotu nemá výsledok.',
     memoryLimit: 'Riadok {line}: text je príliš dlhý.',
     timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',
     unknownLanguage: 'Neznámy jazyk: {language}.'

@@ -47,6 +47,10 @@ const translation: Translation = {
     indentError: 'Նահանջի սխալ {line}-րդ տողում․ բլոկները նահանջեք 4 բացատով։',
     argumentError: '{line}-րդ տող․ մաթեմատիկական ֆունկցիայի արգումենտները սխալ են։',
     undefinedVariable: '{line}-րդ տող․ {variable}-ը դեռ արժեք չունի։',
+    typeError: '{line}-րդ տող․ {operator}-ը չի աշխատում այս արժեքների հետ։',
+    conditionError: '{line}-րդ տող․ պայմանը պետք է լինի ճիշտ կամ սխալ։',
+    divisionByZero: '{line}-րդ տող․ զրոյի վրա բաժանում։',
+    mathError: '{line}-րդ տող․ {operator}-ը այս արժեքի համար արդյունք չունի։',
     memoryLimit: '{line}-րդ տող․ տեքստը չափազանց երկար դարձավ։',
     timeout: 'Ծրագիրը չափազանց երկար աշխատեց՝ առանց մուտքագրում խնդրելու։',
     unknownLanguage: 'Անհայտ լեզու՝ {language}։'

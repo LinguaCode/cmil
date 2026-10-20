@@ -18,12 +18,13 @@ export type Line = {
   tokens: Token[];
 };
 
+/** An expression; column is where its variable, function or operator starts. */
 export type Expression =
   | {type: 'value'; value: Value}
   | {type: 'variable'; name: string; column: number}
-  | {type: 'call'; name: string; args: Expression[]}
-  | {type: 'unary'; operator: string; operand: Expression}
-  | {type: 'binary'; operator: string; left: Expression; right: Expression};
+  | {type: 'call'; name: string; args: Expression[]; column: number}
+  | {type: 'unary'; operator: string; operand: Expression; column: number}
+  | {type: 'binary'; operator: string; left: Expression; right: Expression; column: number};
 
 export type Statement =
   | {type: 'output'; expression: Expression; line: number}
@@ -47,8 +48,8 @@ export type Instruction =
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'jump'; target: number; line?: number}
   | {op: 'jumpUnless' | 'jumpIf'; expression: Expression; target: number; line: number}
-  | {op: 'repeatStart'; slot: number; line: number}
-  | {op: 'repeatTest'; slot: number; expression: Expression; target: number; line: number};
+  | {op: 'repeatStart'; slot: number; expression: Expression; line: number}
+  | {op: 'repeatTest'; slot: number; target: number; line: number};
 
 export type Program = {
   instructions: Instruction[];
@@ -60,5 +61,8 @@ export type ProgramError =
   | {id: typeof ERROR.SYNTAX_ERROR | typeof ERROR.ARGUMENT_ERROR; line: number; column?: number}
   | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
   | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
+  | {id: typeof ERROR.TYPE_ERROR | typeof ERROR.MATH_ERROR; line: number; column?: number; operator: string}
+  | {id: typeof ERROR.DIVISION_BY_ZERO; line: number; column?: number}
+  | {id: typeof ERROR.CONDITION_ERROR; line: number}
   | {id: typeof ERROR.TIMEOUT}
   | {id: typeof ERROR.UNKNOWN_LANGUAGE; language: string};

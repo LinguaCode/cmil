@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Behúzási hiba a(z) {line}. sorban: a blokkokat 4 szóközzel húzd be.',
     argumentError: '{line}. sor: egy matematikai függvény argumentumai hibásak.',
     undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
+    typeError: '{line}. sor: a(z) {operator} nem működik ezekkel az értékekkel.',
+    conditionError: '{line}. sor: a feltételnek igaznak vagy hamisnak kell lennie.',
+    divisionByZero: '{line}. sor: nullával osztás.',
+    mathError: '{line}. sor: a(z) {operator} értéke ennél az értéknél nem létezik.',
     memoryLimit: '{line}. sor: egy szöveg túl hosszú lett.',
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
     unknownLanguage: 'Ismeretlen nyelv: {language}.'

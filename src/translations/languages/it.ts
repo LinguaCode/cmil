@@ -52,6 +52,10 @@ const translation: Translation = {
     indentError: 'Errore di rientro alla riga {line}: rientra i blocchi di 4 spazi.',
     argumentError: 'Riga {line}: una funzione matematica ha argomenti sbagliati.',
     undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
+    typeError: 'Riga {line}: {operator} non funziona con questi valori.',
+    conditionError: 'Riga {line}: una condizione deve essere vera o falsa.',
+    divisionByZero: 'Riga {line}: divisione per zero.',
+    mathError: 'Riga {line}: {operator} non ha risultato per questo valore.',
     memoryLimit: 'Riga {line}: un testo è diventato troppo lungo.',
     timeout: 'Il programma è andato avanti troppo a lungo senza chiedere input.',
     unknownLanguage: 'Lingua sconosciuta: {language}.'

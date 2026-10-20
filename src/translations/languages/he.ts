@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'שגיאת הזחה בשורה {line}: הזיחו בלוקים ב-4 רווחים.',
     argumentError: 'שורה {line}: לפונקציה מתמטית יש ארגומנטים שגויים.',
     undefinedVariable: 'שורה {line}: ל-{variable} עדיין אין ערך.',
+    typeError: 'שורה {line}: {operator} לא עובד עם הערכים האלה.',
+    conditionError: 'שורה {line}: תנאי חייב להיות אמת או שקר.',
+    divisionByZero: 'שורה {line}: חלוקה באפס.',
+    mathError: 'שורה {line}: ל-{operator} אין תוצאה עבור הערך הזה.',
     memoryLimit: 'שורה {line}: טקסט נעשה ארוך מדי.',
     timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',
     unknownLanguage: 'שפה לא מוכרת: {language}.'

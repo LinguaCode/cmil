@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Napaka zamika v vrstici {line}: bloke zamaknite za 4 presledke.',
     argumentError: 'Vrstica {line}: matematična funkcija ima napačne argumente.',
     undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
+    typeError: 'Vrstica {line}: {operator} ne deluje s temi vrednostmi.',
+    conditionError: 'Vrstica {line}: pogoj mora biti resničen ali neresničen.',
+    divisionByZero: 'Vrstica {line}: deljenje z nič.',
+    mathError: 'Vrstica {line}: {operator} za to vrednost nima rezultata.',
     memoryLimit: 'Vrstica {line}: besedilo je postalo predolgo.',
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
     unknownLanguage: 'Neznan jezik: {language}.'

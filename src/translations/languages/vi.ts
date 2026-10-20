@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Lỗi thụt lề ở dòng {line}: hãy thụt lề các khối 4 dấu cách.',
     argumentError: 'Dòng {line}: một hàm toán học có đối số sai.',
     undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
+    typeError: 'Dòng {line}: {operator} không dùng được với các giá trị này.',
+    conditionError: 'Dòng {line}: điều kiện phải đúng hoặc sai.',
+    divisionByZero: 'Dòng {line}: chia cho không.',
+    mathError: 'Dòng {line}: {operator} không có kết quả cho giá trị này.',
     memoryLimit: 'Dòng {line}: một văn bản đã quá dài.',
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
     unknownLanguage: 'Ngôn ngữ không xác định: {language}.'

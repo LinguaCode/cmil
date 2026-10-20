@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Chyba odsazení na řádku {line}: odsazujte bloky o 4 mezery.',
     argumentError: 'Řádek {line}: matematická funkce má špatné argumenty.',
     undefinedVariable: 'Řádek {line}: {variable} zatím nemá hodnotu.',
+    typeError: 'Řádek {line}: {operator} s těmito hodnotami nefunguje.',
+    conditionError: 'Řádek {line}: podmínka musí být pravdivá, nebo nepravdivá.',
+    divisionByZero: 'Řádek {line}: dělení nulou.',
+    mathError: 'Řádek {line}: {operator} pro tuto hodnotu nemá výsledek.',
     memoryLimit: 'Řádek {line}: text je příliš dlouhý.',
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',
     unknownLanguage: 'Neznámý jazyk: {language}.'

@@ -39,7 +39,7 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     let token;
     while ((token = peek()) && matches(token)) {
       index++;
-      node = {type: 'binary', operator: String(token.value), left: node, right: parseOperand()};
+      node = {type: 'binary', operator: String(token.value), left: node, right: parseOperand(), column: token.column};
     }
     return node;
   };
@@ -101,14 +101,14 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     const {min, max} = FUNCTIONS[String(name.value)];
     if (args.length < min || args.length > max) throw argumentError(line, name);
 
-    return {type: 'call', name: String(name.value), args};
+    return {type: 'call', name: String(name.value), args, column: name.column};
   };
 
   const parseUnary = (): Expression => {
     const token = peek();
-    if (isOperator(token, '-') || isOperator(token, '+')) {
+    if (token && (isOperator(token, '-') || isOperator(token, '+'))) {
       index++;
-      return nest(() => ({type: 'unary', operator: String(token?.value), operand: parseUnary()}));
+      return nest(() => ({type: 'unary', operator: String(token.value), operand: parseUnary(), column: token.column}));
     }
     return parsePrimary();
   };
@@ -119,9 +119,10 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   const parseEquality = binary(parseRelational, operators(['==', '!=']));
 
   const parseNot = (): Expression => {
-    if (isCommand(peek(), COMMAND.NOT)) {
+    const token = peek();
+    if (token && isCommand(token, COMMAND.NOT)) {
       index++;
-      return nest(() => ({type: 'unary', operator: COMMAND.NOT, operand: parseNot()}));
+      return nest(() => ({type: 'unary', operator: COMMAND.NOT, operand: parseNot(), column: token.column}));
     }
     return parseEquality();
   };

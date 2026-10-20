@@ -55,6 +55,10 @@ const translation: Translation = {
     indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',
     argumentError: 'السطر {line}: وسائط دالة رياضية غير صحيحة.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
+    typeError: 'السطر {line}: لا يعمل {operator} مع هذه القيم.',
+    conditionError: 'السطر {line}: يجب أن يكون الشرط صحيحًا أو خاطئًا.',
+    divisionByZero: 'السطر {line}: قسمة على صفر.',
+    mathError: 'السطر {line}: ليس لـ {operator} نتيجة لهذه القيمة.',
     memoryLimit: 'السطر {line}: أصبح نص طويلًا جدًا.',
     timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',
     unknownLanguage: 'لغة غير معروفة: {language}.'

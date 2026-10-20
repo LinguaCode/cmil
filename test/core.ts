@@ -109,6 +109,39 @@ describe('core', () => {
     });
   });
 
+  describe('values', () => {
+    it("an error of a value names its operator in the program's language, at its column", () => {
+      assert.deepStrictEqual(run('output 1 + true').error, {id: 'typeError', line: 1, column: 10, operator: '+'});
+      assert.deepStrictEqual(run('տպել ոչ 5', [], 'hy-AM').error, {
+        id: 'typeError',
+        line: 1,
+        column: 6,
+        operator: 'ոչ'
+      });
+      assert.deepStrictEqual(run('output square_root(-4)').error, {
+        id: 'mathError',
+        line: 1,
+        column: 8,
+        operator: 'square_root'
+      });
+      assert.deepStrictEqual(run('output 1 / 0').error, {id: 'divisionByZero', line: 1, column: 10});
+      assert.deepStrictEqual(run('repeat "a" times\n    output 1').error, {
+        id: 'typeError',
+        line: 1,
+        operator: 'repeat'
+      });
+    });
+
+    it('booleans print in the words of the language', () => {
+      assert.deepStrictEqual(run('տպել 1 < 2', [], 'hy-AM').output, ['ճիշտ']);
+      assert.deepStrictEqual(run('вывести "x: " + (1 > 2)', [], 'ru').output, ['x: ложь']);
+    });
+
+    it('and and or skip their right side when the left one decides', () => {
+      assert.deepStrictEqual(run('output false and x\noutput true or x').output, ['false', 'true']);
+    });
+  });
+
   describe('memory', () => {
     it('a too long input', () => {
       assert.deepStrictEqual(run('input x', ['a'.repeat(1000001)]).error, {id: 'memoryLimit', line: 1});
@@ -229,6 +262,10 @@ describe('core', () => {
       {id: 'indentError', line: 2},
       {id: 'argumentError', line: 2},
       {id: 'undefinedVariable', line: 2, column: 3, variable: 'abc'},
+      {id: 'typeError', line: 2, column: 3, operator: '-'},
+      {id: 'conditionError', line: 2},
+      {id: 'divisionByZero', line: 2, column: 3},
+      {id: 'mathError', line: 2, column: 3, operator: 'square_root'},
       {id: 'memoryLimit', line: 2},
       {id: 'timeout'},
       {id: 'unknownLanguage', language: 'xx'}

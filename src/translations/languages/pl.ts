@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Błąd wcięcia w wierszu {line}: wcinaj bloki o 4 spacje.',
     argumentError: 'Wiersz {line}: funkcja matematyczna ma złe argumenty.',
     undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
+    typeError: 'Wiersz {line}: {operator} nie działa z tymi wartościami.',
+    conditionError: 'Wiersz {line}: warunek musi być prawdziwy albo fałszywy.',
+    divisionByZero: 'Wiersz {line}: dzielenie przez zero.',
+    mathError: 'Wiersz {line}: {operator} nie ma wyniku dla tej wartości.',
     memoryLimit: 'Wiersz {line}: tekst stał się za długi.',
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',
     unknownLanguage: 'Nieznany język: {language}.'

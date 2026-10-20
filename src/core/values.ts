@@ -1,33 +1,49 @@
 /**
  * Values of CMIL programs: numbers, texts and booleans, their operators and the math functions.
+ * Values are never converted: an operator or a function with values it doesn't take throws a ValueError.
  */
-import {COMMAND} from '../constants/index.ts';
+import {COMMAND, ERROR, NUMBER_PRECISION} from '../constants/index.ts';
 import type {Value} from './types.ts';
 
-const marker = (word: 'true' | 'false' | 'NaN' | 'Infinity') => `<${word}/>`;
+/** A value that doesn't fit its operator or function; the interpreter adds where it happened. */
+export class ValueError extends Error {
+  id: typeof ERROR.TYPE_ERROR | typeof ERROR.DIVISION_BY_ZERO | typeof ERROR.MATH_ERROR;
 
-//operators and math functions convert mixed values like JavaScript does, for example '6' * 2 is 12
-const num = (value: Value | undefined): number => value as number;
+  constructor(id: ValueError['id']) {
+    super(id);
+    this.id = id;
+  }
+}
+
+const typeError = () => new ValueError(ERROR.TYPE_ERROR);
+
+/** The words a program's language prints for true and false. */
+export type Booleans = {true: string; false: string};
 
 /**
- * Converts a value into text: booleans, NaN and Infinity become markers which the user interface translates.
+ * A number as it is printed and compared: whole numbers as they are, others with 12 significant digits.
  *
  * @example
- * values.toText(4 > 2);
- * // returns '<true/>'
+ * values.rounded(0.1 + 0.2);
+ * // returns 0.3
  */
-export const toText = (value: Value): string => {
-  if (typeof value === 'boolean') return marker(value ? 'true' : 'false');
-  if (typeof value === 'number') {
-    if (Number.isNaN(value)) return marker('NaN');
-    if (value === Infinity) return marker('Infinity');
-    if (value === -Infinity) return `-${marker('Infinity')}`;
-  }
+export const rounded = (value: number): number =>
+  Number.isInteger(value) ? value : Number(value.toPrecision(NUMBER_PRECISION));
 
-  return String(value);
+/**
+ * Converts a value into text; booleans become the words of the program's language.
+ *
+ * @example
+ * values.toText(4 > 2, {true: 'ճիշտ', false: 'սխալ'});
+ * // returns 'ճիշտ'
+ */
+export const toText = (value: Value, booleans: Booleans): string => {
+  if (typeof value === 'boolean') return value ? booleans.true : booleans.false;
+  if (typeof value === 'number') return String(rounded(value) || 0);
+  return value;
 };
 
-const isNumeric = (value: string | number) => !isNaN(parseFloat(String(value))) && isFinite(num(value));
+const isNumeric = (value: string | number) => !isNaN(parseFloat(String(value))) && isFinite(Number(value));
 
 /**
  * Converts an input into a number when it is numeric, else into a text.
@@ -39,89 +55,167 @@ const isNumeric = (value: string | number) => !isNaN(parseFloat(String(value))) 
 export const fromInput = (input: string | number): Value =>
   isNumeric(input) ? parseFloat(String(input)) : String(input);
 
+const number = (value: Value): number => {
+  if (typeof value !== 'number') throw typeError();
+  return value;
+};
+
+export const boolean = (value: Value): boolean => {
+  if (typeof value !== 'boolean') throw typeError();
+  return value;
+};
+
+//a result that is not a number, like the square root of -1, or too large to be one
+const finite = (value: number): number => {
+  if (!Number.isFinite(value)) throw new ValueError(ERROR.MATH_ERROR);
+  return value;
+};
+
+const divisor = (value: Value): number => {
+  if (number(value) === 0) throw new ValueError(ERROR.DIVISION_BY_ZERO);
+  return value as number;
+};
+
+//numbers with numbers, texts with texts
+const compare = (left: Value, right: Value): [number, number] | [string, string] => {
+  if (typeof left === 'number' && typeof right === 'number') return [rounded(left), rounded(right)];
+  if (typeof left === 'string' && typeof right === 'string') return [left, right];
+  throw typeError();
+};
+
+//values of different types are never equal
+const equals = (left: Value, right: Value): boolean =>
+  typeof left === 'number' && typeof right === 'number' ? rounded(left) === rounded(right) : left === right;
+
 /**
- * Applies a binary operator; JavaScript semantics on numbers, texts and booleans.
- * A text joined with any value is joined with the value's text.
+ * Applies a binary operator. + adds numbers, or joins a text with any value.
  */
-export const binary = (operator: string, left: Value, right: Value): Value => {
+export const binary = (operator: string, left: Value, right: Value, booleans: Booleans): Value => {
   switch (operator) {
     case '+':
-      return typeof left === 'string' || typeof right === 'string'
-        ? toText(left) + toText(right)
-        : num(left) + num(right);
+      if (typeof left === 'string' || typeof right === 'string') {
+        return toText(left, booleans) + toText(right, booleans);
+      }
+      return finite(number(left) + number(right));
     case '-':
-      return num(left) - num(right);
+      return finite(number(left) - number(right));
     case '*':
-      return num(left) * num(right);
+      return finite(number(left) * number(right));
     case '/':
-      return num(left) / num(right);
+      return finite(number(left) / divisor(right));
     case '%':
-      return num(left) % num(right);
+      return finite(number(left) % divisor(right));
     case '==':
-      return left == right;
+      return equals(left, right);
     case '!=':
-      return left != right;
+      return !equals(left, right);
+  }
+
+  const [a, b] = compare(left, right);
+  switch (operator) {
     case '<':
-      return num(left) < num(right);
+      return a < b;
     case '>':
-      return num(left) > num(right);
+      return a > b;
     case '<=':
-      return num(left) <= num(right);
+      return a <= b;
     case '>=':
-      return num(left) >= num(right);
+      return a >= b;
   }
 
   throw new Error(`Unknown operator: ${operator}`);
 };
 
-const fixed = (value: number) => parseFloat(value.toFixed(10));
+/**
+ * Applies a unary operator: - and + on numbers, not on booleans.
+ */
+export const unary = (operator: string, operand: Value): Value => {
+  if (operator === COMMAND.NOT) return !boolean(operand);
+  return operator === '-' ? -number(operand) : number(operand);
+};
 
-const tan = (value: Value) => (value == Math.PI / 2 ? Infinity : value == Math.PI ? 0 : fixed(Math.tan(num(value))));
+const whole = (value: Value): number => {
+  if (!Number.isInteger(number(value))) throw typeError();
+  return value as number;
+};
+
+//trigonometry is rounded to 12 decimals, so sin(pi) is 0
+const trigonometric = (value: number) => Math.round(value * 1e12) / 1e12 || 0;
+
+const tan = (value: Value) => {
+  if (trigonometric(Math.cos(number(value))) === 0) throw new ValueError(ERROR.MATH_ERROR);
+  return trigonometric(Math.tan(number(value)));
+};
+
+const ctg = (value: Value) => {
+  if (trigonometric(Math.sin(number(value))) === 0) throw new ValueError(ERROR.MATH_ERROR);
+  return trigonometric(1 / Math.tan(number(value)));
+};
+
+//rounds to a count of decimals; the product is rounded like printed numbers, so round(1.005, 2) is 1.01
+const round = (value: Value, digits: Value = 0) => {
+  const factor = 10 ** whole(digits);
+  return Math.round(rounded(number(value) * factor)) / factor;
+};
 
 type MathFunction = {
   min: number;
   max: number;
-  apply: (...args: Value[]) => Value;
+  apply: (...args: Value[]) => number;
 };
+
+const one = (apply: (value: number) => number): MathFunction => ({
+  min: 1,
+  max: 1,
+  apply: value => finite(apply(number(value)))
+});
 
 /**
  * Math functions by their commands, with the allowed counts of arguments.
  */
 export const FUNCTIONS: Record<string, MathFunction> = {
-  [COMMAND.POW]: {min: 2, max: 2, apply: (base, exponent) => Math.pow(num(base), num(exponent))},
-  [COMMAND.SQRT]: {min: 1, max: 1, apply: value => Math.pow(num(value), 1 / 2)},
-  [COMMAND.SQR]: {min: 1, max: 1, apply: value => Math.pow(num(value), 2)},
-  [COMMAND.ROUND]: {min: 1, max: 1, apply: value => Math.round(num(value))},
-  [COMMAND.FLOOR]: {min: 1, max: 1, apply: value => Math.floor(num(value))},
-  [COMMAND.CEIL]: {min: 1, max: 1, apply: value => Math.ceil(num(value))},
-  [COMMAND.LG]: {min: 1, max: 1, apply: value => Math.log10(num(value))},
-  [COMMAND.LN]: {min: 1, max: 1, apply: value => Math.log(num(value))},
-  [COMMAND.LOG]: {min: 2, max: 2, apply: (base, value) => Math.log(num(value)) / Math.log(num(base))},
+  [COMMAND.POW]: {min: 2, max: 2, apply: (base, exponent) => finite(Math.pow(number(base), number(exponent)))},
+  [COMMAND.SQRT]: one(Math.sqrt),
+  [COMMAND.SQR]: one(value => value * value),
+  [COMMAND.ROUND]: {min: 1, max: 2, apply: (value, digits) => finite(round(value, digits))},
+  [COMMAND.FLOOR]: one(Math.floor),
+  [COMMAND.CEIL]: one(Math.ceil),
+  [COMMAND.LG]: one(Math.log10),
+  [COMMAND.LN]: one(Math.log),
+  [COMMAND.LOG]: {
+    min: 2,
+    max: 2,
+    apply: (base, value) => finite(Math.log(number(value)) / Math.log(number(base)))
+  },
   [COMMAND.RANDOM]: {
     min: 1,
     max: 2,
     apply: (first, second) => {
-      let min = num(first);
-      let max = num(second);
-      if (second === undefined) {
-        max = min;
-        min = 0;
-      }
+      const [min, max] = second === undefined ? [0, whole(first)] : [whole(first), whole(second)];
+      if (min > max) throw new ValueError(ERROR.MATH_ERROR);
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
   },
-  [COMMAND.ABS]: {min: 1, max: 1, apply: value => Math.abs(num(value))},
-  [COMMAND.ARCSIN]: {min: 1, max: 1, apply: value => Math.asin(num(value))},
-  [COMMAND.ARCCOS]: {min: 1, max: 1, apply: value => Math.acos(num(value))},
-  [COMMAND.ARCTAN]: {min: 1, max: 1, apply: value => Math.atan(num(value))},
-  [COMMAND.ARCCTG]: {min: 1, max: 1, apply: value => Math.PI / 2 - Math.atan(num(value))},
-  [COMMAND.SIN]: {min: 1, max: 1, apply: value => fixed(Math.sin(num(value)))},
-  [COMMAND.COS]: {min: 1, max: 1, apply: value => fixed(Math.cos(num(value)))},
+  [COMMAND.ABS]: one(Math.abs),
+  [COMMAND.ARCSIN]: one(Math.asin),
+  [COMMAND.ARCCOS]: one(Math.acos),
+  [COMMAND.ARCTAN]: one(Math.atan),
+  [COMMAND.ARCCTG]: one(value => Math.PI / 2 - Math.atan(value)),
+  [COMMAND.SIN]: one(value => trigonometric(Math.sin(value))),
+  [COMMAND.COS]: one(value => trigonometric(Math.cos(value))),
   [COMMAND.TAN]: {min: 1, max: 1, apply: tan},
-  [COMMAND.CTG]: {min: 1, max: 1, apply: value => 1 / tan(value)}
+  [COMMAND.CTG]: {min: 1, max: 1, apply: ctg}
 };
 
 export const CONSTANTS: Record<string, number> = {
   [COMMAND.PI]: Math.PI,
   [COMMAND.E]: Math.E
+};
+
+/**
+ * The passes of repeat … times: a whole number, not below 0.
+ */
+export const passes = (value: Value): number => {
+  if (whole(value) < 0) throw typeError();
+  return value as number;
 };

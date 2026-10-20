@@ -5,6 +5,7 @@ import * as lexer from './core/lexer.ts';
 import * as parser from './core/parser.ts';
 import * as compiler from './core/compiler.ts';
 import Interpreter from './core/interpreter.ts';
+import {wordsOf} from './core/words.ts';
 import CmilError from './core/error.ts';
 import {ERROR, MAX_STEPS, STATE} from './constants/index.ts';
 import TRANSLATION from './translations/index.ts';
@@ -68,7 +69,9 @@ export class Session {
     if (this.#state !== 'new') return this.#current();
 
     try {
-      this.#interpreter = new Interpreter(compile(this.#sourceCode, this.#language), this.#maxSteps);
+      const program = compile(this.#sourceCode, this.#language);
+      const {first} = wordsOf(this.#language);
+      this.#interpreter = new Interpreter(program, this.#maxSteps, command => first.get(command) ?? command);
     } catch (error) {
       return this.#fail(error, []);
     }

@@ -63,7 +63,8 @@ describe('translations', () => {
         `${word('output')} ${word('ceil')}(1.2)`
       ];
       const step = run(lines.join('\n'), language);
-      assert.deepStrictEqual(step, {state: 'end', output: ['<true/>', '<true/>', '<true/>', '2']}, lines.join('\n'));
+      const yes = word('true');
+      assert.deepStrictEqual(step, {state: 'end', output: [yes, yes, yes, '2']}, lines.join('\n'));
     });
   });
 });

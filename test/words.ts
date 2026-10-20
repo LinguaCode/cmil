@@ -36,6 +36,19 @@ const outputOf = (code: string, language: string) => {
   return output.join('\n');
 };
 
+//a program prints true and false in the words of its language; these are the words of another language
+const sameBooleans = (lines: string[], from: string, to: string) => {
+  const words = new Map(
+    (['true', 'false'] as const).map(command => [
+      translations[from].words[command][0],
+      translations[to].words[command][0]
+    ])
+  );
+  const alternatives = [...words.keys()].map(word => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const pattern = new RegExp(`(?<![\\p{L}\\p{M}\\p{N}_])(${alternatives})(?![\\p{L}\\p{M}\\p{N}_])`, 'gu');
+  return lines.map(line => line.replace(pattern, word => words.get(word) ?? word));
+};
+
 const casesOf = (sources: Source[]): Case[] =>
   sources.flatMap(source => ('sources' in source ? casesOf(source.sources) : [source]));
 
@@ -96,9 +109,9 @@ describe('words', () => {
   describe('programs', () => {
     it('keywords next to operators', () => {
       assert.strictEqual(outputOf('if 1<pi then\n    output 1', 'en'), '1');
-      assert.strictEqual(outputOf('output 2>e', 'en'), '<false/>');
-      assert.strictEqual(outputOf('x = true\noutput x!=true', 'en'), '<false/>');
-      assert.strictEqual(outputOf('output(2*pi>6)', 'en'), '<true/>');
+      assert.strictEqual(outputOf('output 2>e', 'en'), 'false');
+      assert.strictEqual(outputOf('x = true\noutput x!=true', 'en'), 'false');
+      assert.strictEqual(outputOf('output(2*pi>6)', 'en'), 'true');
     });
 
     it('keywords that contain another keyword', () => {
@@ -108,16 +121,16 @@ describe('words', () => {
         outputOf('sortida arrodonir(2.5)\nsortida arrodonir_avall(2.5)\nsortida arrodonir_amunt(2.2)', 'ca'),
         '3\n2\n3'
       );
-      assert.strictEqual(outputOf('uscita e_numero > 2 e vero', 'it'), '<true/>');
+      assert.strictEqual(outputOf('uscita e_numero > 2 e vero', 'it'), 'vero');
       assert.strictEqual(
         outputOf('вывести округлить(2.5)\nвывести округлить_вниз(2.5)\nвывести округлить_вверх(2.2)', 'ru'),
         '3\n2\n3'
       );
-      assert.strictEqual(outputOf('izhod res\nizhod ni_res', 'sl'), '<true/>\n<false/>');
+      assert.strictEqual(outputOf('izhod res\nizhod ni_res', 'sl'), 'res\nni_res');
       assert.strictEqual(outputOf('izhod kvadrat(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
       assert.strictEqual(
         outputOf('shkruaj e vërtetë\nshkruaj e rreme\nshkruaj e > 2', 'sq'),
-        '<true/>\n<false/>\n<true/>'
+        'e vërtetë\ne rreme\ne vërtetë'
       );
     });
 
@@ -127,8 +140,8 @@ describe('words', () => {
     });
 
     it('keywords in any case', () => {
-      assert.strictEqual(outputOf('OUTPUT 5\nOutput Pi > 3', 'en'), '5\n<true/>');
-      assert.strictEqual(outputOf('ՏՊԵԼ ՃԻՇՏ', 'hy-AM'), '<true/>');
+      assert.strictEqual(outputOf('OUTPUT 5\nOutput Pi > 3', 'en'), '5\ntrue');
+      assert.strictEqual(outputOf('ՏՊԵԼ ՃԻՇՏ', 'hy-AM'), 'ճիշտ');
     });
 
     it('words in texts and comments are not keywords', () => {
@@ -199,7 +212,12 @@ describe('words', () => {
         for (const {source, language} of programs) {
           const expected = run(source.code || '', language, source.inputs);
           const translated = translate(source.code || '', language, to);
-          assert.deepStrictEqual(run(translated, to, source.inputs), expected, `${source.title}:\n${translated}`);
+          const result = run(translated, to, source.inputs);
+          assert.deepStrictEqual(
+            {...result, output: sameBooleans(result.output, to, language)},
+            expected,
+            `${source.title}:\n${translated}`
+          );
         }
       });
     });

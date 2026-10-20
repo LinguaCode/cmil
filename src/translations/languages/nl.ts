@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: 'Inspringfout op regel {line}: spring blokken 4 spaties in.',
     argumentError: 'Regel {line}: een rekenfunctie heeft verkeerde argumenten.',
     undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
+    typeError: 'Regel {line}: {operator} werkt niet met deze waarden.',
+    conditionError: 'Regel {line}: een voorwaarde moet waar of onwaar zijn.',
+    divisionByZero: 'Regel {line}: delen door nul.',
+    mathError: 'Regel {line}: {operator} heeft geen uitkomst voor deze waarde.',
     memoryLimit: 'Regel {line}: een tekst werd te lang.',
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',
     unknownLanguage: 'Onbekende taal: {language}.'

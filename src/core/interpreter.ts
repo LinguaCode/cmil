@@ -6,14 +6,13 @@ import * as values from './values.ts';
 import {COMMAND, ERROR, STATE, MAX_TEXT_LENGTH, MAX_OUTPUT_LENGTH} from '../constants/index.ts';
 import type {Expression, Instruction, Program, Value} from './types.ts';
 
-//a condition fails only on false
-const isPassed = (value: Value) => value !== false;
-
 export type RunStatus = (typeof STATE)[keyof typeof STATE];
 
 class Interpreter {
   instructions: Instruction[];
   maxSteps: number;
+  wordOf: (command: string) => string;
+  booleans: values.Booleans;
   counters: number[];
   variables = new Map<string, Value>();
   position = 0;
@@ -24,10 +23,13 @@ class Interpreter {
 
   /**
    * @param maxSteps - the steps the program may run in one call of run().
+   * @param wordOf - the word of a command in the program's language, or an operator as it is; output and errors use it.
    */
-  constructor({instructions, slots}: Program, maxSteps: number) {
+  constructor({instructions, slots}: Program, maxSteps: number, wordOf: (command: string) => string) {
     this.instructions = instructions;
     this.maxSteps = maxSteps;
+    this.wordOf = wordOf;
+    this.booleans = {true: wordOf(COMMAND.TRUE), false: wordOf(COMMAND.FALSE)};
     this.counters = new Array<number>(slots).fill(0);
   }
 
@@ -72,20 +74,54 @@ class Interpreter {
         }
         return value;
       }
-      case 'call':
-        return values.FUNCTIONS[node.name].apply(...node.args.map(arg => this.evaluate(arg)));
+      case 'call': {
+        const args = node.args.map(arg => this.evaluate(arg));
+        return this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(...args));
+      }
       case 'unary': {
         const operand = this.evaluate(node.operand);
-        if (node.operator === COMMAND.NOT) return !operand;
-        return node.operator === '-' ? -operand : +operand;
+        return this.apply(node, node.operator, () => values.unary(node.operator, operand));
       }
       case 'binary': {
         const left = this.evaluate(node.left);
-        if (node.operator === COMMAND.AND) return left && this.evaluate(node.right);
-        if (node.operator === COMMAND.OR) return left || this.evaluate(node.right);
-        return this.checkText(values.binary(node.operator, left, this.evaluate(node.right)));
+        const {operator} = node;
+
+        //and and or skip their right side when the left one decides
+        if (operator === COMMAND.AND || operator === COMMAND.OR) {
+          const decided = this.apply(node, operator, () => values.boolean(left)) === (operator === COMMAND.OR);
+          if (decided) return left;
+          const right = this.evaluate(node.right);
+          return this.apply(node, operator, () => values.boolean(right));
+        }
+
+        const right = this.evaluate(node.right);
+        return this.checkText(this.apply(node, operator, () => values.binary(operator, left, right, this.booleans)));
       }
     }
+  }
+
+  /**
+   * Computes a value of an operator or a function; a value that doesn't fit it is an error at its column.
+   *
+   * @param operator - an operator, or the command of a function or of not, and or or.
+   */
+  apply(node: {column?: number}, operator: string, compute: () => Value): Value {
+    try {
+      return compute();
+    } catch (error) {
+      if (!(error instanceof values.ValueError)) throw error;
+
+      const where = {line: this.line, ...(node.column && {column: node.column})};
+      if (error.id === ERROR.DIVISION_BY_ZERO) throw new CmilError({id: error.id, ...where});
+      throw new CmilError({id: error.id, ...where, operator: this.wordOf(operator)});
+    }
+  }
+
+  //a condition must be true or false
+  test(expression: Expression): boolean {
+    const value = this.evaluate(expression);
+    if (typeof value !== 'boolean') throw new CmilError({id: ERROR.CONDITION_ERROR, line: this.line});
+    return value;
   }
 
   /**
@@ -106,7 +142,7 @@ class Interpreter {
 
       switch (instruction.op) {
         case 'output': {
-          const text = values.toText(this.evaluate(instruction.expression));
+          const text = values.toText(this.evaluate(instruction.expression), this.booleans);
           if (text !== '') {
             this.outputLength += text.length + 1;
             if (this.outputLength > MAX_OUTPUT_LENGTH) {
@@ -128,17 +164,20 @@ class Interpreter {
           next = instruction.target;
           break;
         case 'jumpUnless':
-          if (!isPassed(this.evaluate(instruction.expression))) next = instruction.target;
+          if (!this.test(instruction.expression)) next = instruction.target;
           break;
         case 'jumpIf':
-          if (isPassed(this.evaluate(instruction.expression))) next = instruction.target;
+          if (this.test(instruction.expression)) next = instruction.target;
           break;
-        case 'repeatStart':
-          this.counters[instruction.slot] = 0;
+        case 'repeatStart': {
+          //the count of passes is read once
+          const count = this.evaluate(instruction.expression);
+          this.counters[instruction.slot] = this.apply({}, COMMAND.REPEAT, () => values.passes(count)) as number;
           break;
+        }
         case 'repeatTest':
-          if (this.counters[instruction.slot] < (this.evaluate(instruction.expression) as number)) {
-            this.counters[instruction.slot]++;
+          if (this.counters[instruction.slot] > 0) {
+            this.counters[instruction.slot]--;
           } else {
             next = instruction.target;
           }

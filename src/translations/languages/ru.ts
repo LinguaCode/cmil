@@ -47,6 +47,10 @@ const translation: Translation = {
     indentError: 'Ошибка отступа в строке {line}: делайте отступы блоков по 4 пробела.',
     argumentError: 'Строка {line}: у математической функции неверные аргументы.',
     undefinedVariable: 'Строка {line}: у {variable} ещё нет значения.',
+    typeError: 'Строка {line}: {operator} не работает с этими значениями.',
+    conditionError: 'Строка {line}: условие должно быть истинным или ложным.',
+    divisionByZero: 'Строка {line}: деление на ноль.',
+    mathError: 'Строка {line}: у {operator} нет результата для этого значения.',
     memoryLimit: 'Строка {line}: текст стал слишком длинным.',
     timeout: 'Программа работала слишком долго, не запрашивая ввод.',
     unknownLanguage: 'Неизвестный язык: {language}.'

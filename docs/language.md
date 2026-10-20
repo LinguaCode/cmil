@@ -29,10 +29,12 @@ output "Hello"
 
 ## Values
 
-- **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point.
+- **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point. Whole numbers are printed whole, others with 12 significant digits, and numbers are compared as they are printed: `0.1 + 0.2` prints `0.3` and equals `0.3`.
 - **Texts** in `«…»`, `"…"` or `'…'`. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab.
-- **Booleans:** `true` and `false`.
+- **Booleans:** `true` and `false`, printed in the words of the program's language, for example `ճիշտ` in Armenian.
 - **Constants:** `pi` and `e`.
+
+Values are never converted into another type: `"5" == 5` is `false`, and an operator or function with a value it doesn't take is a `typeError`.
 
 ## Variables
 
@@ -58,18 +60,18 @@ output "Hello, " + name
 
 From the lowest to the highest precedence:
 
-| Operators | Meaning |
-|---|---|
-| `or` | either is true |
-| `and` | both are true |
-| `not` | the opposite |
-| `==`, `!=` | equal, not equal |
-| `<`, `>`, `<=`, `>=` | comparisons |
-| `+`, `-` | add, subtract; `+` also joins texts |
-| `*`, `/`, `%` | multiply, divide, remainder |
-| `-`, `+` before a value | negative, positive |
+| Operators | Meaning | Values |
+|---|---|---|
+| `or` | either is true | booleans; the right side is skipped when the left one is `true` |
+| `and` | both are true | booleans; the right side is skipped when the left one is `false` |
+| `not` | the opposite | a boolean |
+| `==`, `!=` | equal, not equal | any; values of different types are never equal |
+| `<`, `>`, `<=`, `>=` | comparisons | two numbers, or two texts in alphabetical order |
+| `+`, `-` | add, subtract | numbers; `+` also joins a text with any value |
+| `*`, `/`, `%` | multiply, divide, remainder | numbers; dividing by `0` is a `divisionByZero` |
+| `-`, `+` before a value | negative, positive | a number |
 
-Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: <true/>`.
+Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: true`.
 
 ## Conditions
 
@@ -83,7 +85,7 @@ else
     output "Limited access"
 ```
 
-`then` is optional. A condition fails only when it is `false`.
+`then` is optional. A condition must be `true` or `false`; any other value is a `conditionError`.
 
 ## Loops
 
@@ -102,7 +104,7 @@ repeat 3 times
 ```
 
 - `while` checks its condition before every pass, `do … while` after every pass.
-- `repeat N times` checks `N` before every pass and counts from 0, so `repeat 2.5 times` runs 3 times.
+- `repeat N times` reads `N` once, before the first pass, so changing `N` in the loop doesn't change the passes. `N` must be a whole number, not below 0.
 - `break` leaves the innermost loop and `continue` starts its next pass; outside a loop they are a `syntaxError`.
 
 ## Math functions
@@ -111,18 +113,19 @@ repeat 3 times
 |---|---|
 | `power(x, y)` | `x` to the power of `y` |
 | `square(x)`, `square_root(x)` | `x²`, `√x` |
-| `round(x)`, `floor(x)`, `ceil(x)` | nearest, lower, higher whole number |
+| `round(x)`, `round(x, digits)` | nearest whole number, or nearest number with that many decimals: `round(3.14159, 2)` is `3.14` |
+| `floor(x)`, `ceil(x)` | lower, higher whole number |
 | `absolute_value(x)` | `x` without its sign |
-| `sin(x)`, `cos(x)`, `tan(x)`, `ctg(x)` | trigonometry in radians; `sin`, `cos` and `tan` are rounded to 10 decimals |
+| `sin(x)`, `cos(x)`, `tan(x)`, `ctg(x)` | trigonometry in radians, rounded to 12 decimals, so `sin(pi)` is `0` |
 | `arcsin(x)`, `arccos(x)`, `arctan(x)`, `arcctg(x)` | inverse trigonometry |
 | `log(base, x)`, `ln(x)`, `lg(x)` | logarithms: any base, `e`, 10 |
-| `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included |
+| `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included; `min`, `max` must be whole |
 
-Another count of arguments, or a missing `)`, is an `argumentError`.
+Math functions take numbers. Another count of arguments, or a missing `)`, is an `argumentError`; an argument that isn't a number is a `typeError`; and a result that doesn't exist, like `square_root(-1)`, `ln(0)` or `tan(pi / 2)`, is a `mathError`.
 
 ## Output format
 
-`true`, `false`, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>`, which the LinguaCode interface shows in the learner's language. Words in texts are printed as written.
+Every `output` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, and texts as written.
 
 ## Errors
 
@@ -134,6 +137,10 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
 | `argumentError` | a math function with a missing `)` or another count of arguments | `line`, `column` of the function |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
+| `typeError` | an operator, function or `repeat` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`, the word of the program's language |
+| `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
+| `divisionByZero` | `/` or `%` by `0` | `line`, `column` |
+| `mathError` | a math function or operator has no result, like `square_root(-1)` | `line`, `column`, `operator` |
 | `memoryLimit` | a text, or the output of one step, grows too long | `line` |
 | `timeout` | the program runs more steps than its limit between two inputs | none |
 | `unknownLanguage` | the session's language isn't one of the languages | `language` |

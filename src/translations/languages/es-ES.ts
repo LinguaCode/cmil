@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Error de sangría en la línea {line}: sangra los bloques con 4 espacios.',
     argumentError: 'Línea {line}: una función matemática tiene argumentos incorrectos.',
     undefinedVariable: 'Línea {line}: {variable} todavía no tiene valor.',
+    typeError: 'Línea {line}: {operator} no funciona con estos valores.',
+    conditionError: 'Línea {line}: una condición debe ser verdadera o falsa.',
+    divisionByZero: 'Línea {line}: división entre cero.',
+    mathError: 'Línea {line}: {operator} no tiene resultado para este valor.',
     memoryLimit: 'Línea {line}: un texto se hizo demasiado largo.',
     timeout: 'El programa se ejecutó demasiado tiempo sin pedir una entrada.',
     unknownLanguage: 'Idioma desconocido: {language}.'

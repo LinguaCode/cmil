@@ -48,6 +48,10 @@ const translation: Translation = {
     indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',
     argumentError: '第 {line} 行：数学函数的参数不对。',
     undefinedVariable: '第 {line} 行：{variable} 还没有值。',
+    typeError: '第 {line} 行：{operator} 不能用于这些值。',
+    conditionError: '第 {line} 行：条件必须为真或假。',
+    divisionByZero: '第 {line} 行：除数为零。',
+    mathError: '第 {line} 行：{operator} 对这个值没有结果。',
     memoryLimit: '第 {line} 行：文本太长了。',
     timeout: '程序运行太久，却没有请求输入。',
     unknownLanguage: '未知语言：{language}'

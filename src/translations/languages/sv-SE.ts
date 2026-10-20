@@ -51,6 +51,10 @@ const translation: Translation = {
     indentError: 'Indragsfel på rad {line}: dra in block med 4 blanksteg.',
     argumentError: 'Rad {line}: en matematisk funktion har fel argument.',
     undefinedVariable: 'Rad {line}: {variable} har inget värde än.',
+    typeError: 'Rad {line}: {operator} fungerar inte med de här värdena.',
+    conditionError: 'Rad {line}: ett villkor måste vara sant eller falskt.',
+    divisionByZero: 'Rad {line}: division med noll.',
+    mathError: 'Rad {line}: {operator} har inget resultat för det här värdet.',
     memoryLimit: 'Rad {line}: en text blev för lång.',
     timeout: 'Programmet körde för länge utan att be om indata.',
     unknownLanguage: 'Okänt språk: {language}.'
