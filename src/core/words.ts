@@ -11,7 +11,7 @@ export type Segment =
   | {type: 'comment'; text: string}
   | {type: 'other'; text: string};
 
-type Words = {
+type Lexicon = {
   //a lower-cased word and its command
   single: Map<string, string>;
   //a lower-cased first word, and the second words that complete a command with it
@@ -39,18 +39,17 @@ export const IDENTIFIER_PART = /[\p{L}\p{M}\p{N}_]/u;
 export const DIGIT = /[0-9]/;
 const SPACE = /[ \t]/;
 
-const cache = new Map<string, Words>();
+const cache = new Map<string, Lexicon>();
 
 /**
  * The words of a language; the language must be one of the translations.
  */
-export const wordsOf = (language: string): Words => {
+export const wordsOf = (language: string): Lexicon => {
   const cached = cache.get(language);
   if (cached) return cached;
 
-  const words: Words = {single: new Map(), double: new Map(), first: new Map()};
-  for (const {command, definition} of TRANSLATION[language]) {
-    const alternatives = definition.split('|');
+  const words: Lexicon = {single: new Map(), double: new Map(), first: new Map()};
+  for (const [command, alternatives] of Object.entries(TRANSLATION[language].words)) {
     words.first.set(command, alternatives[0]);
 
     for (const alternative of alternatives) {

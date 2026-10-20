@@ -1,159 +1,47 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Armenian
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'մուտքագրել'
-  },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'տպել'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'եթե'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'այլապես'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'ապա'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'կամ'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'և|եւ|ու'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'ոչ'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'սխալ'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'ճիշտ'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'անել'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'մինչ'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'կրկնել'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'անգամ'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'դադարեցնել'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'շարունակել'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'ֆունկցիա'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'պատահականություն'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'աստիճան'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'քառակուսի'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'արմատ'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'կլորացնել'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'ամբողջացնել_ներքև|ամբողջացնել_ներքեւ'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'ամբողջացնել_վերև|ամբողջացնել_վերեւ'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'մոդուլ'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+const translation: Translation = {
+  words: {
+    input: ['մուտքագրել'],
+    output: ['տպել'],
+    if: ['եթե'],
+    else: ['այլապես'],
+    then: ['ապա'],
+    or: ['կամ'],
+    and: ['և', 'եւ', 'ու'],
+    not: ['ոչ'],
+    false: ['սխալ'],
+    true: ['ճիշտ'],
+    do: ['անել'],
+    while: ['մինչ'],
+    repeat: ['կրկնել'],
+    times: ['անգամ'],
+    break: ['դադարեցնել'],
+    continue: ['շարունակել'],
+    function: ['ֆունկցիա'],
+    random: ['պատահականություն'],
+    pow: ['աստիճան'],
+    sqr: ['քառակուսի'],
+    sqrt: ['արմատ'],
+    round: ['կլորացնել'],
+    floor: ['ամբողջացնել_ներքև', 'ամբողջացնել_ներքեւ'],
+    ceil: ['ամբողջացնել_վերև', 'ամբողջացնել_վերեւ'],
+    abs: ['մոդուլ'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   }
-];
+};
 
 export default translation;

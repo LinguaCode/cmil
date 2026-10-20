@@ -2,12 +2,12 @@
  * Builds the syntax tree of a CMIL program from the lines of the lexer.
  */
 import CmilError from './error.ts';
-import {COMMAND, STATUS, MAX_NESTING} from '../constants/index.ts';
+import {COMMAND, ERROR, MAX_NESTING} from '../constants/index.ts';
 import {FUNCTIONS, CONSTANTS} from './values.ts';
 import type {Branch, Expression, Line, Statement, Token} from './types.ts';
 
-const syntaxError = (line: number) => new CmilError(STATUS.SYNTAX_ERROR, {line});
-const functionArgumentError = (line: number) => new CmilError(STATUS.FUNCTION_ARGUMENT_SCOPE_ERROR, {line});
+const syntaxError = (line: number) => new CmilError(ERROR.SYNTAX_ERROR, {line});
+const functionArgumentError = (line: number) => new CmilError(ERROR.FUNCTION_ARGUMENT_SYNTAX_ERROR, {line});
 
 const isCommand = (token: Token | undefined, command: string) =>
   !!token && token.type === 'command' && token.value === command;
@@ -236,7 +236,7 @@ export const parse = (lines: Line[]): Statement[] => {
 
     //deeper than the block, without a header
     if (lines[index] && lines[index].level > level) {
-      throw new CmilError(STATUS.INDENT_ERROR, {line: lines[index].number});
+      throw new CmilError(ERROR.INDENT_ERROR, {line: lines[index].number});
     }
 
     return statements;

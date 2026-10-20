@@ -31,18 +31,12 @@ import uk from './languages/uk.ts';
 import vi from './languages/vi.ts';
 import zhCN from './languages/zh-CN.ts';
 
-/**
- * A command and its words in one language; alternative words are separated with |.
- * A note asks native speakers to check a word; docs/translations.md lists the notes.
- */
-export type Translation = {
-  command: string;
-  definition: string;
-  note?: string;
-};
+import type {Translation} from './types.ts';
 
-//translations of the commands, one file per language
-const translations: Record<string, Translation[]> = {
+export type {Notes, Translation, Words} from './types.ts';
+
+//the words of the commands, one file per language
+const translations: Record<string, Translation> = {
   ar,
   ca,
   cs,

@@ -1,159 +1,47 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in French
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'entrée'
-  },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'sortie'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'si'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'sinon'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'alors'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'ou'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'et'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'non'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'faux'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'vrai'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'faire'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'tant_que'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'répéter'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'fois'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'arrêter'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'continuer'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'fonction'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'aléatoire'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'puissance'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'carré'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'racine_carrée'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'arrondir'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'plancher'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'plafond'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'valeur_absolue'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+const translation: Translation = {
+  words: {
+    input: ['entrée'],
+    output: ['sortie'],
+    if: ['si'],
+    else: ['sinon'],
+    then: ['alors'],
+    or: ['ou'],
+    and: ['et'],
+    not: ['non'],
+    false: ['faux'],
+    true: ['vrai'],
+    do: ['faire'],
+    while: ['tant_que'],
+    repeat: ['répéter'],
+    times: ['fois'],
+    break: ['arrêter'],
+    continue: ['continuer'],
+    function: ['fonction'],
+    random: ['aléatoire'],
+    pow: ['puissance'],
+    sqr: ['carré'],
+    sqrt: ['racine_carrée'],
+    round: ['arrondir'],
+    floor: ['plancher'],
+    ceil: ['plafond'],
+    abs: ['valeur_absolue'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   }
-];
+};
 
 export default translation;

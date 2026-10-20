@@ -1,161 +1,51 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Norwegian
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'skriv_inn'
+const translation: Translation = {
+  words: {
+    input: ['skriv_inn'],
+    output: ['skriv_ut'],
+    if: ['hvis'],
+    else: ['ellers'],
+    then: ['da'],
+    or: ['eller'],
+    and: ['og'],
+    not: ['ikke'],
+    false: ['usann'],
+    true: ['sann'],
+    do: ['gjøre'],
+    while: ['mens'],
+    repeat: ['gjenta'],
+    times: ['ganger'],
+    break: ['avbryt'],
+    continue: ['fortsett'],
+    function: ['funksjon'],
+    random: ['tilfeldig'],
+    pow: ['potens'],
+    sqr: ['kvadrat'],
+    sqrt: ['kvadratrot'],
+    round: ['avrund'],
+    floor: ['avrund_ned'],
+    ceil: ['avrund_opp'],
+    abs: ['absolutt_verdi'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'skriv_ut'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'hvis'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'ellers'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'da',
-    note: 'Is så more common after hvis?'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'eller'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'og'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'ikke'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'usann'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'sann'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'gjøre'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'mens',
-    note: 'Means during; would så_lenge be better?'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'gjenta'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'ganger'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'avbryt'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'fortsett'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'funksjon'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'tilfeldig'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'potens'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'kvadrat'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'kvadratrot'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'avrund'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'avrund_ned'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'avrund_opp'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'absolutt_verdi'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+  notes: {
+    then: 'Is så more common after hvis?',
+    while: 'Means during; would så_lenge be better?'
   }
-];
+};
 
 export default translation;

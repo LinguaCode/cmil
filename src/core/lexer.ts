@@ -2,13 +2,13 @@
  * Splits CMIL source code into lines of tokens; the commands are written in the words of the program's language.
  */
 import CmilError from './error.ts';
-import {STATUS} from '../constants/index.ts';
+import {ERROR} from '../constants/index.ts';
 import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan} from './words.ts';
 import type {Line, Token} from './types.ts';
 
 const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', ','];
 
-const syntaxError = (line: number) => new CmilError(STATUS.SYNTAX_ERROR, {line});
+const syntaxError = (line: number) => new CmilError(ERROR.SYNTAX_ERROR, {line});
 
 const readNumber = (text: string, start: number, lineNumber: number) => {
   let i = start;
@@ -104,7 +104,7 @@ export const tokenize = (sourceCode: string, language: string): Line[] => {
 
   const misindented = lines.find(({spaces}) => spaces % INDENT_SIZE !== 0);
   if (misindented) {
-    throw new CmilError(STATUS.INDENT_ERROR, {line: misindented.number});
+    throw new CmilError(ERROR.INDENT_ERROR, {line: misindented.number});
   }
 
   return lines

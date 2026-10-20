@@ -1,159 +1,47 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Hebrew
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'קלט'
-  },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'פלט'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'אם'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'אחרת'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'אז'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'או'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'ו'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'לא'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'שקר'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'אמת'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'לעשות'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'כל_עוד'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'חזור'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'פעמים'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'עצור'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'המשך'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'פונקציה'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'אקראי'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'חזקה'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'ריבוע'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'שורש_ריבועי'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'עיגול'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'עיגול_למטה'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'עיגול_למעלה'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'ערך_מוחלט'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+const translation: Translation = {
+  words: {
+    input: ['קלט'],
+    output: ['פלט'],
+    if: ['אם'],
+    else: ['אחרת'],
+    then: ['אז'],
+    or: ['או'],
+    and: ['ו'],
+    not: ['לא'],
+    false: ['שקר'],
+    true: ['אמת'],
+    do: ['לעשות'],
+    while: ['כל_עוד'],
+    repeat: ['חזור'],
+    times: ['פעמים'],
+    break: ['עצור'],
+    continue: ['המשך'],
+    function: ['פונקציה'],
+    random: ['אקראי'],
+    pow: ['חזקה'],
+    sqr: ['ריבוע'],
+    sqrt: ['שורש_ריבועי'],
+    round: ['עיגול'],
+    floor: ['עיגול_למטה'],
+    ceil: ['עיגול_למעלה'],
+    abs: ['ערך_מוחלט'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   }
-];
+};
 
 export default translation;
