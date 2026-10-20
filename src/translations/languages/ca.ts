@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'més'
+    definition: 'sinó'
   },
   {
     command: COMMAND.THEN,
-    definition: 'després'
+    definition: 'llavors'
   },
   {
     command: COMMAND.OR,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'mentre_que'
+    definition: 'mentre'
   },
   {
     command: COMMAND.REPEAT,
@@ -56,11 +56,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TIMES,
-    definition: 'temps'
+    definition: 'vegades'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'descans'
+    definition: 'interrompre'
   },
   {
     command: COMMAND.CONTINUE,
@@ -72,7 +72,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.RANDOM,
-    definition: 'al_azar'
+    definition: 'aleatori'
   },
   {
     command: COMMAND.POW,
@@ -80,7 +80,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.SQR,
-    definition: 'plaça'
+    definition: 'quadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'ronda'
+    definition: 'arrodonir'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'planta'
+    definition: 'arrodonir_avall'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'sostre'
+    definition: 'arrodonir_amunt'
   },
   {
     command: COMMAND.ABS,

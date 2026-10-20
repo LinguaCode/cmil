@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'anders'
+    definition: 'sonst'
   },
   {
     command: COMMAND.THEN,
@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: 'richtig'
+    definition: 'wahr'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'während'
+    definition: 'solange'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'pause'
+    definition: 'abbrechen'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'macht'
+    definition: 'potenz'
   },
   {
     command: COMMAND.SQR,
-    definition: 'quadratisch'
+    definition: 'quadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,7 +88,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'rund'
+    definition: 'runden'
   },
   {
     command: COMMAND.FLOOR,

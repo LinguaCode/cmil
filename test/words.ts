@@ -102,9 +102,10 @@ describe('words', () => {
 
     it('keywords that contain another keyword', async () => {
       assert.strictEqual(await outputOf('output square(3)\noutput square_root(16)', 'en'), '9\n4');
+      assert.strictEqual(await outputOf('výstup mocnina(2, 3)\nvýstup druhá_mocnina(3)', 'cs'), '8\n9');
       assert.strictEqual(
-        await outputOf('a = 0\nalors_que a < 2\n    a = a + 1\nsi a == 2 alors\n    sortie a', 'fr'),
-        '2'
+        await outputOf('sortida arrodonir(2.5)\nsortida arrodonir_avall(2.5)\nsortida arrodonir_amunt(2.2)', 'ca'),
+        '3\n2\n3'
       );
       assert.strictEqual(await outputOf('uscita e_numero > 2 e vero', 'it'), '<true/>');
       assert.strictEqual(
@@ -112,13 +113,16 @@ describe('words', () => {
         '3\n2\n3'
       );
       assert.strictEqual(await outputOf('izhod res\nizhod ni_res', 'sl'), '<true/>\n<false/>');
-      assert.strictEqual(await outputOf('izhod kvadratni(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
-      assert.strictEqual(await outputOf('prodhimi e vërtetë\nprodhimi e > 2', 'sq'), '<true/>\n<true/>');
+      assert.strictEqual(await outputOf('izhod kvadrat(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
+      assert.strictEqual(
+        await outputOf('shkruaj e vërtetë\nshkruaj e rreme\nshkruaj e > 2', 'sq'),
+        '<true/>\n<false/>\n<true/>'
+      );
     });
 
     it('two-word keywords, with any spaces between the words', async () => {
-      assert.strictEqual(await outputOf('αν 1 == 1 στη συνέχεια\n    παραγωγή 7', 'el'), '7');
-      assert.strictEqual(await outputOf('αν 1 == 1 στη  \tσυνέχεια\n    παραγωγή 7', 'el'), '7');
+      assert.strictEqual(await outputOf('nëse e vërtetë atëherë\n    shkruaj 7', 'sq'), '7');
+      assert.strictEqual(await outputOf('nëse e  \tvërtetë atëherë\n    shkruaj 7', 'sq'), '7');
     });
 
     it('keywords in any case', async () => {
@@ -171,8 +175,8 @@ describe('words', () => {
     });
 
     it('translates a two-word keyword', () => {
-      assert.strictEqual(translate('if x then', 'en', 'el'), 'αν x στη συνέχεια');
-      assert.strictEqual(translate('αν x στη  συνέχεια', 'el', 'en'), 'if x then');
+      assert.strictEqual(translate('output true', 'en', 'sq'), 'shkruaj e vërtetë');
+      assert.strictEqual(translate('shkruaj e  rreme', 'sq', 'en'), 'output false');
     });
 
     it('renames a name that is a keyword in the other language, the same everywhere', () => {

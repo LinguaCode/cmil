@@ -18,8 +18,8 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
 - **Playground:** https://linguacode.otanim.com runs CMIL in the browser. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. After a release, bump that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 428 tests pass on Node.js 24 and 26.
-- **Types:** `npm run typecheck` checks `src/` and `test/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 429 tests pass on Node.js 24 and 26.
+- **Types:** `npm run typecheck` checks `src/`, `test/` and `scripts/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` (which builds `dist/`), `npm run lint`, `npm run typecheck`, `npm test` and a program through the built package, on Node.js 24 and 26 for every push and pull request.
@@ -37,7 +37,7 @@ Verified on 2026-10-19. Update this section when a fact changes.
 - **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
-- **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`). Crowdin and Transifex are no longer used.
+- **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`), or suggest a word with the issue form `.github/ISSUE_TEMPLATE/translation.yml`. `docs/translations.md` is generated from the translations by `npm run translations-table` (`scripts/translations-table.ts`, which also holds each language's name and each command's meaning). A word's optional `note` asks native speakers to check it. Crowdin and Transifex are no longer used.
 - **Version and changelog:** the version is `0.6.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default).
 
@@ -57,20 +57,23 @@ Read the files before relying on these descriptions.
 - `src/libs/logger.ts`: debug logging
 - `src/constants/`, `src/translations/`: see **Dependencies** above
 - `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts` and `words.ts`
-- `tsconfig.json`: type checking of `src/` and `test/`; `tsconfig.build.json`: the build into `dist/`
+- `scripts/translations-table.ts`: writes `docs/translations.md`
+- `tsconfig.json`: type checking of `src/`, `test/` and `scripts/`; `tsconfig.build.json`: the build into `dist/`
 - `docs/language.md`: the language reference; keep it in line with `test/collection`
 - `docs/running.md`: limits and running sessions in a worker
+- `docs/translations.md`: the words of every language, generated; don't edit it by hand
 
 ## Commands
 
 ```bash
 npm install        # also builds dist/ through prepare
 npm run build      # tsc: src/ into dist/ with type declarations
-npm run typecheck  # tsc on src/ and test/, no output
+npm run typecheck  # tsc on src/, test/ and scripts/, no output
 npm test           # node --test on the .ts sources: test/collection against CodeSubmit, core, translations, words
 npm run coverage   # the same under c8
 npm run lint       # ESLint and Prettier check
 npm run format     # Prettier rewrite
+npm run translations-table  # regenerate docs/translations.md
 ```
 
 `package.json` is the source of truth for scripts.

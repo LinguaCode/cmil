@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'још'
+    definition: 'иначе'
   },
   {
     command: COMMAND.THEN,
@@ -36,7 +36,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'лажне'
+    definition: 'лаж'
   },
   {
     command: COMMAND.TRUE,
@@ -44,23 +44,23 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.DO,
-    definition: 'радим'
+    definition: 'уради'
   },
   {
     command: COMMAND.WHILE,
-    definition: 'а'
+    definition: 'док'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'поновите'
+    definition: 'понови'
   },
   {
     command: COMMAND.TIMES,
-    definition: 'пут'
+    definition: 'пута'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'пауза'
+    definition: 'прекини'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'снага'
+    definition: 'степен'
   },
   {
     command: COMMAND.SQR,
-    definition: 'површина'
+    definition: 'квадрат'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'током_целе'
+    definition: 'заокружи'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'пол'
+    definition: 'заокружи_наниже'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'хем'
+    definition: 'заокружи_навише'
   },
   {
     command: COMMAND.ABS,
@@ -152,7 +152,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.E,
-    definition: 'е'
+    definition: 'e|е'
   }
 ];
 

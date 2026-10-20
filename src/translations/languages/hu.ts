@@ -4,7 +4,7 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'bemeneti'
+    definition: 'bemenet'
   },
   {
     command: COMMAND.OUTPUT,
@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'más'
+    definition: 'különben'
   },
   {
     command: COMMAND.THEN,
@@ -28,7 +28,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.AND,
-    definition: 's'
+    definition: 'és'
   },
   {
     command: COMMAND.NOT,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'szünet'
+    definition: 'megszakítás'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'teljesítmény'
+    definition: 'hatvány'
   },
   {
     command: COMMAND.SQR,
-    definition: 'tér'
+    definition: 'négyzet'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'kerek'
+    definition: 'kerekítés'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'emelet'
+    definition: 'lefelé_kerekítés'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'mennyezet'
+    definition: 'felfelé_kerekítés'
   },
   {
     command: COMMAND.ABS,

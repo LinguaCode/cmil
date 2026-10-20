@@ -1,0 +1,57 @@
+name: Translation
+description: Suggest a better word for a command in your language
+title: '[translation] '
+labels: [translation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping children program in their own language. The words of every language are in [docs/translations.md](https://github.com/LinguaCode/cmil/blob/master/docs/translations.md); the words *to check* there need a native speaker most.
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      description: Its name or code, as in docs/translations.md.
+      placeholder: French (fr)
+    validations:
+      required: true
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      description: The English word of the command.
+      placeholder: floor
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: Current word
+      placeholder: étage
+    validations:
+      required: true
+  - type: input
+    id: suggested
+    attributes:
+      label: Suggested word
+      description: Join the words of a phrase with _, like tant_que. More than one word is fine; separate them with |, the first is the main one.
+      placeholder: plancher
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What the current word means, and where the suggested word is used, for example in school, textbooks or spreadsheets.
+    validations:
+      required: true
+  - type: dropdown
+    id: native
+    attributes:
+      label: Is this your native language?
+      options:
+        - 'Yes'
+        - 'No, but I speak it well'
+        - 'No'
+    validations:
+      required: true

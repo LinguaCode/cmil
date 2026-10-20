@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'khác'
+    definition: 'ngược_lại'
   },
   {
     command: COMMAND.THEN,
-    definition: 'sau_đó'
+    definition: 'thì'
   },
   {
     command: COMMAND.OR,
@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: 'sự_thật'
+    definition: 'đúng'
   },
   {
     command: COMMAND.DO,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'phá_vỡ'
+    definition: 'dừng'
   },
   {
     command: COMMAND.CONTINUE,
@@ -68,7 +68,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'chức_năng'
+    definition: 'hàm'
   },
   {
     command: COMMAND.RANDOM,
@@ -76,7 +76,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'sức_mạnh'
+    definition: 'lũy_thừa'
   },
   {
     command: COMMAND.SQR,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'vòng'
+    definition: 'làm_tròn'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'sàn_nhà'
+    definition: 'làm_tròn_xuống'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'trần'
+    definition: 'làm_tròn_lên'
   },
   {
     command: COMMAND.ABS,

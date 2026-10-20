@@ -4,11 +4,12 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'të_dhëna'
+    definition: 'të_dhëna',
+    note: 'Means data; would lexo (read) be better?'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'prodhimi'
+    definition: 'shkruaj'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +17,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'tjetër'
+    definition: 'përndryshe'
   },
   {
     command: COMMAND.THEN,
-    definition: 'pastaj'
+    definition: 'atëherë'
   },
   {
     command: COMMAND.OR,
@@ -36,7 +37,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'të_rreme'
+    definition: 'e rreme'
   },
   {
     command: COMMAND.TRUE,
@@ -44,23 +45,23 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.DO,
-    definition: 'a'
+    definition: 'bëj'
   },
   {
     command: COMMAND.WHILE,
-    definition: 'ndërsa'
+    definition: 'përderisa'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'përsëriteni'
+    definition: 'përsërit'
   },
   {
     command: COMMAND.TIMES,
-    definition: 'kohët'
+    definition: 'herë'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'pushim'
+    definition: 'ndalo'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,7 +77,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'pushtet'
+    definition: 'fuqi'
   },
   {
     command: COMMAND.SQR,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'raundi'
+    definition: 'rrumbullakos'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'kati'
+    definition: 'rrumbullakos_poshtë'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'tavan'
+    definition: 'rrumbullakos_lart'
   },
   {
     command: COMMAND.ABS,

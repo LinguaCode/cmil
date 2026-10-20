@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'iné'
+    definition: 'inak'
   },
   {
     command: COMMAND.THEN,
-    definition: 'potom'
+    definition: 'tak'
   },
   {
     command: COMMAND.OR,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'zatiaľ_čo'
+    definition: 'kým'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'zlomiť'
+    definition: 'prerušiť'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'moc'
+    definition: 'mocnina'
   },
   {
     command: COMMAND.SQR,
-    definition: 'námestie'
+    definition: 'druhá_mocnina'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'kolo'
+    definition: 'zaokrúhliť'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'poschodie'
+    definition: 'zaokrúhliť_nadol'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'strop'
+    definition: 'zaokrúhliť_nahor'
   },
   {
     command: COMMAND.ABS,

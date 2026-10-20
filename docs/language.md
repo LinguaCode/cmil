@@ -20,7 +20,7 @@ The test cases in [`test/collection`](../test/collection) are the specification 
 - One statement per line. A block is the lines indented under its command, 4 spaces per level.
 - `#` starts a comment until the end of the line. Blank lines are ignored.
 - Commands and variable names are case-insensitive: `X` and `x` are the same variable.
-- A command is a whole word: `output_x` is a variable name. The words of a two-word command, like Greek `στη συνέχεια` (then), may be separated by any spaces.
+- A command is a whole word: `output_x` is a variable name. The words of a two-word command, like Albanian `e vërtetë` (true), may be separated by any spaces.
 
 ```
 # say hello

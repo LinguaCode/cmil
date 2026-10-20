@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'altceva'
+    definition: 'altfel'
   },
   {
     command: COMMAND.THEN,
-    definition: 'apoi'
+    definition: 'atunci'
   },
   {
     command: COMMAND.OR,
@@ -44,15 +44,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.DO,
-    definition: 'face'
+    definition: 'execută'
   },
   {
     command: COMMAND.WHILE,
-    definition: 'în_timp_ce'
+    definition: 'cât_timp'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'repet'
+    definition: 'repetă'
   },
   {
     command: COMMAND.TIMES,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'pauza'
+    definition: 'întrerupe'
   },
   {
     command: COMMAND.CONTINUE,
@@ -68,11 +68,12 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'funcția'
+    definition: 'funcție'
   },
   {
     command: COMMAND.RANDOM,
-    definition: 'aleatoare'
+    definition: 'aleatoare',
+    note: 'Feminine plural; should it be aleator?'
   },
   {
     command: COMMAND.POW,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'runda'
+    definition: 'rotunjire'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'podea'
+    definition: 'rotunjire_în_jos'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'tavan'
+    definition: 'rotunjire_în_sus'
   },
   {
     command: COMMAND.ABS,

@@ -33,10 +33,12 @@ import zhCN from './languages/zh-CN.ts';
 
 /**
  * A command and its words in one language; alternative words are separated with |.
+ * A note asks native speakers to check a word; docs/translations.md lists the notes.
  */
 export type Translation = {
   command: string;
   definition: string;
+  note?: string;
 };
 
 //translations of the commands, one file per language

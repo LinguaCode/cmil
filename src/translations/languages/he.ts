@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'אחר'
+    definition: 'אחרת'
   },
   {
     command: COMMAND.THEN,
@@ -36,11 +36,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'שווא'
+    definition: 'שקר'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'נכון'
+    definition: 'אמת'
   },
   {
     command: COMMAND.DO,
@@ -48,11 +48,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'בזמן'
+    definition: 'כל_עוד'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'חוזר'
+    definition: 'חזור'
   },
   {
     command: COMMAND.TIMES,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'הפסקה'
+    definition: 'עצור'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'כוח'
+    definition: 'חזקה'
   },
   {
     command: COMMAND.SQR,
-    definition: 'כיכר'
+    definition: 'ריבוע'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'סיבוב'
+    definition: 'עיגול'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'קומה'
+    definition: 'עיגול_למטה'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'סיל'
+    definition: 'עיגול_למעלה'
   },
   {
     command: COMMAND.ABS,
@@ -112,7 +112,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TAN,
-    definition: 'טאן'
+    definition: 'tan'
   },
   {
     command: COMMAND.CTG,

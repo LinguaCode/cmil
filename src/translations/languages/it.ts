@@ -4,11 +4,13 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'ingresso'
+    definition: 'ingresso',
+    note: 'An electronics term; would leggi (read) be better?'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'uscita'
+    definition: 'uscita',
+    note: 'An electronics term; would scrivi (write) be better?'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +18,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'altro'
+    definition: 'altrimenti'
   },
   {
     command: COMMAND.THEN,
-    definition: 'poi'
+    definition: 'allora'
   },
   {
     command: COMMAND.OR,
@@ -88,7 +90,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'rotondo'
+    definition: 'arrotonda'
   },
   {
     command: COMMAND.FLOOR,

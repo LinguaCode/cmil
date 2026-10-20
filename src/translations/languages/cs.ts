@@ -36,7 +36,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'lež'
+    definition: 'nepravda'
   },
   {
     command: COMMAND.TRUE,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'zatímco'
+    definition: 'dokud'
   },
   {
     command: COMMAND.REPEAT,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'moc'
+    definition: 'mocnina'
   },
   {
     command: COMMAND.SQR,
-    definition: 'náměstí'
+    definition: 'druhá_mocnina'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'kolo'
+    definition: 'zaokrouhlit'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'podlaha'
+    definition: 'zaokrouhlit_dolů'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'strop'
+    definition: 'zaokrouhlit_nahoru'
   },
   {
     command: COMMAND.ABS,
