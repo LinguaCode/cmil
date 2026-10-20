@@ -222,7 +222,7 @@ Quotes: «…», also "…" and '…'
 | English | Meaning | Armenian |
 |---|---|---|
 | input | waits for the user and stores the answer in a variable | `մուտքագրել` |
-| print | prints values, separated by commas, on one line | `տպել` |
+| print | prints values, separated by commas, on one line | `արտածել` |
 | if | runs the block below when its condition is true | `եթե` |
 | else | runs the block below when the conditions before it are false | `այլապես` |
 | then | may end the condition of if | `ապա` |

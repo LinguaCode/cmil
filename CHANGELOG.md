@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[change]** words: `print` is `արտածել` in Armenian instead of `տպել`, which says more exactly what it does: it outputs.
+
 ## 0.11.0-alpha.0 (2026-10-20)
 
   - **[change]** input: `input` only reads, so `input name` is its only form; the question is printed before it, like `print "Your name?"`. Anything between `input` and the name, like the prompt of `input "Your name?" name`, is a `syntaxError`, and the input step has no `prompt`.

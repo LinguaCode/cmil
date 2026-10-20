@@ -4,7 +4,7 @@ import type {Translation} from '../types.ts';
 const translation: Translation = {
   words: {
     input: ['մուտքագրել'],
-    print: ['տպել'],
+    print: ['արտածել'],
     if: ['եթե'],
     else: ['այլապես'],
     then: ['ապա'],

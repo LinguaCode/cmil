@@ -4,7 +4,7 @@ CMIL programs are written with the commands of the learner's language. The examp
 
 | Command | English | Armenian (`hy-AM`) | Russian (`ru`) |
 |---|---|---|---|
-| print | `print` | `տպել` | `вывести` |
+| print | `print` | `արտածել` | `вывести` |
 | input | `input` | `մուտքագրել` | `ввести` |
 | if, else, then | `if`, `else`, `then` | `եթե`, `այլապես`, `ապա` | `если`, `иначе`, `тогда` |
 | while, do | `while`, `do` | `մինչ`, `անել` | `пока`, `сделать` |

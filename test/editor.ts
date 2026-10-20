@@ -28,9 +28,9 @@ describe('editor', () => {
 
     it('reads the texts and numbers of the language, and marks the rest as other', () => {
       assert.deepStrictEqual(
-        segmentsOf('տպել «ա» >= 2․5, 1x @', 'hy-AM').map(({type, text}) => `${type}:${text}`),
+        segmentsOf('արտածել «ա» >= 2․5, 1x @', 'hy-AM').map(({type, text}) => `${type}:${text}`),
         [
-          'keyword:տպել',
+          'keyword:արտածել',
           'space: ',
           'string:«ա»',
           'space: ',
