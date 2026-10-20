@@ -27,5 +27,5 @@ jobs:
       - name: Run the built package
         run: >-
           node --input-type=module -e "import {Session} from 'cmil';
-          const step = new Session('output 1', 'en').run(); console.log(step.output);
+          const step = new Session('print 1', 'en').run(); console.log(step.output);
           if (step.state !== 'end' || step.error) process.exit(1);"
