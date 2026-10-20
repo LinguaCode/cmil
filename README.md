@@ -72,7 +72,7 @@ CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`n
 `npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()` and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
-- [The CMIL language](docs/language.md): commands, values, operators, math functions and errors.
+- [The CMIL language](docs/language.md): commands, values, operators, lists, functions and errors.
 - [Running CMIL programs](docs/running.md): limits, and running sessions in a worker.
 - [Translations](docs/translations.md): the words of every language, and the words to check.
 

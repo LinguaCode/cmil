@@ -19,7 +19,7 @@ const isOperator = (token: Token | undefined, operator: string) =>
 
 /**
  * Parses one expression of a line, from the lowest to the highest precedence:
- * or, and, not, == !=, < > <= >=, + -, * / %, unary - +, values.
+ * or, and, not, == !=, < > <= >=, + -, * / %, unary - +, indexes like list[1], values.
  */
 const parseExpression = (tokens: Token[], line: number): Expression => {
   //= only stores a value, at the start of a statement; in an expression it is meant as ==
@@ -50,7 +50,23 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
 
   const operators = (list: string[]) => (token: Token) => token.type === 'operator' && list.includes(token.value);
 
-  const parsePrimary = (): Expression => {
+  //the items of a list, up to its ]
+  const parseList = (): Expression => {
+    const items: Expression[] = [];
+    if (isOperator(peek(), ']')) {
+      index++;
+      return {type: 'list', items};
+    }
+
+    for (;;) {
+      items.push(parseOr());
+      const token = tokens[index++];
+      if (isOperator(token, ']')) return {type: 'list', items};
+      if (!isOperator(token, ',')) throw syntaxError(line, token);
+    }
+  };
+
+  const parseValue = (): Expression => {
     const token = tokens[index++];
     if (!token) throw syntaxError(line);
 
@@ -59,10 +75,11 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
       case 'string':
         return {type: 'value', value: token.value};
       case 'identifier':
-        //only the math functions can be called
+        //only the functions of the language can be called
         if (isOperator(peek(), '(')) throw syntaxError(line, peek());
         return {type: 'variable', name: token.value, column: token.column};
       case 'operator':
+        if (token.value === '[') return nest(parseList);
         if (token.value !== '(') throw syntaxError(line, token);
         return nest(() => {
           const node = parseOr();
@@ -84,6 +101,24 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     }
 
     throw syntaxError(line, token);
+  };
+
+  //a value with its indexes, like list[1] or table[2][3]
+  const parsePrimary = (): Expression => {
+    let node = parseValue();
+    let open;
+    while ((open = peek()) && isOperator(open, '[')) {
+      index++;
+      const target = node;
+      const column = open.column;
+      node = nest(() => {
+        const position = parseOr();
+        const close = tokens[index++];
+        if (!isOperator(close, ']')) throw syntaxError(line, close);
+        return {type: 'index', target, index: position, column};
+      });
+    }
+    return node;
   };
 
   //the errors of a call are at the name of its function
@@ -140,17 +175,30 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   return node;
 };
 
-//the parts of a line between the commas outside parentheses
+const opens = (token: Token) => isOperator(token, '(') || isOperator(token, '[');
+const closes = (token: Token) => isOperator(token, ')') || isOperator(token, ']');
+
+//the parts of a line between the commas outside parentheses and brackets
 const splitAtCommas = (tokens: Token[]): Token[][] => {
   const parts: Token[][] = [[]];
   let depth = 0;
   for (const token of tokens) {
-    if (isOperator(token, '(')) depth++;
-    if (isOperator(token, ')')) depth--;
+    if (opens(token)) depth++;
+    if (closes(token)) depth--;
     if (!depth && isOperator(token, ',')) parts.push([]);
     else parts[parts.length - 1].push(token);
   }
   return parts;
+};
+
+//the = of an assignment to an item, like list[1] = 5: the first one outside parentheses and brackets
+const findEquals = (tokens: Token[]): number => {
+  let depth = 0;
+  return tokens.findIndex(token => {
+    if (opens(token)) depth++;
+    if (closes(token)) depth--;
+    return !depth && isOperator(token, '=');
+  });
 };
 
 /**
@@ -213,6 +261,14 @@ export const parse = (lines: Line[]): Statement[] => {
       return {type: 'assign', name: first.value, expression: parseExpression(rest.slice(1), line), line};
     }
 
+    const equals = first.type === 'identifier' && isOperator(rest[0], '[') ? findEquals(tokens) : -1;
+    if (equals > 0) {
+      const item = parseExpression(tokens.slice(0, equals), line);
+      if (item.type !== 'index') throw syntaxError(line, tokens[equals]);
+      const expression = parseExpression(tokens.slice(equals + 1), line);
+      return {type: 'setItem', target: item.target, index: item.index, column: item.column, expression, line};
+    }
+
     if (first.type !== 'command') throw syntaxError(line, first);
 
     switch (first.value) {
@@ -234,10 +290,25 @@ export const parse = (lines: Line[]): Statement[] => {
         if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {type: 'repeat', count: condition(rest, line, COMMAND.TIMES), body: parseBody(level, true), line};
       }
+      case COMMAND.ADD: {
+        //add a value into a list
+        const into = rest.findIndex(token => isCommand(token, COMMAND.INTO));
+        if (into < 0) throw syntaxError(line, rest[rest.length - 1] ?? first);
+        return {
+          type: 'add',
+          expression: parseExpression(rest.slice(0, into), line),
+          target: parseExpression(rest.slice(into + 1), line),
+          line
+        };
+      }
       case COMMAND.FOR: {
-        //for name from a to b, or for name from a to b step c
+        //for name from a to b, for name from a to b step c, or for name in a list or a text
         const [name, from] = rest;
         if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
+        if (isCommand(from, COMMAND.IN)) {
+          const expression = parseExpression(rest.slice(2), line);
+          return {type: 'forEach', name: name.value, expression, body: parseBody(level, true), line};
+        }
         if (!isCommand(from, COMMAND.FROM)) throw syntaxError(line, from ?? name);
         const to = rest.findIndex(token => isCommand(token, COMMAND.TO));
         if (to < 0) throw syntaxError(line, rest[rest.length - 1]);

@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['från'],
     to: ['till'],
     step: ['steg'],
+    in: ['bland'],
+    add: ['lägg_till'],
+    into: ['i_listan'],
     function: ['funktion'],
     random: ['slumptal'],
     pow: ['potens'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['längden_av'],
+    upper: ['versaler'],
+    lower: ['gemener'],
+    number: ['till_tal'],
+    text: ['till_text']
   },
   notes: {
     while: 'Means during; would så_länge be better?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfel på rad {line}.',
     indentError: 'Indragsfel på rad {line}: dra in block med 4 blanksteg.',
-    argumentError: 'Rad {line}: en matematisk funktion har fel argument.',
+    argumentError: 'Rad {line}: en funktion har fel argument.',
     equalsError: 'Rad {line}: skriv == i stället för = för att jämföra.',
     undefinedVariable: 'Rad {line}: {variable} har inget värde än.',
     typeError: 'Rad {line}: {operator} fungerar inte med de här värdena.',
     conditionError: 'Rad {line}: ett villkor måste vara sant eller falskt.',
     divisionByZero: 'Rad {line}: division med noll.',
     mathError: 'Rad {line}: {operator} har inget resultat för det här värdet.',
-    memoryLimit: 'Rad {line}: en text blev för lång.',
+    indexError: 'Rad {line}: det finns inget element {index}.',
+    memoryLimit: 'Rad {line}: en text eller en lista blev för lång.',
     timeout: 'Programmet körde för länge utan att be om indata.',
     unknownLanguage: 'Okänt språk: {language}.'
   }

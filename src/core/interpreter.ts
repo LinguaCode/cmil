@@ -16,6 +16,8 @@ class Interpreter {
   counters: number[];
   //the bounds of each for loop, and the passes it has made
   ranges: {from: number; to: number; step: number; passes: number}[] = [];
+  //the items of each for … in loop, and the passes it has made
+  sequences: {items: Value[]; passes: number}[] = [];
   variables = new Map<string, Value>();
   position = 0;
   line = 0;
@@ -62,10 +64,22 @@ class Interpreter {
     return value;
   }
 
+  //a value as it is printed; a list printed longer than a text may be is a memoryLimit
+  text(value: Value): string {
+    return this.apply({}, '', () => values.toText(value, this.booleans));
+  }
+
   evaluate(node: Expression): Value {
     switch (node.type) {
       case 'value':
         return node.value;
+      case 'list':
+        return node.items.map(item => this.evaluate(item));
+      case 'index': {
+        const target = this.evaluate(node.target);
+        const index = this.evaluate(node.index);
+        return this.apply(node, '[]', () => values.item(target, index));
+      }
       case 'variable': {
         const value = this.variables.get(node.name);
         if (value === undefined) {
@@ -80,7 +94,9 @@ class Interpreter {
       }
       case 'call': {
         const args = node.args.map(arg => this.evaluate(arg));
-        return this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(...args));
+        return this.checkText(
+          this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(args, this.booleans))
+        );
       }
       case 'unary': {
         const operand = this.evaluate(node.operand);
@@ -107,7 +123,7 @@ class Interpreter {
   /**
    * Computes a value of an operator or a function; a value that doesn't fit it is an error at its column.
    *
-   * @param operator - an operator, or the command of a function or of not, and or or.
+   * @param operator - an operator, [] of an index, or the command of a function, of a loop or of not, and or or.
    */
   apply<T>(node: {column?: number}, operator: string, compute: () => T): T {
     try {
@@ -116,6 +132,10 @@ class Interpreter {
       if (!(error instanceof values.ValueError)) throw error;
 
       const where = {line: this.line, ...(node.column && {column: node.column})};
+      if (error.id === ERROR.MEMORY_LIMIT) throw new CmilError({id: error.id, line: this.line});
+      if (error.id === ERROR.INDEX_ERROR) {
+        throw new CmilError({id: error.id, line: this.line, column: node.column ?? 0, index: error.index});
+      }
       if (error.id === ERROR.DIVISION_BY_ZERO) throw new CmilError({id: error.id, ...where});
       throw new CmilError({id: error.id, ...where, operator: this.wordOf(operator)});
     }
@@ -146,9 +166,7 @@ class Interpreter {
 
       switch (instruction.op) {
         case 'print': {
-          const text = instruction.expressions
-            .map(expression => values.toText(this.evaluate(expression), this.booleans))
-            .join(' ');
+          const text = instruction.expressions.map(expression => this.text(this.evaluate(expression))).join(' ');
           if (text !== '') {
             this.outputLength += text.length + 1;
             if (this.outputLength > MAX_OUTPUT_LENGTH) {
@@ -160,7 +178,7 @@ class Interpreter {
         }
         case 'input':
           if (this.input === undefined) {
-            if (instruction.prompt) this.prompt = values.toText(this.evaluate(instruction.prompt), this.booleans);
+            if (instruction.prompt) this.prompt = this.text(this.evaluate(instruction.prompt));
             return STATE.INPUT;
           }
           this.variables.set(instruction.name, this.input);
@@ -170,6 +188,19 @@ class Interpreter {
         case 'assign':
           this.variables.set(instruction.name, this.evaluate(instruction.expression));
           break;
+        case 'setItem': {
+          const target = this.evaluate(instruction.target);
+          const index = this.evaluate(instruction.index);
+          const value = this.evaluate(instruction.expression);
+          this.apply(instruction, '[]', () => values.setItem(target, index, value));
+          break;
+        }
+        case 'add': {
+          const value = this.evaluate(instruction.expression);
+          const target = this.evaluate(instruction.target);
+          this.apply({}, COMMAND.ADD, () => values.add(value, target));
+          break;
+        }
         case 'jump':
           next = instruction.target;
           break;
@@ -202,6 +233,24 @@ class Interpreter {
           if (range.step > 0 ? value <= range.to : value >= range.to) {
             this.variables.set(instruction.name, value);
             range.passes++;
+          } else {
+            next = instruction.target;
+          }
+          break;
+        }
+        case 'forEachStart': {
+          //the items are taken once
+          const value = this.evaluate(instruction.expression);
+          this.sequences[instruction.slot] = {
+            items: this.apply({}, COMMAND.IN, () => values.sequence(value)),
+            passes: 0
+          };
+          break;
+        }
+        case 'forEachTest': {
+          const sequence = this.sequences[instruction.slot];
+          if (sequence.passes < sequence.items.length) {
+            this.variables.set(instruction.name, sequence.items[sequence.passes++]);
           } else {
             next = instruction.target;
           }

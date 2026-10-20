@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['desde'],
     to: ['hasta'],
     step: ['paso'],
+    in: ['en'],
+    add: ['añadir'],
+    into: ['a_la_lista'],
     function: ['función'],
     random: ['aleatorio'],
     pow: ['potencia'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['longitud_de'],
+    upper: ['mayúsculas'],
+    lower: ['minúsculas'],
+    number: ['a_número'],
+    text: ['a_texto']
   },
   notes: {
     break: 'Harsh for children; would interrumpir or salir be better?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Error de sintaxis en la línea {line}.',
     indentError: 'Error de sangría en la línea {line}: sangra los bloques con 4 espacios.',
-    argumentError: 'Línea {line}: una función matemática tiene argumentos incorrectos.',
+    argumentError: 'Línea {line}: una función tiene argumentos incorrectos.',
     equalsError: 'Línea {line}: para comparar, escribe == en lugar de =.',
     undefinedVariable: 'Línea {line}: {variable} todavía no tiene valor.',
     typeError: 'Línea {line}: {operator} no funciona con estos valores.',
     conditionError: 'Línea {line}: una condición debe ser verdadera o falsa.',
     divisionByZero: 'Línea {line}: división entre cero.',
     mathError: 'Línea {line}: {operator} no tiene resultado para este valor.',
-    memoryLimit: 'Línea {line}: un texto se hizo demasiado largo.',
+    indexError: 'Línea {line}: no hay ningún elemento {index}.',
+    memoryLimit: 'Línea {line}: un texto o una lista se hizo demasiado largo.',
     timeout: 'El programa se ejecutó demasiado tiempo sin pedir una entrada.',
     unknownLanguage: 'Idioma desconocido: {language}.'
   }

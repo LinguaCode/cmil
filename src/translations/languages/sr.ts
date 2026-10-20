@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['од'],
     to: ['до'],
     step: ['корак'],
+    in: ['из'],
+    add: ['додај'],
+    into: ['на_крај'],
     function: ['функција'],
     random: ['случајни'],
     pow: ['степен'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e', 'е']
+    e: ['e', 'е'],
+    length: ['дужина'],
+    upper: ['велика_слова'],
+    lower: ['мала_слова'],
+    number: ['у_број'],
+    text: ['у_текст']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Синтаксна грешка у реду {line}.',
     indentError: 'Грешка увлачења у реду {line}: увлачите блокове за 4 размака.',
-    argumentError: 'Ред {line}: математичка функција има погрешне аргументе.',
+    argumentError: 'Ред {line}: функција има погрешне аргументе.',
     equalsError: 'Ред {line}: за поређење пишите == уместо =.',
     undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
     typeError: 'Ред {line}: {operator} не ради са овим вредностима.',
     conditionError: 'Ред {line}: услов мора бити тачан или нетачан.',
     divisionByZero: 'Ред {line}: дељење нулом.',
     mathError: 'Ред {line}: {operator} нема резултат за ову вредност.',
-    memoryLimit: 'Ред {line}: текст је постао предугачак.',
+    indexError: 'Ред {line}: не постоји елемент {index}.',
+    memoryLimit: 'Ред {line}: текст или листа је постао предугачак.',
     timeout: 'Програм је радио предуго, а није тражио унос.',
     unknownLanguage: 'Непознат језик: {language}.'
   }

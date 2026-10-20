@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['de_la'],
     to: ['până_la'],
     step: ['pas'],
+    in: ['în'],
+    add: ['adaugă'],
+    into: ['la'],
     function: ['funcție'],
     random: ['aleatoare'],
     pow: ['putere'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['lungimea'],
+    upper: ['majuscule'],
+    lower: ['minuscule'],
+    number: ['în_număr'],
+    text: ['în_text']
   },
   notes: {
     random: 'Feminine plural; should it be aleator?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Eroare de sintaxă pe linia {line}.',
     indentError: 'Eroare de indentare pe linia {line}: indentează blocurile cu 4 spații.',
-    argumentError: 'Linia {line}: o funcție matematică are argumente greșite.',
+    argumentError: 'Linia {line}: o funcție are argumente greșite.',
     equalsError: 'Linia {line}: pentru a compara, scrie == în loc de =.',
     undefinedVariable: 'Linia {line}: {variable} nu are încă o valoare.',
     typeError: 'Linia {line}: {operator} nu funcționează cu aceste valori.',
     conditionError: 'Linia {line}: o condiție trebuie să fie adevărată sau falsă.',
     divisionByZero: 'Linia {line}: împărțire la zero.',
     mathError: 'Linia {line}: {operator} nu are rezultat pentru această valoare.',
-    memoryLimit: 'Linia {line}: un text a devenit prea lung.',
+    indexError: 'Linia {line}: nu există elementul {index}.',
+    memoryLimit: 'Linia {line}: un text sau o listă a devenit prea lung.',
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',
     unknownLanguage: 'Limbă necunoscută: {language}.'
   }

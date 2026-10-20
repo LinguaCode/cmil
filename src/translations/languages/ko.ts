@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['부터'],
     to: ['까지'],
     step: ['간격'],
+    in: ['안의'],
+    add: ['추가'],
+    into: ['에'],
     function: ['함수'],
     random: ['난수'],
     pow: ['거듭제곱'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['길이'],
+    upper: ['대문자'],
+    lower: ['소문자'],
+    number: ['숫자로'],
+    text: ['문자열로']
   },
   notes: {
     not: 'A fragment of -지 않다; which word should logical not be?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: '{line}번째 줄에 문법 오류가 있습니다.',
     indentError: '{line}번째 줄 들여쓰기 오류: 블록은 4칸씩 들여 쓰세요.',
-    argumentError: '{line}번째 줄: 수학 함수의 인수가 잘못되었습니다.',
+    argumentError: '{line}번째 줄: 함수의 인수가 잘못되었습니다.',
     equalsError: '{line}번째 줄: 비교하려면 = 대신 ==를 쓰세요.',
     undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
     typeError: '{line}번째 줄: {operator}은(는) 이 값들과 함께 쓸 수 없습니다.',
     conditionError: '{line}번째 줄: 조건은 참이나 거짓이어야 합니다.',
     divisionByZero: '{line}번째 줄: 0으로 나눌 수 없습니다.',
     mathError: '{line}번째 줄: 이 값에서는 {operator}의 결과가 없습니다.',
-    memoryLimit: '{line}번째 줄: 텍스트가 너무 길어졌습니다.',
+    indexError: '{line}번째 줄: {index}번째 항목이 없습니다.',
+    memoryLimit: '{line}번째 줄: 텍스트나 목록이 너무 길어졌습니다.',
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
     unknownLanguage: '알 수 없는 언어: {language}'
   }

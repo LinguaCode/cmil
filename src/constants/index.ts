@@ -22,6 +22,11 @@ export const COMMAND = {
   FROM: 'from',
   TO: 'to',
   STEP: 'step',
+  IN: 'in',
+
+  //lists
+  ADD: 'add',
+  INTO: 'into',
 
   BREAK: 'break',
   CONTINUE: 'continue',
@@ -59,7 +64,14 @@ export const COMMAND = {
   RANDOM: 'random',
 
   PI: 'pi',
-  E: 'e'
+  E: 'e',
+
+  //lists and texts
+  LENGTH: 'length',
+  UPPER: 'upper',
+  LOWER: 'lower',
+  NUMBER: 'number',
+  TEXT: 'text'
 } as const;
 
 export type Command = (typeof COMMAND)[keyof typeof COMMAND];
@@ -75,6 +87,7 @@ export const ERROR = {
   CONDITION_ERROR: 'conditionError',
   DIVISION_BY_ZERO: 'divisionByZero',
   MATH_ERROR: 'mathError',
+  INDEX_ERROR: 'indexError',
   MEMORY_LIMIT: 'memoryLimit',
   TIMEOUT: 'timeout',
   UNKNOWN_LANGUAGE: 'unknownLanguage'
@@ -91,8 +104,9 @@ export const STATE = {
 //steps a program may run in one call of run() or input(), unless the session sets its own maxSteps
 export const MAX_STEPS = 1000000;
 
-//limits of the memory: length of one text and of the output of one call
+//limits of the memory: length of one text, of one list and of the output of one call
 export const MAX_TEXT_LENGTH = 1000000;
+export const MAX_LIST_LENGTH = 1000000;
 export const MAX_OUTPUT_LENGTH = 10000000;
 
 //nesting of blocks and of expressions

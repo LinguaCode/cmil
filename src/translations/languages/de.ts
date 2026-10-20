@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['von'],
     to: ['bis'],
     step: ['schritt'],
+    in: ['in'],
+    add: ['füge_hinzu'],
+    into: ['zu'],
     function: ['funktion'],
     random: ['zufällig'],
     pow: ['potenz'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['länge_von'],
+    upper: ['großbuchstaben', 'grossbuchstaben'],
+    lower: ['kleinbuchstaben'],
+    number: ['zu_zahl'],
+    text: ['zu_text']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfehler in Zeile {line}.',
     indentError: 'Einrückungsfehler in Zeile {line}: Blöcke um 4 Leerzeichen einrücken.',
-    argumentError: 'Zeile {line}: Eine Mathefunktion hat falsche Argumente.',
+    argumentError: 'Zeile {line}: Eine Funktion hat falsche Argumente.',
     equalsError: 'Zeile {line}: Zum Vergleichen == statt = schreiben.',
     undefinedVariable: 'Zeile {line}: {variable} hat noch keinen Wert.',
     typeError: 'Zeile {line}: {operator} funktioniert mit diesen Werten nicht.',
     conditionError: 'Zeile {line}: Eine Bedingung muss wahr oder falsch sein.',
     divisionByZero: 'Zeile {line}: Division durch null.',
     mathError: 'Zeile {line}: {operator} hat für diesen Wert kein Ergebnis.',
-    memoryLimit: 'Zeile {line}: Ein Text wurde zu lang.',
+    indexError: 'Zeile {line}: Es gibt kein Element {index}.',
+    memoryLimit: 'Zeile {line}: Ein Text oder eine Liste wurde zu lang.',
     timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',
     unknownLanguage: 'Unbekannte Sprache: {language}.'
   }

@@ -4,7 +4,8 @@ import {describe, it} from 'node:test';
 
 import {Session, check, languages, messageOf, type ProgramError, type Step} from '../src/index.ts';
 import translations from '../src/translations/index.ts';
-import {ERROR} from '../src/constants/index.ts';
+import {ERROR, MAX_LIST_LENGTH} from '../src/constants/index.ts';
+import * as values from '../src/core/values.ts';
 
 /**
  * Runs a program and answers every input request from inputs.
@@ -139,6 +140,57 @@ describe('core', () => {
 
     it('and and or skip their right side when the left one decides', () => {
       assert.deepStrictEqual(run('print false and x\nprint true or x').output, ['false', 'true']);
+    });
+  });
+
+  describe('lists', () => {
+    it('an indexError points at the [ of its index, with the index', () => {
+      assert.deepStrictEqual(run('a = [1]\nprint a[2]').error, {id: 'indexError', line: 2, column: 8, index: 2});
+      assert.deepStrictEqual(run('a = [1]\na[0] = 5').error, {id: 'indexError', line: 2, column: 2, index: 0});
+      assert.deepStrictEqual(run('print [1, 2, 3][0.1 * 3 * 10]').output, ['3']);
+    });
+
+    it("an error of a list names its operator in the program's language", () => {
+      assert.deepStrictEqual(run('print 5[1]').error, {id: 'typeError', line: 1, column: 8, operator: '[]'});
+      assert.deepStrictEqual(run('ավելացնել 1 մեջ 5', [], 'hy-AM').error, {
+        id: 'typeError',
+        line: 1,
+        operator: 'ավելացնել'
+      });
+      assert.deepStrictEqual(run('յուրաքանչյուր x ից 5\n    տպել x', [], 'hy-AM').error, {
+        id: 'typeError',
+        line: 1,
+        operator: 'ից'
+      });
+    });
+
+    it('booleans in a list print in the words of the language', () => {
+      assert.deepStrictEqual(run('տպել [ճիշտ, սխալ, "ա"]', [], 'hy-AM').output, ['[ճիշտ, սխալ, "ա"]']);
+    });
+
+    it('lists inside themselves compare', () => {
+      const code = 'a = [1]\nadd a into a\nb = [1]\nadd b into b\nc = [2]\nadd c into c\nprint a == b, a == c';
+      assert.deepStrictEqual(run(code).output, ['true false']);
+    });
+
+    it('deep lists print and compare without overflowing the stack', () => {
+      const code = 'x = []\ny = []\nrepeat 100000 times\n    x = [x]\n    y = [y]\nprint x == y, length_of(to_text(x))';
+      assert.deepStrictEqual(run(code).output, ['true 200002']);
+    });
+
+    it('a list shared many times is printed until its text is too long', () => {
+      const {error} = run('b = []\nrepeat 40 times\n    b = [b, b]\nprint b == b, length_of(b)\nprint to_text(b)');
+      assert.deepStrictEqual(error, {id: 'memoryLimit', line: 5});
+    });
+
+    it('a list grows to MAX_LIST_LENGTH items', () => {
+      assert.throws(
+        () => values.add(1, new Array(MAX_LIST_LENGTH).fill(0)),
+        (error: values.ValueError) => error.id === 'memoryLimit'
+      );
+      const list = new Array(MAX_LIST_LENGTH - 1).fill(0);
+      values.add(1, list);
+      assert.strictEqual(list.length, MAX_LIST_LENGTH);
     });
   });
 
@@ -278,6 +330,7 @@ describe('core', () => {
       {id: 'conditionError', line: 2},
       {id: 'divisionByZero', line: 2, column: 3},
       {id: 'mathError', line: 2, column: 3, operator: 'square_root'},
+      {id: 'indexError', line: 2, column: 3, index: 5},
       {id: 'memoryLimit', line: 2},
       {id: 'timeout'},
       {id: 'unknownLanguage', language: 'xx'}

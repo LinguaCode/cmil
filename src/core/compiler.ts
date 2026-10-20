@@ -4,9 +4,11 @@
  *
  * Instructions:
  * - print {expressions}, input {name, prompt}, assign {name, expression}
+ * - setItem {target, index, expression}, add {expression, target}: change a list
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
  * - forStart {slot, from, to, step}, forTest {slot, name, target}: the bounds of a for loop, read once, and its passes
+ * - forEachStart {slot, expression}, forEachTest {slot, name, target}: the items of a for … in loop, and its passes
  */
 import type {Instruction, Program, Statement} from './types.ts';
 
@@ -57,6 +59,14 @@ export const compile = (statements: Statement[]): Program => {
       case 'assign':
         emit({op: 'assign', name: node.name, expression: node.expression, line});
         break;
+      case 'setItem': {
+        const {target, index, expression, column} = node;
+        emit({op: 'setItem', target, index, expression, column, line});
+        break;
+      }
+      case 'add':
+        emit({op: 'add', expression: node.expression, target: node.target, line});
+        break;
       case 'if': {
         const ends = node.branches.map(branch => {
           const test = emit({op: 'jumpUnless', expression: branch.condition, target: UNPATCHED, line: branch.line});
@@ -103,6 +113,17 @@ export const compile = (statements: Statement[]): Program => {
         const slot = slots++;
         emit({op: 'forStart', slot, from: node.from, to: node.to, step: node.step, line});
         const test = emit({op: 'forTest', slot, name: node.name, target: UNPATCHED, line});
+        const body = loop(test, () => block(node.body));
+        emit({op: 'jump', target: test});
+        patch(test, here());
+        body.continueAt();
+        body.end(here());
+        break;
+      }
+      case 'forEach': {
+        const slot = slots++;
+        emit({op: 'forEachStart', slot, expression: node.expression, line});
+        const test = emit({op: 'forEachTest', slot, name: node.name, target: UNPATCHED, line});
         const body = loop(test, () => block(node.body));
         emit({op: 'jump', target: test});
         patch(test, here());

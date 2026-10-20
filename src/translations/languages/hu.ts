@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['kezdet'],
     to: ['vég'],
     step: ['lépés'],
+    in: ['közül'],
+    add: ['hozzáad'],
+    into: ['ehhez'],
     function: ['funkció'],
     random: ['véletlen'],
     pow: ['hatvány'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['hossza'],
+    upper: ['nagybetűs'],
+    lower: ['kisbetűs'],
+    number: ['számmá'],
+    text: ['szöveggé']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Szintaktikai hiba a(z) {line}. sorban.',
     indentError: 'Behúzási hiba a(z) {line}. sorban: a blokkokat 4 szóközzel húzd be.',
-    argumentError: '{line}. sor: egy matematikai függvény argumentumai hibásak.',
+    argumentError: '{line}. sor: egy függvény argumentumai hibásak.',
     equalsError: '{line}. sor: összehasonlításhoz == kell, nem =.',
     undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
     typeError: '{line}. sor: a(z) {operator} nem működik ezekkel az értékekkel.',
     conditionError: '{line}. sor: a feltételnek igaznak vagy hamisnak kell lennie.',
     divisionByZero: '{line}. sor: nullával osztás.',
     mathError: '{line}. sor: a(z) {operator} értéke ennél az értéknél nem létezik.',
-    memoryLimit: '{line}. sor: egy szöveg túl hosszú lett.',
+    indexError: '{line}. sor: nincs {index}. elem.',
+    memoryLimit: '{line}. sor: egy szöveg vagy lista túl hosszú lett.',
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
     unknownLanguage: 'Ismeretlen nyelv: {language}.'
   }

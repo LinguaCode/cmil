@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['от'],
     to: ['до'],
     step: ['шаг'],
+    in: ['из'],
+    add: ['добавить'],
+    into: ['в_конец'],
     function: ['функция'],
     random: ['случайное'],
     pow: ['степень'],
@@ -44,19 +47,25 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['длина'],
+    upper: ['заглавные'],
+    lower: ['строчные'],
+    number: ['в_число'],
+    text: ['в_текст']
   },
   messages: {
     syntaxError: 'Синтаксическая ошибка в строке {line}.',
     indentError: 'Ошибка отступа в строке {line}: делайте отступы блоков по 4 пробела.',
-    argumentError: 'Строка {line}: у математической функции неверные аргументы.',
+    argumentError: 'Строка {line}: у функции неверные аргументы.',
     equalsError: 'Строка {line}: для сравнения пишите == вместо =.',
     undefinedVariable: 'Строка {line}: у {variable} ещё нет значения.',
     typeError: 'Строка {line}: {operator} не работает с этими значениями.',
     conditionError: 'Строка {line}: условие должно быть истинным или ложным.',
     divisionByZero: 'Строка {line}: деление на ноль.',
     mathError: 'Строка {line}: у {operator} нет результата для этого значения.',
-    memoryLimit: 'Строка {line}: текст стал слишком длинным.',
+    indexError: 'Строка {line}: нет элемента с номером {index}.',
+    memoryLimit: 'Строка {line}: текст или список стал слишком длинным.',
     timeout: 'Программа работала слишком долго, не запрашивая ввод.',
     unknownLanguage: 'Неизвестный язык: {language}.'
   }

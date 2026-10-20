@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['from'],
     to: ['to'],
     step: ['step'],
+    in: ['in'],
+    add: ['add'],
+    into: ['into'],
     function: ['function'],
     random: ['random'],
     pow: ['power'],
@@ -44,19 +47,25 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['length_of'],
+    upper: ['uppercase'],
+    lower: ['lowercase'],
+    number: ['to_number'],
+    text: ['to_text']
   },
   messages: {
     syntaxError: 'Syntax error on line {line}.',
     indentError: 'Indentation error on line {line}: indent blocks by 4 spaces.',
-    argumentError: 'Line {line}: a math function has the wrong arguments.',
+    argumentError: 'Line {line}: a function has the wrong arguments.',
     equalsError: 'Line {line}: to compare, use == instead of =.',
     undefinedVariable: 'Line {line}: {variable} has no value yet.',
     typeError: "Line {line}: {operator} doesn't work with these values.",
     conditionError: 'Line {line}: a condition must be true or false.',
     divisionByZero: 'Line {line}: division by zero.',
     mathError: 'Line {line}: {operator} has no result for this value.',
-    memoryLimit: 'Line {line}: a text grew too long.',
+    indexError: 'Line {line}: there is no item {index}.',
+    memoryLimit: 'Line {line}: a text or a list grew too long.',
     timeout: 'The program ran too long without asking for input.',
     unknownLanguage: 'Unknown language: {language}.'
   }

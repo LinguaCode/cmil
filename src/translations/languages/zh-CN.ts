@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['从'],
     to: ['到'],
     step: ['步长'],
+    in: ['在'],
+    add: ['添加'],
+    into: ['进'],
     function: ['函数'],
     random: ['随机的'],
     pow: ['乘方'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['长度'],
+    upper: ['大写'],
+    lower: ['小写'],
+    number: ['转数字'],
+    text: ['转文本']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: '第 {line} 行有语法错误。',
     indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',
-    argumentError: '第 {line} 行：数学函数的参数不对。',
+    argumentError: '第 {line} 行：函数的参数不对。',
     equalsError: '第 {line} 行：比较时请用 ==，不要用 =。',
     undefinedVariable: '第 {line} 行：{variable} 还没有值。',
     typeError: '第 {line} 行：{operator} 不能用于这些值。',
     conditionError: '第 {line} 行：条件必须为真或假。',
     divisionByZero: '第 {line} 行：除数为零。',
     mathError: '第 {line} 行：{operator} 对这个值没有结果。',
-    memoryLimit: '第 {line} 行：文本太长了。',
+    indexError: '第 {line} 行：没有第 {index} 项。',
+    memoryLimit: '第 {line} 行：文本或列表太长了。',
     timeout: '程序运行太久，却没有请求输入。',
     unknownLanguage: '未知语言：{language}'
   }

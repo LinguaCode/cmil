@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['krok'],
+    in: ['wśród'],
+    add: ['dodaj'],
+    into: ['na_koniec'],
     function: ['funkcja'],
     random: ['losowy'],
     pow: ['potęga'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['długość'],
+    upper: ['wielkie_litery'],
+    lower: ['małe_litery'],
+    number: ['na_liczbę'],
+    text: ['na_tekst']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Błąd składni w wierszu {line}.',
     indentError: 'Błąd wcięcia w wierszu {line}: wcinaj bloki o 4 spacje.',
-    argumentError: 'Wiersz {line}: funkcja matematyczna ma złe argumenty.',
+    argumentError: 'Wiersz {line}: funkcja ma złe argumenty.',
     equalsError: 'Wiersz {line}: aby porównać, pisz == zamiast =.',
     undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
     typeError: 'Wiersz {line}: {operator} nie działa z tymi wartościami.',
     conditionError: 'Wiersz {line}: warunek musi być prawdziwy albo fałszywy.',
     divisionByZero: 'Wiersz {line}: dzielenie przez zero.',
     mathError: 'Wiersz {line}: {operator} nie ma wyniku dla tej wartości.',
-    memoryLimit: 'Wiersz {line}: tekst stał się za długi.',
+    indexError: 'Wiersz {line}: nie ma elementu {index}.',
+    memoryLimit: 'Wiersz {line}: tekst lub lista stały się za długie.',
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',
     unknownLanguage: 'Nieznany język: {language}.'
   }

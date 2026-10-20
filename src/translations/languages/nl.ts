@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['van'],
     to: ['tot'],
     step: ['stap'],
+    in: ['in'],
+    add: ['voeg_toe'],
+    into: ['aan'],
     function: ['functie'],
     random: ['willekeurig'],
     pow: ['macht'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['lengte_van'],
+    upper: ['hoofdletters'],
+    lower: ['kleine_letters'],
+    number: ['naar_getal'],
+    text: ['naar_tekst']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfout op regel {line}.',
     indentError: 'Inspringfout op regel {line}: spring blokken 4 spaties in.',
-    argumentError: 'Regel {line}: een rekenfunctie heeft verkeerde argumenten.',
+    argumentError: 'Regel {line}: een functie heeft verkeerde argumenten.',
     equalsError: 'Regel {line}: schrijf == in plaats van = om te vergelijken.',
     undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
     typeError: 'Regel {line}: {operator} werkt niet met deze waarden.',
     conditionError: 'Regel {line}: een voorwaarde moet waar of onwaar zijn.',
     divisionByZero: 'Regel {line}: delen door nul.',
     mathError: 'Regel {line}: {operator} heeft geen uitkomst voor deze waarde.',
-    memoryLimit: 'Regel {line}: een tekst werd te lang.',
+    indexError: 'Regel {line}: er is geen element {index}.',
+    memoryLimit: 'Regel {line}: een tekst of een lijst werd te lang.',
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',
     unknownLanguage: 'Onbekende taal: {language}.'
   }

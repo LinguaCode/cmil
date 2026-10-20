@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['fra'],
     to: ['til'],
     step: ['trin'],
+    in: ['blandt'],
+    add: ['tilføj'],
+    into: ['i_listen'],
     function: ['funktion'],
     random: ['tilfældig'],
     pow: ['potens'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['længden_af'],
+    upper: ['store_bogstaver'],
+    lower: ['små_bogstaver'],
+    number: ['til_tal'],
+    text: ['til_tekst']
   },
   notes: {
     while: 'Means during; would så_længe be better?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaksfejl i linje {line}.',
     indentError: 'Indrykningsfejl i linje {line}: ryk blokke 4 mellemrum ind.',
-    argumentError: 'Linje {line}: en matematisk funktion har forkerte argumenter.',
+    argumentError: 'Linje {line}: en funktion har forkerte argumenter.',
     equalsError: 'Linje {line}: skriv == i stedet for = for at sammenligne.',
     undefinedVariable: 'Linje {line}: {variable} har endnu ingen værdi.',
     typeError: 'Linje {line}: {operator} virker ikke med disse værdier.',
     conditionError: 'Linje {line}: en betingelse skal være sand eller falsk.',
     divisionByZero: 'Linje {line}: division med nul.',
     mathError: 'Linje {line}: {operator} har intet resultat for denne værdi.',
-    memoryLimit: 'Linje {line}: en tekst blev for lang.',
+    indexError: 'Linje {line}: der er intet element {index}.',
+    memoryLimit: 'Linje {line}: en tekst eller en liste blev for lang.',
     timeout: 'Programmet kørte for længe uden at bede om inddata.',
     unknownLanguage: 'Ukendt sprog: {language}.'
   }

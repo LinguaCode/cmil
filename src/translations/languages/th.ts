@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['จาก'],
     to: ['ถึง'],
     step: ['ทีละ'],
+    in: ['ใน'],
+    add: ['เพิ่ม'],
+    into: ['เข้า'],
     function: ['ฟังก์ชัน'],
     random: ['แบบสุ่ม'],
     pow: ['ยกกำลัง'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['ความยาว'],
+    upper: ['ตัวพิมพ์ใหญ่'],
+    lower: ['ตัวพิมพ์เล็ก'],
+    number: ['เป็นตัวเลข'],
+    text: ['เป็นข้อความ']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'ไวยากรณ์ผิดในบรรทัดที่ {line}',
     indentError: 'ย่อหน้าผิดในบรรทัดที่ {line}: ให้ย่อหน้าบล็อกทีละ 4 ช่อง',
-    argumentError: 'บรรทัดที่ {line}: ฟังก์ชันคณิตศาสตร์มีอาร์กิวเมนต์ไม่ถูกต้อง',
+    argumentError: 'บรรทัดที่ {line}: ฟังก์ชันมีอาร์กิวเมนต์ไม่ถูกต้อง',
     equalsError: 'บรรทัดที่ {line}: ถ้าจะเปรียบเทียบ ให้ใช้ == แทน =',
     undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
     typeError: 'บรรทัดที่ {line}: {operator} ใช้กับค่าเหล่านี้ไม่ได้',
     conditionError: 'บรรทัดที่ {line}: เงื่อนไขต้องเป็นจริงหรือเท็จ',
     divisionByZero: 'บรรทัดที่ {line}: หารด้วยศูนย์',
     mathError: 'บรรทัดที่ {line}: {operator} ไม่มีผลลัพธ์สำหรับค่านี้',
-    memoryLimit: 'บรรทัดที่ {line}: ข้อความยาวเกินไป',
+    indexError: 'บรรทัดที่ {line}: ไม่มีรายการที่ {index}',
+    memoryLimit: 'บรรทัดที่ {line}: ข้อความหรือรายการยาวเกินไป',
     timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',
     unknownLanguage: 'ไม่รู้จักภาษา: {language}'
   }

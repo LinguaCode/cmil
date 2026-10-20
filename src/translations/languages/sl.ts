@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['korak'],
+    in: ['iz'],
+    add: ['dodaj'],
+    into: ['na_konec'],
     function: ['funkcija'],
     random: ['naključno'],
     pow: ['potenca'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['dolžina'],
+    upper: ['velike_črke'],
+    lower: ['male_črke'],
+    number: ['v_število'],
+    text: ['v_besedilo']
   },
   notes: {
     then: 'Is potem more common after če?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Skladenjska napaka v vrstici {line}.',
     indentError: 'Napaka zamika v vrstici {line}: bloke zamaknite za 4 presledke.',
-    argumentError: 'Vrstica {line}: matematična funkcija ima napačne argumente.',
+    argumentError: 'Vrstica {line}: funkcija ima napačne argumente.',
     equalsError: 'Vrstica {line}: za primerjavo pišite == namesto =.',
     undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
     typeError: 'Vrstica {line}: {operator} ne deluje s temi vrednostmi.',
     conditionError: 'Vrstica {line}: pogoj mora biti resničen ali neresničen.',
     divisionByZero: 'Vrstica {line}: deljenje z nič.',
     mathError: 'Vrstica {line}: {operator} za to vrednost nima rezultata.',
-    memoryLimit: 'Vrstica {line}: besedilo je postalo predolgo.',
+    indexError: 'Vrstica {line}: elementa {index} ni.',
+    memoryLimit: 'Vrstica {line}: besedilo ali seznam je postal predolg.',
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
     unknownLanguage: 'Neznan jezik: {language}.'
   }

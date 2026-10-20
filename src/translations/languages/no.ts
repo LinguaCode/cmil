@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['fra'],
     to: ['til'],
     step: ['steg'],
+    in: ['blant'],
+    add: ['legg_til'],
+    into: ['i_listen'],
     function: ['funksjon'],
     random: ['tilfeldig'],
     pow: ['potens'],
@@ -44,7 +47,12 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['lengden_av'],
+    upper: ['store_bokstaver'],
+    lower: ['små_bokstaver'],
+    number: ['til_tall'],
+    text: ['til_tekst']
   },
   notes: {
     then: 'Is så more common after hvis?',
@@ -52,20 +60,29 @@ const translation: Translation = {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaksfeil på linje {line}.',
     indentError: 'Innrykksfeil på linje {line}: rykk inn blokker med 4 mellomrom.',
-    argumentError: 'Linje {line}: en matematisk funksjon har feil argumenter.',
+    argumentError: 'Linje {line}: en funksjon har feil argumenter.',
     equalsError: 'Linje {line}: skriv == i stedet for = for å sammenligne.',
     undefinedVariable: 'Linje {line}: {variable} har ingen verdi ennå.',
     typeError: 'Linje {line}: {operator} virker ikke med disse verdiene.',
     conditionError: 'Linje {line}: en betingelse må være sann eller usann.',
     divisionByZero: 'Linje {line}: deling på null.',
     mathError: 'Linje {line}: {operator} har ikke noe resultat for denne verdien.',
-    memoryLimit: 'Linje {line}: en tekst ble for lang.',
+    indexError: 'Linje {line}: det finnes ikke noe element {index}.',
+    memoryLimit: 'Linje {line}: en tekst eller en liste ble for lang.',
     timeout: 'Programmet kjørte for lenge uten å be om inndata.',
     unknownLanguage: 'Ukjent språk: {language}.'
   }

@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['nga'],
     to: ['deri'],
     step: ['hap'],
+    in: ['në'],
+    add: ['shto'],
+    into: ['te'],
     function: ['funksioni'],
     random: ['të_rastit'],
     pow: ['fuqi'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['gjatësia'],
+    upper: ['shkronja_të_mëdha'],
+    lower: ['shkronja_të_vogla'],
+    number: ['në_numër'],
+    text: ['në_tekst']
   },
   notes: {
     input: 'Means data; would lexo (read) be better?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Gabim sintakse në rreshtin {line}.',
     indentError: 'Gabim kryeradhe në rreshtin {line}: kryeradhi blloqet me 4 hapësira.',
-    argumentError: 'Rreshti {line}: një funksion matematik ka argumente të gabuara.',
+    argumentError: 'Rreshti {line}: një funksion ka argumente të gabuara.',
     equalsError: 'Rreshti {line}: për të krahasuar, shkruaj == në vend të =.',
     undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
     typeError: 'Rreshti {line}: {operator} nuk punon me këto vlera.',
     conditionError: 'Rreshti {line}: një kusht duhet të jetë i vërtetë ose i rremë.',
     divisionByZero: 'Rreshti {line}: pjesëtim me zero.',
     mathError: 'Rreshti {line}: {operator} nuk ka rezultat për këtë vlerë.',
-    memoryLimit: 'Rreshti {line}: një tekst u bë shumë i gjatë.',
+    indexError: 'Rreshti {line}: nuk ka element {index}.',
+    memoryLimit: 'Rreshti {line}: një tekst ose një listë u bë shumë i gjatë.',
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
     unknownLanguage: 'Gjuhë e panjohur: {language}.'
   }
