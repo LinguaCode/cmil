@@ -130,10 +130,10 @@ describe('core', () => {
   describe('values', () => {
     it("an error of a value names its operator in the program's language, at its column", () => {
       assert.deepStrictEqual(run('print 1 + true').error, {id: 'typeError', line: 1, column: 9, operator: '+'});
-      assert.deepStrictEqual(run('տպել ոչ 5', [], 'hy-AM').error, {
+      assert.deepStrictEqual(run('արտածել ոչ 5', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
-        column: 6,
+        column: 9,
         operator: 'ոչ'
       });
       assert.deepStrictEqual(run('print square_root(-4)').error, {
@@ -151,7 +151,7 @@ describe('core', () => {
     });
 
     it('booleans print in the words of the language', () => {
-      assert.deepStrictEqual(run('տպել 1 < 2', [], 'hy-AM').output, ['ճիշտ']);
+      assert.deepStrictEqual(run('արտածել 1 < 2', [], 'hy-AM').output, ['ճիշտ']);
       assert.deepStrictEqual(run('вывести "x: " + (1 > 2)', [], 'ru').output, ['x: ложь']);
     });
 
@@ -179,15 +179,15 @@ describe('core', () => {
         line: 1,
         operator: 'հեռացնել'
       });
-      assert.deepStrictEqual(run('յուրաքանչյուր x մեջ 5\n    տպել x', [], 'hy-AM').error, {
+      assert.deepStrictEqual(run('յուրաքանչյուր x մեջ 5\n    արտածել x', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
         operator: 'մեջ'
       });
-      assert.deepStrictEqual(run('տպել 1 մեջ 5', [], 'hy-AM').error, {
+      assert.deepStrictEqual(run('արտածել 1 մեջ 5', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
-        column: 8,
+        column: 11,
         operator: 'մեջ'
       });
     });
@@ -202,7 +202,7 @@ describe('core', () => {
     });
 
     it('booleans and texts in a list print in the words and quotes of the language', () => {
-      assert.deepStrictEqual(run('տպել [ճիշտ, սխալ, "ա"]', [], 'hy-AM').output, ['[ճիշտ, սխալ, «ա»]']);
+      assert.deepStrictEqual(run('արտածել [ճիշտ, սխալ, "ա"]', [], 'hy-AM').output, ['[ճիշտ, սխալ, «ա»]']);
     });
 
     it('lists inside themselves compare', () => {

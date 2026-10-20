@@ -173,7 +173,7 @@ describe('words', () => {
 
     it('keywords in any case', () => {
       assert.strictEqual(outputOf('PRINT 5\nPrint Pi > 3', 'en'), '5\ntrue');
-      assert.strictEqual(outputOf('ՏՊԵԼ ՃԻՇՏ', 'hy-AM'), 'ճիշտ');
+      assert.strictEqual(outputOf('ԱՐՏԱԾԵԼ ՃԻՇՏ', 'hy-AM'), 'ճիշտ');
     });
 
     it('words in texts and comments are not keywords', () => {
@@ -205,12 +205,12 @@ describe('words', () => {
     it('translates commands and the quotes of texts, and keeps names', () => {
       assert.strictEqual(
         translate(program, 'en', 'hy-AM'),
-        'մուտքագրել name\nեթե name == «Ani» ապա\n    տպել «output » + name\nայլապես\n    տպել name'
+        'մուտքագրել name\nեթե name == «Ani» ապա\n    արտածել «output » + name\nայլապես\n    արտածել name'
       );
     });
 
     it('writes texts in the quotes of the language, with their escapes', () => {
-      assert.strictEqual(translate('print "a » b"', 'en', 'hy-AM'), 'տպել «a \\» b»');
+      assert.strictEqual(translate('print "a » b"', 'en', 'hy-AM'), 'արտածել «a \\» b»');
       assert.strictEqual(translate('print "a\\\\b\\n\\tc"', 'en', 'de'), 'ausgeben „a\\\\b\\n\\tc“');
       assert.strictEqual(translate('出力 「a」 + 『b』', 'ja', 'en'), 'print "a" + "b"');
       //an unclosed text stays as written
