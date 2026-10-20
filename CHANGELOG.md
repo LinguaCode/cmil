@@ -1,4 +1,4 @@
-## Unreleased
+## 0.7.0-alpha.0 (2026-10-20)
 
   - **[fix]** commands: a command next to an operator is recognized, like `pi` and `e` in `if 1<pi` and `output 2>e`, which failed with `undefinedVariable`.
   - **[change]** commands: the lexer finds the words of each language itself, replacing the regex translator of `linguacode-translator` and its license file. A command is a whole word in any case, and the words of a two-word command, like Albanian `e vërtetë` (true), may be separated by any spaces.
