@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['til_tal'],
     text: ['til_tekst']
   },
+  quotes: [['»', '«']],
   notes: {
     while: 'Means during; would så_længe be better?',
     for: 'A new word; it needs a native review.',

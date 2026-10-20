@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['para_número'],
     text: ['para_texto']
   },
+  quotes: [['«', '»']],
   notes: {
     random: 'Feminine; should it be aleatório?',
     floor: 'Brazil uses piso; which word is used in Portugal?',

@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['v_število'],
     text: ['v_besedilo']
   },
+  quotes: [['„', '“']],
   notes: {
     then: 'Is potem more common after če?',
     for: 'A new word; it needs a native review.',

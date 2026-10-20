@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['เป็นตัวเลข'],
     text: ['เป็นข้อความ']
   },
+  quotes: [['“', '”']],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

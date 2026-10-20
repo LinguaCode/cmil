@@ -72,8 +72,8 @@ export class Session {
 
     try {
       const program = compile(this.#sourceCode, this.#language);
-      const {first} = wordsOf(this.#language);
-      this.#interpreter = new Interpreter(program, this.#maxSteps, command => first.get(command) ?? command);
+      const {first, main} = wordsOf(this.#language);
+      this.#interpreter = new Interpreter(program, this.#maxSteps, command => first.get(command) ?? command, main);
     } catch (error) {
       return this.#fail(error, []);
     }

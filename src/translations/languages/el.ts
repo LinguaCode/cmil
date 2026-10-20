@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['σε_αριθμό'],
     text: ['σε_κείμενο']
   },
+  quotes: [['«', '»']],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

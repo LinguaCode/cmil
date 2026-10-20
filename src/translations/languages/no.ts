@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['til_tall'],
     text: ['til_tekst']
   },
+  quotes: [['«', '»']],
   notes: {
     then: 'Is så more common after hvis?',
     while: 'Means during; would så_lenge be better?',

@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['naar_getal'],
     text: ['naar_tekst']
   },
+  quotes: [['“', '”']],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

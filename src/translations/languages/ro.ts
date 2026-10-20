@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['în_număr'],
     text: ['în_text']
   },
+  quotes: [['„', '”']],
   notes: {
     random: 'Feminine plural; should it be aleator?',
     for: 'A new word; it needs a native review.',

@@ -6,6 +6,8 @@ const sources: Source[] = [
     sources: [
       {title: 'print several values', code: 'print 1, "a", true', output: '1 a true'},
       {title: 'commas of a function stay in it', code: 'print power(2, 3), 1', output: '8 1'},
+      {title: 'texts in the quotes of every language', code: 'print «a» + "b" + \'c\'', output: 'abc'},
+      {title: 'texts in the quotes of English', code: 'print “Hi, ” + "Ani"', output: 'Hi, Ani'},
       {
         title: 'input with a prompt',
         code: 'input "Your name?" name\nprint "Hi " + name',

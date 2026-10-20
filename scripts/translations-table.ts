@@ -105,6 +105,13 @@ const MEANINGS: Record<Command, string> = {
 
 const code = (words: string[]) => words.map(word => `\`${word}\``).join(', ');
 
+//the main quotes of a language, which translate() writes, then the other quotes it reads, also those of every language
+const quotesOf = (quotes: [string, string][]) => {
+  const all = [...quotes, ['"', '"'], ["'", "'"], ['«', '»']].map(([open, close]) => `${open}…${close}`);
+  const [main, ...others] = [...new Set(all)];
+  return `${main}, also ${others.slice(0, -1).join(', ')} and ${others[others.length - 1]}`;
+};
+
 //the anchor GitHub gives a heading
 const anchor = (heading: string) =>
   heading
@@ -122,7 +129,7 @@ export const translationsTable = (): string => {
 
   const sections = languages.map(language => {
     const [name, native] = NAMES[language];
-    const {words, notes = {}} = translations[language];
+    const {words, notes = {}, quotes} = translations[language];
     const checks = commands.filter(command => notes[command]);
 
     const rows = commands.map(command => `| ${english(command)} | ${MEANINGS[command]} | ${code(words[command])} |`);
@@ -131,6 +138,8 @@ export const translationsTable = (): string => {
       `## ${name} (${language})`,
       '',
       `${native}${checks.length ? ` · ${checks.length} to check` : ''}`,
+      '',
+      `Quotes: ${quotesOf(quotes)}`,
       '',
       `| English | Meaning | ${name} |`,
       '|---|---|---|',

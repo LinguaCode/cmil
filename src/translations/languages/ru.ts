@@ -55,6 +55,10 @@ const translation: Translation = {
     number: ['в_число'],
     text: ['в_текст']
   },
+  quotes: [
+    ['«', '»'],
+    ['„', '“']
+  ],
   messages: {
     syntaxError: 'Синтаксическая ошибка в строке {line}.',
     indentError: 'Ошибка отступа в строке {line}: делайте отступы блоков по 4 пробела.',

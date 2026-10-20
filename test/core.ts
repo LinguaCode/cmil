@@ -164,8 +164,8 @@ describe('core', () => {
       });
     });
 
-    it('booleans in a list print in the words of the language', () => {
-      assert.deepStrictEqual(run('տպել [ճիշտ, սխալ, "ա"]', [], 'hy-AM').output, ['[ճիշտ, սխալ, "ա"]']);
+    it('booleans and texts in a list print in the words and quotes of the language', () => {
+      assert.deepStrictEqual(run('տպել [ճիշտ, սխալ, "ա"]', [], 'hy-AM').output, ['[ճիշտ, սխալ, «ա»]']);
     });
 
     it('lists inside themselves compare', () => {

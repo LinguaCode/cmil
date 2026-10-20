@@ -55,6 +55,10 @@ const translation: Translation = {
     number: ['to_number'],
     text: ['to_text']
   },
+  quotes: [
+    ['"', '"'],
+    ['“', '”']
+  ],
   messages: {
     syntaxError: 'Syntax error on line {line}.',
     indentError: 'Indentation error on line {line}: indent blocks by 4 spaces.',

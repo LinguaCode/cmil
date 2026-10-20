@@ -56,7 +56,7 @@ if (step.state === 'end' && step.error) {
 
 `check(sourceCode, language)` returns the first error a program has before it runs, or `null`. `messageOf(error, language)` returns the message of an error in a language, for example `Syntax error on line 2.`
 
-`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('print "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`. Texts, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
+`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('print "Hi"', 'en', 'hy-AM')` returns `'տպել «Hi»'`. Texts are written in the main quotes of the other language, and their values, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their steps and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 

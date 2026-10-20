@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['转数字'],
     text: ['转文本']
   },
+  quotes: [['“', '”']],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

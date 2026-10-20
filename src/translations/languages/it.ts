@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['in_numero'],
     text: ['in_testo']
   },
+  quotes: [['«', '»']],
   notes: {
     input: 'An electronics term; would leggi (read) be better?',
     print: 'An electronics term; would scrivi (write) be better?',
