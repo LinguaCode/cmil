@@ -1,4 +1,4 @@
-## Unreleased
+## 0.11.0-alpha.0 (2026-10-20)
 
   - **[change]** input: `input` only reads, so `input name` is its only form; the question is printed before it, like `print "Your name?"`. Anything between `input` and the name, like the prompt of `input "Your name?" name`, is a `syntaxError`, and the input step has no `prompt`.
   - **[add]** API: `new Session(code, language, {random})` gives the numbers `random()` is made from, from 0 up to 1 like `Math.random()`, the default; sessions given the same numbers make the same random numbers.
