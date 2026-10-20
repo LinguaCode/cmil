@@ -1,4 +1,4 @@
-## Unreleased
+## 0.9.0-alpha.0 (2026-10-20)
 
   - **[add]** loops: `for i from 1 to 10`, with an optional `step 2` or a negative step to count down; the bounds are read once and both ends are included. The words `for`, `from`, `to` and `step` are in every language; those of 28 languages need a native review.
   - **[add]** lists: `[1, 2, "a"]` and `[]`, items read with `list[1]`, counted from 1, and replaced with `list[1] = x`, `add x into list`, and `for x in list`, which also passes the letters of a text. A list is shared when it is assigned, printed like `[1, 2, "a"]`, and equal to another list with equal items. An index outside a list or a text is the new error `indexError`, with its `index`. A list may have 1,000,000 items (`memoryLimit`).
