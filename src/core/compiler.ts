@@ -9,8 +9,12 @@
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
  * - forStart {slot, from, to, step}, forTest {slot, name, target}: the bounds of a for loop, read once, and its passes
  * - forEachStart {slot, expression}, forEachTest {slot, name, target}: the items of a for … in loop, and its passes
+ * - call {call}: a call of a function whose value isn't used, return {expression}, end: the end of the program
+ *
+ * The instructions of the functions follow the end of the program.
  */
-import type {Instruction, Program, Statement} from './types.ts';
+import {callsOf} from './tree.ts';
+import type {Expression, Instruction, Program, Statement, UserFunction} from './types.ts';
 
 //a jump whose target is patched once the target is compiled
 const UNPATCHED = -1;
@@ -20,9 +24,37 @@ type Loop = {
   continues: number[];
 };
 
+//the expressions of an instruction
+const expressionsOf = (instruction: Instruction): (Expression | undefined)[] => {
+  switch (instruction.op) {
+    case 'print':
+      return instruction.expressions;
+    case 'input':
+      return [instruction.prompt];
+    case 'assign':
+    case 'return':
+    case 'jumpUnless':
+    case 'jumpIf':
+    case 'repeatStart':
+    case 'forEachStart':
+      return [instruction.expression];
+    case 'setItem':
+      return [instruction.target, instruction.index, instruction.expression];
+    case 'add':
+      return [instruction.expression, instruction.target];
+    case 'call':
+      return [instruction.call];
+    case 'forStart':
+      return [instruction.from, instruction.to, instruction.step];
+    default:
+      return [];
+  }
+};
+
 export const compile = (statements: Statement[]): Program => {
   const instructions: Instruction[] = [];
   const loops: Loop[] = [];
+  const functions = new Map<string, UserFunction>();
   let slots = 0;
 
   const emit = (instruction: Instruction) => instructions.push(instruction) - 1;
@@ -66,6 +98,15 @@ export const compile = (statements: Statement[]): Program => {
       }
       case 'add':
         emit({op: 'add', expression: node.expression, target: node.target, line});
+        break;
+      case 'call':
+        emit({op: 'call', call: node.call, line});
+        break;
+      case 'return':
+        emit({op: 'return', expression: node.expression, line});
+        break;
+      //compiled after the end of the program
+      case 'function':
         break;
       case 'if': {
         const ends = node.branches.map(branch => {
@@ -142,5 +183,17 @@ export const compile = (statements: Statement[]): Program => {
 
   block(statements);
 
-  return {instructions, slots};
+  const definitions = statements.filter(node => node.type === 'function');
+  if (definitions.length) {
+    emit({op: 'end'});
+    for (const {name, parameters, body, line} of definitions) {
+      functions.set(name, {start: here(), parameters});
+      block(body);
+      emit({op: 'return', line});
+    }
+  }
+
+  const replays = instructions.map(instruction => expressionsOf(instruction).some(node => callsOf(node).length));
+
+  return {instructions, slots, functions, replays};
 };

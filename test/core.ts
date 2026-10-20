@@ -4,7 +4,7 @@ import {describe, it} from 'node:test';
 
 import {Session, check, languages, messageOf, type ProgramError, type Step} from '../src/index.ts';
 import translations from '../src/translations/index.ts';
-import {ERROR, MAX_LIST_LENGTH} from '../src/constants/index.ts';
+import {ERROR, MAX_LIST_LENGTH, MAX_RECURSION} from '../src/constants/index.ts';
 import * as values from '../src/core/values.ts';
 
 /**
@@ -194,6 +194,61 @@ describe('core', () => {
     });
   });
 
+  describe('functions', () => {
+    it('a function waits for input like the program, with its prompt', () => {
+      const {steps, output} = run('function ask(q)\n    input q a\n    return a\nprint ask("A?") + ask("B?")', [1, 2]);
+      assert.deepStrictEqual(
+        steps.map(step => step.state === 'input' && step.prompt),
+        ['A?', 'B?', false]
+      );
+      assert.deepStrictEqual(output, ['3']);
+    });
+
+    it(`calls nest up to ${MAX_RECURSION} deep`, () => {
+      const code = (n: number) =>
+        `function down(n)\n    if n == 1\n        return 1\n    return down(n - 1) + 1\nprint down(${n})`;
+      assert.deepStrictEqual(run(code(MAX_RECURSION)).output, [String(MAX_RECURSION)]);
+      assert.deepStrictEqual(run(code(MAX_RECURSION + 1)).error, {id: 'recursionLimit', line: 4});
+    });
+
+    it('noValue and undefinedFunction point at the call', () => {
+      assert.deepStrictEqual(run('function f()\n    x = 1\nprint 1 + f()').error, {
+        id: 'noValue',
+        line: 3,
+        column: 11,
+        function: 'f'
+      });
+      assert.deepStrictEqual(check('print 1\nprint Double(2)', 'en'), {
+        id: 'undefinedFunction',
+        line: 2,
+        column: 7,
+        function: 'double'
+      });
+    });
+
+    it('the calls of a program are checked in the order of its lines', () => {
+      const code = 'function f()\n    return g()\nif true\n    print h()\nelse\n    print f()';
+      assert.deepStrictEqual(check(code, 'en'), {id: 'undefinedFunction', line: 2, column: 12, function: 'g'});
+      assert.deepStrictEqual(check('do\n    print a()\nwhile b()', 'en'), {
+        id: 'undefinedFunction',
+        line: 2,
+        column: 11,
+        function: 'a'
+      });
+    });
+
+    it('a function runs with its own loops', () => {
+      const code =
+        'function total(n)\n    sum = 0\n    repeat n times\n        sum = sum + n\n    return sum\nrepeat 2 times\n    print total(3)';
+      assert.deepStrictEqual(run(code).output, ['9', '9']);
+
+      //each call counts the passes of its own loop
+      const tree =
+        'function leaves(depth)\n    if depth == 0\n        return 1\n    sum = 0\n    for branch in [1, 2]\n        repeat 2 times\n            sum = sum + leaves(depth - 1)\n    return sum\nprint leaves(3)';
+      assert.deepStrictEqual(run(tree).output, ['64']);
+    });
+  });
+
   describe('memory', () => {
     it('a too long input', () => {
       assert.deepStrictEqual(run('input x', ['a'.repeat(1000001)]).error, {id: 'memoryLimit', line: 1});
@@ -326,12 +381,15 @@ describe('core', () => {
       {id: 'indentError', line: 2},
       {id: 'argumentError', line: 2},
       {id: 'undefinedVariable', line: 2, column: 3, variable: 'abc'},
+      {id: 'undefinedFunction', line: 2, column: 3, function: 'abc'},
+      {id: 'noValue', line: 2, column: 3, function: 'abc'},
       {id: 'typeError', line: 2, column: 3, operator: '-'},
       {id: 'conditionError', line: 2},
       {id: 'divisionByZero', line: 2, column: 3},
       {id: 'mathError', line: 2, column: 3, operator: 'square_root'},
       {id: 'indexError', line: 2, column: 3, index: 5},
       {id: 'memoryLimit', line: 2},
+      {id: 'recursionLimit', line: 2},
       {id: 'timeout'},
       {id: 'unknownLanguage', language: 'xx'}
     ];

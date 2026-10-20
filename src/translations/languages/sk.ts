@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['pridaj'],
     into: ['na_koniec'],
     function: ['funkcia'],
+    return: ['vráť'],
     random: ['náhodný'],
     pow: ['mocnina'],
     sqr: ['druhá_mocnina'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Riadok {line}: funkcia má zlé argumenty.',
     equalsError: 'Riadok {line}: na porovnanie píšte == namiesto =.',
     undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
+    undefinedFunction: 'Riadok {line}: funkcia {function} neexistuje.',
+    noValue: 'Riadok {line}: {function} nevracia žiadnu hodnotu.',
     typeError: 'Riadok {line}: {operator} s týmito hodnotami nefunguje.',
     conditionError: 'Riadok {line}: podmienka musí byť pravdivá alebo nepravdivá.',
     divisionByZero: 'Riadok {line}: delenie nulou.',
     mathError: 'Riadok {line}: {operator} pre túto hodnotu nemá výsledok.',
     indexError: 'Riadok {line}: prvok {index} neexistuje.',
     memoryLimit: 'Riadok {line}: text alebo zoznam je príliš dlhý.',
+    recursionLimit: 'Riadok {line}: príliš veľa vnorených volaní funkcií.',
     timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',
     unknownLanguage: 'Neznámy jazyk: {language}.'
   }

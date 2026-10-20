@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['dodaj'],
     into: ['na_koniec'],
     function: ['funkcja'],
+    return: ['zwróć'],
     random: ['losowy'],
     pow: ['potęga'],
     sqr: ['kwadrat'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Wiersz {line}: funkcja ma złe argumenty.',
     equalsError: 'Wiersz {line}: aby porównać, pisz == zamiast =.',
     undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
+    undefinedFunction: 'Wiersz {line}: nie ma funkcji {function}.',
+    noValue: 'Wiersz {line}: {function} nie zwraca wartości.',
     typeError: 'Wiersz {line}: {operator} nie działa z tymi wartościami.',
     conditionError: 'Wiersz {line}: warunek musi być prawdziwy albo fałszywy.',
     divisionByZero: 'Wiersz {line}: dzielenie przez zero.',
     mathError: 'Wiersz {line}: {operator} nie ma wyniku dla tej wartości.',
     indexError: 'Wiersz {line}: nie ma elementu {index}.',
     memoryLimit: 'Wiersz {line}: tekst lub lista stały się za długie.',
+    recursionLimit: 'Wiersz {line}: za dużo zagnieżdżonych wywołań funkcji.',
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',
     unknownLanguage: 'Nieznany język: {language}.'
   }

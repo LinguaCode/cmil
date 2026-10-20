@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['додај'],
     into: ['на_крај'],
     function: ['функција'],
+    return: ['врати'],
     random: ['случајни'],
     pow: ['степен'],
     sqr: ['квадрат'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Ред {line}: функција има погрешне аргументе.',
     equalsError: 'Ред {line}: за поређење пишите == уместо =.',
     undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
+    undefinedFunction: 'Ред {line}: не постоји функција {function}.',
+    noValue: 'Ред {line}: {function} не враћа вредност.',
     typeError: 'Ред {line}: {operator} не ради са овим вредностима.',
     conditionError: 'Ред {line}: услов мора бити тачан или нетачан.',
     divisionByZero: 'Ред {line}: дељење нулом.',
     mathError: 'Ред {line}: {operator} нема резултат за ову вредност.',
     indexError: 'Ред {line}: не постоји елемент {index}.',
     memoryLimit: 'Ред {line}: текст или листа је постао предугачак.',
+    recursionLimit: 'Ред {line}: превише угнежђених позива функција.',
     timeout: 'Програм је радио предуго, а није тражио унос.',
     unknownLanguage: 'Непознат језик: {language}.'
   }

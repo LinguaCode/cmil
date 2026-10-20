@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['adaugă'],
     into: ['la'],
     function: ['funcție'],
+    return: ['returnează'],
     random: ['aleatoare'],
     pow: ['putere'],
     sqr: ['pătrat'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Linia {line}: o funcție are argumente greșite.',
     equalsError: 'Linia {line}: pentru a compara, scrie == în loc de =.',
     undefinedVariable: 'Linia {line}: {variable} nu are încă o valoare.',
+    undefinedFunction: 'Linia {line}: nu există funcția {function}.',
+    noValue: 'Linia {line}: {function} nu returnează nicio valoare.',
     typeError: 'Linia {line}: {operator} nu funcționează cu aceste valori.',
     conditionError: 'Linia {line}: o condiție trebuie să fie adevărată sau falsă.',
     divisionByZero: 'Linia {line}: împărțire la zero.',
     mathError: 'Linia {line}: {operator} nu are rezultat pentru această valoare.',
     indexError: 'Linia {line}: nu există elementul {index}.',
     memoryLimit: 'Linia {line}: un text sau o listă a devenit prea lung.',
+    recursionLimit: 'Linia {line}: prea multe apeluri de funcții imbricate.',
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',
     unknownLanguage: 'Limbă necunoscută: {language}.'
   }

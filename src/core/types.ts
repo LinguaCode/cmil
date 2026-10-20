@@ -25,6 +25,7 @@ export type Expression =
   | {type: 'index'; target: Expression; index: Expression; column: number}
   | {type: 'variable'; name: string; column: number}
   | {type: 'call'; name: string; args: Expression[]; column: number}
+  | {type: 'userCall'; name: string; args: Expression[]; column: number}
   | {type: 'unary'; operator: string; operand: Expression; column: number}
   | {type: 'binary'; operator: string; left: Expression; right: Expression; column: number};
 
@@ -34,6 +35,9 @@ export type Statement =
   | {type: 'assign'; name: string; expression: Expression; line: number}
   | {type: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {type: 'add'; expression: Expression; target: Expression; line: number}
+  | {type: 'call'; call: Expression & {type: 'userCall'}; line: number}
+  | {type: 'function'; name: string; parameters: string[]; body: Statement[]; line: number}
+  | {type: 'return'; expression?: Expression; line: number}
   | {type: 'if'; branches: Branch[]; elseBody: Statement[]; line: number}
   | {type: 'while'; condition: Expression; body: Statement[]; line: number}
   | {type: 'doWhile'; body: Statement[]; condition: Expression; line: number}
@@ -54,6 +58,9 @@ export type Instruction =
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {op: 'add'; expression: Expression; target: Expression; line: number}
+  | {op: 'call'; call: Expression & {type: 'userCall'}; line: number}
+  | {op: 'return'; expression?: Expression; line: number}
+  | {op: 'end'; line?: number}
   | {op: 'jump'; target: number; line?: number}
   | {op: 'jumpUnless' | 'jumpIf'; expression: Expression; target: number; line: number}
   | {op: 'repeatStart'; slot: number; expression: Expression; line: number}
@@ -63,9 +70,18 @@ export type Instruction =
   | {op: 'forEachStart'; slot: number; expression: Expression; line: number}
   | {op: 'forEachTest'; slot: number; name: string; target: number; line: number};
 
+/** A function of a program: where its instructions start, and its parameters. */
+export type UserFunction = {
+  start: number;
+  parameters: string[];
+};
+
 export type Program = {
   instructions: Instruction[];
   slots: number;
+  functions: Map<string, UserFunction>;
+  //the instructions with calls of functions, which run again with the values they had when the call returns
+  replays: boolean[];
 };
 
 /** An error of a program: its id, and where it is; the column counts from 1. */
@@ -74,6 +90,8 @@ export type ProgramError =
   | {id: typeof ERROR.EQUALS_ERROR; line: number; column: number}
   | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
   | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
+  | {id: typeof ERROR.UNDEFINED_FUNCTION | typeof ERROR.NO_VALUE; line: number; column: number; function: string}
+  | {id: typeof ERROR.RECURSION_LIMIT; line: number}
   | {id: typeof ERROR.TYPE_ERROR | typeof ERROR.MATH_ERROR; line: number; column?: number; operator: string}
   | {id: typeof ERROR.DIVISION_BY_ZERO; line: number; column?: number}
   | {id: typeof ERROR.INDEX_ERROR; line: number; column: number; index: number}

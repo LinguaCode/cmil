@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['ajouter'],
     into: ['à_la_liste'],
     function: ['fonction'],
+    return: ['retourner'],
     random: ['aléatoire'],
     pow: ['puissance'],
     sqr: ['carré'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Ligne {line} : une fonction a de mauvais arguments.',
     equalsError: 'Ligne {line} : pour comparer, écrivez == au lieu de =.',
     undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
+    undefinedFunction: "Ligne {line} : il n'y a pas de fonction {function}.",
+    noValue: 'Ligne {line} : {function} ne renvoie pas de valeur.',
     typeError: 'Ligne {line} : {operator} ne fonctionne pas avec ces valeurs.',
     conditionError: 'Ligne {line} : une condition doit être vraie ou fausse.',
     divisionByZero: 'Ligne {line} : division par zéro.',
     mathError: 'Ligne {line} : {operator} n’a pas de résultat pour cette valeur.',
     indexError: "Ligne {line} : il n'y a pas d'élément {index}.",
     memoryLimit: 'Ligne {line} : un texte ou une liste est devenu trop long.',
+    recursionLimit: "Ligne {line} : trop d'appels de fonctions imbriqués.",
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
     unknownLanguage: 'Langue inconnue : {language}.'
   }

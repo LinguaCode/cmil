@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['додати'],
     into: ['в_кінець'],
     function: ['функція'],
+    return: ['повернути'],
     random: ['випадковий'],
     pow: ['степінь'],
     sqr: ['квадрат'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Рядок {line}: функція має неправильні аргументи.',
     equalsError: 'Рядок {line}: для порівняння пишіть == замість =.',
     undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
+    undefinedFunction: 'Рядок {line}: немає функції {function}.',
+    noValue: 'Рядок {line}: функція {function} не повертає значення.',
     typeError: 'Рядок {line}: {operator} не працює з цими значеннями.',
     conditionError: 'Рядок {line}: умова має бути істинною або хибною.',
     divisionByZero: 'Рядок {line}: ділення на нуль.',
     mathError: 'Рядок {line}: {operator} не має результату для цього значення.',
     indexError: 'Рядок {line}: немає елемента з номером {index}.',
     memoryLimit: 'Рядок {line}: текст або список став задовгим.',
+    recursionLimit: 'Рядок {line}: забагато вкладених викликів функцій.',
     timeout: 'Програма працювала задовго, не запитуючи введення.',
     unknownLanguage: 'Невідома мова: {language}.'
   }

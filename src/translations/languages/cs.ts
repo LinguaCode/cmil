@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['přidej'],
     into: ['na_konec'],
     function: ['funkce'],
+    return: ['vrať'],
     random: ['náhodné'],
     pow: ['mocnina'],
     sqr: ['druhá_mocnina'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Řádek {line}: funkce má špatné argumenty.',
     equalsError: 'Řádek {line}: pro porovnání pište == místo =.',
     undefinedVariable: 'Řádek {line}: {variable} zatím nemá hodnotu.',
+    undefinedFunction: 'Řádek {line}: funkce {function} neexistuje.',
+    noValue: 'Řádek {line}: {function} nevrací žádnou hodnotu.',
     typeError: 'Řádek {line}: {operator} s těmito hodnotami nefunguje.',
     conditionError: 'Řádek {line}: podmínka musí být pravdivá, nebo nepravdivá.',
     divisionByZero: 'Řádek {line}: dělení nulou.',
     mathError: 'Řádek {line}: {operator} pro tuto hodnotu nemá výsledek.',
     indexError: 'Řádek {line}: prvek {index} neexistuje.',
     memoryLimit: 'Řádek {line}: text nebo seznam je příliš dlouhý.',
+    recursionLimit: 'Řádek {line}: příliš mnoho vnořených volání funkcí.',
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',
     unknownLanguage: 'Neznámý jazyk: {language}.'
   }

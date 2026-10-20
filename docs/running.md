@@ -1,6 +1,6 @@
 # Running CMIL programs
 
-CMIL interprets programs itself: a program never runs as JavaScript, so it can only print, read input and compute with numbers, texts, booleans and lists. The interpreter also limits every program:
+CMIL interprets programs itself: a program never runs as JavaScript, so it can only print, read input, and compute with numbers, texts, booleans, lists and its own functions. The interpreter also limits every program:
 
 | Limit | Value | Error |
 |---|---|---|
@@ -9,6 +9,7 @@ CMIL interprets programs itself: a program never runs as JavaScript, so it can o
 | Length of one list | 1,000,000 items | `memoryLimit` |
 | Output of one call of `run()` or `input()` | 10,000,000 characters | `memoryLimit` |
 | Nesting of blocks or expressions | 100 levels | `syntaxError` |
+| Calls of functions inside each other | 1,000 | `recursionLimit` |
 
 The values are in `src/constants/index.ts`. 1,000,000 steps take about half a second; a session can allow fewer or more:
 

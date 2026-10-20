@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['добавить'],
     into: ['в_конец'],
     function: ['функция'],
+    return: ['вернуть'],
     random: ['случайное'],
     pow: ['степень'],
     sqr: ['квадрат'],
@@ -60,12 +61,15 @@ const translation: Translation = {
     argumentError: 'Строка {line}: у функции неверные аргументы.',
     equalsError: 'Строка {line}: для сравнения пишите == вместо =.',
     undefinedVariable: 'Строка {line}: у {variable} ещё нет значения.',
+    undefinedFunction: 'Строка {line}: нет функции {function}.',
+    noValue: 'Строка {line}: функция {function} не возвращает значения.',
     typeError: 'Строка {line}: {operator} не работает с этими значениями.',
     conditionError: 'Строка {line}: условие должно быть истинным или ложным.',
     divisionByZero: 'Строка {line}: деление на ноль.',
     mathError: 'Строка {line}: у {operator} нет результата для этого значения.',
     indexError: 'Строка {line}: нет элемента с номером {index}.',
     memoryLimit: 'Строка {line}: текст или список стал слишком длинным.',
+    recursionLimit: 'Строка {line}: слишком много вложенных вызовов функций.',
     timeout: 'Программа работала слишком долго, не запрашивая ввод.',
     unknownLanguage: 'Неизвестный язык: {language}.'
   }

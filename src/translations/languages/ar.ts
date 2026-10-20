@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['أضف'],
     into: ['ضمن'],
     function: ['دالة'],
+    return: ['أرجع'],
     random: ['عشوائية'],
     pow: ['قوة'],
     sqr: ['مربع'],
@@ -71,7 +72,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -80,12 +82,15 @@ const translation: Translation = {
     argumentError: 'السطر {line}: وسائط دالة غير صحيحة.',
     equalsError: 'السطر {line}: للمقارنة اكتب == بدلًا من =.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
+    undefinedFunction: 'السطر {line}: لا توجد دالة باسم {function}.',
+    noValue: 'السطر {line}: الدالة {function} لا ترجع قيمة.',
     typeError: 'السطر {line}: لا يعمل {operator} مع هذه القيم.',
     conditionError: 'السطر {line}: يجب أن يكون الشرط صحيحًا أو خاطئًا.',
     divisionByZero: 'السطر {line}: قسمة على صفر.',
     mathError: 'السطر {line}: ليس لـ {operator} نتيجة لهذه القيمة.',
     indexError: 'السطر {line}: لا يوجد عنصر رقم {index}.',
     memoryLimit: 'السطر {line}: أصبح نص أو قائمة طويلًا جدًا.',
+    recursionLimit: 'السطر {line}: استدعاءات متداخلة للدوال كثيرة جدًا.',
     timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',
     unknownLanguage: 'لغة غير معروفة: {language}.'
   }

@@ -36,7 +36,7 @@ const compile = (sourceCode: string, language: string): Program => {
 
 /**
  * Returns the first error a program has before it runs: a syntax, indentation or argument error,
- * or an unknown language; null when it has none.
+ * a call of a function it doesn't define, or an unknown language; null when it has none.
  */
 export const check = (sourceCode: string, language: string): ProgramError | null => {
   try {

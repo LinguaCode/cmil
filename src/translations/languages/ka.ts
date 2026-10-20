@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['დაამატე'],
     into: ['შიგ'],
     function: ['ფუნქცია'],
+    return: ['დააბრუნე'],
     random: ['შემთხვევითი'],
     pow: ['ხარისხი'],
     sqr: ['კვადრატი'],
@@ -70,7 +71,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -79,12 +81,15 @@ const translation: Translation = {
     argumentError: '{line}-ე ხაზი: ფუნქციას არასწორი არგუმენტები აქვს.',
     equalsError: '{line}-ე ხაზი: შესადარებლად დაწერეთ == და არა =.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
+    undefinedFunction: '{line}-ე ხაზი: ფუნქცია {function} არ არსებობს.',
+    noValue: '{line}-ე ხაზი: {function} მნიშვნელობას არ აბრუნებს.',
     typeError: '{line}-ე ხაზი: {operator} არ მუშაობს ამ მნიშვნელობებთან.',
     conditionError: '{line}-ე ხაზი: პირობა უნდა იყოს ჭეშმარიტი ან მცდარი.',
     divisionByZero: '{line}-ე ხაზი: ნულზე გაყოფა.',
     mathError: '{line}-ე ხაზი: {operator}-ს ამ მნიშვნელობისთვის შედეგი არ აქვს.',
     indexError: '{line}-ე ხაზი: {index} ნომრის ელემენტი არ არსებობს.',
     memoryLimit: '{line}-ე ხაზი: ტექსტი ან სია ზედმეტად გრძელი გახდა.',
+    recursionLimit: '{line}-ე ხაზი: ფუნქციების ჩადგმული გამოძახებები ზედმეტად ბევრია.',
     timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',
     unknownLanguage: 'უცნობი ენა: {language}.'
   }

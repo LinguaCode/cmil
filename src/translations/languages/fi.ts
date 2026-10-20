@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['lisää'],
     into: ['listaan'],
     function: ['funktio'],
+    return: ['palauta'],
     random: ['satunnainen'],
     pow: ['potenssi'],
     sqr: ['neliö'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Rivi {line}: funktiolla on väärät argumentit.',
     equalsError: 'Rivi {line}: vertaa kirjoittamalla == eikä =.',
     undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
+    undefinedFunction: 'Rivi {line}: funktiota {function} ei ole.',
+    noValue: 'Rivi {line}: {function} ei palauta arvoa.',
     typeError: 'Rivi {line}: {operator} ei toimi näillä arvoilla.',
     conditionError: 'Rivi {line}: ehdon täytyy olla tosi tai epätosi.',
     divisionByZero: 'Rivi {line}: jako nollalla.',
     mathError: 'Rivi {line}: {operator} ei anna tulosta tälle arvolle.',
     indexError: 'Rivi {line}: alkiota {index} ei ole.',
     memoryLimit: 'Rivi {line}: teksti tai lista kasvoi liian pitkäksi.',
+    recursionLimit: 'Rivi {line}: liian monta sisäkkäistä funktiokutsua.',
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
     unknownLanguage: 'Tuntematon kieli: {language}.'
   }

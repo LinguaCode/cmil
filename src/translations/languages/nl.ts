@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['voeg_toe'],
     into: ['aan'],
     function: ['functie'],
+    return: ['geef_terug'],
     random: ['willekeurig'],
     pow: ['macht'],
     sqr: ['kwadraat'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Regel {line}: een functie heeft verkeerde argumenten.',
     equalsError: 'Regel {line}: schrijf == in plaats van = om te vergelijken.',
     undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
+    undefinedFunction: 'Regel {line}: er is geen functie {function}.',
+    noValue: 'Regel {line}: {function} geeft geen waarde terug.',
     typeError: 'Regel {line}: {operator} werkt niet met deze waarden.',
     conditionError: 'Regel {line}: een voorwaarde moet waar of onwaar zijn.',
     divisionByZero: 'Regel {line}: delen door nul.',
     mathError: 'Regel {line}: {operator} heeft geen uitkomst voor deze waarde.',
     indexError: 'Regel {line}: er is geen element {index}.',
     memoryLimit: 'Regel {line}: een tekst of een lijst werd te lang.',
+    recursionLimit: 'Regel {line}: te veel geneste functieaanroepen.',
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',
     unknownLanguage: 'Onbekende taal: {language}.'
   }
