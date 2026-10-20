@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
 import {Session, check, languages, messageOf, type ProgramError, type Step} from '../src/index.ts';
-import translations from '../src/translations/index.ts';
+import translations, {type Plural} from '../src/translations/index.ts';
 import {ERROR, MAX_LIST_LENGTH, MAX_RECURSION} from '../src/constants/index.ts';
 import * as values from '../src/core/values.ts';
 
@@ -71,8 +71,25 @@ describe('core', () => {
       assert.strictEqual(run(code).error?.id, 'syntaxError');
     });
 
-    it('a math function with a wrong count of arguments', () => {
-      assert.deepStrictEqual(run('print power(2)').error, {id: 'argumentError', line: 1, column: 7});
+    it('a function of the language with a wrong count of arguments, or without its parentheses', () => {
+      const error = {id: 'argumentError', line: 1, column: 7, function: 'power', min: 2, max: 2};
+      assert.deepStrictEqual(run('print power(2)').error, error);
+      assert.deepStrictEqual(run('print power 2, 3').error, error);
+      assert.deepStrictEqual(run('print round(1, 2, 3)').error, {...error, function: 'round', min: 1, max: 2});
+    });
+
+    it('a function of the program with a wrong count of arguments, or without its parentheses', () => {
+      const program = 'function f(a)\n    return a\n';
+      assert.deepStrictEqual(run(`${program}print f(1, 2)`).error, {
+        id: 'argumentError',
+        line: 3,
+        column: 7,
+        function: 'f',
+        min: 1,
+        max: 1
+      });
+      assert.deepStrictEqual(run(`${program}print f(1`).error, {id: 'syntaxError', line: 3, column: 7});
+      assert.deepStrictEqual(run(`${program}print f 1`).error, {id: 'syntaxError', line: 3, column: 9});
     });
 
     it('an unterminated text is a syntax error', () => {
@@ -152,16 +169,36 @@ describe('core', () => {
 
     it("an error of a list names its operator in the program's language", () => {
       assert.deepStrictEqual(run('print 5[1]').error, {id: 'typeError', line: 1, column: 8, operator: '[]'});
-      assert.deepStrictEqual(run('ավելացնել 1 մեջ 5', [], 'hy-AM').error, {
+      assert.deepStrictEqual(run('ավելացնել 1 վերջում 5', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
         operator: 'ավելացնել'
       });
-      assert.deepStrictEqual(run('յուրաքանչյուր x ից 5\n    տպել x', [], 'hy-AM').error, {
+      assert.deepStrictEqual(run('հեռացնել 1 ից 5', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
-        operator: 'ից'
+        operator: 'հեռացնել'
       });
+      assert.deepStrictEqual(run('յուրաքանչյուր x մեջ 5\n    տպել x', [], 'hy-AM').error, {
+        id: 'typeError',
+        line: 1,
+        operator: 'մեջ'
+      });
+      assert.deepStrictEqual(run('տպել 1 մեջ 5', [], 'hy-AM').error, {
+        id: 'typeError',
+        line: 1,
+        column: 8,
+        operator: 'մեջ'
+      });
+    });
+
+    it('an itemError prints the item as in a list of the language', () => {
+      assert.deepStrictEqual(run('զ = [1]\nհեռացնել «ա» ից զ', [], 'hy-AM').error, {
+        id: 'itemError',
+        line: 2,
+        item: '«ա»'
+      });
+      assert.deepStrictEqual(run('b = [1]\nremove [2] out of b').error, {id: 'itemError', line: 2, item: '[2]'});
     });
 
     it('booleans and texts in a list print in the words and quotes of the language', () => {
@@ -369,7 +406,14 @@ describe('core', () => {
     it('returns the first syntax, indentation, argument or language error', () => {
       assert.deepStrictEqual(check('print 1\nprint (', 'en'), {id: 'syntaxError', line: 2});
       assert.deepStrictEqual(check('print 1\n  output 2', 'en'), {id: 'indentError', line: 2});
-      assert.deepStrictEqual(check('print sin(1, 2)', 'en'), {id: 'argumentError', line: 1, column: 7});
+      assert.deepStrictEqual(check('print SIN(1, 2)', 'en'), {
+        id: 'argumentError',
+        line: 1,
+        column: 7,
+        function: 'SIN',
+        min: 1,
+        max: 1
+      });
       assert.deepStrictEqual(check('print 1', 'xx'), {id: 'unknownLanguage', language: 'xx'});
     });
   });
@@ -379,7 +423,7 @@ describe('core', () => {
       {id: 'syntaxError', line: 2, column: 3},
       {id: 'equalsError', line: 2, column: 3},
       {id: 'indentError', line: 2},
-      {id: 'argumentError', line: 2},
+      {id: 'argumentError', line: 2, column: 3, function: 'power', min: 2, max: 2},
       {id: 'undefinedVariable', line: 2, column: 3, variable: 'abc'},
       {id: 'undefinedFunction', line: 2, column: 3, function: 'abc'},
       {id: 'noValue', line: 2, column: 3, function: 'abc'},
@@ -388,6 +432,7 @@ describe('core', () => {
       {id: 'divisionByZero', line: 2, column: 3},
       {id: 'mathError', line: 2, column: 3, operator: 'square_root'},
       {id: 'indexError', line: 2, column: 3, index: 5},
+      {id: 'itemError', line: 2, item: '"a"'},
       {id: 'memoryLimit', line: 2},
       {id: 'recursionLimit', line: 2},
       {id: 'timeout'},
@@ -401,17 +446,34 @@ describe('core', () => {
       });
     });
 
-    it('messages have the placeholders of the English ones', () => {
+    it('messages, and each of their plural forms, have the placeholders of the English ones', () => {
       const placeholders = (text: string) => (text.match(/\{\w+\}/g) || []).sort();
+      const formsOf = (message: string | Plural) => (typeof message === 'string' ? [message] : Object.values(message));
       languages.forEach(language => {
         Object.values(ERROR).forEach(id => {
-          assert.deepStrictEqual(
-            placeholders(translations[language].messages[id]),
-            placeholders(translations.en.messages[id]),
-            `${language}: ${id}`
-          );
+          const english = placeholders(formsOf(translations.en.messages[id])[0]);
+          formsOf(translations[language].messages[id]).forEach(form => {
+            assert.deepStrictEqual(placeholders(form), english, `${language}: ${id}`);
+          });
         });
       });
+    });
+
+    it('a message takes the plural form of its count in the language', () => {
+      const argumentError = (name: string, min: number, max: number): ProgramError => ({
+        id: 'argumentError',
+        line: 3,
+        column: 7,
+        function: name,
+        min,
+        max
+      });
+      assert.strictEqual(messageOf(argumentError('power', 2, 2), 'en'), 'Line 3: power takes 2 values.');
+      assert.strictEqual(messageOf(argumentError('sin', 1, 1), 'en'), 'Line 3: sin takes 1 value.');
+      assert.strictEqual(messageOf(argumentError('round', 1, 2), 'en'), 'Line 3: round takes 1–2 values.');
+      assert.strictEqual(messageOf(argumentError('синус', 1, 1), 'ru'), 'Строка 3: синус принимает 1 значение.');
+      assert.strictEqual(messageOf(argumentError('степень', 2, 2), 'ru'), 'Строка 3: степень принимает 2 значения.');
+      assert.strictEqual(messageOf(argumentError('f', 5, 5), 'ru'), 'Строка 3: f принимает 5 значений.');
     });
 
     it('fills the placeholders', () => {

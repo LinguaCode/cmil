@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['في'],
     add: ['أضف'],
     into: ['ضمن'],
+    remove: ['احذف'],
+    outOf: ['من_ضمن'],
     function: ['دالة'],
     return: ['أرجع'],
     random: ['عشوائية'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['أحرف_كبيرة'],
     lower: ['أحرف_صغيرة'],
     number: ['كرقم'],
-    text: ['كنص']
+    text: ['كنص'],
+    split: ['قسم'],
+    join: ['ادمج']
   },
   quotes: [['«', '»']],
   notes: {
@@ -74,13 +78,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'خطأ نحوي في السطر {line}.',
     indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',
-    argumentError: 'السطر {line}: وسائط دالة غير صحيحة.',
+    argumentError: {
+      one: 'السطر {line}: الدالة {function} تأخذ {count} قيمة.',
+      two: 'السطر {line}: الدالة {function} تأخذ {count} قيمتين.',
+      few: 'السطر {line}: الدالة {function} تأخذ {count} قيم.',
+      other: 'السطر {line}: الدالة {function} تأخذ {count} قيمة.'
+    },
     equalsError: 'السطر {line}: للمقارنة اكتب == بدلًا من =.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
     undefinedFunction: 'السطر {line}: لا توجد دالة باسم {function}.',
@@ -90,6 +103,7 @@ const translation: Translation = {
     divisionByZero: 'السطر {line}: قسمة على صفر.',
     mathError: 'السطر {line}: ليس لـ {operator} نتيجة لهذه القيمة.',
     indexError: 'السطر {line}: لا يوجد عنصر رقم {index}.',
+    itemError: 'السطر {line}: لا يوجد العنصر {item} في القائمة.',
     memoryLimit: 'السطر {line}: أصبح نص أو قائمة طويلًا جدًا.',
     recursionLimit: 'السطر {line}: استدعاءات متداخلة للدوال كثيرة جدًا.',
     timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',

@@ -6,8 +6,11 @@ export type Words = Record<Command, string[]>;
 /** Notes that ask native speakers to check the words of some commands. */
 export type Notes = Partial<Record<Command, string>>;
 
+/** A message with a form for each plural category of its {count} in the language, like one and other in English. */
+export type Plural = {other: string} & Partial<Record<Exclude<Intl.LDMLPluralRule, 'other'>, string>>;
+
 /** The message of each error, with placeholders like {line}. */
-export type Messages = Record<ErrorId, string>;
+export type Messages = Record<ErrorId, string | Plural>;
 
 /** A pair of quotes around texts, like « and ». */
 export type Quotes = [open: string, close: string];

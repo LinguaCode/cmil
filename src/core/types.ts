@@ -6,10 +6,10 @@ import type {ERROR} from '../constants/index.ts';
 /** A value of a CMIL program; a list is shared by every variable it is assigned to. */
 export type Value = number | string | boolean | Value[];
 
-/** A token, with the line and the column, from 1, where it starts. */
+/** A token, with the line and the column, from 1, where it starts; a command keeps its word as written. */
 export type Token = (
   {type: 'number'; value: number} | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string}
-) & {line: number; column: number};
+) & {line: number; column: number; text?: string};
 
 /** A line of the source code that contains tokens. */
 export type Line = {
@@ -35,6 +35,7 @@ export type Statement =
   | {type: 'assign'; name: string; expression: Expression; line: number}
   | {type: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {type: 'add'; expression: Expression; target: Expression; line: number}
+  | {type: 'remove'; expression: Expression; target: Expression; line: number}
   | {type: 'call'; call: Expression & {type: 'userCall'}; line: number}
   | {type: 'function'; name: string; parameters: string[]; body: Statement[]; line: number}
   | {type: 'return'; expression?: Expression; line: number}
@@ -58,6 +59,7 @@ export type Instruction =
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {op: 'add'; expression: Expression; target: Expression; line: number}
+  | {op: 'remove'; expression: Expression; target: Expression; line: number}
   | {op: 'call'; call: Expression & {type: 'userCall'}; line: number}
   | {op: 'return'; expression?: Expression; line: number}
   | {op: 'end'; line?: number}
@@ -86,7 +88,9 @@ export type Program = {
 
 /** An error of a program: its id, and where it is; the column counts from 1. */
 export type ProgramError =
-  | {id: typeof ERROR.SYNTAX_ERROR | typeof ERROR.ARGUMENT_ERROR; line: number; column?: number}
+  | {id: typeof ERROR.SYNTAX_ERROR; line: number; column?: number}
+  //a call with another count of arguments than its function takes, from min to max, or without its )
+  | {id: typeof ERROR.ARGUMENT_ERROR; line: number; column: number; function: string; min: number; max: number}
   | {id: typeof ERROR.EQUALS_ERROR; line: number; column: number}
   | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
   | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
@@ -95,6 +99,8 @@ export type ProgramError =
   | {id: typeof ERROR.TYPE_ERROR | typeof ERROR.MATH_ERROR; line: number; column?: number; operator: string}
   | {id: typeof ERROR.DIVISION_BY_ZERO; line: number; column?: number}
   | {id: typeof ERROR.INDEX_ERROR; line: number; column: number; index: number}
+  //remove of an item that isn't in the list, printed as in the program
+  | {id: typeof ERROR.ITEM_ERROR; line: number; item: string}
   | {id: typeof ERROR.CONDITION_ERROR; line: number}
   | {id: typeof ERROR.TIMEOUT}
   | {id: typeof ERROR.UNKNOWN_LANGUAGE; language: string};

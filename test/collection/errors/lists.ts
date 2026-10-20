@@ -21,6 +21,17 @@ const sources: Source[] = [
       {title: 'a letter replaced', code: 't = "abc"\nt[1] = "x"', errorId: 'typeError', errorParam: {line: 2}},
       {title: 'add into a text', code: 't = "abc"\nadd "d" into t', errorId: 'typeError', errorParam: {line: 2}},
       {title: 'add without into', code: 'a = []\nadd 1', errorId: 'syntaxError', errorParam: {line: 2}},
+      {
+        title: 'remove an item not in the list',
+        code: 'a = [1]\nremove 2 out of a',
+        errorId: 'itemError',
+        errorParam: {line: 2},
+        output: ''
+      },
+      {title: 'remove out of a text', code: 'remove "a" out of "abc"', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'remove without out of', code: 'a = [1]\nremove 1', errorId: 'syntaxError', errorParam: {line: 2}},
+      {title: 'in a number', code: 'print 1 in 5', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'a number in a text', code: 'print 1 in "123"', errorId: 'typeError', errorParam: {line: 1}},
       {title: 'for in a number', code: 'for x in 5\n    print x', errorId: 'typeError', errorParam: {line: 1}},
       {title: 'a list plus a list', code: 'print [1] + [2]', errorId: 'typeError', errorParam: {line: 1}},
       {title: 'lists compared with <', code: 'print [1] < [2]', errorId: 'typeError', errorParam: {line: 1}},
@@ -45,6 +56,14 @@ const sources: Source[] = [
       {
         title: 'a text function without its argument',
         code: 'print to_text()',
+        errorId: 'argumentError',
+        errorParam: {line: 1}
+      },
+      {title: 'split of a number', code: 'print split(5)', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'join of a text', code: 'print join("abc")', errorId: 'typeError', errorParam: {line: 1}},
+      {
+        title: 'split with three values',
+        code: 'print split("a", "b", "c")',
         errorId: 'argumentError',
         errorParam: {line: 1}
       }

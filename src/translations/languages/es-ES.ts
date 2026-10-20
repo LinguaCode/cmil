@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['en'],
     add: ['añadir'],
     into: ['a_la_lista'],
+    remove: ['quitar'],
+    outOf: ['de'],
     function: ['función'],
     return: ['devolver'],
     random: ['aleatorio'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['mayúsculas'],
     lower: ['minúsculas'],
     number: ['a_número'],
-    text: ['a_texto']
+    text: ['a_texto'],
+    split: ['dividir'],
+    join: ['unir']
   },
   quotes: [['«', '»']],
   notes: {
@@ -70,13 +74,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Error de sintaxis en la línea {line}.',
     indentError: 'Error de sangría en la línea {line}: sangra los bloques con 4 espacios.',
-    argumentError: 'Línea {line}: una función tiene argumentos incorrectos.',
+    argumentError: {
+      one: 'Línea {line}: {function} recibe {count} valor.',
+      other: 'Línea {line}: {function} recibe {count} valores.'
+    },
     equalsError: 'Línea {line}: para comparar, escribe == en lugar de =.',
     undefinedVariable: 'Línea {line}: {variable} todavía no tiene valor.',
     undefinedFunction: 'Línea {line}: no existe la función {function}.',
@@ -86,6 +97,7 @@ const translation: Translation = {
     divisionByZero: 'Línea {line}: división entre cero.',
     mathError: 'Línea {line}: {operator} no tiene resultado para este valor.',
     indexError: 'Línea {line}: no hay ningún elemento {index}.',
+    itemError: 'Línea {line}: la lista no tiene el elemento {item}.',
     memoryLimit: 'Línea {line}: un texto o una lista se hizo demasiado largo.',
     recursionLimit: 'Línea {line}: demasiadas llamadas a funciones anidadas.',
     timeout: 'El programa se ejecutó demasiado tiempo sin pedir una entrada.',

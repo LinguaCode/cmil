@@ -70,7 +70,7 @@ const listText = (root: Value[], format: Format): string => {
     if (frame.index) printed += ', ';
     const next = frame.list[frame.index++];
     if (!Array.isArray(next)) {
-      printed += typeof next === 'string' ? quote(next, format.quotes) : toText(next, format);
+      printed += itemText(next, format);
     } else if (open.has(next)) {
       printed += '[...]';
     } else {
@@ -84,6 +84,12 @@ const listText = (root: Value[], format: Format): string => {
 
   return printed;
 };
+
+/**
+ * A value as an item of a list is printed: a text in quotes, other values as they are printed.
+ */
+export const itemText = (value: Value, format: Format): string =>
+  typeof value === 'string' ? quote(value, format.quotes) : toText(value, format);
 
 /**
  * Converts a value into text; booleans become the words of the program's language.
@@ -192,6 +198,11 @@ export const binary = (operator: string, left: Value, right: Value, format: Form
       return equals(left, right);
     case '!=':
       return !equals(left, right);
+    //a value in a list, or a text in a text
+    case COMMAND.IN:
+      if (Array.isArray(right)) return right.some(item => equals(item, left));
+      if (typeof right === 'string' && typeof left === 'string') return right.includes(left);
+      throw typeError();
   }
 
   const [a, b] = compare(left, right);
@@ -294,6 +305,17 @@ export const add = (value: Value, target: Value): void => {
 };
 
 /**
+ * Removes the first item of a list equal to a value; false when the list has none.
+ */
+export const remove = (value: Value, target: Value): boolean => {
+  const all = list(target);
+  const index = all.findIndex(item => equals(item, value));
+  if (index < 0) return false;
+  all.splice(index, 1);
+  return true;
+};
+
+/**
  * The items a for … in loop passes: a copy of a list, so changing the list doesn't change the loop,
  * or the letters of a text.
  */
@@ -361,7 +383,25 @@ export const FUNCTIONS: Record<string, BuiltIn> = {
       return result;
     }
   },
-  [COMMAND.TEXT]: {min: 1, max: 1, apply: ([value], format) => toText(value, format)}
+  [COMMAND.TEXT]: {min: 1, max: 1, apply: ([value], format) => toText(value, format)},
+  //the words of a text, or its parts between a separator; an empty separator gives its letters
+  [COMMAND.SPLIT]: {
+    min: 1,
+    max: 2,
+    apply: ([value, separator]) => {
+      if (separator === undefined) return text(value).trim() ? text(value).trim().split(/\s+/) : [];
+      return text(separator) ? text(value).split(text(separator)) : Array.from(text(value));
+    }
+  },
+  //the items of a list as they are printed, joined with a separator, or with nothing
+  [COMMAND.JOIN]: {
+    min: 1,
+    max: 2,
+    apply: ([value, separator = ''], format) =>
+      list(value)
+        .map(item => toText(item, format))
+        .join(text(separator))
+  }
 };
 
 export const CONSTANTS: Record<string, number> = {

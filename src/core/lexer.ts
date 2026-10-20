@@ -74,7 +74,7 @@ const tokenizeLine = (text: string, indent: number, lineNumber: number, language
     const position = {line: lineNumber, column: offset + 1};
 
     if (segment.type === 'keyword') {
-      tokens.push({type: 'command', value: segment.command, ...position});
+      tokens.push({type: 'command', value: segment.command, text: segment.text, ...position});
     } else if (segment.type === 'name') {
       tokens.push({type: 'identifier', value: segment.text.toLowerCase(), ...position});
     } else if (segment.type === 'string') {

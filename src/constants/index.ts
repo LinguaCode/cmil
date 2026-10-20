@@ -27,6 +27,8 @@ export const COMMAND = {
   //lists
   ADD: 'add',
   INTO: 'into',
+  REMOVE: 'remove',
+  OUT_OF: 'outOf',
 
   BREAK: 'break',
   CONTINUE: 'continue',
@@ -72,7 +74,9 @@ export const COMMAND = {
   UPPER: 'upper',
   LOWER: 'lower',
   NUMBER: 'number',
-  TEXT: 'text'
+  TEXT: 'text',
+  SPLIT: 'split',
+  JOIN: 'join'
 } as const;
 
 export type Command = (typeof COMMAND)[keyof typeof COMMAND];
@@ -91,6 +95,7 @@ export const ERROR = {
   DIVISION_BY_ZERO: 'divisionByZero',
   MATH_ERROR: 'mathError',
   INDEX_ERROR: 'indexError',
+  ITEM_ERROR: 'itemError',
   MEMORY_LIMIT: 'memoryLimit',
   RECURSION_LIMIT: 'recursionLimit',
   TIMEOUT: 'timeout',

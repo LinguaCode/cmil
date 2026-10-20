@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['në'],
     add: ['shto'],
     into: ['te'],
+    remove: ['hiq'],
+    outOf: ['prej'],
     function: ['funksioni'],
     return: ['kthe'],
     random: ['të_rastit'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['shkronja_të_mëdha'],
     lower: ['shkronja_të_vogla'],
     number: ['në_numër'],
-    text: ['në_tekst']
+    text: ['në_tekst'],
+    split: ['ndaj'],
+    join: ['bashko']
   },
   quotes: [['«', '»']],
   notes: {
@@ -70,13 +74,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Gabim sintakse në rreshtin {line}.',
     indentError: 'Gabim kryeradhe në rreshtin {line}: kryeradhi blloqet me 4 hapësira.',
-    argumentError: 'Rreshti {line}: një funksion ka argumente të gabuara.',
+    argumentError: {
+      one: 'Rreshti {line}: {function} merr {count} vlerë.',
+      other: 'Rreshti {line}: {function} merr {count} vlera.'
+    },
     equalsError: 'Rreshti {line}: për të krahasuar, shkruaj == në vend të =.',
     undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
     undefinedFunction: 'Rreshti {line}: nuk ka funksion {function}.',
@@ -86,6 +97,7 @@ const translation: Translation = {
     divisionByZero: 'Rreshti {line}: pjesëtim me zero.',
     mathError: 'Rreshti {line}: {operator} nuk ka rezultat për këtë vlerë.',
     indexError: 'Rreshti {line}: nuk ka element {index}.',
+    itemError: 'Rreshti {line}: lista nuk ka elementin {item}.',
     memoryLimit: 'Rreshti {line}: një tekst ose një listë u bë shumë i gjatë.',
     recursionLimit: 'Rreshti {line}: shumë thirrje funksionesh brenda njëra-tjetrës.',
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',

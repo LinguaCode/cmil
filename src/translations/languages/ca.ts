@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['en'],
     add: ['afegir'],
     into: ['dins'],
+    remove: ['treure'],
+    outOf: ['del'],
     function: ['funció'],
     return: ['retorna'],
     random: ['aleatori'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['majúscules'],
     lower: ['minúscules'],
     number: ['a_nombre'],
-    text: ['a_text']
+    text: ['a_text'],
+    split: ['dividir'],
+    join: ['unir']
   },
   quotes: [['«', '»']],
   notes: {
@@ -69,13 +73,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Error de sintaxi a la línia {line}.',
     indentError: 'Error de sagnat a la línia {line}: sagna els blocs amb 4 espais.',
-    argumentError: 'Línia {line}: una funció té arguments incorrectes.',
+    argumentError: {
+      one: 'Línia {line}: {function} rep {count} valor.',
+      other: 'Línia {line}: {function} rep {count} valors.'
+    },
     equalsError: 'Línia {line}: per comparar, escriu == en lloc de =.',
     undefinedVariable: 'Línia {line}: {variable} encara no té valor.',
     undefinedFunction: 'Línia {line}: no existeix la funció {function}.',
@@ -85,6 +96,7 @@ const translation: Translation = {
     divisionByZero: 'Línia {line}: divisió per zero.',
     mathError: 'Línia {line}: {operator} no té resultat per a aquest valor.',
     indexError: 'Línia {line}: no hi ha cap element {index}.',
+    itemError: "Línia {line}: la llista no té l'element {item}.",
     memoryLimit: 'Línia {line}: un text o una llista ha esdevingut massa llarg.',
     recursionLimit: 'Línia {line}: massa crides de funcions imbricades.',
     timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",

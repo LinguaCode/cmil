@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['შორის'],
     add: ['დაამატე'],
     into: ['შიგ'],
+    remove: ['ამოიღე'],
+    outOf: ['სიიდან'],
     function: ['ფუნქცია'],
     return: ['დააბრუნე'],
     random: ['შემთხვევითი'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['მთავრული'],
     lower: ['მხედრული'],
     number: ['რიცხვად'],
-    text: ['ტექსტად']
+    text: ['ტექსტად'],
+    split: ['გაყავი'],
+    join: ['შეაერთე']
   },
   quotes: [['„', '“']],
   notes: {
@@ -73,13 +77,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'სინტაქსური შეცდომა {line}-ე ხაზზე.',
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
-    argumentError: '{line}-ე ხაზი: ფუნქციას არასწორი არგუმენტები აქვს.',
+    argumentError: '{line}-ე ხაზი: {function} იღებს {count} მნიშვნელობას.',
     equalsError: '{line}-ე ხაზი: შესადარებლად დაწერეთ == და არა =.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
     undefinedFunction: '{line}-ე ხაზი: ფუნქცია {function} არ არსებობს.',
@@ -89,6 +97,7 @@ const translation: Translation = {
     divisionByZero: '{line}-ე ხაზი: ნულზე გაყოფა.',
     mathError: '{line}-ე ხაზი: {operator}-ს ამ მნიშვნელობისთვის შედეგი არ აქვს.',
     indexError: '{line}-ე ხაზი: {index} ნომრის ელემენტი არ არსებობს.',
+    itemError: '{line}-ე ხაზი: სიაში არ არის ელემენტი {item}.',
     memoryLimit: '{line}-ე ხაზი: ტექსტი ან სია ზედმეტად გრძელი გახდა.',
     recursionLimit: '{line}-ე ხაზი: ფუნქციების ჩადგმული გამოძახებები ზედმეტად ბევრია.',
     timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',

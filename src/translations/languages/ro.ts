@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['în'],
     add: ['adaugă'],
     into: ['la'],
+    remove: ['elimină'],
+    outOf: ['din'],
     function: ['funcție'],
     return: ['returnează'],
     random: ['aleatoare'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['majuscule'],
     lower: ['minuscule'],
     number: ['în_număr'],
-    text: ['în_text']
+    text: ['în_text'],
+    split: ['împarte'],
+    join: ['unește']
   },
   quotes: [['„', '”']],
   notes: {
@@ -70,13 +74,21 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Eroare de sintaxă pe linia {line}.',
     indentError: 'Eroare de indentare pe linia {line}: indentează blocurile cu 4 spații.',
-    argumentError: 'Linia {line}: o funcție are argumente greșite.',
+    argumentError: {
+      one: 'Linia {line}: {function} primește {count} valoare.',
+      few: 'Linia {line}: {function} primește {count} valori.',
+      other: 'Linia {line}: {function} primește {count} de valori.'
+    },
     equalsError: 'Linia {line}: pentru a compara, scrie == în loc de =.',
     undefinedVariable: 'Linia {line}: {variable} nu are încă o valoare.',
     undefinedFunction: 'Linia {line}: nu există funcția {function}.',
@@ -86,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Linia {line}: împărțire la zero.',
     mathError: 'Linia {line}: {operator} nu are rezultat pentru această valoare.',
     indexError: 'Linia {line}: nu există elementul {index}.',
+    itemError: 'Linia {line}: lista nu are elementul {item}.',
     memoryLimit: 'Linia {line}: un text sau o listă a devenit prea lung.',
     recursionLimit: 'Linia {line}: prea multe apeluri de funcții imbricate.',
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',

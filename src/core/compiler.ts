@@ -4,7 +4,7 @@
  *
  * Instructions:
  * - print {expressions}, input {name, prompt}, assign {name, expression}
- * - setItem {target, index, expression}, add {expression, target}: change a list
+ * - setItem {target, index, expression}, add {expression, target}, remove {expression, target}: change a list
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
  * - forStart {slot, from, to, step}, forTest {slot, name, target}: the bounds of a for loop, read once, and its passes
@@ -41,6 +41,7 @@ const expressionsOf = (instruction: Instruction): (Expression | undefined)[] => 
     case 'setItem':
       return [instruction.target, instruction.index, instruction.expression];
     case 'add':
+    case 'remove':
       return [instruction.expression, instruction.target];
     case 'call':
       return [instruction.call];
@@ -97,7 +98,8 @@ export const compile = (statements: Statement[]): Program => {
         break;
       }
       case 'add':
-        emit({op: 'add', expression: node.expression, target: node.target, line});
+      case 'remove':
+        emit({op: node.type, expression: node.expression, target: node.target, line});
         break;
       case 'call':
         emit({op: 'call', call: node.call, line});

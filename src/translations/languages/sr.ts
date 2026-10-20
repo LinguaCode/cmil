@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['од'],
     to: ['до'],
     step: ['корак'],
-    in: ['из'],
+    in: ['међу'],
     add: ['додај'],
     into: ['на_крај'],
+    remove: ['уклони'],
+    outOf: ['из'],
     function: ['функција'],
     return: ['врати'],
     random: ['случајни'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['велика_слова'],
     lower: ['мала_слова'],
     number: ['у_број'],
-    text: ['у_текст']
+    text: ['у_текст'],
+    split: ['подели'],
+    join: ['спој']
   },
   quotes: [['„', '“']],
   notes: {
@@ -69,13 +73,21 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Синтаксна грешка у реду {line}.',
     indentError: 'Грешка увлачења у реду {line}: увлачите блокове за 4 размака.',
-    argumentError: 'Ред {line}: функција има погрешне аргументе.',
+    argumentError: {
+      one: 'Ред {line}: {function} прима {count} вредност.',
+      few: 'Ред {line}: {function} прима {count} вредности.',
+      other: 'Ред {line}: {function} прима {count} вредности.'
+    },
     equalsError: 'Ред {line}: за поређење пишите == уместо =.',
     undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
     undefinedFunction: 'Ред {line}: не постоји функција {function}.',
@@ -85,6 +97,7 @@ const translation: Translation = {
     divisionByZero: 'Ред {line}: дељење нулом.',
     mathError: 'Ред {line}: {operator} нема резултат за ову вредност.',
     indexError: 'Ред {line}: не постоји елемент {index}.',
+    itemError: 'Ред {line}: листа нема елемент {item}.',
     memoryLimit: 'Ред {line}: текст или листа је постао предугачак.',
     recursionLimit: 'Ред {line}: превише угнежђених позива функција.',
     timeout: 'Програм је радио предуго, а није тражио унос.',

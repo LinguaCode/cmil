@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['在'],
     add: ['添加'],
     into: ['进'],
+    remove: ['删除'],
+    outOf: ['自'],
     function: ['函数'],
     return: ['返回'],
     random: ['随机的'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['大写'],
     lower: ['小写'],
     number: ['转数字'],
-    text: ['转文本']
+    text: ['转文本'],
+    split: ['拆分'],
+    join: ['连接']
   },
   quotes: [['“', '”']],
   notes: {
@@ -69,13 +73,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: '第 {line} 行有语法错误。',
     indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',
-    argumentError: '第 {line} 行：函数的参数不对。',
+    argumentError: '第 {line} 行：{function} 需要 {count} 个值。',
     equalsError: '第 {line} 行：比较时请用 ==，不要用 =。',
     undefinedVariable: '第 {line} 行：{variable} 还没有值。',
     undefinedFunction: '第 {line} 行：没有函数 {function}。',
@@ -85,6 +93,7 @@ const translation: Translation = {
     divisionByZero: '第 {line} 行：除数为零。',
     mathError: '第 {line} 行：{operator} 对这个值没有结果。',
     indexError: '第 {line} 行：没有第 {index} 项。',
+    itemError: '第 {line} 行：列表中没有 {item}。',
     memoryLimit: '第 {line} 行：文本或列表太长了。',
     recursionLimit: '第 {line} 行：函数嵌套调用太深了。',
     timeout: '程序运行太久，却没有请求输入。',

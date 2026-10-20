@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['blant'],
     add: ['legg_til'],
     into: ['i_listen'],
+    remove: ['fjern'],
+    outOf: ['ut av'],
     function: ['funksjon'],
     return: ['returner'],
     random: ['tilfeldig'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['store_bokstaver'],
     lower: ['små_bokstaver'],
     number: ['til_tall'],
-    text: ['til_tekst']
+    text: ['til_tekst'],
+    split: ['del_opp'],
+    join: ['slå_sammen']
   },
   quotes: [['«', '»']],
   notes: {
@@ -71,13 +75,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaksfeil på linje {line}.',
     indentError: 'Innrykksfeil på linje {line}: rykk inn blokker med 4 mellomrom.',
-    argumentError: 'Linje {line}: en funksjon har feil argumenter.',
+    argumentError: {
+      one: 'Linje {line}: {function} tar {count} verdi.',
+      other: 'Linje {line}: {function} tar {count} verdier.'
+    },
     equalsError: 'Linje {line}: skriv == i stedet for = for å sammenligne.',
     undefinedVariable: 'Linje {line}: {variable} har ingen verdi ennå.',
     undefinedFunction: 'Linje {line}: det finnes ingen funksjon {function}.',
@@ -87,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Linje {line}: deling på null.',
     mathError: 'Linje {line}: {operator} har ikke noe resultat for denne verdien.',
     indexError: 'Linje {line}: det finnes ikke noe element {index}.',
+    itemError: 'Linje {line}: listen har ikke elementet {item}.',
     memoryLimit: 'Linje {line}: en tekst eller en liste ble for lang.',
     recursionLimit: 'Linje {line}: for mange nøstede funksjonskall.',
     timeout: 'Programmet kjørte for lenge uten å be om inndata.',

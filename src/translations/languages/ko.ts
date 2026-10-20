@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['안의'],
     add: ['추가'],
     into: ['에'],
+    remove: ['삭제'],
+    outOf: ['에서'],
     function: ['함수'],
     return: ['반환'],
     random: ['난수'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['대문자'],
     lower: ['소문자'],
     number: ['숫자로'],
-    text: ['문자열로']
+    text: ['문자열로'],
+    split: ['나누기'],
+    join: ['합치기']
   },
   quotes: [['“', '”']],
   notes: {
@@ -70,13 +74,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: '{line}번째 줄에 문법 오류가 있습니다.',
     indentError: '{line}번째 줄 들여쓰기 오류: 블록은 4칸씩 들여 쓰세요.',
-    argumentError: '{line}번째 줄: 함수의 인수가 잘못되었습니다.',
+    argumentError: '{line}번째 줄: {function}은(는) 값을 {count}개 받습니다.',
     equalsError: '{line}번째 줄: 비교하려면 = 대신 ==를 쓰세요.',
     undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
     undefinedFunction: '{line}번째 줄: {function} 함수가 없습니다.',
@@ -86,6 +94,7 @@ const translation: Translation = {
     divisionByZero: '{line}번째 줄: 0으로 나눌 수 없습니다.',
     mathError: '{line}번째 줄: 이 값에서는 {operator}의 결과가 없습니다.',
     indexError: '{line}번째 줄: {index}번째 항목이 없습니다.',
+    itemError: '{line}번째 줄: 목록에 {item} 항목이 없습니다.',
     memoryLimit: '{line}번째 줄: 텍스트나 목록이 너무 길어졌습니다.',
     recursionLimit: '{line}번째 줄: 함수 호출이 너무 깊게 중첩되었습니다.',
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',

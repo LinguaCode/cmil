@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['in'],
     add: ['add'],
     into: ['into'],
+    remove: ['remove'],
+    outOf: ['out of'],
     function: ['function'],
     return: ['return'],
     random: ['random'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['uppercase'],
     lower: ['lowercase'],
     number: ['to_number'],
-    text: ['to_text']
+    text: ['to_text'],
+    split: ['split'],
+    join: ['join']
   },
   quotes: [
     ['"', '"'],
@@ -62,7 +66,10 @@ const translation: Translation = {
   messages: {
     syntaxError: 'Syntax error on line {line}.',
     indentError: 'Indentation error on line {line}: indent blocks by 4 spaces.',
-    argumentError: 'Line {line}: a function has the wrong arguments.',
+    argumentError: {
+      one: 'Line {line}: {function} takes {count} value.',
+      other: 'Line {line}: {function} takes {count} values.'
+    },
     equalsError: 'Line {line}: to compare, use == instead of =.',
     undefinedVariable: 'Line {line}: {variable} has no value yet.',
     undefinedFunction: 'Line {line}: there is no function {function}.',
@@ -72,6 +79,7 @@ const translation: Translation = {
     divisionByZero: 'Line {line}: division by zero.',
     mathError: 'Line {line}: {operator} has no result for this value.',
     indexError: 'Line {line}: there is no item {index}.',
+    itemError: 'Line {line}: the list has no item {item}.',
     memoryLimit: 'Line {line}: a text or a list grew too long.',
     recursionLimit: 'Line {line}: too many calls of functions inside each other.',
     timeout: 'The program ran too long without asking for input.',

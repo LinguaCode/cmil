@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['korak'],
-    in: ['iz'],
+    in: ['med'],
     add: ['dodaj'],
     into: ['na_konec'],
+    remove: ['odstrani'],
+    outOf: ['iz'],
     function: ['funkcija'],
     return: ['vrni'],
     random: ['naključno'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['velike_črke'],
     lower: ['male_črke'],
     number: ['v_število'],
-    text: ['v_besedilo']
+    text: ['v_besedilo'],
+    split: ['razdeli'],
+    join: ['združi']
   },
   quotes: [['„', '“']],
   notes: {
@@ -70,13 +74,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Skladenjska napaka v vrstici {line}.',
     indentError: 'Napaka zamika v vrstici {line}: bloke zamaknite za 4 presledke.',
-    argumentError: 'Vrstica {line}: funkcija ima napačne argumente.',
+    argumentError: {
+      one: 'Vrstica {line}: {function} sprejme {count} vrednost.',
+      two: 'Vrstica {line}: {function} sprejme {count} vrednosti.',
+      few: 'Vrstica {line}: {function} sprejme {count} vrednosti.',
+      other: 'Vrstica {line}: {function} sprejme {count} vrednosti.'
+    },
     equalsError: 'Vrstica {line}: za primerjavo pišite == namesto =.',
     undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
     undefinedFunction: 'Vrstica {line}: funkcije {function} ni.',
@@ -86,6 +99,7 @@ const translation: Translation = {
     divisionByZero: 'Vrstica {line}: deljenje z nič.',
     mathError: 'Vrstica {line}: {operator} za to vrednost nima rezultata.',
     indexError: 'Vrstica {line}: elementa {index} ni.',
+    itemError: 'Vrstica {line}: seznam nima elementa {item}.',
     memoryLimit: 'Vrstica {line}: besedilo ali seznam je postal predolg.',
     recursionLimit: 'Vrstica {line}: preveč gnezdenih klicev funkcij.',
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',

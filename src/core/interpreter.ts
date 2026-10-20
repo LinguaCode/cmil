@@ -311,6 +311,15 @@ class Interpreter {
             this.apply({}, COMMAND.ADD, () => values.add(value, target));
             break;
           }
+          case 'remove': {
+            const value = this.evaluate(instruction.expression);
+            const target = this.evaluate(instruction.target);
+            if (!this.apply({}, COMMAND.REMOVE, () => values.remove(value, target))) {
+              const item = this.apply({}, '', () => values.itemText(value, this.format));
+              throw new CmilError({id: ERROR.ITEM_ERROR, line: this.line, item});
+            }
+            break;
+          }
           case 'call':
             //the value of the call isn't used, and the function may return none
             this.replay(instruction.call);

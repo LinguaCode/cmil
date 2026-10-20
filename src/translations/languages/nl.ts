@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['in'],
     add: ['voeg_toe'],
     into: ['aan'],
+    remove: ['verwijder'],
+    outOf: ['uit'],
     function: ['functie'],
     return: ['geef_terug'],
     random: ['willekeurig'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['hoofdletters'],
     lower: ['kleine_letters'],
     number: ['naar_getal'],
-    text: ['naar_tekst']
+    text: ['naar_tekst'],
+    split: ['splits'],
+    join: ['voeg_samen']
   },
   quotes: [['“', '”']],
   notes: {
@@ -69,13 +73,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfout op regel {line}.',
     indentError: 'Inspringfout op regel {line}: spring blokken 4 spaties in.',
-    argumentError: 'Regel {line}: een functie heeft verkeerde argumenten.',
+    argumentError: {
+      one: 'Regel {line}: {function} neemt {count} waarde.',
+      other: 'Regel {line}: {function} neemt {count} waarden.'
+    },
     equalsError: 'Regel {line}: schrijf == in plaats van = om te vergelijken.',
     undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
     undefinedFunction: 'Regel {line}: er is geen functie {function}.',
@@ -85,6 +96,7 @@ const translation: Translation = {
     divisionByZero: 'Regel {line}: delen door nul.',
     mathError: 'Regel {line}: {operator} heeft geen uitkomst voor deze waarde.',
     indexError: 'Regel {line}: er is geen element {index}.',
+    itemError: 'Regel {line}: de lijst heeft geen element {item}.',
     memoryLimit: 'Regel {line}: een tekst of een lijst werd te lang.',
     recursionLimit: 'Regel {line}: te veel geneste functieaanroepen.',
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',

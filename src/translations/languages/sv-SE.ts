@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['bland'],
     add: ['lägg_till'],
     into: ['i_listan'],
+    remove: ['ta_bort'],
+    outOf: ['ur'],
     function: ['funktion'],
     return: ['returnera'],
     random: ['slumptal'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['versaler'],
     lower: ['gemener'],
     number: ['till_tal'],
-    text: ['till_text']
+    text: ['till_text'],
+    split: ['dela_upp'],
+    join: ['slå_ihop']
   },
   quotes: [['”', '”']],
   notes: {
@@ -70,13 +74,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfel på rad {line}.',
     indentError: 'Indragsfel på rad {line}: dra in block med 4 blanksteg.',
-    argumentError: 'Rad {line}: en funktion har fel argument.',
+    argumentError: {
+      one: 'Rad {line}: {function} tar {count} värde.',
+      other: 'Rad {line}: {function} tar {count} värden.'
+    },
     equalsError: 'Rad {line}: skriv == i stället för = för att jämföra.',
     undefinedVariable: 'Rad {line}: {variable} har inget värde än.',
     undefinedFunction: 'Rad {line}: det finns ingen funktion {function}.',
@@ -86,6 +97,7 @@ const translation: Translation = {
     divisionByZero: 'Rad {line}: division med noll.',
     mathError: 'Rad {line}: {operator} har inget resultat för det här värdet.',
     indexError: 'Rad {line}: det finns inget element {index}.',
+    itemError: 'Rad {line}: listan har inget element {item}.',
     memoryLimit: 'Rad {line}: en text eller en lista blev för lång.',
     recursionLimit: 'Rad {line}: för många nästlade funktionsanrop.',
     timeout: 'Programmet körde för länge utan att be om indata.',

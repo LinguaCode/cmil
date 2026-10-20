@@ -10,8 +10,9 @@ CMIL programs are written with the commands of the learner's language. The examp
 | while, do | `while`, `do` | `մինչ`, `անել` | `пока`, `сделать` |
 | repeat … times | `repeat`, `times` | `կրկնել`, `անգամ` | `повторять`, `раз` |
 | for … from … to … step | `for`, `from`, `to`, `step` | `յուրաքանչյուր`, `սկսած`, `մինչև`, `քայլ` | `для`, `от`, `до`, `шаг` |
-| for … in | `for`, `in` | `յուրաքանչյուր`, `ից` | `для`, `из` |
-| add … into | `add`, `into` | `ավելացնել`, `մեջ` | `добавить`, `в_конец` |
+| for … in, in | `for`, `in` | `յուրաքանչյուր`, `մեջ` | `для`, `среди` |
+| add … into | `add`, `into` | `ավելացնել`, `վերջում` | `добавить`, `в_конец` |
+| remove … out of | `remove`, `out of` | `հեռացնել`, `ից` | `удалить`, `из` |
 | function, return | `function`, `return` | `ֆունկցիա`, `վերադարձնել` | `функция`, `вернуть` |
 | break, continue | `break`, `continue` | `դադարեցնել`, `շարունակել` | `прервать`, `продолжать` |
 | and, or, not | `and`, `or`, `not` | `և` (`եւ`, `ու`), `կամ`, `ոչ` | `и`, `или`, `не` |
@@ -72,6 +73,7 @@ From the lowest to the highest precedence:
 | `not` | the opposite | a boolean |
 | `==`, `!=` | equal, not equal | any; values of different types are never equal |
 | `<`, `>`, `<=`, `>=` | comparisons | two numbers, or two texts in alphabetical order |
+| `in` | a value in a list, or a text in a text | `"🍎" in basket` is `true` when an item of `basket` is `==` to it; `"ell" in "hello"` is `true` |
 | `+`, `-` | add, subtract | numbers; `+` also joins a text with any value |
 | `*`, `/`, `%` | multiply, divide, remainder | numbers; dividing by `0` is a `divisionByZero` |
 | `-`, `+` before a value | negative, positive | a number |
@@ -132,7 +134,8 @@ print fruits, length_of(fruits), fruits[3]
 prints `["cherry", "pear", "plum"] 3 plum`.
 
 - `list[i]` is the item at `i`, counted from 1, and `list[i] = value` replaces it. An `i` that isn't a whole number from 1 to the length of the list is an `indexError`. Lists in lists have items of items: `table[2][1]`.
-- `add value into list` puts the value at the end of the list.
+- `add value into list` puts the value at the end of the list, and `remove value out of list` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`.
+- `value in list` is `true` when the list has the value.
 - `text[i]` is a letter of a text; letters can be read but not replaced. An emoji is one letter.
 - A list is shared, not copied, when it is assigned: after `b = a`, `add 1 into b` adds to `a` too.
 - A list is printed with its items in brackets, texts in the main quotes of the program's language: `[1, "a", true]` in English, `[1, «ա», ճիշտ]` in Armenian. A list inside itself is printed as `[...]`.
@@ -151,7 +154,7 @@ prints `["cherry", "pear", "plum"] 3 plum`.
 | `log(base, x)`, `ln(x)`, `lg(x)` | logarithms: any base, `e`, 10 |
 | `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included; `min`, `max` must be whole |
 
-Math functions take numbers. Another count of arguments, or a missing `)`, is an `argumentError`; an argument that isn't a number is a `typeError`; and a result that doesn't exist, like `square_root(-1)`, `ln(0)` or `tan(pi / 2)`, is a `mathError`.
+Math functions take numbers. Another count of arguments, or a missing `(` or `)`, is an `argumentError`, whose message names the function and the count of values it takes; an argument that isn't a number is a `typeError`; and a result that doesn't exist, like `square_root(-1)`, `ln(0)` or `tan(pi / 2)`, is a `mathError`.
 
 ## Text and list functions
 
@@ -161,6 +164,8 @@ Math functions take numbers. Another count of arguments, or a missing `)`, is an
 | `uppercase(t)`, `lowercase(t)` | a text in capital or small letters |
 | `to_number(t)` | the number a text holds, read like an input: `to_number("2.5")` is `2.5`; a text that isn't a number is a `typeError` |
 | `to_text(x)` | a value as it is printed: `to_text(5) + to_text(5)` is `55` |
+| `split(t)`, `split(t, separator)` | a list of the words of a text, or of its parts between a separator: `split("a,b", ",")` is `["a", "b"]`; an empty separator gives the letters |
+| `join(list)`, `join(list, separator)` | the items of a list as they are printed, joined into a text: `join(["a", "b"], ", ")` is `a, b` |
 
 Another value than these functions take is a `typeError`.
 
@@ -196,16 +201,17 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 |---|---|---|
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
-| `argumentError` | a call with a missing `)` or another count of arguments | `line`, `column` of the function |
+| `argumentError` | a call with another count of arguments, or a function of the language without its `(` or `)` | `line`, `column` and `function`, the name as written, and `min` and `max`, the counts of values it takes |
 | `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
 | `undefinedFunction` | a call of a function the program doesn't define | `line`, `column`, `function` |
 | `noValue` | the value of a call of a function that returned without one | `line`, `column`, `function` |
-| `typeError` | an operator, function, index, `repeat`, `for … in` or `add` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
+| `typeError` | an operator, function, index, `repeat`, `for … in`, `add` or `remove` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
 | `divisionByZero` | `/` or `%` by `0` | `line`, `column` |
 | `mathError` | a math function or operator has no result, like `square_root(-1)` | `line`, `column`, `operator` |
 | `indexError` | an index outside a list or a text, like `[1, 2][3]` | `line`, `column` of the `[`, `index` |
+| `itemError` | `remove` of a value the list doesn't have | `line`, `item`: the value as a list prints it |
 | `memoryLimit` | a text, a list, or the output of one step, grows too long | `line` |
 | `recursionLimit` | more than 1000 calls of functions inside each other | `line` |
 | `timeout` | the program runs more steps than its limit between two inputs | none |

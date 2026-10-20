@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['серед'],
     add: ['додати'],
     into: ['в_кінець'],
+    remove: ['видалити'],
+    outOf: ['із'],
     function: ['функція'],
     return: ['повернути'],
     random: ['випадковий'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['великі_літери'],
     lower: ['малі_літери'],
     number: ['в_число'],
-    text: ['в_текст']
+    text: ['в_текст'],
+    split: ['розділити'],
+    join: ['поєднати']
   },
   quotes: [
     ['«', '»'],
@@ -72,13 +76,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Синтаксична помилка в рядку {line}.',
     indentError: 'Помилка відступу в рядку {line}: робіть відступи блоків у 4 пробіли.',
-    argumentError: 'Рядок {line}: функція має неправильні аргументи.',
+    argumentError: {
+      one: 'Рядок {line}: {function} приймає {count} значення.',
+      few: 'Рядок {line}: {function} приймає {count} значення.',
+      many: 'Рядок {line}: {function} приймає {count} значень.',
+      other: 'Рядок {line}: {function} приймає {count} значення.'
+    },
     equalsError: 'Рядок {line}: для порівняння пишіть == замість =.',
     undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
     undefinedFunction: 'Рядок {line}: немає функції {function}.',
@@ -88,6 +101,7 @@ const translation: Translation = {
     divisionByZero: 'Рядок {line}: ділення на нуль.',
     mathError: 'Рядок {line}: {operator} не має результату для цього значення.',
     indexError: 'Рядок {line}: немає елемента з номером {index}.',
+    itemError: 'Рядок {line}: у списку немає елемента {item}.',
     memoryLimit: 'Рядок {line}: текст або список став задовгим.',
     recursionLimit: 'Рядок {line}: забагато вкладених викликів функцій.',
     timeout: 'Програма працювала задовго, не запитуючи введення.',

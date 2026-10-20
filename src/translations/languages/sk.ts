@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['krok'],
-    in: ['zo'],
+    in: ['medzi'],
     add: ['pridaj'],
     into: ['na_koniec'],
+    remove: ['odober'],
+    outOf: ['zo'],
     function: ['funkcia'],
     return: ['vráť'],
     random: ['náhodný'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['veľké_písmená'],
     lower: ['malé_písmená'],
     number: ['na_číslo'],
-    text: ['na_text']
+    text: ['na_text'],
+    split: ['rozdeľ'],
+    join: ['spoj']
   },
   quotes: [['„', '“']],
   notes: {
@@ -69,13 +73,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaktická chyba na riadku {line}.',
     indentError: 'Chyba odsadenia na riadku {line}: odsadzujte bloky o 4 medzery.',
-    argumentError: 'Riadok {line}: funkcia má zlé argumenty.',
+    argumentError: {
+      one: 'Riadok {line}: {function} berie {count} hodnotu.',
+      few: 'Riadok {line}: {function} berie {count} hodnoty.',
+      many: 'Riadok {line}: {function} berie {count} hodnoty.',
+      other: 'Riadok {line}: {function} berie {count} hodnôt.'
+    },
     equalsError: 'Riadok {line}: na porovnanie píšte == namiesto =.',
     undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
     undefinedFunction: 'Riadok {line}: funkcia {function} neexistuje.',
@@ -85,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Riadok {line}: delenie nulou.',
     mathError: 'Riadok {line}: {operator} pre túto hodnotu nemá výsledok.',
     indexError: 'Riadok {line}: prvok {index} neexistuje.',
+    itemError: 'Riadok {line}: zoznam nemá prvok {item}.',
     memoryLimit: 'Riadok {line}: text alebo zoznam je príliš dlhý.',
     recursionLimit: 'Riadok {line}: príliš veľa vnorených volaní funkcií.',
     timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',

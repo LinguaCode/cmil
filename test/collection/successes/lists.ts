@@ -56,6 +56,27 @@ const sources: Source[] = [
       {title: 'a list joined into a text', code: 'print "items: " + [1, "a"]', output: 'items: [1, "a"]'},
       {title: 'a list inside itself', code: 'a = [1]\nadd a into a\nprint a', output: '[1, [...]]'},
       {
+        title: 'in: a value in a list',
+        code: 'basket = ["🍎", "🍐"]\nprint "🍎" in basket, "🍋" in basket, [1] in [[1], 2]',
+        output: 'true false true'
+      },
+      {title: 'in: a text in a text', code: 'print "ell" in "hello", "x" in "hello"', output: 'true false'},
+      {
+        title: 'not in, with parentheses',
+        code: 'basket = ["🍎"]\nif not ("🍋" in basket)\n    add "🍋" into basket\nprint basket',
+        output: '["🍎", "🍋"]'
+      },
+      {
+        title: 'remove takes out the first equal item',
+        code: 'numbers = [1, 2, 3, 2]\nremove 2 out of numbers\nprint numbers',
+        output: '[1, 3, 2]'
+      },
+      {
+        title: 'remove out of an item',
+        code: 'm = [[1, 2], [3]]\nremove 2 out of m[1]\nprint m',
+        output: '[[1], [3]]'
+      },
+      {
         title: 'the inputs gathered in a list',
         code: 'names = []\nrepeat 3 times\n    input name\n    add name into names\nprint names',
         inputs: ['Ani', 'Aram', 5],
@@ -96,7 +117,19 @@ const sources: Source[] = [
       {title: 'a number stays a number', code: 'print to_number(7) + 1', output: '8'},
       {title: 'a number into a text', code: 'print to_text(5) + to_text(5), to_text(0.1 + 0.2)', output: '55 0.3'},
       {title: 'a boolean into a text', code: 'print to_text(1 < 2) + "!"', output: 'true!'},
-      {title: 'a list into a text', code: 'print length_of(to_text([1, "a"]))', output: '8'}
+      {title: 'a list into a text', code: 'print length_of(to_text([1, "a"]))', output: '8'},
+      {
+        title: 'split a text into its words',
+        code: 'print split("  one two   three "), length_of(split(""))',
+        output: '["one", "two", "three"] 0'
+      },
+      {title: 'split at a separator', code: 'print split("a,b,,c", ",")', output: '["a", "b", "", "c"]'},
+      {title: 'split into letters', code: 'print split("ab😀", "")', output: '["a", "b", "😀"]'},
+      {
+        title: 'join the items of a list',
+        code: 'print join(["a", "b"], ", ") + "|" + join([1, true, [2]], " ") + "|" + join([])',
+        output: 'a, b|1 true [2]|'
+      }
     ]
   }
 ];
