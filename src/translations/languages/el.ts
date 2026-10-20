@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['σε'],
     add: ['πρόσθεσε'],
     into: ['στο_τέλος'],
+    remove: ['αφαίρεσε'],
+    outOf: ['έξω_από'],
     function: ['συνάρτηση'],
     return: ['επίστρεψε'],
     random: ['τυχαία'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['κεφαλαία'],
     lower: ['πεζά'],
     number: ['σε_αριθμό'],
-    text: ['σε_κείμενο']
+    text: ['σε_κείμενο'],
+    split: ['χώρισε'],
+    join: ['ένωσε']
   },
   quotes: [['«', '»']],
   notes: {
@@ -69,13 +73,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Συντακτικό σφάλμα στη γραμμή {line}.',
     indentError: 'Σφάλμα εσοχής στη γραμμή {line}: κάντε εσοχή στα μπλοκ με 4 κενά.',
-    argumentError: 'Γραμμή {line}: μια συνάρτηση έχει λάθος ορίσματα.',
+    argumentError: {
+      one: 'Γραμμή {line}: η {function} παίρνει {count} τιμή.',
+      other: 'Γραμμή {line}: η {function} παίρνει {count} τιμές.'
+    },
     equalsError: 'Γραμμή {line}: για σύγκριση γράψτε == αντί για =.',
     undefinedVariable: 'Γραμμή {line}: το {variable} δεν έχει ακόμα τιμή.',
     undefinedFunction: 'Γραμμή {line}: δεν υπάρχει συνάρτηση {function}.',
@@ -85,6 +96,7 @@ const translation: Translation = {
     divisionByZero: 'Γραμμή {line}: διαίρεση με το μηδέν.',
     mathError: 'Γραμμή {line}: το {operator} δεν έχει αποτέλεσμα για αυτή την τιμή.',
     indexError: 'Γραμμή {line}: δεν υπάρχει στοιχείο {index}.',
+    itemError: 'Γραμμή {line}: η λίστα δεν έχει το στοιχείο {item}.',
     memoryLimit: 'Γραμμή {line}: ένα κείμενο ή μια λίστα έγινε πολύ μεγάλο.',
     recursionLimit: 'Γραμμή {line}: πάρα πολλές εμφωλευμένες κλήσεις συναρτήσεων.',
     timeout: 'Το πρόγραμμα έτρεξε πολλή ώρα χωρίς να ζητήσει είσοδο.',

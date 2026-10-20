@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['dans'],
     add: ['ajouter'],
     into: ['à_la_liste'],
+    remove: ['retirer'],
+    outOf: ['du'],
     function: ['fonction'],
     return: ['retourner'],
     random: ['aléatoire'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['majuscules'],
     lower: ['minuscules'],
     number: ['en_nombre'],
-    text: ['en_texte']
+    text: ['en_texte'],
+    split: ['découper'],
+    join: ['joindre']
   },
   quotes: [['«', '»']],
   notes: {
@@ -69,13 +73,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Erreur de syntaxe à la ligne {line}.',
     indentError: "Erreur d'indentation à la ligne {line} : indentez les blocs de 4 espaces.",
-    argumentError: 'Ligne {line} : une fonction a de mauvais arguments.',
+    argumentError: {
+      one: 'Ligne {line} : {function} prend {count} valeur.',
+      other: 'Ligne {line} : {function} prend {count} valeurs.'
+    },
     equalsError: 'Ligne {line} : pour comparer, écrivez == au lieu de =.',
     undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
     undefinedFunction: "Ligne {line} : il n'y a pas de fonction {function}.",
@@ -85,6 +96,7 @@ const translation: Translation = {
     divisionByZero: 'Ligne {line} : division par zéro.',
     mathError: 'Ligne {line} : {operator} n’a pas de résultat pour cette valeur.',
     indexError: "Ligne {line} : il n'y a pas d'élément {index}.",
+    itemError: "Ligne {line} : la liste n'a pas d'élément {item}.",
     memoryLimit: 'Ligne {line} : un texte ou une liste est devenu trop long.',
     recursionLimit: "Ligne {line} : trop d'appels de fonctions imbriqués.",
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',

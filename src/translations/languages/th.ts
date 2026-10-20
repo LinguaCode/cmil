@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['ใน'],
     add: ['เพิ่ม'],
     into: ['เข้า'],
+    remove: ['ลบ'],
+    outOf: ['ออกจาก'],
     function: ['ฟังก์ชัน'],
     return: ['คืนค่า'],
     random: ['แบบสุ่ม'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['ตัวพิมพ์ใหญ่'],
     lower: ['ตัวพิมพ์เล็ก'],
     number: ['เป็นตัวเลข'],
-    text: ['เป็นข้อความ']
+    text: ['เป็นข้อความ'],
+    split: ['แยก'],
+    join: ['รวม']
   },
   quotes: [['“', '”']],
   notes: {
@@ -69,13 +73,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'ไวยากรณ์ผิดในบรรทัดที่ {line}',
     indentError: 'ย่อหน้าผิดในบรรทัดที่ {line}: ให้ย่อหน้าบล็อกทีละ 4 ช่อง',
-    argumentError: 'บรรทัดที่ {line}: ฟังก์ชันมีอาร์กิวเมนต์ไม่ถูกต้อง',
+    argumentError: 'บรรทัดที่ {line}: {function} รับค่า {count} ค่า',
     equalsError: 'บรรทัดที่ {line}: ถ้าจะเปรียบเทียบ ให้ใช้ == แทน =',
     undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
     undefinedFunction: 'บรรทัดที่ {line}: ไม่มีฟังก์ชัน {function}',
@@ -85,6 +93,7 @@ const translation: Translation = {
     divisionByZero: 'บรรทัดที่ {line}: หารด้วยศูนย์',
     mathError: 'บรรทัดที่ {line}: {operator} ไม่มีผลลัพธ์สำหรับค่านี้',
     indexError: 'บรรทัดที่ {line}: ไม่มีรายการที่ {index}',
+    itemError: 'บรรทัดที่ {line}: รายการไม่มี {item}',
     memoryLimit: 'บรรทัดที่ {line}: ข้อความหรือรายการยาวเกินไป',
     recursionLimit: 'บรรทัดที่ {line}: เรียกฟังก์ชันซ้อนกันลึกเกินไป',
     timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',

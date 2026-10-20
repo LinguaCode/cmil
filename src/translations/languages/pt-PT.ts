@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['em'],
     add: ['adicionar'],
     into: ['à_lista'],
+    remove: ['remover'],
+    outOf: ['da'],
     function: ['função'],
     return: ['devolver'],
     random: ['aleatória'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['maiúsculas'],
     lower: ['minúsculas'],
     number: ['para_número'],
-    text: ['para_texto']
+    text: ['para_texto'],
+    split: ['dividir'],
+    join: ['juntar']
   },
   quotes: [['«', '»']],
   notes: {
@@ -71,13 +75,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Erro de sintaxe na linha {line}.',
     indentError: 'Erro de indentação na linha {line}: indente os blocos com 4 espaços.',
-    argumentError: 'Linha {line}: uma função tem argumentos errados.',
+    argumentError: {
+      one: 'Linha {line}: {function} recebe {count} valor.',
+      other: 'Linha {line}: {function} recebe {count} valores.'
+    },
     equalsError: 'Linha {line}: para comparar, escreva == em vez de =.',
     undefinedVariable: 'Linha {line}: {variable} ainda não tem valor.',
     undefinedFunction: 'Linha {line}: não existe a função {function}.',
@@ -87,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Linha {line}: divisão por zero.',
     mathError: 'Linha {line}: {operator} não tem resultado para este valor.',
     indexError: 'Linha {line}: não existe o elemento {index}.',
+    itemError: 'Linha {line}: a lista não tem o elemento {item}.',
     memoryLimit: 'Linha {line}: um texto ou uma lista ficou demasiado longo.',
     recursionLimit: 'Linha {line}: demasiadas chamadas de funções encadeadas.',
     timeout: 'O programa correu demasiado tempo sem pedir entrada.',

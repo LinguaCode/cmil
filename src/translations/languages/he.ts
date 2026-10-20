@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['בתוך'],
     add: ['הוסף'],
     into: ['אל'],
+    remove: ['הסר'],
+    outOf: ['מתוך'],
     function: ['פונקציה'],
     return: ['החזר'],
     random: ['אקראי'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['אותיות_גדולות'],
     lower: ['אותיות_קטנות'],
     number: ['למספר'],
-    text: ['לטקסט']
+    text: ['לטקסט'],
+    split: ['פצל'],
+    join: ['חבר']
   },
   quotes: [['„', '”']],
   notes: {
@@ -69,13 +73,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'שגיאת תחביר בשורה {line}.',
     indentError: 'שגיאת הזחה בשורה {line}: הזיחו בלוקים ב-4 רווחים.',
-    argumentError: 'שורה {line}: לפונקציה יש ארגומנטים שגויים.',
+    argumentError: {
+      one: 'שורה {line}: {function} מקבלת {count} ערך.',
+      other: 'שורה {line}: {function} מקבלת {count} ערכים.'
+    },
     equalsError: 'שורה {line}: כדי להשוות כתבו == במקום =.',
     undefinedVariable: 'שורה {line}: ל-{variable} עדיין אין ערך.',
     undefinedFunction: 'שורה {line}: אין פונקציה {function}.',
@@ -85,6 +96,7 @@ const translation: Translation = {
     divisionByZero: 'שורה {line}: חלוקה באפס.',
     mathError: 'שורה {line}: ל-{operator} אין תוצאה עבור הערך הזה.',
     indexError: 'שורה {line}: אין פריט מספר {index}.',
+    itemError: 'שורה {line}: אין ברשימה פריט {item}.',
     memoryLimit: 'שורה {line}: טקסט או רשימה נעשו ארוכים מדי.',
     recursionLimit: 'שורה {line}: יותר מדי קריאות מקוננות לפונקציות.',
     timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',

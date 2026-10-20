@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['開始'],
     to: ['終了'],
     step: ['増分'],
-    in: ['から'],
+    in: ['の中'],
     add: ['追加'],
     into: ['へ'],
+    remove: ['削除'],
+    outOf: ['から'],
     function: ['関数'],
     return: ['返す'],
     random: ['乱数'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['大文字'],
     lower: ['小文字'],
     number: ['数値化'],
-    text: ['文字列化']
+    text: ['文字列化'],
+    split: ['分割'],
+    join: ['結合']
   },
   quotes: [
     ['「', '」'],
@@ -65,7 +69,7 @@ const translation: Translation = {
   messages: {
     syntaxError: '{line} 行目に構文エラーがあります。',
     indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',
-    argumentError: '{line} 行目: 関数の引数が正しくありません。',
+    argumentError: '{line} 行目: {function} の引数は {count} 個です。',
     equalsError: '{line} 行目: 比べるときは = ではなく == を使います。',
     undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
     undefinedFunction: '{line} 行目: 関数 {function} はありません。',
@@ -75,6 +79,7 @@ const translation: Translation = {
     divisionByZero: '{line} 行目: 0 で割ることはできません。',
     mathError: '{line} 行目: この値では {operator} の結果がありません。',
     indexError: '{line} 行目: {index} 番目の要素はありません。',
+    itemError: '{line} 行目: リストに {item} はありません。',
     memoryLimit: '{line} 行目: テキストかリストが長くなりすぎました。',
     recursionLimit: '{line} 行目: 関数の呼び出しが深すぎます。',
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',

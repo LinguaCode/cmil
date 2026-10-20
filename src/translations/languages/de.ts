@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['in'],
     add: ['füge_hinzu'],
     into: ['zu'],
+    remove: ['entferne'],
+    outOf: ['aus'],
     function: ['funktion'],
     return: ['zurückgeben'],
     random: ['zufällig'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['großbuchstaben', 'grossbuchstaben'],
     lower: ['kleinbuchstaben'],
     number: ['zu_zahl'],
-    text: ['zu_text']
+    text: ['zu_text'],
+    split: ['teile'],
+    join: ['verbinde']
   },
   quotes: [
     ['„', '“'],
@@ -72,13 +76,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaxfehler in Zeile {line}.',
     indentError: 'Einrückungsfehler in Zeile {line}: Blöcke um 4 Leerzeichen einrücken.',
-    argumentError: 'Zeile {line}: Eine Funktion hat falsche Argumente.',
+    argumentError: {
+      one: 'Zeile {line}: {function} nimmt {count} Wert.',
+      other: 'Zeile {line}: {function} nimmt {count} Werte.'
+    },
     equalsError: 'Zeile {line}: Zum Vergleichen == statt = schreiben.',
     undefinedVariable: 'Zeile {line}: {variable} hat noch keinen Wert.',
     undefinedFunction: 'Zeile {line}: Es gibt keine Funktion {function}.',
@@ -88,6 +99,7 @@ const translation: Translation = {
     divisionByZero: 'Zeile {line}: Division durch null.',
     mathError: 'Zeile {line}: {operator} hat für diesen Wert kein Ergebnis.',
     indexError: 'Zeile {line}: Es gibt kein Element {index}.',
+    itemError: 'Zeile {line}: Die Liste hat kein Element {item}.',
     memoryLimit: 'Zeile {line}: Ein Text oder eine Liste wurde zu lang.',
     recursionLimit: 'Zeile {line}: Zu viele verschachtelte Funktionsaufrufe.',
     timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',

@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['trong'],
     add: ['thêm'],
     into: ['vào'],
+    remove: ['xóa'],
+    outOf: ['khỏi'],
     function: ['hàm'],
     return: ['trả_về'],
     random: ['ngẫu_nhiên'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['chữ_hoa'],
     lower: ['chữ_thường'],
     number: ['thành_số'],
-    text: ['thành_chuỗi']
+    text: ['thành_chuỗi'],
+    split: ['tách'],
+    join: ['nối']
   },
   quotes: [['“', '”']],
   notes: {
@@ -69,13 +73,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Lỗi cú pháp ở dòng {line}.',
     indentError: 'Lỗi thụt lề ở dòng {line}: hãy thụt lề các khối 4 dấu cách.',
-    argumentError: 'Dòng {line}: một hàm có đối số sai.',
+    argumentError: 'Dòng {line}: {function} nhận {count} giá trị.',
     equalsError: 'Dòng {line}: để so sánh, hãy viết == thay vì =.',
     undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
     undefinedFunction: 'Dòng {line}: không có hàm {function}.',
@@ -85,6 +93,7 @@ const translation: Translation = {
     divisionByZero: 'Dòng {line}: chia cho không.',
     mathError: 'Dòng {line}: {operator} không có kết quả cho giá trị này.',
     indexError: 'Dòng {line}: không có phần tử thứ {index}.',
+    itemError: 'Dòng {line}: danh sách không có phần tử {item}.',
     memoryLimit: 'Dòng {line}: một văn bản hoặc danh sách đã quá dài.',
     recursionLimit: 'Dòng {line}: có quá nhiều lời gọi hàm lồng nhau.',
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',

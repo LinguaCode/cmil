@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['kezdet'],
     to: ['vég'],
     step: ['lépés'],
-    in: ['közül'],
+    in: ['között'],
     add: ['hozzáad'],
     into: ['ehhez'],
+    remove: ['töröl'],
+    outOf: ['ebből'],
     function: ['funkció'],
     return: ['visszaad'],
     random: ['véletlen'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['nagybetűs'],
     lower: ['kisbetűs'],
     number: ['számmá'],
-    text: ['szöveggé']
+    text: ['szöveggé'],
+    split: ['feloszt'],
+    join: ['összefűz']
   },
   quotes: [['„', '”']],
   notes: {
@@ -69,13 +73,17 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Szintaktikai hiba a(z) {line}. sorban.',
     indentError: 'Behúzási hiba a(z) {line}. sorban: a blokkokat 4 szóközzel húzd be.',
-    argumentError: '{line}. sor: egy függvény argumentumai hibásak.',
+    argumentError: '{line}. sor: a(z) {function} {count} értéket vár.',
     equalsError: '{line}. sor: összehasonlításhoz == kell, nem =.',
     undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
     undefinedFunction: '{line}. sor: nincs {function} nevű függvény.',
@@ -85,6 +93,7 @@ const translation: Translation = {
     divisionByZero: '{line}. sor: nullával osztás.',
     mathError: '{line}. sor: a(z) {operator} értéke ennél az értéknél nem létezik.',
     indexError: '{line}. sor: nincs {index}. elem.',
+    itemError: '{line}. sor: a listában nincs {item} elem.',
     memoryLimit: '{line}. sor: egy szöveg vagy lista túl hosszú lett.',
     recursionLimit: '{line}. sor: túl sok egymásba ágyazott függvényhívás.',
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',

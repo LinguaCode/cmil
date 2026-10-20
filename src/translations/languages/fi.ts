@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['joukossa'],
     add: ['lisää'],
     into: ['listaan'],
+    remove: ['poista'],
+    outOf: ['listasta'],
     function: ['funktio'],
     return: ['palauta'],
     random: ['satunnainen'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['isot_kirjaimet'],
     lower: ['pienet_kirjaimet'],
     number: ['luvuksi'],
-    text: ['tekstiksi']
+    text: ['tekstiksi'],
+    split: ['jaa'],
+    join: ['yhdistä']
   },
   quotes: [['”', '”']],
   notes: {
@@ -70,13 +74,20 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaksivirhe rivillä {line}.',
     indentError: 'Sisennysvirhe rivillä {line}: sisennä lohkot 4 välilyönnillä.',
-    argumentError: 'Rivi {line}: funktiolla on väärät argumentit.',
+    argumentError: {
+      one: 'Rivi {line}: {function} ottaa {count} arvon.',
+      other: 'Rivi {line}: {function} ottaa {count} arvoa.'
+    },
     equalsError: 'Rivi {line}: vertaa kirjoittamalla == eikä =.',
     undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
     undefinedFunction: 'Rivi {line}: funktiota {function} ei ole.',
@@ -86,6 +97,7 @@ const translation: Translation = {
     divisionByZero: 'Rivi {line}: jako nollalla.',
     mathError: 'Rivi {line}: {operator} ei anna tulosta tälle arvolle.',
     indexError: 'Rivi {line}: alkiota {index} ei ole.',
+    itemError: 'Rivi {line}: listassa ei ole alkiota {item}.',
     memoryLimit: 'Rivi {line}: teksti tai lista kasvoi liian pitkäksi.',
     recursionLimit: 'Rivi {line}: liian monta sisäkkäistä funktiokutsua.',
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',

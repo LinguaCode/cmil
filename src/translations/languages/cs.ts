@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['krok'],
-    in: ['ze'],
+    in: ['mezi'],
     add: ['přidej'],
     into: ['na_konec'],
+    remove: ['odeber'],
+    outOf: ['ze'],
     function: ['funkce'],
     return: ['vrať'],
     random: ['náhodné'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['velká_písmena'],
     lower: ['malá_písmena'],
     number: ['na_číslo'],
-    text: ['na_text']
+    text: ['na_text'],
+    split: ['rozděl'],
+    join: ['spoj']
   },
   quotes: [['„', '“']],
   notes: {
@@ -69,13 +73,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaktická chyba na řádku {line}.',
     indentError: 'Chyba odsazení na řádku {line}: odsazujte bloky o 4 mezery.',
-    argumentError: 'Řádek {line}: funkce má špatné argumenty.',
+    argumentError: {
+      one: 'Řádek {line}: {function} bere {count} hodnotu.',
+      few: 'Řádek {line}: {function} bere {count} hodnoty.',
+      many: 'Řádek {line}: {function} bere {count} hodnoty.',
+      other: 'Řádek {line}: {function} bere {count} hodnot.'
+    },
     equalsError: 'Řádek {line}: pro porovnání pište == místo =.',
     undefinedVariable: 'Řádek {line}: {variable} zatím nemá hodnotu.',
     undefinedFunction: 'Řádek {line}: funkce {function} neexistuje.',
@@ -85,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Řádek {line}: dělení nulou.',
     mathError: 'Řádek {line}: {operator} pro tuto hodnotu nemá výsledek.',
     indexError: 'Řádek {line}: prvek {index} neexistuje.',
+    itemError: 'Řádek {line}: seznam nemá prvek {item}.',
     memoryLimit: 'Řádek {line}: text nebo seznam je příliš dlouhý.',
     recursionLimit: 'Řádek {line}: příliš mnoho vnořených volání funkcí.',
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',

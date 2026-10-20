@@ -68,9 +68,11 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.FROM]: 'the first value of for',
   [COMMAND.TO]: 'the last value of for',
   [COMMAND.STEP]: 'how much for adds each pass, 1 unless given',
-  [COMMAND.IN]: 'the list or text whose items for … in passes',
+  [COMMAND.IN]: 'the list or text whose items for … in passes; also true when a list has a value, or a text has a text',
   [COMMAND.ADD]: 'adds a value at the end of a list, in add … into …',
   [COMMAND.INTO]: 'the list of add',
+  [COMMAND.REMOVE]: 'removes the first item equal to a value from a list, in remove … out of …',
+  [COMMAND.OUT_OF]: 'the list of remove',
   [COMMAND.BREAK]: 'leaves the innermost loop',
   [COMMAND.CONTINUE]: 'starts the next pass of the innermost loop',
   [COMMAND.FUNCTION]: 'defines a function, in function name(a, b)',
@@ -100,7 +102,9 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.UPPER]: 'a text in capital letters',
   [COMMAND.LOWER]: 'a text in small letters',
   [COMMAND.NUMBER]: 'the number a text holds',
-  [COMMAND.TEXT]: 'a value as it is printed'
+  [COMMAND.TEXT]: 'a value as it is printed',
+  [COMMAND.SPLIT]: 'the words of a text, or its parts between a separator',
+  [COMMAND.JOIN]: 'the items of a list joined into a text, with a separator'
 };
 
 const code = (words: string[]) => words.map(word => `\`${word}\``).join(', ');

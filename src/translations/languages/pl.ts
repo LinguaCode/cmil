@@ -26,6 +26,8 @@ const translation: Translation = {
     in: ['wśród'],
     add: ['dodaj'],
     into: ['na_koniec'],
+    remove: ['usuń'],
+    outOf: ['ze'],
     function: ['funkcja'],
     return: ['zwróć'],
     random: ['losowy'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['wielkie_litery'],
     lower: ['małe_litery'],
     number: ['na_liczbę'],
-    text: ['na_tekst']
+    text: ['na_tekst'],
+    split: ['podziel'],
+    join: ['połącz']
   },
   quotes: [['„', '”']],
   notes: {
@@ -69,13 +73,22 @@ const translation: Translation = {
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
     text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.'
+    return: 'A new word; it needs a native review.',
+    remove: 'A new word; it needs a native review.',
+    outOf: 'A new word; it needs a native review.',
+    split: 'A new word; it needs a native review.',
+    join: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Błąd składni w wierszu {line}.',
     indentError: 'Błąd wcięcia w wierszu {line}: wcinaj bloki o 4 spacje.',
-    argumentError: 'Wiersz {line}: funkcja ma złe argumenty.',
+    argumentError: {
+      one: 'Wiersz {line}: {function} przyjmuje {count} wartość.',
+      few: 'Wiersz {line}: {function} przyjmuje {count} wartości.',
+      many: 'Wiersz {line}: {function} przyjmuje {count} wartości.',
+      other: 'Wiersz {line}: {function} przyjmuje {count} wartości.'
+    },
     equalsError: 'Wiersz {line}: aby porównać, pisz == zamiast =.',
     undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
     undefinedFunction: 'Wiersz {line}: nie ma funkcji {function}.',
@@ -85,6 +98,7 @@ const translation: Translation = {
     divisionByZero: 'Wiersz {line}: dzielenie przez zero.',
     mathError: 'Wiersz {line}: {operator} nie ma wyniku dla tej wartości.',
     indexError: 'Wiersz {line}: nie ma elementu {index}.',
+    itemError: 'Wiersz {line}: na liście nie ma elementu {item}.',
     memoryLimit: 'Wiersz {line}: tekst lub lista stały się za długie.',
     recursionLimit: 'Wiersz {line}: za dużo zagnieżdżonych wywołań funkcji.',
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',

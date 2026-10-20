@@ -10,8 +10,9 @@ import type {Branch, Expression, Line, Statement, Token} from './types.ts';
 //an error at a token, or at the end of the line without one
 const syntaxError = (line: number, token?: Token) =>
   new CmilError({id: ERROR.SYNTAX_ERROR, line, ...(token && {column: token.column})});
-const argumentError = (line: number, token?: Token) =>
-  new CmilError({id: ERROR.ARGUMENT_ERROR, line, ...(token && {column: token.column})});
+//a call of a function with another count of arguments than it takes, or without its parentheses
+const argumentError = (line: number, column: number, name: string, {min, max}: {min: number; max: number}) =>
+  new CmilError({id: ERROR.ARGUMENT_ERROR, line, column, function: name, min, max});
 
 const isCommand = (token: Token | undefined, command: string) =>
   !!token && token.type === 'command' && token.value === command;
@@ -121,9 +122,9 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     return node;
   };
 
-  //the arguments of a call in parentheses; the errors of a call are at the name of its function
-  const parseArguments = (name: Token) => {
-    if (!isOperator(tokens[index++], '(')) throw argumentError(line, name);
+  //the arguments of a call in parentheses; a call without them is a syntax error at the name of its function
+  const parseArguments = (name: Token, fail = () => syntaxError(line, name)) => {
+    if (!isOperator(tokens[index++], '(')) throw fail();
 
     const args: Expression[] = [];
     if (isOperator(peek(), ')')) {
@@ -133,17 +134,19 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
         args.push(parseOr());
         const token = tokens[index++];
         if (isOperator(token, ')')) break;
-        if (!isOperator(token, ',')) throw argumentError(line, name);
+        if (!isOperator(token, ',')) throw fail();
       }
     }
 
     return {args, column: name.column};
   };
 
+  //the errors of a call of a function of the language name the function as written and the arguments it takes
   const parseCall = (name: Token): Expression => {
-    const call = parseArguments(name);
-    const {min, max} = FUNCTIONS[String(name.value)];
-    if (call.args.length < min || call.args.length > max) throw argumentError(line, name);
+    const counts = FUNCTIONS[String(name.value)];
+    const fail = () => argumentError(line, name.column, name.text ?? String(name.value), counts);
+    const call = parseArguments(name, fail);
+    if (call.args.length < counts.min || call.args.length > counts.max) throw fail();
 
     return {type: 'call', name: String(name.value), ...call};
   };
@@ -159,7 +162,11 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
 
   const parseMultiplicative = binary(parseUnary, operators(['*', '/', '%']));
   const parseAdditive = binary(parseMultiplicative, operators(['+', '-']));
-  const parseRelational = binary(parseAdditive, operators(['<', '>', '<=', '>=']));
+  //in: a value in a list, or a text in a text
+  const parseRelational = binary(
+    parseAdditive,
+    token => operators(['<', '>', '<=', '>='])(token) || isCommand(token, COMMAND.IN)
+  );
   const parseEquality = binary(parseRelational, operators(['==', '!=']));
 
   const parseNot = (): Expression => {
@@ -243,6 +250,7 @@ const expressionsOf = (statement: Statement): (Expression | undefined)[] => {
     case 'setItem':
       return [statement.target, statement.index, statement.expression];
     case 'add':
+    case 'remove':
       return [statement.expression, statement.target];
     case 'call':
       return [statement.call];
@@ -268,7 +276,9 @@ const checkCalls = (statements: Statement[], functions: Map<string, number>): vo
         if (parameters === undefined) {
           throw new CmilError({id: ERROR.UNDEFINED_FUNCTION, line, column: call.column, function: call.name});
         }
-        if (call.args.length !== parameters) throw new CmilError({id: ERROR.ARGUMENT_ERROR, line, column: call.column});
+        if (call.args.length !== parameters) {
+          throw argumentError(line, call.column, call.name, {min: parameters, max: parameters});
+        }
       })
     );
 
@@ -394,14 +404,16 @@ export const parse = (lines: Line[]): Statement[] => {
         if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {type: 'repeat', count: condition(rest, line, COMMAND.TIMES), body: parseBody(level, true), line};
       }
-      case COMMAND.ADD: {
-        //add a value into a list
-        const into = rest.findIndex(token => isCommand(token, COMMAND.INTO));
-        if (into < 0) throw syntaxError(line, rest[rest.length - 1] ?? first);
+      case COMMAND.ADD:
+      case COMMAND.REMOVE: {
+        //add a value into a list, or remove it out of a list
+        const separator = first.value === COMMAND.ADD ? COMMAND.INTO : COMMAND.OUT_OF;
+        const at = rest.findIndex(token => isCommand(token, separator));
+        if (at < 0) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {
-          type: 'add',
-          expression: parseExpression(rest.slice(0, into), line),
-          target: parseExpression(rest.slice(into + 1), line),
+          type: first.value === COMMAND.ADD ? 'add' : 'remove',
+          expression: parseExpression(rest.slice(0, at), line),
+          target: parseExpression(rest.slice(at + 1), line),
           line
         };
       }

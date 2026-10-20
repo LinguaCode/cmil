@@ -23,9 +23,11 @@ const translation: Translation = {
     from: ['от'],
     to: ['до'],
     step: ['шаг'],
-    in: ['из'],
+    in: ['среди'],
     add: ['добавить'],
     into: ['в_конец'],
+    remove: ['удалить'],
+    outOf: ['из'],
     function: ['функция'],
     return: ['вернуть'],
     random: ['случайное'],
@@ -53,7 +55,9 @@ const translation: Translation = {
     upper: ['заглавные'],
     lower: ['строчные'],
     number: ['в_число'],
-    text: ['в_текст']
+    text: ['в_текст'],
+    split: ['разделить'],
+    join: ['соединить']
   },
   quotes: [
     ['«', '»'],
@@ -62,7 +66,12 @@ const translation: Translation = {
   messages: {
     syntaxError: 'Синтаксическая ошибка в строке {line}.',
     indentError: 'Ошибка отступа в строке {line}: делайте отступы блоков по 4 пробела.',
-    argumentError: 'Строка {line}: у функции неверные аргументы.',
+    argumentError: {
+      one: 'Строка {line}: {function} принимает {count} значение.',
+      few: 'Строка {line}: {function} принимает {count} значения.',
+      many: 'Строка {line}: {function} принимает {count} значений.',
+      other: 'Строка {line}: {function} принимает {count} значения.'
+    },
     equalsError: 'Строка {line}: для сравнения пишите == вместо =.',
     undefinedVariable: 'Строка {line}: у {variable} ещё нет значения.',
     undefinedFunction: 'Строка {line}: нет функции {function}.',
@@ -72,6 +81,7 @@ const translation: Translation = {
     divisionByZero: 'Строка {line}: деление на ноль.',
     mathError: 'Строка {line}: у {operator} нет результата для этого значения.',
     indexError: 'Строка {line}: нет элемента с номером {index}.',
+    itemError: 'Строка {line}: в списке нет элемента {item}.',
     memoryLimit: 'Строка {line}: текст или список стал слишком длинным.',
     recursionLimit: 'Строка {line}: слишком много вложенных вызовов функций.',
     timeout: 'Программа работала слишком долго, не запрашивая ввод.',
