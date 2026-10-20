@@ -45,8 +45,8 @@ Shqip · 1 to check
 
 | English | Meaning | Albanian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `të_dhëna` |
-| output | prints a value | `shkruaj` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `të_dhëna` |
+| print | prints values, separated by commas, on one line | `shkruaj` |
 | if | runs the block below when its condition is true | `nëse` |
 | else | runs the block below when the conditions before it are false | `përndryshe` |
 | then | may end the condition of if | `atëherë` |
@@ -73,11 +73,11 @@ Shqip · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -94,8 +94,8 @@ To check:
 
 | English | Meaning | Arabic |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `المدخلات` |
-| output | prints a value | `الإخراج` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `المدخلات` |
+| print | prints values, separated by commas, on one line | `الإخراج` |
 | if | runs the block below when its condition is true | `إذا` |
 | else | runs the block below when the conditions before it are false | `وإلا` |
 | then | may end the condition of if | `ثم` |
@@ -122,11 +122,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -136,7 +136,7 @@ To check:
 To check:
 
 - `المدخلات` (input): Plural (the inputs); would أدخل be better?
-- `الإخراج` (output): Also means directing a film; would اطبع (print) be better?
+- `الإخراج` (print): Also means directing a film; would اطبع (print) be better?
 - `ثم` (then): Means afterwards; would فإن be better?
 - `كاذبة` (false): Feminine (lying); is خطأ the usual truth value?
 - `صحيح` (true): Is صواب or صح the usual truth value?
@@ -147,8 +147,8 @@ To check:
 
 | English | Meaning | Armenian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `մուտքագրել` |
-| output | prints a value | `տպել` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `մուտքագրել` |
+| print | prints values, separated by commas, on one line | `տպել` |
 | if | runs the block below when its condition is true | `եթե` |
 | else | runs the block below when the conditions before it are false | `այլապես` |
 | then | may end the condition of if | `ապա` |
@@ -175,11 +175,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -192,8 +192,8 @@ Català
 
 | English | Meaning | Catalan |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `entrada` |
-| output | prints a value | `sortida` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrada` |
+| print | prints values, separated by commas, on one line | `sortida` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sinó` |
 | then | may end the condition of if | `llavors` |
@@ -220,11 +220,11 @@ Català
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -237,8 +237,8 @@ Català
 
 | English | Meaning | Chinese |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `输入` |
-| output | prints a value | `输出` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `输入` |
+| print | prints values, separated by commas, on one line | `输出` |
 | if | runs the block below when its condition is true | `如果` |
 | else | runs the block below when the conditions before it are false | `否则` |
 | then | may end the condition of if | `那么` |
@@ -265,11 +265,11 @@ Català
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -282,8 +282,8 @@ Català
 
 | English | Meaning | Czech |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `vstup` |
-| output | prints a value | `výstup` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vstup` |
+| print | prints values, separated by commas, on one line | `výstup` |
 | if | runs the block below when its condition is true | `když` |
 | else | runs the block below when the conditions before it are false | `jinak` |
 | then | may end the condition of if | `pak` |
@@ -310,11 +310,11 @@ Català
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -327,8 +327,8 @@ Dansk · 1 to check
 
 | English | Meaning | Danish |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `indtast` |
-| output | prints a value | `udskriv` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `indtast` |
+| print | prints values, separated by commas, on one line | `udskriv` |
 | if | runs the block below when its condition is true | `hvis` |
 | else | runs the block below when the conditions before it are false | `ellers` |
 | then | may end the condition of if | `så` |
@@ -355,11 +355,11 @@ Dansk · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -376,8 +376,8 @@ Nederlands
 
 | English | Meaning | Dutch |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `invoer` |
-| output | prints a value | `uitvoer` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `invoer` |
+| print | prints values, separated by commas, on one line | `uitvoer` |
 | if | runs the block below when its condition is true | `als` |
 | else | runs the block below when the conditions before it are false | `anders` |
 | then | may end the condition of if | `dan` |
@@ -404,11 +404,11 @@ Nederlands
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -421,8 +421,8 @@ English
 
 | English | Meaning | English |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `input` |
-| output | prints a value | `output` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `input` |
+| print | prints values, separated by commas, on one line | `print` |
 | if | runs the block below when its condition is true | `if` |
 | else | runs the block below when the conditions before it are false | `else` |
 | then | may end the condition of if | `then` |
@@ -449,11 +449,11 @@ English
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `cot` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arccot` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -466,8 +466,8 @@ Suomi · 1 to check
 
 | English | Meaning | Finnish |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `syötä` |
-| output | prints a value | `tulosta` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `syötä` |
+| print | prints values, separated by commas, on one line | `tulosta` |
 | if | runs the block below when its condition is true | `jos` |
 | else | runs the block below when the conditions before it are false | `muuten` |
 | then | may end the condition of if | `niin` |
@@ -494,11 +494,11 @@ Suomi · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -515,8 +515,8 @@ Français
 
 | English | Meaning | French |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `entrée` |
-| output | prints a value | `sortie` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrée` |
+| print | prints values, separated by commas, on one line | `sortie` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sinon` |
 | then | may end the condition of if | `alors` |
@@ -543,11 +543,11 @@ Français
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -560,8 +560,8 @@ Français
 
 | English | Meaning | Georgian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `შეყვანის` |
-| output | prints a value | `გამოშვება` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `შეყვანის` |
+| print | prints values, separated by commas, on one line | `გამოშვება` |
 | if | runs the block below when its condition is true | `თუ` |
 | else | runs the block below when the conditions before it are false | `სხვა` |
 | then | may end the condition of if | `მაშინ` |
@@ -588,11 +588,11 @@ Français
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -602,7 +602,7 @@ Français
 To check:
 
 - `შეყვანის` (input): Genitive (of input); should it be შეყვანა?
-- `გამოშვება` (output): Means release; should it be გამოტანა?
+- `გამოშვება` (print): Means release; should it be გამოტანა?
 - `სხვა` (else): Means other; should it be თორემ?
 - `მართალია` (true): Means it is true; should it be ჭეშმარიტი?
 
@@ -612,8 +612,8 @@ Deutsch
 
 | English | Meaning | German |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `eingeben` |
-| output | prints a value | `ausgeben` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `eingeben` |
+| print | prints values, separated by commas, on one line | `ausgeben` |
 | if | runs the block below when its condition is true | `wenn` |
 | else | runs the block below when the conditions before it are false | `sonst` |
 | then | may end the condition of if | `dann` |
@@ -640,11 +640,11 @@ Deutsch
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -657,8 +657,8 @@ Deutsch
 
 | English | Meaning | Greek |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `διάβασε` |
-| output | prints a value | `γράψε` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `διάβασε` |
+| print | prints values, separated by commas, on one line | `γράψε` |
 | if | runs the block below when its condition is true | `αν` |
 | else | runs the block below when the conditions before it are false | `αλλιώς` |
 | then | may end the condition of if | `τότε` |
@@ -685,11 +685,11 @@ Deutsch
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -702,8 +702,8 @@ Deutsch
 
 | English | Meaning | Hebrew |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `קלט` |
-| output | prints a value | `פלט` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `קלט` |
+| print | prints values, separated by commas, on one line | `פלט` |
 | if | runs the block below when its condition is true | `אם` |
 | else | runs the block below when the conditions before it are false | `אחרת` |
 | then | may end the condition of if | `אז` |
@@ -730,11 +730,11 @@ Deutsch
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -747,8 +747,8 @@ Magyar
 
 | English | Meaning | Hungarian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `bemenet` |
-| output | prints a value | `kimenet` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `bemenet` |
+| print | prints values, separated by commas, on one line | `kimenet` |
 | if | runs the block below when its condition is true | `ha` |
 | else | runs the block below when the conditions before it are false | `különben` |
 | then | may end the condition of if | `akkor` |
@@ -775,11 +775,11 @@ Magyar
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -792,8 +792,8 @@ Italiano · 2 to check
 
 | English | Meaning | Italian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `ingresso` |
-| output | prints a value | `uscita` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ingresso` |
+| print | prints values, separated by commas, on one line | `uscita` |
 | if | runs the block below when its condition is true | `se` |
 | else | runs the block below when the conditions before it are false | `altrimenti` |
 | then | may end the condition of if | `allora` |
@@ -820,11 +820,11 @@ Italiano · 2 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -834,7 +834,7 @@ Italiano · 2 to check
 To check:
 
 - `ingresso` (input): An electronics term; would leggi (read) be better?
-- `uscita` (output): An electronics term; would scrivi (write) be better?
+- `uscita` (print): An electronics term; would scrivi (write) be better?
 
 ## Japanese (ja)
 
@@ -842,8 +842,8 @@ To check:
 
 | English | Meaning | Japanese |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `入力` |
-| output | prints a value | `出力` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `入力` |
+| print | prints values, separated by commas, on one line | `出力` |
 | if | runs the block below when its condition is true | `もし` |
 | else | runs the block below when the conditions before it are false | `そうでなければ` |
 | then | may end the condition of if | `ならば` |
@@ -870,11 +870,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -891,8 +891,8 @@ To check:
 
 | English | Meaning | Korean |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `입력` |
-| output | prints a value | `출력` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `입력` |
+| print | prints values, separated by commas, on one line | `출력` |
 | if | runs the block below when its condition is true | `만약` |
 | else | runs the block below when the conditions before it are false | `아니면` |
 | then | may end the condition of if | `그러면` |
@@ -919,11 +919,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -940,8 +940,8 @@ Norsk · 2 to check
 
 | English | Meaning | Norwegian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `skriv_inn` |
-| output | prints a value | `skriv_ut` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `skriv_inn` |
+| print | prints values, separated by commas, on one line | `skriv_ut` |
 | if | runs the block below when its condition is true | `hvis` |
 | else | runs the block below when the conditions before it are false | `ellers` |
 | then | may end the condition of if | `da` |
@@ -968,11 +968,11 @@ Norsk · 2 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -990,8 +990,8 @@ Polski
 
 | English | Meaning | Polish |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `wczytaj` |
-| output | prints a value | `wypisz` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `wczytaj` |
+| print | prints values, separated by commas, on one line | `wypisz` |
 | if | runs the block below when its condition is true | `jeśli` |
 | else | runs the block below when the conditions before it are false | `inaczej` |
 | then | may end the condition of if | `wtedy` |
@@ -1018,11 +1018,11 @@ Polski
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1035,8 +1035,8 @@ Português · 2 to check
 
 | English | Meaning | Portuguese |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `entrada` |
-| output | prints a value | `saída` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrada` |
+| print | prints values, separated by commas, on one line | `saída` |
 | if | runs the block below when its condition is true | `se` |
 | else | runs the block below when the conditions before it are false | `senão` |
 | then | may end the condition of if | `então` |
@@ -1063,11 +1063,11 @@ Português · 2 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1085,8 +1085,8 @@ Română · 1 to check
 
 | English | Meaning | Romanian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `intrare` |
-| output | prints a value | `ieșire` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `intrare` |
+| print | prints values, separated by commas, on one line | `ieșire` |
 | if | runs the block below when its condition is true | `dacă` |
 | else | runs the block below when the conditions before it are false | `altfel` |
 | then | may end the condition of if | `atunci` |
@@ -1113,11 +1113,11 @@ Română · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1134,8 +1134,8 @@ To check:
 
 | English | Meaning | Russian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `ввести` |
-| output | prints a value | `вывести` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ввести` |
+| print | prints values, separated by commas, on one line | `вывести` |
 | if | runs the block below when its condition is true | `если` |
 | else | runs the block below when the conditions before it are false | `иначе` |
 | then | may end the condition of if | `тогда` |
@@ -1162,11 +1162,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1179,8 +1179,8 @@ To check:
 
 | English | Meaning | Serbian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `улаз` |
-| output | prints a value | `излаз` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `улаз` |
+| print | prints values, separated by commas, on one line | `излаз` |
 | if | runs the block below when its condition is true | `ако` |
 | else | runs the block below when the conditions before it are false | `иначе` |
 | then | may end the condition of if | `онда` |
@@ -1207,11 +1207,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1224,8 +1224,8 @@ Slovenčina
 
 | English | Meaning | Slovak |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `vstup` |
-| output | prints a value | `výstup` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vstup` |
+| print | prints values, separated by commas, on one line | `výstup` |
 | if | runs the block below when its condition is true | `ak` |
 | else | runs the block below when the conditions before it are false | `inak` |
 | then | may end the condition of if | `tak` |
@@ -1252,11 +1252,11 @@ Slovenčina
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1269,8 +1269,8 @@ Slovenščina · 1 to check
 
 | English | Meaning | Slovenian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `vhod` |
-| output | prints a value | `izhod` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vhod` |
+| print | prints values, separated by commas, on one line | `izhod` |
 | if | runs the block below when its condition is true | `če` |
 | else | runs the block below when the conditions before it are false | `sicer` |
 | then | may end the condition of if | `nato` |
@@ -1297,11 +1297,11 @@ Slovenščina · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1318,8 +1318,8 @@ Español · 1 to check
 
 | English | Meaning | Spanish |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `introducir` |
-| output | prints a value | `salida` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `introducir` |
+| print | prints values, separated by commas, on one line | `salida` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sino` |
 | then | may end the condition of if | `entonces` |
@@ -1346,11 +1346,11 @@ Español · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1367,8 +1367,8 @@ Svenska · 1 to check
 
 | English | Meaning | Swedish |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `mata_in` |
-| output | prints a value | `skriv_ut` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `mata_in` |
+| print | prints values, separated by commas, on one line | `skriv_ut` |
 | if | runs the block below when its condition is true | `om` |
 | else | runs the block below when the conditions before it are false | `annars` |
 | then | may end the condition of if | `så` |
@@ -1395,11 +1395,11 @@ Svenska · 1 to check
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1416,8 +1416,8 @@ To check:
 
 | English | Meaning | Thai |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `นำเข้าข้อมูล` |
-| output | prints a value | `ส่งออก` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `นำเข้าข้อมูล` |
+| print | prints values, separated by commas, on one line | `ส่งออก` |
 | if | runs the block below when its condition is true | `ถ้า` |
 | else | runs the block below when the conditions before it are false | `มิฉะนั้น` |
 | then | may end the condition of if | `แล้ว` |
@@ -1444,11 +1444,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1461,8 +1461,8 @@ To check:
 
 | English | Meaning | Ukrainian |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `ввести` |
-| output | prints a value | `вивести` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ввести` |
+| print | prints values, separated by commas, on one line | `вивести` |
 | if | runs the block below when its condition is true | `якщо` |
 | else | runs the block below when the conditions before it are false | `інакше` |
 | then | may end the condition of if | `тоді` |
@@ -1489,11 +1489,11 @@ To check:
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |
@@ -1506,8 +1506,8 @@ Tiếng Việt
 
 | English | Meaning | Vietnamese |
 |---|---|---|
-| input | waits for the user and stores the answer in a variable | `đầu_vào` |
-| output | prints a value | `ra` |
+| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `đầu_vào` |
+| print | prints values, separated by commas, on one line | `ra` |
 | if | runs the block below when its condition is true | `nếu` |
 | else | runs the block below when the conditions before it are false | `ngược_lại` |
 | then | may end the condition of if | `thì` |
@@ -1534,11 +1534,11 @@ Tiếng Việt
 | sin | sine | `sin` |
 | cos | cosine | `cos` |
 | tan | tangent | `tan` |
-| ctg | cotangent | `ctg` |
+| cot | cotangent | `ctg` |
 | arcsin | inverse sine | `arcsin` |
 | arccos | inverse cosine | `arccos` |
 | arctan | inverse tangent | `arctan` |
-| arcctg | inverse cotangent | `arcctg` |
+| arccot | inverse cotangent | `arcctg` |
 | log | logarithm in any base | `log` |
 | ln | natural logarithm | `ln` |
 | lg | logarithm in base 10 | `lg` |

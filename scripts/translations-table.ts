@@ -50,8 +50,8 @@ const NAMES: Record<string, [string, string]> = {
 };
 
 const MEANINGS: Record<Command, string> = {
-  [COMMAND.INPUT]: 'waits for the user and stores the answer in a variable',
-  [COMMAND.OUTPUT]: 'prints a value',
+  [COMMAND.INPUT]: 'waits for the user, after a prompt if it has one, and stores the answer in a variable',
+  [COMMAND.PRINT]: 'prints values, separated by commas, on one line',
   [COMMAND.IF]: 'runs the block below when its condition is true',
   [COMMAND.ELSE]: 'runs the block below when the conditions before it are false',
   [COMMAND.THEN]: 'may end the condition of if',
@@ -78,11 +78,11 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.SIN]: 'sine',
   [COMMAND.COS]: 'cosine',
   [COMMAND.TAN]: 'tangent',
-  [COMMAND.CTG]: 'cotangent',
+  [COMMAND.COT]: 'cotangent',
   [COMMAND.ARCSIN]: 'inverse sine',
   [COMMAND.ARCCOS]: 'inverse cosine',
   [COMMAND.ARCTAN]: 'inverse tangent',
-  [COMMAND.ARCCTG]: 'inverse cotangent',
+  [COMMAND.ARCCOT]: 'inverse cotangent',
   [COMMAND.LOG]: 'logarithm in any base',
   [COMMAND.LN]: 'natural logarithm',
   [COMMAND.LG]: 'logarithm in base 10',

@@ -4,7 +4,7 @@ import type {Translation} from '../types.ts';
 const translation: Translation = {
   words: {
     input: ['ingresso'],
-    output: ['uscita'],
+    print: ['uscita'],
     if: ['se'],
     else: ['altrimenti'],
     then: ['allora'],
@@ -31,11 +31,11 @@ const translation: Translation = {
     sin: ['sin'],
     cos: ['cos'],
     tan: ['tan'],
-    ctg: ['ctg'],
+    cot: ['ctg'],
     arcsin: ['arcsin'],
     arccos: ['arccos'],
     arctan: ['arctan'],
-    arcctg: ['arcctg'],
+    arccot: ['arcctg'],
     log: ['log'],
     ln: ['ln'],
     lg: ['lg'],
@@ -44,13 +44,14 @@ const translation: Translation = {
   },
   notes: {
     input: 'An electronics term; would leggi (read) be better?',
-    output: 'An electronics term; would scrivi (write) be better?'
+    print: 'An electronics term; would scrivi (write) be better?'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Errore di sintassi alla riga {line}.',
     indentError: 'Errore di rientro alla riga {line}: rientra i blocchi di 4 spazi.',
     argumentError: 'Riga {line}: una funzione matematica ha argomenti sbagliati.',
+    equalsError: 'Riga {line}: per confrontare, scrivi == invece di =.',
     undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
     typeError: 'Riga {line}: {operator} non funziona con questi valori.',
     conditionError: 'Riga {line}: una condizione deve essere vera o falsa.',

@@ -4,7 +4,7 @@ import type {Translation} from '../types.ts';
 const translation: Translation = {
   words: {
     input: ['შეყვანის'],
-    output: ['გამოშვება'],
+    print: ['გამოშვება'],
     if: ['თუ'],
     else: ['სხვა'],
     then: ['მაშინ'],
@@ -31,11 +31,11 @@ const translation: Translation = {
     sin: ['sin'],
     cos: ['cos'],
     tan: ['tan'],
-    ctg: ['ctg'],
+    cot: ['ctg'],
     arcsin: ['arcsin'],
     arccos: ['arccos'],
     arctan: ['arctan'],
-    arcctg: ['arcctg'],
+    arccot: ['arcctg'],
     log: ['log'],
     ln: ['ln'],
     lg: ['lg'],
@@ -44,7 +44,7 @@ const translation: Translation = {
   },
   notes: {
     input: 'Genitive (of input); should it be შეყვანა?',
-    output: 'Means release; should it be გამოტანა?',
+    print: 'Means release; should it be გამოტანა?',
     else: 'Means other; should it be თორემ?',
     true: 'Means it is true; should it be ჭეშმარიტი?'
   },
@@ -53,6 +53,7 @@ const translation: Translation = {
     syntaxError: 'სინტაქსური შეცდომა {line}-ე ხაზზე.',
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
     argumentError: '{line}-ე ხაზი: მათემატიკურ ფუნქციას არასწორი არგუმენტები აქვს.',
+    equalsError: '{line}-ე ხაზი: შესადარებლად დაწერეთ == და არა =.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
     typeError: '{line}-ე ხაზი: {operator} არ მუშაობს ამ მნიშვნელობებთან.',
     conditionError: '{line}-ე ხაზი: პირობა უნდა იყოს ჭეშმარიტი ან მცდარი.',

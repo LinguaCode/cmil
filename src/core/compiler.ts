@@ -3,7 +3,7 @@
  * so the interpreter runs them in a loop and can pause at any input.
  *
  * Instructions:
- * - output {expression}, input {name}, assign {name, expression}
+ * - print {expressions}, input {name, prompt}, assign {name, expression}
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
  */
@@ -47,11 +47,11 @@ export const compile = (statements: Statement[]): Program => {
     const {line} = node;
 
     switch (node.type) {
-      case 'output':
-        emit({op: 'output', expression: node.expression, line});
+      case 'print':
+        emit({op: 'print', expressions: node.expressions, line});
         break;
       case 'input':
-        emit({op: 'input', name: node.name, line});
+        emit({op: 'input', name: node.name, prompt: node.prompt, line});
         break;
       case 'assign':
         emit({op: 'assign', name: node.name, expression: node.expression, line});

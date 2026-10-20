@@ -110,8 +110,8 @@ const readNumber = (line: string, start: number) => {
  * A keyword is a whole word, or two words of a two-word command; case doesn't matter.
  *
  * @example
- * scan('output 1<pi', 'en');
- * // returns keyword 'output', other ' 1<', keyword 'pi'
+ * scan('print 1<pi', 'en');
+ * // returns keyword 'print', other ' 1<', keyword 'pi'
  */
 export const scan = (line: string, language: string): Segment[] => {
   const {single, double} = wordsOf(language);

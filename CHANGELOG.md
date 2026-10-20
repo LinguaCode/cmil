@@ -11,6 +11,9 @@
   - **[change]** numbers: printed and compared with 12 significant digits, so `0.1 + 0.2` prints `0.3` and equals `0.3`, and always with all their digits, like `0.0000001` instead of `1e-7`. Trigonometry is rounded to 12 decimals instead of 10, so `sin(pi)` is still `0`.
   - **[fix]** loops: `repeat N times` reads N once, so changing N in the loop no longer makes it endless. N must be a whole number, not below 0.
   - **[add]** math: `round(x, digits)` rounds to a count of decimals.
+  - **[change]** commands: English `output` is `print`, and `ctg` and `arcctg` are `cot` and `arccot`, as in English mathematics; the command ids follow. The words of the other languages don't change.
+  - **[add]** commands: `print a, b` prints several values on one line, separated by spaces, and `input "Your name?" name` asks with a prompt, which the input step returns as `prompt`.
+  - **[add]** errors: `=` inside an expression, like `if x = 5`, is an `equalsError`, whose message says to compare with `==`.
 
 ## 0.7.0-alpha.0 (2026-10-20)
 
