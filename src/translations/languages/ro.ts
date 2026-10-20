@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['ori'],
     break: ['întrerupe'],
     continue: ['continua'],
+    for: ['pentru'],
+    from: ['de_la'],
+    to: ['până_la'],
+    step: ['pas'],
     function: ['funcție'],
     random: ['aleatoare'],
     pow: ['putere'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    random: 'Feminine plural; should it be aleator?'
+    random: 'Feminine plural; should it be aleator?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

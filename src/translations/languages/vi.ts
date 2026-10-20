@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['lần'],
     break: ['dừng'],
     continue: ['tiếp_tục'],
+    for: ['cho'],
+    from: ['từ'],
+    to: ['đến'],
+    step: ['bước'],
     function: ['hàm'],
     random: ['ngẫu_nhiên'],
     pow: ['lũy_thừa'],
@@ -41,6 +45,12 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  notes: {
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

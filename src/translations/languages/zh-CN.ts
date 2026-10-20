@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['次'],
     break: ['跳出'],
     continue: ['继续'],
+    for: ['对于'],
+    from: ['从'],
+    to: ['到'],
+    step: ['步长'],
     function: ['函数'],
     random: ['随机的'],
     pow: ['乘方'],
@@ -41,6 +45,12 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  notes: {
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

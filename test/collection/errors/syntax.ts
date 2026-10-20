@@ -72,6 +72,22 @@ const sources: Source[] = [
         errorParam: {
           line: 1
         }
+      },
+      {
+        title: 'for without from',
+        code: 'for i to 5\n    print i',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 1
+        }
+      },
+      {
+        title: 'for with step before to',
+        code: 'for i from 1 step 2 to 5\n    print i',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 1
+        }
       }
     ]
   }

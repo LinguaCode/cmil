@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['gånger'],
     break: ['avbryt'],
     continue: ['fortsätt'],
+    for: ['för'],
+    from: ['från'],
+    to: ['till'],
+    step: ['steg'],
     function: ['funktion'],
     random: ['slumptal'],
     pow: ['potens'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    while: 'Means during; would så_länge be better?'
+    while: 'Means during; would så_länge be better?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

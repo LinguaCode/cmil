@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['krat'],
     break: ['prekini'],
     continue: ['nadaljuj'],
+    for: ['za'],
+    from: ['od'],
+    to: ['do'],
+    step: ['korak'],
     function: ['funkcija'],
     random: ['naključno'],
     pow: ['potenca'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    then: 'Is potem more common after če?'
+    then: 'Is potem more common after če?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['kertaa'],
     break: ['keskeytä'],
     continue: ['jatka'],
+    for: ['jokaiselle'],
+    from: ['alkaen'],
+    to: ['asti'],
+    step: ['askel'],
     function: ['funktio'],
     random: ['satunnainen'],
     pow: ['potenssi'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    while: 'Means when; is there a short word for as long as?'
+    while: 'Means when; is there a short word for as long as?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

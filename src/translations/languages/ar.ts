@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['مرات'],
     break: ['توقف'],
     continue: ['استمر'],
+    for: ['لكل'],
+    from: ['من'],
+    to: ['إلى'],
+    step: ['بخطوة'],
     function: ['دالة'],
     random: ['عشوائية'],
     pow: ['قوة'],
@@ -47,7 +51,11 @@ const translation: Translation = {
     print: 'Also means directing a film; would اطبع (print) be better?',
     then: 'Means afterwards; would فإن be better?',
     false: 'Feminine (lying); is خطأ the usual truth value?',
-    true: 'Is صواب or صح the usual truth value?'
+    true: 'Is صواب or صح the usual truth value?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

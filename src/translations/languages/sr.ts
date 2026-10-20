@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['пута'],
     break: ['прекини'],
     continue: ['даље'],
+    for: ['за'],
+    from: ['од'],
+    to: ['до'],
+    step: ['корак'],
     function: ['функција'],
     random: ['случајни'],
     pow: ['степен'],
@@ -41,6 +45,12 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e', 'е']
+  },
+  notes: {
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

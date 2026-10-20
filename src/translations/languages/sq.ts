@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['herë'],
     break: ['ndalo'],
     continue: ['vazhdo'],
+    for: ['për'],
+    from: ['nga'],
+    to: ['deri'],
+    step: ['hap'],
     function: ['funksioni'],
     random: ['të_rastit'],
     pow: ['fuqi'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    input: 'Means data; would lexo (read) be better?'
+    input: 'Means data; would lexo (read) be better?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

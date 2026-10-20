@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['번'],
     break: ['중단'],
     continue: ['계속'],
+    for: ['각각'],
+    from: ['부터'],
+    to: ['까지'],
+    step: ['간격'],
     function: ['함수'],
     random: ['난수'],
     pow: ['거듭제곱'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    not: 'A fragment of -지 않다; which word should logical not be?'
+    not: 'A fragment of -지 않다; which word should logical not be?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[add]** loops: `for i from 1 to 10`, with an optional `step 2` or a negative step to count down; the bounds are read once and both ends are included. The words `for`, `from`, `to` and `step` are in every language; those of 28 languages need a native review.
+
 ## 0.8.0-alpha.0 (2026-10-20)
 
   - **[change]** translations: each language file is a typed record of the words of each command, like `and: ['և', 'եւ', 'ու']`, instead of a list of definitions separated with `|`; TypeScript checks that every command has words. Notes for native speakers are in its `notes`.

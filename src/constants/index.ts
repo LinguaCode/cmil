@@ -18,6 +18,11 @@ export const COMMAND = {
   DO: 'do',
   TIMES: 'times',
 
+  FOR: 'for',
+  FROM: 'from',
+  TO: 'to',
+  STEP: 'step',
+
   BREAK: 'break',
   CONTINUE: 'continue',
 

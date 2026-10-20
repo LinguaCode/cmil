@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['ჯერ'],
     break: ['შეწყვიტე'],
     continue: ['გაგრძელება'],
+    for: ['ციკლი'],
+    from: ['საწყისი'],
+    to: ['ბოლო'],
+    step: ['ბიჯი'],
     function: ['ფუნქცია'],
     random: ['შემთხვევითი'],
     pow: ['ხარისხი'],
@@ -46,7 +50,11 @@ const translation: Translation = {
     input: 'Genitive (of input); should it be შეყვანა?',
     print: 'Means release; should it be გამოტანა?',
     else: 'Means other; should it be თორემ?',
-    true: 'Means it is true; should it be ჭეშმარიტი?'
+    true: 'Means it is true; should it be ჭეშმარიტი?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['vezes'],
     break: ['interromper'],
     continue: ['continuar'],
+    for: ['para'],
+    from: ['de'],
+    to: ['até'],
+    step: ['passo'],
     function: ['função'],
     random: ['aleatória'],
     pow: ['potência'],
@@ -44,7 +48,11 @@ const translation: Translation = {
   },
   notes: {
     random: 'Feminine; should it be aleatório?',
-    floor: 'Brazil uses piso; which word is used in Portugal?'
+    floor: 'Brazil uses piso; which word is used in Portugal?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
