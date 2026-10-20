@@ -12,43 +12,44 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.IF,
-    definition: '는_경우'
+    definition: '만약'
   },
   {
     command: COMMAND.ELSE,
-    definition: '다른_사람'
+    definition: '아니면'
   },
   {
     command: COMMAND.THEN,
-    definition: '다음'
+    definition: '그러면'
   },
   {
     command: COMMAND.OR,
-    definition: '나'
+    definition: '또는'
   },
   {
     command: COMMAND.AND,
-    definition: '고'
+    definition: '그리고'
   },
   {
     command: COMMAND.NOT,
-    definition: '지'
+    definition: '지',
+    note: 'A fragment of -지 않다; which word should logical not be?'
   },
   {
     command: COMMAND.FALSE,
-    definition: '그릇된'
+    definition: '거짓'
   },
   {
     command: COMMAND.TRUE,
-    definition: '참된'
+    definition: '참'
   },
   {
     command: COMMAND.DO,
-    definition: '마'
+    definition: '실행'
   },
   {
     command: COMMAND.WHILE,
-    definition: '동'
+    definition: '동안'
   },
   {
     command: COMMAND.REPEAT,
@@ -56,11 +57,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TIMES,
-    definition: '시간'
+    definition: '번'
   },
   {
     command: COMMAND.BREAK,
-    definition: '휴식'
+    definition: '중단'
   },
   {
     command: COMMAND.CONTINUE,
@@ -68,7 +69,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FUNCTION,
-    definition: '기능'
+    definition: '함수'
   },
   {
     command: COMMAND.RANDOM,
@@ -76,11 +77,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: '전원'
+    definition: '거듭제곱'
   },
   {
     command: COMMAND.SQR,
-    definition: '장'
+    definition: '제곱'
   },
   {
     command: COMMAND.SQRT,
@@ -88,19 +89,19 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: '라운드'
+    definition: '반올림'
   },
   {
     command: COMMAND.FLOOR,
-    definition: '층'
+    definition: '내림'
   },
   {
     command: COMMAND.CEIL,
-    definition: '천장'
+    definition: '올림'
   },
   {
     command: COMMAND.ABS,
-    definition: '절대_값'
+    definition: '절댓값'
   },
   {
     command: COMMAND.SIN,

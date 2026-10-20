@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'inngang'
+    definition: 'skriv_inn'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'utgang'
+    definition: 'skriv_ut'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +16,12 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'annet'
+    definition: 'ellers'
   },
   {
     command: COMMAND.THEN,
-    definition: 'da'
+    definition: 'da',
+    note: 'Is så more common after hvis?'
   },
   {
     command: COMMAND.OR,
@@ -36,7 +37,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'falske'
+    definition: 'usann'
   },
   {
     command: COMMAND.TRUE,
@@ -48,7 +49,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'mens'
+    definition: 'mens',
+    note: 'Means during; would så_lenge be better?'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +62,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'bryter'
+    definition: 'avbryt'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +78,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'strøm'
+    definition: 'potens'
   },
   {
     command: COMMAND.SQR,
-    definition: 'torget'
+    definition: 'kvadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +90,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'runde'
+    definition: 'avrund'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'etasje'
+    definition: 'avrund_ned'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'tak'
+    definition: 'avrund_opp'
   },
   {
     command: COMMAND.ABS,

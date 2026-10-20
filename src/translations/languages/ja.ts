@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: '他'
+    definition: 'そうでなければ'
   },
   {
     command: COMMAND.THEN,
-    definition: 'その後'
+    definition: 'ならば'
   },
   {
     command: COMMAND.OR,
@@ -28,11 +28,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.AND,
-    definition: 'そして'
+    definition: 'かつ'
   },
   {
     command: COMMAND.NOT,
-    definition: 'じゃない'
+    definition: 'でない'
   },
   {
     command: COMMAND.FALSE,
@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: '正しい'
+    definition: '真'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'しばらくの間'
+    definition: 'しばらくの間',
+    note: 'Means for a while; which word fits before the condition? DNCL puts the condition first: 〈condition〉の間.'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +61,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: '休憩'
+    definition: '中断'
   },
   {
     command: COMMAND.CONTINUE,
@@ -72,15 +73,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.RANDOM,
-    definition: 'おまかせ表示'
+    definition: '乱数'
   },
   {
     command: COMMAND.POW,
-    definition: '電源'
+    definition: 'べき乗'
   },
   {
     command: COMMAND.SQR,
-    definition: '広場'
+    definition: '二乗'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: '丸'
+    definition: '四捨五入'
   },
   {
     command: COMMAND.FLOOR,
-    definition: '階'
+    definition: '切り捨て'
   },
   {
     command: COMMAND.CEIL,
-    definition: '天井'
+    definition: '切り上げ'
   },
   {
     command: COMMAND.ABS,

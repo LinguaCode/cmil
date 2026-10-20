@@ -31,12 +31,16 @@ Whether you are a programmer or not, you can contribute to LinguaCode. Below are
 12. Improve the translator's core.
 
 ## How to translate
-The commands of LinguaCode are translated in this repository, one file per language in [`src/translations/languages`](src/translations/languages).
+The commands of LinguaCode are translated in this repository, one file per language in [`src/translations/languages`](src/translations/languages). [`docs/translations.md`](docs/translations.md) lists the words of every language with their meaning, and the words that need a native speaker most.
+
+To suggest a better word without changing any code, [open a translation issue](https://github.com/LinguaCode/cmil/issues/new?template=translation.yml).
+
+To change the words yourself:
 
 1. Fork this repository.
-2. To add a language, copy `src/translations/languages/en.ts` to a file named after the language code, for example `it.ts`, or `pt-PT.ts` for a regional variant, and add it to `src/translations/index.ts`. To improve a language, edit its existing file.
-3. Translate the `definition` of every command. Separate alternative spellings with `|`, for example `'և|եւ|ու'`.
-4. Run `npm test`, which checks that every language defines every command and gives every word only one command, and open a pull request.
+2. To add a language, copy `src/translations/languages/en.ts` to a file named after the language code, for example `it.ts`, or `pt-PT.ts` for a regional variant, add it to `src/translations/index.ts`, and add its name to `scripts/translations-table.ts`. To improve a language, edit its existing file.
+3. Translate the `definition` of every command. Join the words of a phrase with `_`, for example `tant_que`, and separate alternative spellings with `|`, for example `'և|եւ|ու'`; the first is the main one. A `note` asks native speakers to check a word; remove it when the word is right.
+4. Run `npm run translations-table`, which updates `docs/translations.md`, then `npm test`, which checks that every language defines every command, gives every word only one command and runs programs, and open a pull request.
 5. Take this :pizza: piece of pizza from us in return for help :blush:.
 
 ## License

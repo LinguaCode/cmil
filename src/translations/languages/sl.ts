@@ -16,11 +16,12 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'ostalo'
+    definition: 'sicer'
   },
   {
     command: COMMAND.THEN,
-    definition: 'nato'
+    definition: 'nato',
+    note: 'Is potem more common after če?'
   },
   {
     command: COMMAND.OR,
@@ -48,11 +49,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'medtem_ko'
+    definition: 'dokler'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'ponovite'
+    definition: 'ponovi'
   },
   {
     command: COMMAND.TIMES,
@@ -60,11 +61,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'odmor'
+    definition: 'prekini'
   },
   {
     command: COMMAND.CONTINUE,
-    definition: 'še'
+    definition: 'nadaljuj'
   },
   {
     command: COMMAND.FUNCTION,
@@ -76,11 +77,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'moč'
+    definition: 'potenca'
   },
   {
     command: COMMAND.SQR,
-    definition: 'kvadratni'
+    definition: 'kvadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'krog'
+    definition: 'zaokroži'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'tla'
+    definition: 'zaokroži_navzdol'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'strop'
+    definition: 'zaokroži_navzgor'
   },
   {
     command: COMMAND.ABS,

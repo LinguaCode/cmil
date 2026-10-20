@@ -8,7 +8,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'udgang'
+    definition: 'udskriv'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'andet'
+    definition: 'ellers'
   },
   {
     command: COMMAND.THEN,
-    definition: 'derefter'
+    definition: 'så'
   },
   {
     command: COMMAND.OR,
@@ -48,7 +48,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'mens'
+    definition: 'mens',
+    note: 'Means during; would så_længe be better?'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +61,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'bryde'
+    definition: 'afbryd'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,27 +77,27 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'magt'
+    definition: 'potens'
   },
   {
     command: COMMAND.SQR,
-    definition: 'pladsen'
+    definition: 'kvadrat'
   },
   {
     command: COMMAND.SQRT,
-    definition: 'kvadrat_rod'
+    definition: 'kvadratrod'
   },
   {
     command: COMMAND.ROUND,
-    definition: 'runde'
+    definition: 'afrund'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'etage'
+    definition: 'afrund_ned'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'loft'
+    definition: 'afrund_op'
   },
   {
     command: COMMAND.ABS,

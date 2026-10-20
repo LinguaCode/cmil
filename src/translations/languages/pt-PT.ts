@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'mais'
+    definition: 'senão'
   },
   {
     command: COMMAND.THEN,
-    definition: 'em_seguida'
+    definition: 'então'
   },
   {
     command: COMMAND.OR,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'quebra'
+    definition: 'interromper'
   },
   {
     command: COMMAND.CONTINUE,
@@ -72,15 +72,16 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.RANDOM,
-    definition: 'aleatória'
+    definition: 'aleatória',
+    note: 'Feminine; should it be aleatório?'
   },
   {
     command: COMMAND.POW,
-    definition: 'alimentação'
+    definition: 'potência'
   },
   {
     command: COMMAND.SQR,
-    definition: 'praça'
+    definition: 'quadrado'
   },
   {
     command: COMMAND.SQRT,
@@ -88,11 +89,12 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'rodada'
+    definition: 'arredondar'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'chão'
+    definition: 'chão',
+    note: 'Brazil uses piso; which word is used in Portugal?'
   },
   {
     command: COMMAND.CEIL,

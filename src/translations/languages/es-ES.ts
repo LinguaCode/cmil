@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'otro'
+    definition: 'sino'
   },
   {
     command: COMMAND.THEN,
-    definition: 'después'
+    definition: 'entonces'
   },
   {
     command: COMMAND.OR,
@@ -60,7 +60,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'abortar'
+    definition: 'abortar',
+    note: 'Harsh for children; would interrumpir or salir be better?'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +77,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'el_poder'
+    definition: 'potencia'
   },
   {
     command: COMMAND.SQR,
-    definition: 'plaza'
+    definition: 'cuadrado'
   },
   {
     command: COMMAND.SQRT,
@@ -104,7 +105,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.SIN,
-    definition: 'Sin'
+    definition: 'sin'
   },
   {
     command: COMMAND.COS,

@@ -4,11 +4,13 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'المدخلات'
+    definition: 'المدخلات',
+    note: 'Plural (the inputs); would أدخل be better?'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'الإخراج'
+    definition: 'الإخراج',
+    note: 'Also means directing a film; would اطبع (print) be better?'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +18,12 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'آخر'
+    definition: 'وإلا'
   },
   {
     command: COMMAND.THEN,
-    definition: 'ثم'
+    definition: 'ثم',
+    note: 'Means afterwards; would فإن be better?'
   },
   {
     command: COMMAND.OR,
@@ -36,19 +39,21 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'كاذبة'
+    definition: 'كاذبة',
+    note: 'Feminine (lying); is خطأ the usual truth value?'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'صحيح'
+    definition: 'صحيح',
+    note: 'Is صواب or صح the usual truth value?'
   },
   {
     command: COMMAND.DO,
-    definition: 'هل'
+    definition: 'افعل'
   },
   {
     command: COMMAND.WHILE,
-    definition: 'بينما'
+    definition: 'طالما'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,15 +65,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'كسر'
+    definition: 'توقف'
   },
   {
     command: COMMAND.CONTINUE,
-    definition: 'تواصل'
+    definition: 'استمر'
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'وظيفة'
+    definition: 'دالة'
   },
   {
     command: COMMAND.RANDOM,
@@ -76,7 +81,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'السلطة'
+    definition: 'قوة'
   },
   {
     command: COMMAND.SQR,
@@ -88,19 +93,19 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'جولة'
+    definition: 'تقريب'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'الكلمة'
+    definition: 'تقريب_لأسفل'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'سقف'
+    definition: 'تقريب_لأعلى'
   },
   {
     command: COMMAND.ABS,
-    definition: 'قيمه_مطلقه'
+    definition: 'قيمة_مطلقة'
   },
   {
     command: COMMAND.SIN,

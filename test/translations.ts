@@ -6,6 +6,7 @@ import {describe, it} from 'node:test';
 
 import translations from '../src/translations/index.ts';
 import CodeSubmit, {languages, type SessionEnd} from '../src/index.ts';
+import {DOCS_PATH, translationsTable} from '../scripts/translations-table.ts';
 
 const LANGUAGES_PATH = path.join(import.meta.dirname, '../src/translations/languages');
 
@@ -34,6 +35,10 @@ describe('translations', () => {
 
     assert.deepStrictEqual(Object.keys(translations).sort(), files);
     assert.deepStrictEqual([...languages].sort(), files);
+  });
+
+  it('docs/translations.md is up to date, run npm run translations-table', () => {
+    assert.strictEqual(fs.readFileSync(DOCS_PATH, 'utf8'), translationsTable());
   });
 
   Object.keys(translations).forEach(language => {

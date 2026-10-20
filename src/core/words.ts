@@ -143,7 +143,7 @@ export const scan = (line: string, language: string): Segment[] => {
       const word = readWord(line, i);
       const lower = word.toLowerCase();
 
-      //a two-word command, like στη συνέχεια
+      //a two-word command, like e vërtetë
       const end = i + word.length;
       let next = end;
       while (next < line.length && SPACE.test(line[next])) next++;

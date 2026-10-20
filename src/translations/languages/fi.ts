@@ -8,7 +8,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'lähtö'
+    definition: 'tulosta'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'muuta'
+    definition: 'muuten'
   },
   {
     command: COMMAND.THEN,
-    definition: 'sitten'
+    definition: 'niin'
   },
   {
     command: COMMAND.OR,
@@ -36,11 +36,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'väärä'
+    definition: 'epätosi'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'totta'
+    definition: 'tosi'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'kun'
+    definition: 'kun',
+    note: 'Means when; is there a short word for as long as?'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,15 +61,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'tauko'
+    definition: 'keskeytä'
   },
   {
     command: COMMAND.CONTINUE,
-    definition: 'edelleen'
+    definition: 'jatka'
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'toiminto'
+    definition: 'funktio'
   },
   {
     command: COMMAND.RANDOM,
@@ -76,7 +77,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'teho'
+    definition: 'potenssi'
   },
   {
     command: COMMAND.SQR,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'pyöreä'
+    definition: 'pyöristä'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'lattia'
+    definition: 'pyöristä_alas'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'katto'
+    definition: 'pyöristä_ylös'
   },
   {
     command: COMMAND.ABS,

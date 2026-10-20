@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'вхід'
+    definition: 'ввести'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'вихід'
+    definition: 'вивести'
   },
   {
     command: COMMAND.IF,
@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'ще'
+    definition: 'інакше'
   },
   {
     command: COMMAND.THEN,
@@ -36,11 +36,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'помилкові'
+    definition: 'хиба'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'правда'
+    definition: 'істина'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'а'
+    definition: 'поки'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'перерва'
+    definition: 'перервати'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'потужність'
+    definition: 'степінь'
   },
   {
     command: COMMAND.SQR,
-    definition: 'площа'
+    definition: 'квадрат'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'круглий'
+    definition: 'округлити'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'підлога'
+    definition: 'округлити_вниз'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'підшити'
+    definition: 'округлити_вгору'
   },
   {
     command: COMMAND.ABS,
@@ -152,7 +152,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.E,
-    definition: 'е'
+    definition: 'e|е'
   }
 ];
 

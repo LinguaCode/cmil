@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'autre'
+    definition: 'sinon'
   },
   {
     command: COMMAND.THEN,
@@ -32,7 +32,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.NOT,
-    definition: 'pas'
+    definition: 'non'
   },
   {
     command: COMMAND.FALSE,
@@ -48,11 +48,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'alors_que'
+    definition: 'tant_que'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'répétez'
+    definition: 'répéter'
   },
   {
     command: COMMAND.TIMES,
@@ -60,7 +60,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'pause'
+    definition: 'arrêter'
   },
   {
     command: COMMAND.CONTINUE,
@@ -68,7 +68,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'la_fonction'
+    definition: 'fonction'
   },
   {
     command: COMMAND.RANDOM,
@@ -88,11 +88,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'ronde'
+    definition: 'arrondir'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'étage'
+    definition: 'plancher'
   },
   {
     command: COMMAND.CEIL,

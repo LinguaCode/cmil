@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'ingang'
+    definition: 'invoer'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'uitgang'
+    definition: 'uitvoer'
   },
   {
     command: COMMAND.IF,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'terwijl'
+    definition: 'zolang'
   },
   {
     command: COMMAND.REPEAT,
@@ -56,11 +56,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TIMES,
-    definition: 'tijden'
+    definition: 'keer'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'breken'
+    definition: 'onderbreek'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'kracht'
+    definition: 'macht'
   },
   {
     command: COMMAND.SQR,
-    definition: 'plein'
+    definition: 'kwadraat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'ronde'
+    definition: 'afronden'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'verdieping'
+    definition: 'afronden_beneden'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'plafond'
+    definition: 'afronden_boven'
   },
   {
     command: COMMAND.ABS,

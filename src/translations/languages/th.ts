@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'อื่นอีก'
+    definition: 'มิฉะนั้น'
   },
   {
     command: COMMAND.THEN,
@@ -36,15 +36,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'ปลอม'
+    definition: 'เท็จ'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'เรื่องจริง'
+    definition: 'จริง'
   },
   {
     command: COMMAND.DO,
-    definition: 'ทำอย่าง'
+    definition: 'ทำ'
   },
   {
     command: COMMAND.WHILE,
@@ -52,15 +52,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'ขอย้ำ'
+    definition: 'ทำซ้ำ'
   },
   {
     command: COMMAND.TIMES,
-    definition: 'ครั้งแล้ว'
+    definition: 'ครั้ง'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'พัก'
+    definition: 'หยุด'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'พลังงาน'
+    definition: 'ยกกำลัง'
   },
   {
     command: COMMAND.SQR,
-    definition: 'สแควร์'
+    definition: 'กำลังสอง'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'ร'
+    definition: 'ปัดเศษ'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'ชั้น'
+    definition: 'ปัดลง'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'เพดาน'
+    definition: 'ปัดขึ้น'
   },
   {
     command: COMMAND.ABS,

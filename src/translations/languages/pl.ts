@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'wejście'
+    definition: 'wczytaj'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'wyjście'
+    definition: 'wypisz'
   },
   {
     command: COMMAND.IF,
@@ -16,7 +16,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'jeszcze'
+    definition: 'inaczej'
   },
   {
     command: COMMAND.THEN,
@@ -36,7 +36,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FALSE,
-    definition: 'fałszywe'
+    definition: 'fałsz'
   },
   {
     command: COMMAND.TRUE,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'a'
+    definition: 'dopóki'
   },
   {
     command: COMMAND.REPEAT,
@@ -56,11 +56,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TIMES,
-    definition: 'raz'
+    definition: 'razy'
   },
   {
     command: COMMAND.BREAK,
-    definition: 'przerwa'
+    definition: 'przerwij'
   },
   {
     command: COMMAND.CONTINUE,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: 'moc'
+    definition: 'potęga'
   },
   {
     command: COMMAND.SQR,
-    definition: 'powierzchnia'
+    definition: 'kwadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,19 +88,19 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'przez_cały'
+    definition: 'zaokrąglij'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'podłoga'
+    definition: 'zaokrąglij_w_dół'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'hem'
+    definition: 'zaokrąglij_w_górę'
   },
   {
     command: COMMAND.ABS,
-    definition: 'całkowita_wartość'
+    definition: 'wartość_bezwzględna'
   },
   {
     command: COMMAND.SIN,

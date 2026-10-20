@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'εισαγωγή'
+    definition: 'διάβασε'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'παραγωγή'
+    definition: 'γράψε'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'άλλο'
+    definition: 'αλλιώς'
   },
   {
     command: COMMAND.THEN,
-    definition: 'στη συνέχεια'
+    definition: 'τότε'
   },
   {
     command: COMMAND.OR,
@@ -32,27 +32,27 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.NOT,
-    definition: 'δεν'
+    definition: 'όχι'
   },
   {
     command: COMMAND.FALSE,
-    definition: 'ψευδές'
+    definition: 'ψευδής'
   },
   {
     command: COMMAND.TRUE,
-    definition: 'αλήθεια'
+    definition: 'αληθής'
   },
   {
     command: COMMAND.DO,
-    definition: 'κάνω'
+    definition: 'κάνε'
   },
   {
     command: COMMAND.WHILE,
-    definition: 'ενώ'
+    definition: 'όσο'
   },
   {
     command: COMMAND.REPEAT,
-    definition: 'επαναλάβετε'
+    definition: 'επανάλαβε'
   },
   {
     command: COMMAND.TIMES,
@@ -60,15 +60,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'διάλειμμα'
+    definition: 'διάκοψε'
   },
   {
     command: COMMAND.CONTINUE,
-    definition: 'συνεχίστε'
+    definition: 'συνέχισε'
   },
   {
     command: COMMAND.FUNCTION,
-    definition: 'λειτουργία'
+    definition: 'συνάρτηση'
   },
   {
     command: COMMAND.RANDOM,
@@ -80,7 +80,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.SQR,
-    definition: 'πλατεία'
+    definition: 'τετράγωνο'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'γύρω_από'
+    definition: 'στρογγυλοποίηση'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'πάτωμα'
+    definition: 'στρογγυλοποίηση_κάτω'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'ταβάνι'
+    definition: 'στρογγυλοποίηση_πάνω'
   },
   {
     command: COMMAND.ABS,

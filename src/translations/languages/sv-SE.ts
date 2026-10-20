@@ -4,11 +4,11 @@ import type {Translation} from '../index.ts';
 const translation: Translation[] = [
   {
     command: COMMAND.INPUT,
-    definition: 'ingång'
+    definition: 'mata_in'
   },
   {
     command: COMMAND.OUTPUT,
-    definition: 'utgång'
+    definition: 'skriv_ut'
   },
   {
     command: COMMAND.IF,
@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: 'annat'
+    definition: 'annars'
   },
   {
     command: COMMAND.THEN,
-    definition: 'sedan'
+    definition: 'så'
   },
   {
     command: COMMAND.OR,
@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: 'sanna'
+    definition: 'sant'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,8 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: 'medan'
+    definition: 'medan',
+    note: 'Means during; would så_länge be better?'
   },
   {
     command: COMMAND.REPEAT,
@@ -60,7 +61,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.BREAK,
-    definition: 'bryta'
+    definition: 'avbryt'
   },
   {
     command: COMMAND.CONTINUE,
@@ -72,15 +73,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.RANDOM,
-    definition: 'slumpmässiga'
+    definition: 'slumptal'
   },
   {
     command: COMMAND.POW,
-    definition: 'makt'
+    definition: 'potens'
   },
   {
     command: COMMAND.SQR,
-    definition: 'torget'
+    definition: 'kvadrat'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +89,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: 'runda'
+    definition: 'avrunda'
   },
   {
     command: COMMAND.FLOOR,
-    definition: 'golv'
+    definition: 'avrunda_nedåt'
   },
   {
     command: COMMAND.CEIL,
-    definition: 'tak'
+    definition: 'avrunda_uppåt'
   },
   {
     command: COMMAND.ABS,

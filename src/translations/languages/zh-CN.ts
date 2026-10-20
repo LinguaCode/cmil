@@ -16,11 +16,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ELSE,
-    definition: '别'
+    definition: '否则'
   },
   {
     command: COMMAND.THEN,
-    definition: '然后'
+    definition: '那么'
   },
   {
     command: COMMAND.OR,
@@ -28,7 +28,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.AND,
-    definition: '和'
+    definition: '并且'
   },
   {
     command: COMMAND.NOT,
@@ -40,7 +40,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TRUE,
-    definition: '真的'
+    definition: '真'
   },
   {
     command: COMMAND.DO,
@@ -48,7 +48,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.WHILE,
-    definition: '同时'
+    definition: '当'
   },
   {
     command: COMMAND.REPEAT,
@@ -56,11 +56,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.TIMES,
-    definition: '时间'
+    definition: '次'
   },
   {
     command: COMMAND.BREAK,
-    definition: '打破'
+    definition: '跳出'
   },
   {
     command: COMMAND.CONTINUE,
@@ -68,7 +68,7 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.FUNCTION,
-    definition: '功能'
+    definition: '函数'
   },
   {
     command: COMMAND.RANDOM,
@@ -76,11 +76,11 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.POW,
-    definition: '电'
+    definition: '乘方'
   },
   {
     command: COMMAND.SQR,
-    definition: '广场'
+    definition: '平方'
   },
   {
     command: COMMAND.SQRT,
@@ -88,15 +88,15 @@ const translation: Translation[] = [
   },
   {
     command: COMMAND.ROUND,
-    definition: '圆'
+    definition: '四舍五入'
   },
   {
     command: COMMAND.FLOOR,
-    definition: '地板'
+    definition: '向下取整'
   },
   {
     command: COMMAND.CEIL,
-    definition: '天花板'
+    definition: '向上取整'
   },
   {
     command: COMMAND.ABS,
