@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Lỗi cú pháp ở dòng {line}.',
+    indentError: 'Lỗi thụt lề ở dòng {line}: hãy thụt lề các khối 4 dấu cách.',
+    argumentError: 'Dòng {line}: một hàm toán học có đối số sai.',
+    undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
+    memoryLimit: 'Dòng {line}: một văn bản đã quá dài.',
+    timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
+    unknownLanguage: 'Ngôn ngữ không xác định: {language}.'
   }
 };
 

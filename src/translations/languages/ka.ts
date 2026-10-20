@@ -47,6 +47,16 @@ const translation: Translation = {
     output: 'Means release; should it be გამოტანა?',
     else: 'Means other; should it be თორემ?',
     true: 'Means it is true; should it be ჭეშმარიტი?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'სინტაქსური შეცდომა {line}-ე ხაზზე.',
+    indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
+    argumentError: '{line}-ე ხაზი: მათემატიკურ ფუნქციას არასწორი არგუმენტები აქვს.',
+    undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
+    memoryLimit: '{line}-ე ხაზი: ტექსტი ზედმეტად გრძელი გახდა.',
+    timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',
+    unknownLanguage: 'უცნობი ენა: {language}.'
   }
 };
 

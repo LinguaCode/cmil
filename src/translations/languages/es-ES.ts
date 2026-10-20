@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     break: 'Harsh for children; would interrumpir or salir be better?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Error de sintaxis en la línea {line}.',
+    indentError: 'Error de sangría en la línea {line}: sangra los bloques con 4 espacios.',
+    argumentError: 'Línea {line}: una función matemática tiene argumentos incorrectos.',
+    undefinedVariable: 'Línea {line}: {variable} todavía no tiene valor.',
+    memoryLimit: 'Línea {line}: un texto se hizo demasiado largo.',
+    timeout: 'El programa se ejecutó demasiado tiempo sin pedir una entrada.',
+    unknownLanguage: 'Idioma desconocido: {language}.'
   }
 };
 

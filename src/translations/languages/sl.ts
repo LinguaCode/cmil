@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     then: 'Is potem more common after če?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Skladenjska napaka v vrstici {line}.',
+    indentError: 'Napaka zamika v vrstici {line}: bloke zamaknite za 4 presledke.',
+    argumentError: 'Vrstica {line}: matematična funkcija ima napačne argumente.',
+    undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
+    memoryLimit: 'Vrstica {line}: besedilo je postalo predolgo.',
+    timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
+    unknownLanguage: 'Neznan jezik: {language}.'
   }
 };
 

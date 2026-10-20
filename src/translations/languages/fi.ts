@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     while: 'Means when; is there a short word for as long as?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaksivirhe rivillä {line}.',
+    indentError: 'Sisennysvirhe rivillä {line}: sisennä lohkot 4 välilyönnillä.',
+    argumentError: 'Rivi {line}: matemaattisella funktiolla on väärät argumentit.',
+    undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
+    memoryLimit: 'Rivi {line}: teksti kasvoi liian pitkäksi.',
+    timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
+    unknownLanguage: 'Tuntematon kieli: {language}.'
   }
 };
 

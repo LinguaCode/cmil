@@ -1,28 +1,19 @@
 /**
- * Runs the instructions of one program. All the state of the program belongs to its session.
+ * Runs the instructions of one program. All the state of the program belongs to its interpreter.
  */
 import CmilError from './error.ts';
 import * as values from './values.ts';
-import {
-  COMMAND,
-  ERROR,
-  STATE,
-  TIMEOUT_TIME,
-  MAX_STEPS,
-  MAX_TEXT_LENGTH,
-  MAX_OUTPUT_LENGTH
-} from '../constants/index.ts';
+import {COMMAND, ERROR, STATE, MAX_TEXT_LENGTH, MAX_OUTPUT_LENGTH} from '../constants/index.ts';
 import type {Expression, Instruction, Program, Value} from './types.ts';
-
-const isTimeoutIgnored = () => typeof process !== 'undefined' && !!process.env.TIMEOUT_IGNORE;
 
 //a condition fails only on false
 const isPassed = (value: Value) => value !== false;
 
 export type RunStatus = (typeof STATE)[keyof typeof STATE];
 
-class Session {
+class Interpreter {
   instructions: Instruction[];
+  maxSteps: number;
   counters: number[];
   variables = new Map<string, Value>();
   position = 0;
@@ -31,8 +22,12 @@ class Session {
   output: string[] = [];
   outputLength = 0;
 
-  constructor({instructions, slots}: Program) {
+  /**
+   * @param maxSteps - the steps the program may run in one call of run().
+   */
+  constructor({instructions, slots}: Program, maxSteps: number) {
     this.instructions = instructions;
+    this.maxSteps = maxSteps;
     this.counters = new Array<number>(slots).fill(0);
   }
 
@@ -56,7 +51,7 @@ class Session {
 
   checkText(value: Value): Value {
     if (typeof value === 'string' && value.length > MAX_TEXT_LENGTH) {
-      throw new CmilError(ERROR.MEMORY_LIMIT, {line: this.line});
+      throw new CmilError({id: ERROR.MEMORY_LIMIT, line: this.line});
     }
     return value;
   }
@@ -68,7 +63,12 @@ class Session {
       case 'variable': {
         const value = this.variables.get(node.name);
         if (value === undefined) {
-          throw new CmilError(ERROR.UNDEFINED_VARIABLE, {variable: node.name, line: this.line});
+          throw new CmilError({
+            id: ERROR.UNDEFINED_VARIABLE,
+            line: this.line,
+            column: node.column,
+            variable: node.name
+          });
         }
         return value;
       }
@@ -93,12 +93,11 @@ class Session {
    * Errors of the program are thrown as CmilError.
    */
   run(): RunStatus {
-    const startTime = Date.now();
     let steps = 0;
 
     while (this.position < this.instructions.length) {
-      if (++steps > MAX_STEPS || (!isTimeoutIgnored() && Date.now() - startTime > TIMEOUT_TIME)) {
-        throw new CmilError(ERROR.TIMEOUT);
+      if (++steps > this.maxSteps) {
+        throw new CmilError({id: ERROR.TIMEOUT});
       }
 
       const instruction = this.instructions[this.position];
@@ -111,14 +110,14 @@ class Session {
           if (text !== '') {
             this.outputLength += text.length + 1;
             if (this.outputLength > MAX_OUTPUT_LENGTH) {
-              throw new CmilError(ERROR.MEMORY_LIMIT, {line: this.line});
+              throw new CmilError({id: ERROR.MEMORY_LIMIT, line: this.line});
             }
             this.output.push(text);
           }
           break;
         }
         case 'input':
-          if (this.input === undefined) return STATE.WAITS_FOR_INPUT;
+          if (this.input === undefined) return STATE.INPUT;
           this.variables.set(instruction.name, this.input);
           this.input = undefined;
           break;
@@ -149,8 +148,8 @@ class Session {
       this.position = next;
     }
 
-    return STATE.SESSION_END;
+    return STATE.END;
   }
 }
 
-export default Session;
+export default Interpreter;

@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'שגיאת תחביר בשורה {line}.',
+    indentError: 'שגיאת הזחה בשורה {line}: הזיחו בלוקים ב-4 רווחים.',
+    argumentError: 'שורה {line}: לפונקציה מתמטית יש ארגומנטים שגויים.',
+    undefinedVariable: 'שורה {line}: ל-{variable} עדיין אין ערך.',
+    memoryLimit: 'שורה {line}: טקסט נעשה ארוך מדי.',
+    timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',
+    unknownLanguage: 'שפה לא מוכרת: {language}.'
   }
 };
 

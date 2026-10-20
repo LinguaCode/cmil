@@ -45,6 +45,16 @@ const translation: Translation = {
   notes: {
     input: 'An electronics term; would leggi (read) be better?',
     output: 'An electronics term; would scrivi (write) be better?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Errore di sintassi alla riga {line}.',
+    indentError: 'Errore di rientro alla riga {line}: rientra i blocchi di 4 spazi.',
+    argumentError: 'Riga {line}: una funzione matematica ha argomenti sbagliati.',
+    undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
+    memoryLimit: 'Riga {line}: un testo è diventato troppo lungo.',
+    timeout: 'Il programma è andato avanti troppo a lungo senza chiedere input.',
+    unknownLanguage: 'Lingua sconosciuta: {language}.'
   }
 };
 

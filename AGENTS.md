@@ -13,21 +13,28 @@ The project had no commits between 2020-05-30 and its revival. Expect obsolete t
 Verified on 2026-10-20. Update this section when a fact changes.
 
 - **Runtime:** Node.js, TypeScript with `strict`, published as ES modules. `engines.node` is `>= 24`. Imports between sources end in `.ts`; `tsc` rewrites them to `.js` in the build. Keep the syntax erasable (`erasableSyntaxOnly`: no enums, namespaces or parameter properties), because Node.js runs the sources directly in the tests. Browser use goes through the consumer's bundler.
-- **Public API:** `src/index.ts` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `input(value)`, `stop()`, `onOutput()`, `onInputRequest()` and `onSessionEnd()`, as the default and as a named export, plus `languages` (the language codes), `translate(sourceCode, from, to)` (a program in another language: names that are commands there get a trailing `_`; an unknown language throws) and the types of its callbacks. Its state is in `#` private fields. An unknown language ends the session with `unknownLanguage`. The `'module.exports'` export lets CommonJS code `require('cmil')` the class.
+- **Public API:** `src/index.ts` exports only named exports:
+  - `Session(sourceCode, language, {maxSteps})` (`src/session.ts`), whose `run()` and `input(value)` return a step, `{state: 'input', output}` or `{state: 'end', output, error?}`, and `stop()`. Its state is in `#` private fields; an unknown language ends it with `unknownLanguage`.
+  - `check(sourceCode, language)`, the first error before running, or `null`.
+  - `messageOf(error, language)` (`src/messages.ts`), from the `messages` of each language.
+  - `languages`, the language codes, and `translate(sourceCode, from, to)`, a program in another language: names that are commands there get a trailing `_`, and an unknown language throws.
+  - the types `Step`, `SessionOptions` and `ProgramError`.
+
+  CommonJS code uses `const {Session} = require('cmil')`.
 - **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/` and `src/translations/`. There is no `npm start`.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
 - **Playground:** https://linguacode.otanim.com runs CMIL in the browser. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. Its tests drive the page in Chromium, Firefox and WebKit on every push and pull request. After a release, bump that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 429 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 439 tests pass on Node.js 24 and 26.
 - **Types:** `npm run typecheck` checks `src/`, `test/` and `scripts/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` (which builds `dist/`), `npm run lint`, `npm run typecheck`, `npm test` and a program through the built package, on Node.js 24 and 26 for every push and pull request.
 - **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (190 cases).
-- **Core:** programs never run as JavaScript. `src/core/lexer.ts` splits lines into tokens, with the words of the program's language found by `words.ts`, `parser.ts` builds the syntax tree, `compiler.ts` flattens it into instructions with jumps, and `interpreter.ts` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
-- **Errors:** syntax and indentation errors are found before the program runs. Every error reports its absolute line, except `timeout`. Output printed before an error is sent first.
+- **Core:** programs never run as JavaScript. `src/core/lexer.ts` splits lines into tokens, with the words of the program's language found by `words.ts`, `parser.ts` builds the syntax tree, `compiler.ts` flattens it into instructions with jumps, and `interpreter.ts` runs them in a loop. All state belongs to one session, so sessions are independent.
+- **Errors:** `{id, …}` (`ProgramError` in `src/core/types.ts`). Syntax, indentation and argument errors are found before the program runs. Every error reports its absolute line, except `timeout` and `unknownLanguage`, and the column, from 1, where it points at a token. Output printed before an error comes with it.
 - **Output format:** boolean values, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard), also when joined into text; words in texts stay as written.
-- **Limits** (`src/constants/index.ts`, see `docs/running.md`): between two inputs a program may run 666 ms and 100,000 steps (`timeout`); a text may be 1,000,000 characters and unsent output 10,000,000 (`memoryLimit`); blocks and expressions nest at most 100 levels (`syntaxError`).
+- **Limits** (`src/constants/index.ts`, see `docs/running.md`): in one call of `run()` or `input()` a program may run 1,000,000 steps, about half a second, or the session's `maxSteps` (`timeout`); the core has no clock, so hosts stop a hung worker themselves. A text may be 1,000,000 characters and the output of one call 10,000,000 (`memoryLimit`); blocks and expressions nest at most 100 levels (`syntaxError`).
 - **Dependencies:** none at runtime. The dev dependencies are TypeScript, c8, ESLint, typescript-eslint, Prettier and their configs. The former sibling packages live in this repository, each with its own license file:
   - `src/constants/index.ts`: the command ids, error ids, run states and limits, from `linguacode-constants` (MIT)
   - `src/translations/`: the words of each command in each language, from `linguacode-translations` (MIT); `types.ts` types a language file, `index.ts` lists the languages
@@ -44,7 +51,9 @@ Verified on 2026-10-20. Update this section when a fact changes.
 
 Read the files before relying on these descriptions.
 
-- `src/index.ts`: public API: runs a session, sends output, requests input, reports the end
+- `src/index.ts`: the public API
+- `src/session.ts`: `Session` and `check()`: compiles a program and runs it step by step
+- `src/messages.ts`: `messageOf()`
 - `src/core/types.ts`: types of tokens, lines, the syntax tree, instructions and values
 - `src/core/words.ts`: the words of each language; `scan()` splits a line into keywords, names, texts and comments, `translateSource()` translates a program
 - `src/core/lexer.ts`: tokens of each line; indentation, texts, numbers, identifiers and commands
@@ -67,7 +76,7 @@ Read the files before relying on these descriptions.
 npm install        # also builds dist/ through prepare
 npm run build      # tsc: src/ into dist/ with type declarations
 npm run typecheck  # tsc on src/, test/ and scripts/, no output
-npm test           # node --test on the .ts sources: test/collection against CodeSubmit, core, translations, words
+npm test           # node --test on the .ts sources: test/collection in a Session, core, translations, words
 npm run coverage   # the same under c8
 npm run lint       # ESLint and Prettier check
 npm run format     # Prettier rewrite
@@ -127,7 +136,7 @@ The revival raises choices that belong to the owner. Present the options with tr
 1. Target Node.js version: decided, `>= 24`, tested on 24 and 26. Revisit when an LTS line ends; check the schedule on the web, don't rely on memory.
 2. CommonJS or ESM. JavaScript or TypeScript: decided, TypeScript with `strict`, published as ESM; `require('cmil')` keeps working for CommonJS.
 3. Build step: decided, `tsc` into `dist/`, run by `prepare` in a clone and before publishing.
-4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly against `CodeSubmit`.
+4. Test runner: decided, the Node.js test runner with c8 for coverage. The harness runs `test/collection/` directly in a `Session`.
 5. Sibling dependencies: decided, brought into this repository.
 6. Lockfile policy: decided, `package-lock.json` is committed.
 7. CI: decided, GitHub Actions.

@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: '第 {line} 行有语法错误。',
+    indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',
+    argumentError: '第 {line} 行：数学函数的参数不对。',
+    undefinedVariable: '第 {line} 行：{variable} 还没有值。',
+    memoryLimit: '第 {line} 行：文本太长了。',
+    timeout: '程序运行太久，却没有请求输入。',
+    unknownLanguage: '未知语言：{language}'
   }
 };
 

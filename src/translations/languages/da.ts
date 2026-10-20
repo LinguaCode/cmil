@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     while: 'Means during; would så_længe be better?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaksfejl i linje {line}.',
+    indentError: 'Indrykningsfejl i linje {line}: ryk blokke 4 mellemrum ind.',
+    argumentError: 'Linje {line}: en matematisk funktion har forkerte argumenter.',
+    undefinedVariable: 'Linje {line}: {variable} har endnu ingen værdi.',
+    memoryLimit: 'Linje {line}: en tekst blev for lang.',
+    timeout: 'Programmet kørte for længe uden at bede om inddata.',
+    unknownLanguage: 'Ukendt sprog: {language}.'
   }
 };
 

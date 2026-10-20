@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'ไวยากรณ์ผิดในบรรทัดที่ {line}',
+    indentError: 'ย่อหน้าผิดในบรรทัดที่ {line}: ให้ย่อหน้าบล็อกทีละ 4 ช่อง',
+    argumentError: 'บรรทัดที่ {line}: ฟังก์ชันคณิตศาสตร์มีอาร์กิวเมนต์ไม่ถูกต้อง',
+    undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
+    memoryLimit: 'บรรทัดที่ {line}: ข้อความยาวเกินไป',
+    timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',
+    unknownLanguage: 'ไม่รู้จักภาษา: {language}'
   }
 };
 

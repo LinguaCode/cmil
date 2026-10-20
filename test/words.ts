@@ -4,7 +4,7 @@ import {describe, it} from 'node:test';
 
 import {scan} from '../src/core/words.ts';
 import translations from '../src/translations/index.ts';
-import CodeSubmit, {languages, translate} from '../src/index.ts';
+import {Session, languages, translate} from '../src/index.ts';
 import successes from './collection/successes/index.ts';
 import errors from './collection/errors/index.ts';
 import tutorials from './collection/tutorials.ts';
@@ -12,25 +12,26 @@ import type {Case, Source} from './collection/types.ts';
 
 /**
  * Runs a program and answers every input request from inputs.
- * Resolves with the output and the error id and line of the session end, or when no inputs are left.
+ * Returns the output and the error id and line of the session end, or 'no inputs left'.
  */
-const run = (code: string, language: string, inputs: (string | number)[] = []) =>
-  new Promise<{output: string[]; errorId: string | undefined; line: number | undefined}>(resolve => {
-    const queue = inputs.slice();
-    const output: string[] = [];
-    const codeSubmit = new CodeSubmit(code, language);
+const run = (code: string, language: string, inputs: (string | number)[] = []) => {
+  const queue = inputs.slice();
+  const session = new Session(code, language);
 
-    codeSubmit
-      .onOutput(text => output.push(text))
-      .onInputRequest(() =>
-        queue.length ? codeSubmit.input(queue.shift()) : resolve({output, errorId: 'no inputs left', line: undefined})
-      )
-      .onSessionEnd(({errorId, param}) => resolve({output, errorId, line: param.line}))
-      .execute();
-  });
+  let step = session.run();
+  let output = step.output;
+  while (step.state === 'input' && queue.length) {
+    step = session.input(queue.shift() as string | number);
+    output = output.concat(step.output);
+  }
 
-const outputOf = async (code: string, language: string) => {
-  const {output, errorId} = await run(code, language);
+  if (step.state === 'input') return {output, errorId: 'no inputs left', line: undefined};
+  const {error} = step;
+  return {output, errorId: error?.id, line: error && 'line' in error ? error.line : undefined};
+};
+
+const outputOf = (code: string, language: string) => {
+  const {output, errorId} = run(code, language);
   assert.strictEqual(errorId, undefined, `${language}: ${code}`);
   return output.join('\n');
 };
@@ -93,63 +94,63 @@ describe('words', () => {
   });
 
   describe('programs', () => {
-    it('keywords next to operators', async () => {
-      assert.strictEqual(await outputOf('if 1<pi then\n    output 1', 'en'), '1');
-      assert.strictEqual(await outputOf('output 2>e', 'en'), '<false/>');
-      assert.strictEqual(await outputOf('x = true\noutput x!=true', 'en'), '<false/>');
-      assert.strictEqual(await outputOf('output(2*pi>6)', 'en'), '<true/>');
+    it('keywords next to operators', () => {
+      assert.strictEqual(outputOf('if 1<pi then\n    output 1', 'en'), '1');
+      assert.strictEqual(outputOf('output 2>e', 'en'), '<false/>');
+      assert.strictEqual(outputOf('x = true\noutput x!=true', 'en'), '<false/>');
+      assert.strictEqual(outputOf('output(2*pi>6)', 'en'), '<true/>');
     });
 
-    it('keywords that contain another keyword', async () => {
-      assert.strictEqual(await outputOf('output square(3)\noutput square_root(16)', 'en'), '9\n4');
-      assert.strictEqual(await outputOf('výstup mocnina(2, 3)\nvýstup druhá_mocnina(3)', 'cs'), '8\n9');
+    it('keywords that contain another keyword', () => {
+      assert.strictEqual(outputOf('output square(3)\noutput square_root(16)', 'en'), '9\n4');
+      assert.strictEqual(outputOf('výstup mocnina(2, 3)\nvýstup druhá_mocnina(3)', 'cs'), '8\n9');
       assert.strictEqual(
-        await outputOf('sortida arrodonir(2.5)\nsortida arrodonir_avall(2.5)\nsortida arrodonir_amunt(2.2)', 'ca'),
+        outputOf('sortida arrodonir(2.5)\nsortida arrodonir_avall(2.5)\nsortida arrodonir_amunt(2.2)', 'ca'),
         '3\n2\n3'
       );
-      assert.strictEqual(await outputOf('uscita e_numero > 2 e vero', 'it'), '<true/>');
+      assert.strictEqual(outputOf('uscita e_numero > 2 e vero', 'it'), '<true/>');
       assert.strictEqual(
-        await outputOf('вывести округлить(2.5)\nвывести округлить_вниз(2.5)\nвывести округлить_вверх(2.2)', 'ru'),
+        outputOf('вывести округлить(2.5)\nвывести округлить_вниз(2.5)\nвывести округлить_вверх(2.2)', 'ru'),
         '3\n2\n3'
       );
-      assert.strictEqual(await outputOf('izhod res\nizhod ni_res', 'sl'), '<true/>\n<false/>');
-      assert.strictEqual(await outputOf('izhod kvadrat(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
+      assert.strictEqual(outputOf('izhod res\nizhod ni_res', 'sl'), '<true/>\n<false/>');
+      assert.strictEqual(outputOf('izhod kvadrat(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
       assert.strictEqual(
-        await outputOf('shkruaj e vërtetë\nshkruaj e rreme\nshkruaj e > 2', 'sq'),
+        outputOf('shkruaj e vërtetë\nshkruaj e rreme\nshkruaj e > 2', 'sq'),
         '<true/>\n<false/>\n<true/>'
       );
     });
 
-    it('two-word keywords, with any spaces between the words', async () => {
-      assert.strictEqual(await outputOf('nëse e vërtetë atëherë\n    shkruaj 7', 'sq'), '7');
-      assert.strictEqual(await outputOf('nëse e  \tvërtetë atëherë\n    shkruaj 7', 'sq'), '7');
+    it('two-word keywords, with any spaces between the words', () => {
+      assert.strictEqual(outputOf('nëse e vërtetë atëherë\n    shkruaj 7', 'sq'), '7');
+      assert.strictEqual(outputOf('nëse e  \tvërtetë atëherë\n    shkruaj 7', 'sq'), '7');
     });
 
-    it('keywords in any case', async () => {
-      assert.strictEqual(await outputOf('OUTPUT 5\nOutput Pi > 3', 'en'), '5\n<true/>');
-      assert.strictEqual(await outputOf('ՏՊԵԼ ՃԻՇՏ', 'hy-AM'), '<true/>');
+    it('keywords in any case', () => {
+      assert.strictEqual(outputOf('OUTPUT 5\nOutput Pi > 3', 'en'), '5\n<true/>');
+      assert.strictEqual(outputOf('ՏՊԵԼ ՃԻՇՏ', 'hy-AM'), '<true/>');
     });
 
-    it('words in texts and comments are not keywords', async () => {
+    it('words in texts and comments are not keywords', () => {
       assert.strictEqual(
-        await outputOf('output «output»\noutput "say \\"output\\" now"\noutput \'it\\\'s output\' # output 2', 'en'),
+        outputOf('output «output»\noutput "say \\"output\\" now"\noutput \'it\\\'s output\' # output 2', 'en'),
         'output\nsay "output" now\nit\'s output'
       );
     });
 
-    it('names that contain a keyword', async () => {
+    it('names that contain a keyword', () => {
       assert.strictEqual(
-        await outputOf('output_x = 3\nx_output = 4\noutputx = 5\noutput output_x + x_output + outputx', 'en'),
+        outputOf('output_x = 3\nx_output = 4\noutputx = 5\noutput output_x + x_output + outputx', 'en'),
         '12'
       );
     });
 
-    it('a number joined to a word is a syntax error', async () => {
-      assert.deepStrictEqual(await run('output 2pi', 'en'), {output: [], errorId: 'syntaxError', line: 1});
+    it('a number joined to a word is a syntax error', () => {
+      assert.deepStrictEqual(run('output 2pi', 'en'), {output: [], errorId: 'syntaxError', line: 1});
     });
 
-    it('@ is not part of the language', async () => {
-      assert.deepStrictEqual(await run('@output 1', 'en'), {output: [], errorId: 'syntaxError', line: 1});
+    it('@ is not part of the language', () => {
+      assert.deepStrictEqual(run('@output 1', 'en'), {output: [], errorId: 'syntaxError', line: 1});
     });
   });
 
@@ -194,11 +195,11 @@ describe('words', () => {
     });
 
     languages.forEach(to => {
-      it(`spec programs run the same in ${to}`, async () => {
+      it(`spec programs run the same in ${to}`, () => {
         for (const {source, language} of programs) {
-          const expected = await run(source.code || '', language, source.inputs);
+          const expected = run(source.code || '', language, source.inputs);
           const translated = translate(source.code || '', language, to);
-          assert.deepStrictEqual(await run(translated, to, source.inputs), expected, `${source.title}:\n${translated}`);
+          assert.deepStrictEqual(run(translated, to, source.inputs), expected, `${source.title}:\n${translated}`);
         }
       });
     });

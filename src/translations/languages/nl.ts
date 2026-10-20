@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaxfout op regel {line}.',
+    indentError: 'Inspringfout op regel {line}: spring blokken 4 spaties in.',
+    argumentError: 'Regel {line}: een rekenfunctie heeft verkeerde argumenten.',
+    undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
+    memoryLimit: 'Regel {line}: een tekst werd te lang.',
+    timeout: 'Het programma liep te lang zonder om invoer te vragen.',
+    unknownLanguage: 'Onbekende taal: {language}.'
   }
 };
 

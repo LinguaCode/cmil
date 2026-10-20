@@ -41,6 +41,15 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  messages: {
+    syntaxError: 'Syntax error on line {line}.',
+    indentError: 'Indentation error on line {line}: indent blocks by 4 spaces.',
+    argumentError: 'Line {line}: a math function has the wrong arguments.',
+    undefinedVariable: 'Line {line}: {variable} has no value yet.',
+    memoryLimit: 'Line {line}: a text grew too long.',
+    timeout: 'The program ran too long without asking for input.',
+    unknownLanguage: 'Unknown language: {language}.'
   }
 };
 

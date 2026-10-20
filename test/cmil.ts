@@ -1,8 +1,8 @@
 //packages
 import assert from 'node:assert';
-import {describe, it, before, after} from 'node:test';
+import {describe, it} from 'node:test';
 
-import CodeSubmit, {type SessionEnd} from '../src/index.ts';
+import {Session, type ProgramError} from '../src/index.ts';
 import successes from './collection/successes/index.ts';
 import errors from './collection/errors/index.ts';
 import tutorials from './collection/tutorials.ts';
@@ -29,50 +29,41 @@ const collections = [
 
 type Result = {
   output: string;
-  error: SessionEnd;
+  error: ProgramError | undefined;
 };
 
 /**
- * Executes the source code of the test case via CodeSubmit.
- * Resolves with the collected output and the error of the session end.
+ * Runs the source code of the test case in a session, answering its input requests with the inputs of the case.
+ * Returns the printed lines and the error of the session end.
  */
-const run = (source: Case, language: string) =>
-  new Promise<Result>((resolve, reject) => {
-    const inputs = (source.inputs || []).slice();
-    let output = '';
+const run = (source: Case, language: string): Result => {
+  const inputs = (source.inputs || []).slice();
+  const session = new Session(source.code || '', language);
+  let step = session.run();
+  let output = step.output;
+  while (step.state === 'input') {
+    const input = inputs.shift();
+    if (input === undefined) {
+      throw new Error(`Input requested, but no inputs left.\nOutput so far:\n${output.join('\n')}`);
+    }
+    step = session.input(input);
+    output = output.concat(step.output);
+  }
 
-    const codeSubmit = new CodeSubmit(source.code || '', language);
-
-    codeSubmit
-      .onOutput(receivedData => {
-        output += receivedData ? `${receivedData}\n` : '';
-      })
-      .onInputRequest(() => {
-        if (!inputs.length) {
-          return reject(new Error(`Input requested, but no inputs left.\nOutput so far:\n${output}`));
-        }
-
-        setImmediate(() => codeSubmit.input(inputs.shift()));
-      })
-      .onSessionEnd(error => {
-        resolve({
-          output: output.slice(0, -1),
-          error
-        });
-      })
-      .execute();
-  });
+  return {output: output.join('\n'), error: step.error};
+};
 
 const sourceCodeMessage = (source: Case) =>
   `Source code:\n== START ==\n${source.code ? `${source.code}\n` : ''}== END ==`;
 
-const errorCheck = (source: Case, output: string, error: SessionEnd) => {
+const errorCheck = (source: Case, output: string, error: ProgramError | undefined) => {
   const message = `${sourceCodeMessage(source)}\nError:\n${JSON.stringify(error)}`;
+  const params: Record<string, unknown> = error || {};
 
-  assert.strictEqual(error.errorId, source.errorId, message);
+  assert.strictEqual(error?.id, source.errorId, message);
 
   (['variable', 'line'] as const).forEach(param => {
-    assert.strictEqual(error.param?.[param], source.errorParam?.[param], `${param}: ${message}`);
+    assert.strictEqual(params[param], source.errorParam?.[param], `${param}: ${message}`);
   });
 
   //output printed before the error, checked when the case defines it
@@ -81,8 +72,8 @@ const errorCheck = (source: Case, output: string, error: SessionEnd) => {
   }
 };
 
-const outputCheck = (source: Case, output: string, error: SessionEnd) => {
-  assert.strictEqual(error.errorId, undefined, `${sourceCodeMessage(source)}\nError:\n${JSON.stringify(error)}`);
+const outputCheck = (source: Case, output: string, error: ProgramError | undefined) => {
+  assert.strictEqual(error, undefined, `${sourceCodeMessage(source)}\nError:\n${JSON.stringify(error)}`);
   assert.strictEqual(output, source.output || '', sourceCodeMessage(source));
 };
 
@@ -93,15 +84,14 @@ const analyze = (sources: Source[], language: string) => {
         analyze(source.sources, language);
       });
     } else {
-      it(source.title, {todo: source.todo, skip: source.skip}, () =>
-        run(source, language).then(({output, error}) => {
-          if (source.errorId) {
-            errorCheck(source, output, error);
-          } else {
-            outputCheck(source, output, error);
-          }
-        })
-      );
+      it(source.title, {todo: source.todo, skip: source.skip}, () => {
+        const {output, error} = run(source, language);
+        if (source.errorId) {
+          errorCheck(source, output, error);
+        } else {
+          outputCheck(source, output, error);
+        }
+      });
     }
   });
 };
@@ -115,53 +105,20 @@ collections.forEach(({name, sources, language}) => {
 
 /**sessions keep their own state*/
 describe('sessions', () => {
-  it('a session waiting for input survives another session', () =>
-    new Promise<void>((resolve, reject) => {
-      const outputs: string[] = [];
-
-      const waiting = new CodeSubmit('input name\noutput "A got " + name', 'en');
-      waiting
-        .onOutput(text => outputs.push(text))
-        .onInputRequest(() => {})
-        .onSessionEnd(error => {
-          try {
-            assert.strictEqual(error.errorId, undefined, JSON.stringify(error));
-            assert.deepStrictEqual(outputs, ['B runs', 'A got Ani']);
-            resolve();
-          } catch (assertionError) {
-            reject(assertionError);
-          }
-        })
-        .execute();
-
-      new CodeSubmit('output "B runs"', 'en')
-        .onOutput(text => outputs.push(text))
-        .onInputRequest(() => {})
-        .onSessionEnd(() => {})
-        .execute();
-
-      waiting.input('Ani');
-    }));
+  it('a session waiting for input survives another session', () => {
+    const waiting = new Session('input name\noutput "A got " + name', 'en');
+    assert.deepStrictEqual(waiting.run(), {state: 'input', output: []});
+    assert.deepStrictEqual(new Session('output "B runs"', 'en').run(), {state: 'end', output: ['B runs']});
+    assert.deepStrictEqual(waiting.input('Ani'), {state: 'end', output: ['A got Ani']});
+  });
 });
 
-/**without the time limit, the step limit still ends a long-running loop*/
+/**a session may set its own step limit*/
 describe('step limit', () => {
-  before(() => {
-    process.env.TIMEOUT_IGNORE = 'true';
+  it('maxSteps ends a loop sooner', () => {
+    const step = new Session('while 1 < 4\n    output 123', 'en', {maxSteps: 100}).run();
+    assert.strictEqual(step.state, 'end');
+    assert.strictEqual(step.state === 'end' && step.error?.id, 'timeout');
+    assert.ok(step.output.length > 0 && step.output.every(line => line === '123'));
   });
-
-  after(() => {
-    delete process.env.TIMEOUT_IGNORE;
-  });
-
-  analyze(
-    [
-      {
-        title: 'Infinity loop: timeout ignored',
-        code: 'while 1 < 4\n    output 123',
-        errorId: 'timeout'
-      }
-    ],
-    'en'
-  );
 });

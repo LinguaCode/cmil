@@ -59,28 +59,29 @@ export const COMMAND = {
 
 export type Command = (typeof COMMAND)[keyof typeof COMMAND];
 
-//the errors reported to onSessionEnd
+//the errors of a program
 export const ERROR = {
-  TIMEOUT: 'timeout',
   SYNTAX_ERROR: 'syntaxError',
   INDENT_ERROR: 'indentError',
+  ARGUMENT_ERROR: 'argumentError',
   UNDEFINED_VARIABLE: 'undefinedVariable',
-  FUNCTION_ARGUMENT_SYNTAX_ERROR: 'functionArgumentSyntaxError',
   MEMORY_LIMIT: 'memoryLimit',
+  TIMEOUT: 'timeout',
   UNKNOWN_LANGUAGE: 'unknownLanguage'
 } as const;
 
+export type ErrorId = (typeof ERROR)[keyof typeof ERROR];
+
 //what a session does when it stops running
 export const STATE = {
-  WAITS_FOR_INPUT: 'waitsForInput',
-  SESSION_END: 'sessionEnd'
+  INPUT: 'input',
+  END: 'end'
 } as const;
 
-//limits of a program, between two inputs
-export const TIMEOUT_TIME = 666;
-export const MAX_STEPS = 100000;
+//steps a program may run in one call of run() or input(), unless the session sets its own maxSteps
+export const MAX_STEPS = 1000000;
 
-//limits of the memory: length of one text and of the output waiting to be sent
+//limits of the memory: length of one text and of the output of one call
 export const MAX_TEXT_LENGTH = 1000000;
 export const MAX_OUTPUT_LENGTH = 10000000;
 

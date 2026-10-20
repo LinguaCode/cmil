@@ -1,16 +1,14 @@
-import type {ErrorParam} from './types.ts';
+import type {ProgramError} from './types.ts';
 
 /**
- * An error of a CMIL program, reported to onSessionEnd as {errorId, param}.
+ * An error of a CMIL program, thrown inside the core; Session and check() return its error.
  */
 class CmilError extends Error {
-  errorId: string;
-  param: ErrorParam;
+  error: ProgramError;
 
-  constructor(errorId: string, param: ErrorParam = {}) {
-    super(errorId);
-    this.errorId = errorId;
-    this.param = param;
+  constructor(error: ProgramError) {
+    super(error.id);
+    this.error = error;
   }
 }
 

@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Error de sintaxi a la línia {line}.',
+    indentError: 'Error de sagnat a la línia {line}: sagna els blocs amb 4 espais.',
+    argumentError: 'Línia {line}: una funció matemàtica té arguments incorrectes.',
+    undefinedVariable: 'Línia {line}: {variable} encara no té valor.',
+    memoryLimit: 'Línia {line}: un text ha esdevingut massa llarg.',
+    timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",
+    unknownLanguage: 'Llengua desconeguda: {language}.'
   }
 };
 

@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Szintaktikai hiba a(z) {line}. sorban.',
+    indentError: 'Behúzási hiba a(z) {line}. sorban: a blokkokat 4 szóközzel húzd be.',
+    argumentError: '{line}. sor: egy matematikai függvény argumentumai hibásak.',
+    undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
+    memoryLimit: '{line}. sor: egy szöveg túl hosszú lett.',
+    timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
+    unknownLanguage: 'Ismeretlen nyelv: {language}.'
   }
 };
 

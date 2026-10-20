@@ -118,7 +118,7 @@ repeat 3 times
 | `log(base, x)`, `ln(x)`, `lg(x)` | logarithms: any base, `e`, 10 |
 | `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included |
 
-Another count of arguments, or a missing `)`, is a `functionArgumentSyntaxError`.
+Another count of arguments, or a missing `)`, is an `argumentError`.
 
 ## Output format
 
@@ -126,16 +126,16 @@ Another count of arguments, or a missing `)`, is a `functionArgumentSyntaxError`
 
 ## Errors
 
-`onSessionEnd` receives `{errorId, param}`. Syntax and indentation errors are found before the program runs; output printed before any other error is sent first.
+A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation and argument errors are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
 
-| `errorId` | When | `param` |
+| `id` | When | Also |
 |---|---|---|
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
-| `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line` |
-| `functionArgumentSyntaxError` | a math function with a missing `)` or another count of arguments | `line` |
-| `undefinedVariable` | a variable is read before it is stored | `variable`, `line` |
-| `memoryLimit` | a text grows too long | `line` |
-| `timeout` | the program runs too long between two inputs | none |
+| `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
+| `argumentError` | a math function with a missing `)` or another count of arguments | `line`, `column` of the function |
+| `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
+| `memoryLimit` | a text, or the output of one step, grows too long | `line` |
+| `timeout` | the program runs more steps than its limit between two inputs | none |
 | `unknownLanguage` | the session's language isn't one of the languages | `language` |
 
 The limits are in [running.md](running.md).

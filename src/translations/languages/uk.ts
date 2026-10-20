@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e', 'е']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Синтаксична помилка в рядку {line}.',
+    indentError: 'Помилка відступу в рядку {line}: робіть відступи блоків у 4 пробіли.',
+    argumentError: 'Рядок {line}: математична функція має неправильні аргументи.',
+    undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
+    memoryLimit: 'Рядок {line}: текст став задовгим.',
+    timeout: 'Програма працювала задовго, не запитуючи введення.',
+    unknownLanguage: 'Невідома мова: {language}.'
   }
 };
 

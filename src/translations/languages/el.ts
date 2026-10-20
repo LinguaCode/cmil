@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Συντακτικό σφάλμα στη γραμμή {line}.',
+    indentError: 'Σφάλμα εσοχής στη γραμμή {line}: κάντε εσοχή στα μπλοκ με 4 κενά.',
+    argumentError: 'Γραμμή {line}: μια μαθηματική συνάρτηση έχει λάθος ορίσματα.',
+    undefinedVariable: 'Γραμμή {line}: το {variable} δεν έχει ακόμα τιμή.',
+    memoryLimit: 'Γραμμή {line}: ένα κείμενο έγινε πολύ μεγάλο.',
+    timeout: 'Το πρόγραμμα έτρεξε πολλή ώρα χωρίς να ζητήσει είσοδο.',
+    unknownLanguage: 'Άγνωστη γλώσσα: {language}.'
   }
 };
 

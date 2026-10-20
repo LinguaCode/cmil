@@ -35,30 +35,30 @@ npm install github:LinguaCode/cmil --allow-git=root
 ```
 
 #### Usage
-CMIL is a library: it exports the `CodeSubmit` class, which runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`. It's an ES module with TypeScript types; CommonJS code can use `const CodeSubmit = require('cmil')`.
+CMIL is a library. A `Session` runs one program written in one of the [LinguaCode languages](src/translations/languages), for example `en`, `ru` or `hy-AM`, step by step: `run()` starts it, and `input(value)` continues it when it waits for input. It's an ES module with TypeScript types; CommonJS code can use `const {Session} = require('cmil')`.
 ```js
-import CodeSubmit from 'cmil';
+import {Session, messageOf} from 'cmil';
 
-const codeSubmit = new CodeSubmit('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
+const session = new Session('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
 
-codeSubmit
-  .onOutput(output => console.log(output))
-  .onInputRequest(() => codeSubmit.input('Ani'))
-  .onSessionEnd(error => {
-    if (error.errorId) {
-      console.error(error.errorId, error.param);
-    }
-  })
-  .execute();
+let step = session.run(); // {state: 'input', output: ['What is your name?']}
+step = session.input('Ani'); // {state: 'end', output: ['Hello, Ani']}
+
+if (step.state === 'end' && step.error) {
+  console.error(messageOf(step.error, 'en'));
+}
 ```
-- `onOutput(callback)`: receives the text printed by the program.
-- `onInputRequest(callback)`: called when the program waits for input; pass the value to `codeSubmit.input(value)`.
-- `onSessionEnd(callback)`: called when the program ends. On an error, `errorId` is set (for example `syntaxError`, `undefinedVariable`, `timeout`, `memoryLimit` or `unknownLanguage`) and `param` holds details such as `line` or `variable`. Output printed before the error is sent first.
-- `stop()`: ends the session, for example when the learner leaves; it takes no more input, and `onSessionEnd` isn't called.
+- `run()`: starts the program, which runs until it waits for input or ends.
+- `input(value)`: gives the program the input it waits for; an empty input is asked for again.
+- Both return a step: `{state: 'input', output}` or `{state: 'end', output, error}`. `output` holds the lines printed since the last step. `error` is set when the program ended with one, for example `{id: 'undefinedVariable', line: 2, column: 8, variable: 'x'}`; output printed before the error comes with it.
+- `stop()`: ends the session, for example when the learner leaves; it takes no more input.
+- `new Session(sourceCode, language, {maxSteps})`: a program may run 1,000,000 steps, about half a second, in one step before it ends with `timeout`.
+
+`check(sourceCode, language)` returns the first error a program has before it runs, or `null`. `messageOf(error, language)` returns the message of an error in a language, for example `Syntax error on line 2.`
 
 `import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('output "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`. Texts, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
 
-CMIL runs programs with its own interpreter, never as JavaScript, and limits their time and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
+CMIL runs programs with its own interpreter, never as JavaScript, and limits their steps and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 
 #### Development
 ```
@@ -69,7 +69,7 @@ npm test
 ```
 CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`npm run build`), and `npm run typecheck` checks the types.
 
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, against `CodeSubmit`, plus the tests of the interpreter, the keyword scanner, `translate()` and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()` and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, math functions and errors.

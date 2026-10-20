@@ -41,6 +41,15 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  messages: {
+    syntaxError: 'Շարահյուսական սխալ {line}-րդ տողում։',
+    indentError: 'Նահանջի սխալ {line}-րդ տողում․ բլոկները նահանջեք 4 բացատով։',
+    argumentError: '{line}-րդ տող․ մաթեմատիկական ֆունկցիայի արգումենտները սխալ են։',
+    undefinedVariable: '{line}-րդ տող․ {variable}-ը դեռ արժեք չունի։',
+    memoryLimit: '{line}-րդ տող․ տեքստը չափազանց երկար դարձավ։',
+    timeout: 'Ծրագիրը չափազանց երկար աշխատեց՝ առանց մուտքագրում խնդրելու։',
+    unknownLanguage: 'Անհայտ լեզու՝ {language}։'
   }
 };
 
