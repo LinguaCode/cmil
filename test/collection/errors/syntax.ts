@@ -74,6 +74,22 @@ const sources: Source[] = [
         }
       },
       {
+        title: 'input with a question: it only reads',
+        code: 'input "Your name?" name',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 1
+        }
+      },
+      {
+        title: 'input with two names',
+        code: 'print 1\ninput name age',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 2
+        }
+      },
+      {
         title: 'for without from',
         code: 'for i to 5\n    print i',
         errorId: 'syntaxError',

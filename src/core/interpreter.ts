@@ -43,6 +43,7 @@ class Interpreter {
   maxSteps: number;
   wordOf: (command: string) => string;
   format: values.Format;
+  random: () => number;
   counters: number[];
   //the bounds of each for loop, and the passes it has made
   ranges: {from: number; to: number; step: number; passes: number}[] = [];
@@ -52,8 +53,6 @@ class Interpreter {
   position = 0;
   line = 0;
   input: Value | undefined = undefined;
-  //the prompt of the input the program waits for
-  prompt: string | undefined = undefined;
   output: string[] = [];
   outputLength = 0;
   //the callers of the functions that haven't returned yet
@@ -68,12 +67,14 @@ class Interpreter {
    * @param maxSteps - the steps the program may run in one call of run().
    * @param wordOf - the word of a command in the program's language, or an operator as it is; output and errors use it.
    * @param quotes - the quotes of texts in printed lists.
+   * @param random - a number from 0 up to 1, like Math.random(), for random().
    */
   constructor(
     {instructions, slots, functions, replays}: Program,
     maxSteps: number,
     wordOf: (command: string) => string,
-    quotes: Quotes
+    quotes: Quotes,
+    random: () => number = Math.random
   ) {
     this.instructions = instructions;
     this.functions = functions;
@@ -81,6 +82,7 @@ class Interpreter {
     this.maxSteps = maxSteps;
     this.wordOf = wordOf;
     this.format = {true: wordOf(COMMAND.TRUE), false: wordOf(COMMAND.FALSE), quotes};
+    this.random = random;
     this.counters = new Array<number>(slots).fill(0);
   }
 
@@ -199,7 +201,9 @@ class Interpreter {
       }
       case 'call': {
         const args = node.args.map(arg => this.evaluate(arg));
-        return this.checkText(this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(args, this.format)));
+        return this.checkText(
+          this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(args, this.format, this.random))
+        );
       }
       case 'userCall':
         throw new Error('A call of a function in an instruction without calls.');
@@ -287,13 +291,9 @@ class Interpreter {
             break;
           }
           case 'input':
-            if (this.input === undefined) {
-              if (instruction.prompt) this.prompt = this.text(this.evaluate(instruction.prompt));
-              return STATE.INPUT;
-            }
+            if (this.input === undefined) return STATE.INPUT;
             this.variables.set(instruction.name, this.input);
             this.input = undefined;
-            this.prompt = undefined;
             break;
           case 'assign':
             this.variables.set(instruction.name, this.evaluate(instruction.expression));

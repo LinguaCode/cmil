@@ -13,16 +13,19 @@ import type {Program, ProgramError} from './core/types.ts';
 
 /**
  * What a program did in one call of run() or input(): the lines it printed,
- * and whether it waits for input, with the prompt of the input if it has one,
- * or has ended, with its error if it has one.
+ * and whether it waits for input, or has ended, with its error if it has one.
  */
 export type Step =
-  | {state: typeof STATE.INPUT; output: string[]; prompt?: string}
-  | {state: typeof STATE.END; output: string[]; error?: ProgramError};
+  {state: typeof STATE.INPUT; output: string[]} | {state: typeof STATE.END; output: string[]; error?: ProgramError};
 
 export type SessionOptions = {
   /** The steps a program may run in one call of run() or input() before it ends with timeout. */
   maxSteps?: number;
+  /**
+   * The numbers random() is made from, from 0 up to 1, like Math.random(), which is the default.
+   * Two sessions with generators that give the same numbers make the same random numbers.
+   */
+  random?: () => number;
 };
 
 //the program of a source code; errors in the source are thrown as CmilError
@@ -52,15 +55,17 @@ export class Session {
   #sourceCode: string;
   #language: string;
   #maxSteps: number;
+  #random: () => number;
 
   #interpreter: Interpreter | null = null;
   #state: 'new' | Step['state'] = 'new';
   #error: ProgramError | undefined;
 
-  constructor(sourceCode: string, language: string, {maxSteps = MAX_STEPS}: SessionOptions = {}) {
+  constructor(sourceCode: string, language: string, {maxSteps = MAX_STEPS, random = Math.random}: SessionOptions = {}) {
     this.#sourceCode = sourceCode;
     this.#language = language;
     this.#maxSteps = maxSteps;
+    this.#random = random;
   }
 
   /**
@@ -73,7 +78,13 @@ export class Session {
     try {
       const program = compile(this.#sourceCode, this.#language);
       const {first, main} = wordsOf(this.#language);
-      this.#interpreter = new Interpreter(program, this.#maxSteps, command => first.get(command) ?? command, main);
+      this.#interpreter = new Interpreter(
+        program,
+        this.#maxSteps,
+        command => first.get(command) ?? command,
+        main,
+        this.#random
+      );
     } catch (error) {
       return this.#fail(error, []);
     }
@@ -117,18 +128,8 @@ export class Session {
 
     const output = interpreter.takeOutput();
     this.#state = state;
-    if (state === STATE.END) {
-      this.#interpreter = null;
-      return {state, output};
-    }
-
-    return this.#waiting(output);
-  }
-
-  //the input step, with the prompt of the input when it has one
-  #waiting(output: string[]): Step {
-    const prompt = this.#interpreter?.prompt;
-    return prompt ? {state: STATE.INPUT, output, prompt} : {state: STATE.INPUT, output};
+    if (state === STATE.END) this.#interpreter = null;
+    return {state, output};
   }
 
   //output printed before the error is returned with it
@@ -143,7 +144,7 @@ export class Session {
   }
 
   #current(): Step {
-    if (this.#state === STATE.INPUT) return this.#waiting([]);
+    if (this.#state === STATE.INPUT) return {state: STATE.INPUT, output: []};
     return this.#error ? {state: STATE.END, output: [], error: this.#error} : {state: STATE.END, output: []};
   }
 }

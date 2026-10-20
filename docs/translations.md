@@ -47,7 +47,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Albanian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `të_dhëna` |
+| input | waits for the user and stores the answer in a variable | `të_dhëna` |
 | print | prints values, separated by commas, on one line | `shkruaj` |
 | if | runs the block below when its condition is true | `nëse` |
 | else | runs the block below when the conditions before it are false | `përndryshe` |
@@ -132,7 +132,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Arabic |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `المدخلات` |
+| input | waits for the user and stores the answer in a variable | `المدخلات` |
 | print | prints values, separated by commas, on one line | `الإخراج` |
 | if | runs the block below when its condition is true | `إذا` |
 | else | runs the block below when the conditions before it are false | `وإلا` |
@@ -221,7 +221,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Armenian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `մուտքագրել` |
+| input | waits for the user and stores the answer in a variable | `մուտքագրել` |
 | print | prints values, separated by commas, on one line | `տպել` |
 | if | runs the block below when its condition is true | `եթե` |
 | else | runs the block below when the conditions before it are false | `այլապես` |
@@ -285,7 +285,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Catalan |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrada` |
+| input | waits for the user and stores the answer in a variable | `entrada` |
 | print | prints values, separated by commas, on one line | `sortida` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sinó` |
@@ -369,7 +369,7 @@ Quotes: “…”, also "…", '…' and «…»
 
 | English | Meaning | Chinese |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `输入` |
+| input | waits for the user and stores the answer in a variable | `输入` |
 | print | prints values, separated by commas, on one line | `输出` |
 | if | runs the block below when its condition is true | `如果` |
 | else | runs the block below when the conditions before it are false | `否则` |
@@ -453,7 +453,7 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Czech |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vstup` |
+| input | waits for the user and stores the answer in a variable | `vstup` |
 | print | prints values, separated by commas, on one line | `výstup` |
 | if | runs the block below when its condition is true | `když` |
 | else | runs the block below when the conditions before it are false | `jinak` |
@@ -537,7 +537,7 @@ Quotes: »…«, also "…", '…' and «…»
 
 | English | Meaning | Danish |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `indtast` |
+| input | waits for the user and stores the answer in a variable | `indtast` |
 | print | prints values, separated by commas, on one line | `udskriv` |
 | if | runs the block below when its condition is true | `hvis` |
 | else | runs the block below when the conditions before it are false | `ellers` |
@@ -622,7 +622,7 @@ Quotes: “…”, also "…", '…' and «…»
 
 | English | Meaning | Dutch |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `invoer` |
+| input | waits for the user and stores the answer in a variable | `invoer` |
 | print | prints values, separated by commas, on one line | `uitvoer` |
 | if | runs the block below when its condition is true | `als` |
 | else | runs the block below when the conditions before it are false | `anders` |
@@ -706,7 +706,7 @@ Quotes: "…", also “…”, '…' and «…»
 
 | English | Meaning | English |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `input` |
+| input | waits for the user and stores the answer in a variable | `input` |
 | print | prints values, separated by commas, on one line | `print` |
 | if | runs the block below when its condition is true | `if` |
 | else | runs the block below when the conditions before it are false | `else` |
@@ -770,7 +770,7 @@ Quotes: ”…”, also "…", '…' and «…»
 
 | English | Meaning | Finnish |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `syötä` |
+| input | waits for the user and stores the answer in a variable | `syötä` |
 | print | prints values, separated by commas, on one line | `tulosta` |
 | if | runs the block below when its condition is true | `jos` |
 | else | runs the block below when the conditions before it are false | `muuten` |
@@ -855,7 +855,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | French |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrée` |
+| input | waits for the user and stores the answer in a variable | `entrée` |
 | print | prints values, separated by commas, on one line | `sortie` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sinon` |
@@ -939,7 +939,7 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Georgian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `შეყვანის` |
+| input | waits for the user and stores the answer in a variable | `შეყვანის` |
 | print | prints values, separated by commas, on one line | `გამოშვება` |
 | if | runs the block below when its condition is true | `თუ` |
 | else | runs the block below when the conditions before it are false | `სხვა` |
@@ -1027,7 +1027,7 @@ Quotes: „…“, also »…«, "…", '…' and «…»
 
 | English | Meaning | German |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `eingeben` |
+| input | waits for the user and stores the answer in a variable | `eingeben` |
 | print | prints values, separated by commas, on one line | `ausgeben` |
 | if | runs the block below when its condition is true | `wenn` |
 | else | runs the block below when the conditions before it are false | `sonst` |
@@ -1111,7 +1111,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Greek |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `διάβασε` |
+| input | waits for the user and stores the answer in a variable | `διάβασε` |
 | print | prints values, separated by commas, on one line | `γράψε` |
 | if | runs the block below when its condition is true | `αν` |
 | else | runs the block below when the conditions before it are false | `αλλιώς` |
@@ -1195,7 +1195,7 @@ Quotes: „…”, also "…", '…' and «…»
 
 | English | Meaning | Hebrew |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `קלט` |
+| input | waits for the user and stores the answer in a variable | `קלט` |
 | print | prints values, separated by commas, on one line | `פלט` |
 | if | runs the block below when its condition is true | `אם` |
 | else | runs the block below when the conditions before it are false | `אחרת` |
@@ -1279,7 +1279,7 @@ Quotes: „…”, also "…", '…' and «…»
 
 | English | Meaning | Hungarian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `bemenet` |
+| input | waits for the user and stores the answer in a variable | `bemenet` |
 | print | prints values, separated by commas, on one line | `kimenet` |
 | if | runs the block below when its condition is true | `ha` |
 | else | runs the block below when the conditions before it are false | `különben` |
@@ -1363,7 +1363,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Italian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ingresso` |
+| input | waits for the user and stores the answer in a variable | `ingresso` |
 | print | prints values, separated by commas, on one line | `uscita` |
 | if | runs the block below when its condition is true | `se` |
 | else | runs the block below when the conditions before it are false | `altrimenti` |
@@ -1449,7 +1449,7 @@ Quotes: 「…」, also 『…』, "…", '…' and «…»
 
 | English | Meaning | Japanese |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `入力` |
+| input | waits for the user and stores the answer in a variable | `入力` |
 | print | prints values, separated by commas, on one line | `出力` |
 | if | runs the block below when its condition is true | `もし` |
 | else | runs the block below when the conditions before it are false | `そうでなければ` |
@@ -1517,7 +1517,7 @@ Quotes: “…”, also "…", '…' and «…»
 
 | English | Meaning | Korean |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `입력` |
+| input | waits for the user and stores the answer in a variable | `입력` |
 | print | prints values, separated by commas, on one line | `출력` |
 | if | runs the block below when its condition is true | `만약` |
 | else | runs the block below when the conditions before it are false | `아니면` |
@@ -1602,7 +1602,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Norwegian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `skriv_inn` |
+| input | waits for the user and stores the answer in a variable | `skriv_inn` |
 | print | prints values, separated by commas, on one line | `skriv_ut` |
 | if | runs the block below when its condition is true | `hvis` |
 | else | runs the block below when the conditions before it are false | `ellers` |
@@ -1688,7 +1688,7 @@ Quotes: „…”, also "…", '…' and «…»
 
 | English | Meaning | Polish |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `wczytaj` |
+| input | waits for the user and stores the answer in a variable | `wczytaj` |
 | print | prints values, separated by commas, on one line | `wypisz` |
 | if | runs the block below when its condition is true | `jeśli` |
 | else | runs the block below when the conditions before it are false | `inaczej` |
@@ -1772,7 +1772,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Portuguese |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `entrada` |
+| input | waits for the user and stores the answer in a variable | `entrada` |
 | print | prints values, separated by commas, on one line | `saída` |
 | if | runs the block below when its condition is true | `se` |
 | else | runs the block below when the conditions before it are false | `senão` |
@@ -1858,7 +1858,7 @@ Quotes: „…”, also "…", '…' and «…»
 
 | English | Meaning | Romanian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `intrare` |
+| input | waits for the user and stores the answer in a variable | `intrare` |
 | print | prints values, separated by commas, on one line | `ieșire` |
 | if | runs the block below when its condition is true | `dacă` |
 | else | runs the block below when the conditions before it are false | `altfel` |
@@ -1943,7 +1943,7 @@ Quotes: «…», also „…“, "…" and '…'
 
 | English | Meaning | Russian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ввести` |
+| input | waits for the user and stores the answer in a variable | `ввести` |
 | print | prints values, separated by commas, on one line | `вывести` |
 | if | runs the block below when its condition is true | `если` |
 | else | runs the block below when the conditions before it are false | `иначе` |
@@ -2007,7 +2007,7 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Serbian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `улаз` |
+| input | waits for the user and stores the answer in a variable | `улаз` |
 | print | prints values, separated by commas, on one line | `излаз` |
 | if | runs the block below when its condition is true | `ако` |
 | else | runs the block below when the conditions before it are false | `иначе` |
@@ -2091,7 +2091,7 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Slovak |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vstup` |
+| input | waits for the user and stores the answer in a variable | `vstup` |
 | print | prints values, separated by commas, on one line | `výstup` |
 | if | runs the block below when its condition is true | `ak` |
 | else | runs the block below when the conditions before it are false | `inak` |
@@ -2175,7 +2175,7 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Slovenian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `vhod` |
+| input | waits for the user and stores the answer in a variable | `vhod` |
 | print | prints values, separated by commas, on one line | `izhod` |
 | if | runs the block below when its condition is true | `če` |
 | else | runs the block below when the conditions before it are false | `sicer` |
@@ -2260,7 +2260,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Spanish |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `introducir` |
+| input | waits for the user and stores the answer in a variable | `introducir` |
 | print | prints values, separated by commas, on one line | `salida` |
 | if | runs the block below when its condition is true | `si` |
 | else | runs the block below when the conditions before it are false | `sino` |
@@ -2345,7 +2345,7 @@ Quotes: ”…”, also "…", '…' and «…»
 
 | English | Meaning | Swedish |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `mata_in` |
+| input | waits for the user and stores the answer in a variable | `mata_in` |
 | print | prints values, separated by commas, on one line | `skriv_ut` |
 | if | runs the block below when its condition is true | `om` |
 | else | runs the block below when the conditions before it are false | `annars` |
@@ -2430,7 +2430,7 @@ Quotes: “…”, also "…", '…' and «…»
 
 | English | Meaning | Thai |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `นำเข้าข้อมูล` |
+| input | waits for the user and stores the answer in a variable | `นำเข้าข้อมูล` |
 | print | prints values, separated by commas, on one line | `ส่งออก` |
 | if | runs the block below when its condition is true | `ถ้า` |
 | else | runs the block below when the conditions before it are false | `มิฉะนั้น` |
@@ -2514,7 +2514,7 @@ Quotes: «…», also „…“, "…" and '…'
 
 | English | Meaning | Ukrainian |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `ввести` |
+| input | waits for the user and stores the answer in a variable | `ввести` |
 | print | prints values, separated by commas, on one line | `вивести` |
 | if | runs the block below when its condition is true | `якщо` |
 | else | runs the block below when the conditions before it are false | `інакше` |
@@ -2598,7 +2598,7 @@ Quotes: “…”, also "…", '…' and «…»
 
 | English | Meaning | Vietnamese |
 |---|---|---|
-| input | waits for the user, after a prompt if it has one, and stores the answer in a variable | `đầu_vào` |
+| input | waits for the user and stores the answer in a variable | `đầu_vào` |
 | print | prints values, separated by commas, on one line | `ra` |
 | if | runs the block below when its condition is true | `nếu` |
 | else | runs the block below when the conditions before it are false | `ngược_lại` |

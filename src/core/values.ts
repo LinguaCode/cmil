@@ -325,7 +325,8 @@ export const sequence = (value: Value): Value[] =>
 type BuiltIn = {
   min: number;
   max: number;
-  apply: (args: Value[], format: Format) => Value;
+  //random is a number from 0 up to 1, like Math.random()
+  apply: (args: Value[], format: Format, random: () => number) => Value;
 };
 
 const one = (apply: (value: number) => number): BuiltIn => ({
@@ -354,10 +355,10 @@ export const FUNCTIONS: Record<string, BuiltIn> = {
   [COMMAND.RANDOM]: {
     min: 1,
     max: 2,
-    apply: ([first, second]) => {
+    apply: ([first, second], _format, random) => {
       const [min, max] = second === undefined ? [0, whole(first)] : [whole(first), whole(second)];
       if (min > max) throw new ValueError(ERROR.MATH_ERROR);
-      return Math.floor(Math.random() * (max - min + 1) + min);
+      return Math.floor(random() * (max - min + 1) + min);
     }
   },
   [COMMAND.ABS]: one(Math.abs),
