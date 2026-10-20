@@ -45,7 +45,7 @@ import {Worker} from 'node:worker_threads';
 import {messageOf} from 'cmil';
 
 const worker = new Worker(new URL('./session-worker.mjs', import.meta.url), {
-  workerData: {sourceCode: 'input "Your name?" name\nprint "Hello, " + name', language: 'en'},
+  workerData: {sourceCode: 'print "Your name?"\ninput name\nprint "Hello, " + name', language: 'en'},
   resourceLimits: {maxOldGenerationSizeMb: 64}
 });
 
@@ -57,7 +57,6 @@ worker.on('message', step => {
   step.output.forEach(line => console.log(line));
 
   if (step.state === 'input') {
-    console.log(step.prompt ?? '');
     worker.postMessage('Ani');
     timer = setTimeout(() => worker.terminate(), 3000);
   } else if (step.error) {

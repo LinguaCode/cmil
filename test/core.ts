@@ -232,13 +232,16 @@ describe('core', () => {
   });
 
   describe('functions', () => {
-    it('a function waits for input like the program, with its prompt', () => {
-      const {steps, output} = run('function ask(q)\n    input q a\n    return a\nprint ask("A?") + ask("B?")', [1, 2]);
-      assert.deepStrictEqual(
-        steps.map(step => step.state === 'input' && step.prompt),
-        ['A?', 'B?', false]
+    it('a function waits for input like the program', () => {
+      const {steps} = run(
+        'function ask(q)\n    print q\n    input a\n    return a\nprint ask("A?") + ask("B?")',
+        [1, 2]
       );
-      assert.deepStrictEqual(output, ['3']);
+      assert.deepStrictEqual(steps, [
+        {state: 'input', output: ['A?']},
+        {state: 'input', output: ['B?']},
+        {state: 'end', output: ['3']}
+      ]);
     });
 
     it(`calls nest up to ${MAX_RECURSION} deep`, () => {
@@ -323,11 +326,21 @@ describe('core', () => {
       ]);
     });
 
-    it('the prompt of an input comes with its step', () => {
-      const session = new Session('input "Your name?" name\nprint "Hi " + name\ninput age', 'en');
-      assert.deepStrictEqual(session.run(), {state: 'input', output: [], prompt: 'Your name?'});
-      assert.deepStrictEqual(session.input(''), {state: 'input', output: [], prompt: 'Your name?'});
+    it('an input only reads: its question is printed before it', () => {
+      const session = new Session('print "Your name?"\ninput name\nprint "Hi " + name\ninput age', 'en');
+      assert.deepStrictEqual(session.run(), {state: 'input', output: ['Your name?']});
+      assert.deepStrictEqual(session.input(''), {state: 'input', output: []});
       assert.deepStrictEqual(session.input('Ani'), {state: 'input', output: ['Hi Ani']});
+    });
+
+    it('an input with anything but a name is a syntax error at it', () => {
+      assert.deepStrictEqual(run('input "Your name?" name').error, {id: 'syntaxError', line: 1, column: 7});
+      assert.deepStrictEqual(run('input name age').error, {id: 'syntaxError', line: 1, column: 12});
+      assert.deepStrictEqual(run('մուտքագրել «Անուն՞» անուն', [], 'hy-AM').error, {
+        id: 'syntaxError',
+        line: 1,
+        column: 12
+      });
     });
 
     it('= in an expression points at the =', () => {
@@ -391,6 +404,18 @@ describe('core', () => {
       const tight = new Session(code, 'en', {maxSteps: 50});
       tight.run();
       assert.deepStrictEqual(tight.input(1), {state: 'end', output: [], error: {id: 'timeout'}});
+    });
+
+    it('random() is made from the numbers of the random option', () => {
+      //the same numbers each time: 0, 0.5, 0.99, 0, 0.5, …
+      const numbers = () => {
+        let call = 0;
+        return () => [0, 0.5, 0.99][call++ % 3];
+      };
+      const code = 'repeat 4 times\n    print random(1, 6)\nprint random(10)';
+      const first = new Session(code, 'en', {random: numbers()}).run();
+      assert.deepStrictEqual(first, {state: 'end', output: ['1', '4', '6', '1', '5']});
+      assert.deepStrictEqual(new Session(code, 'en', {random: numbers()}).run(), first);
     });
 
     it('the state of a session is private', () => {

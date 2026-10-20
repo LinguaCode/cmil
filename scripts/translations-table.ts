@@ -50,7 +50,7 @@ const NAMES: Record<string, [string, string]> = {
 };
 
 const MEANINGS: Record<Command, string> = {
-  [COMMAND.INPUT]: 'waits for the user, after a prompt if it has one, and stores the answer in a variable',
+  [COMMAND.INPUT]: 'waits for the user and stores the answer in a variable',
   [COMMAND.PRINT]: 'prints values, separated by commas, on one line',
   [COMMAND.IF]: 'runs the block below when its condition is true',
   [COMMAND.ELSE]: 'runs the block below when the conditions before it are false',

@@ -243,7 +243,7 @@ const expressionsOf = (statement: Statement): (Expression | undefined)[] => {
     case 'print':
       return statement.expressions;
     case 'input':
-      return [statement.prompt];
+      return [];
     case 'assign':
     case 'return':
       return [statement.expression];
@@ -389,12 +389,11 @@ export const parse = (lines: Line[]): Statement[] => {
       case COMMAND.PRINT:
         return {type: 'print', expressions: splitAtCommas(rest).map(part => parseExpression(part, line)), line};
       case COMMAND.INPUT: {
-        //input name, or input with a prompt before the name: input "Your name?" name
-        const name = rest[rest.length - 1];
+        //input name: it only reads, so a question is printed before it
+        const [name, extra] = rest;
         if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
-        const statement: Statement = {type: 'input', name: name.value, line};
-        if (rest.length > 1) statement.prompt = parseExpression(rest.slice(0, -1), line);
-        return statement;
+        if (extra) throw syntaxError(line, extra);
+        return {type: 'input', name: name.value, line};
       }
       case COMMAND.IF:
         return parseIf(rest, line, level);

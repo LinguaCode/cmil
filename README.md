@@ -39,9 +39,9 @@ CMIL is a library. A `Session` runs one program written in one of the [LinguaCod
 ```js
 import {Session, messageOf} from 'cmil';
 
-const session = new Session('input "What is your name?" name\nprint "Hello, " + name', 'en');
+const session = new Session('print "What is your name?"\ninput name\nprint "Hello, " + name', 'en');
 
-let step = session.run(); // {state: 'input', output: [], prompt: 'What is your name?'}
+let step = session.run(); // {state: 'input', output: ['What is your name?']}
 step = session.input('Ani'); // {state: 'end', output: ['Hello, Ani']}
 
 if (step.state === 'end' && step.error) {
@@ -50,9 +50,9 @@ if (step.state === 'end' && step.error) {
 ```
 - `run()`: starts the program, which runs until it waits for input or ends.
 - `input(value)`: gives the program the input it waits for; an empty input is asked for again.
-- Both return a step: `{state: 'input', output, prompt}` or `{state: 'end', output, error}`. `output` holds the lines printed since the last step, and `prompt` the prompt of the input when it has one, to show to the user. `error` is set when the program ended with one, for example `{id: 'undefinedVariable', line: 2, column: 8, variable: 'x'}`; output printed before the error comes with it.
+- Both return a step: `{state: 'input', output}` or `{state: 'end', output, error}`. `output` holds the lines printed since the last step, like the question a program prints before its input. `error` is set when the program ended with one, for example `{id: 'undefinedVariable', line: 2, column: 8, variable: 'x'}`; output printed before the error comes with it.
 - `stop()`: ends the session, for example when the learner leaves; it takes no more input.
-- `new Session(sourceCode, language, {maxSteps})`: a program may run 1,000,000 steps, about half a second, in one step before it ends with `timeout`.
+- `new Session(sourceCode, language, {maxSteps, random})`: a program may run 1,000,000 steps, about half a second, in one step before it ends with `timeout`. `random` gives the numbers `random()` is made from, from 0 up to 1 like `Math.random()`, the default; two sessions given the same numbers make the same random numbers, for example to check a learner's program against a solution.
 
 `check(sourceCode, language)` returns the first error a program has before it runs, or `null`. `messageOf(error, language)` returns the message of an error in a language, for example `Syntax error on line 2.`
 

@@ -31,7 +31,7 @@ export type Expression =
 
 export type Statement =
   | {type: 'print'; expressions: Expression[]; line: number}
-  | {type: 'input'; name: string; prompt?: Expression; line: number}
+  | {type: 'input'; name: string; line: number}
   | {type: 'assign'; name: string; expression: Expression; line: number}
   | {type: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {type: 'add'; expression: Expression; target: Expression; line: number}
@@ -55,7 +55,7 @@ export type Branch = {
 
 export type Instruction =
   | {op: 'print'; expressions: Expression[]; line: number}
-  | {op: 'input'; name: string; prompt?: Expression; line: number}
+  | {op: 'input'; name: string; line: number}
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {op: 'add'; expression: Expression; target: Expression; line: number}

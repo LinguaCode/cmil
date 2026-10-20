@@ -55,9 +55,10 @@ prints `500`.
 
 ## Output and input
 
-`print expression` prints a value on a line, and `print a, b, c` several values separated by spaces. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. A prompt before the name, `input "Your name?" name`, is shown to the user while the program waits; it can be any value, like `"Your " + item + "?"`.
+`print expression` prints a value on a line, and `print a, b, c` several values separated by spaces. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. `input` only reads: what the user should type is printed before it, like `print "Your name?"`, and anything between `input` and the name is a syntax error.
 
 ```
+print "What is your name?"
 input name
 print "Hello, " + name
 ```

@@ -57,9 +57,9 @@ const sources: Source[] = [
       },
       {
         title: 'a function asks for input',
-        code: 'function ask(question)\n    input question answer\n    return answer\nprint ask("Name?") + " and " + ask("Friend?")',
+        code: 'function ask(question)\n    print question\n    input answer\n    return answer\nprint ask("Name?") + " and " + ask("Friend?")',
         inputs: ['Ani', 'Aram'],
-        output: 'Ani and Aram'
+        output: 'Name?\nFriend?\nAni and Aram'
       },
       {
         title: 'values are computed from left to right',

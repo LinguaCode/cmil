@@ -3,7 +3,7 @@
  * so the interpreter runs them in a loop and can pause at any input.
  *
  * Instructions:
- * - print {expressions}, input {name, prompt}, assign {name, expression}
+ * - print {expressions}, input {name}, assign {name, expression}
  * - setItem {target, index, expression}, add {expression, target}, remove {expression, target}: change a list
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
@@ -30,7 +30,7 @@ const expressionsOf = (instruction: Instruction): (Expression | undefined)[] => 
     case 'print':
       return instruction.expressions;
     case 'input':
-      return [instruction.prompt];
+      return [];
     case 'assign':
     case 'return':
     case 'jumpUnless':
@@ -87,7 +87,7 @@ export const compile = (statements: Statement[]): Program => {
         emit({op: 'print', expressions: node.expressions, line});
         break;
       case 'input':
-        emit({op: 'input', name: node.name, prompt: node.prompt, line});
+        emit({op: 'input', name: node.name, line});
         break;
       case 'assign':
         emit({op: 'assign', name: node.name, expression: node.expression, line});

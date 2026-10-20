@@ -9,16 +9,10 @@ const sources: Source[] = [
       {title: 'texts in the quotes of every language', code: 'print «a» + "b" + \'c\'', output: 'abc'},
       {title: 'texts in the quotes of English', code: 'print “Hi, ” + "Ani"', output: 'Hi, Ani'},
       {
-        title: 'input with a prompt',
-        code: 'input "Your name?" name\nprint "Hi " + name',
+        title: 'input after its question',
+        code: 'print "Your name?"\ninput name\nprint "Hi " + name',
         inputs: ['Ani'],
-        output: 'Hi Ani'
-      },
-      {
-        title: 'input with a prompt from an expression',
-        code: 'x = "age"\ninput "Your " + x + "?" a\nprint a',
-        inputs: [7],
-        output: '7'
+        output: 'Your name?\nHi Ani'
       },
       {title: 'cot and arccot', code: 'print round(cot(1), 3)\nprint round(arccot(1), 3)', output: '0.642\n0.785'}
     ]
