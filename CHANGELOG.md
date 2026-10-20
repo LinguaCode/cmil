@@ -1,4 +1,4 @@
-## Unreleased
+## 0.10.0-alpha.0 (2026-10-20)
 
   - **[add]** texts: each language has its own quotes besides `«…»`, `"…"` and `'…'`, like `“…”` in English, `„…“` in German or `「…」` in Japanese; `docs/translations.md` lists them.
   - **[change]** `translate()`: texts are written in the main quotes of the language a program is translated into, like `«…»` in Armenian, with their escapes.
