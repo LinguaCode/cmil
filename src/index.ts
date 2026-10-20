@@ -6,9 +6,12 @@ import TRANSLATION from './translations/index.ts';
 
 export {Session, check} from './session.ts';
 export {messageOf} from './messages.ts';
+export {segmentsOf, commandsOf, quotesOf} from './editor.ts';
 
 export type {Step, SessionOptions} from './session.ts';
 export type {ProgramError} from './core/types.ts';
+export type {LineSegment, CommandKind} from './editor.ts';
+export type {Quotes} from './translations/index.ts';
 
 /** The codes of the languages programs can be written in, for example 'en' or 'hy-AM'. */
 export const languages: readonly string[] = Object.freeze(Object.keys(TRANSLATION));
