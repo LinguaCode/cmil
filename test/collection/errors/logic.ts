@@ -42,7 +42,7 @@ const sources: Source[] = [
       },
       {
         title: 'Big loop: overload',
-        code: 'repeat 100000 times\n    output 1010101010',
+        code: 'repeat 1000000 times\n    output 1010101010',
         errorId: 'timeout'
       },
       {

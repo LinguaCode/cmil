@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Błąd składni w wierszu {line}.',
+    indentError: 'Błąd wcięcia w wierszu {line}: wcinaj bloki o 4 spacje.',
+    argumentError: 'Wiersz {line}: funkcja matematyczna ma złe argumenty.',
+    undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
+    memoryLimit: 'Wiersz {line}: tekst stał się za długi.',
+    timeout: 'Program działał zbyt długo, nie prosząc o dane.',
+    unknownLanguage: 'Nieznany język: {language}.'
   }
 };
 

@@ -4,15 +4,18 @@ CMIL interprets programs itself: a program never runs as JavaScript, so it can o
 
 | Limit | Value | Error |
 |---|---|---|
-| Time between two inputs | 666 ms | `timeout` |
-| Steps between two inputs | 100,000 | `timeout` |
+| Steps in one call of `run()` or `input()` | 1,000,000, or the session's `maxSteps` | `timeout` |
 | Length of one text | 1,000,000 characters | `memoryLimit` |
-| Output waiting to be sent | 10,000,000 characters | `memoryLimit` |
+| Output of one call of `run()` or `input()` | 10,000,000 characters | `memoryLimit` |
 | Nesting of blocks or expressions | 100 levels | `syntaxError` |
 
-The values are in `src/constants/index.ts`.
+The values are in `src/constants/index.ts`. 1,000,000 steps take about half a second; a session can allow fewer or more:
 
-A program runs synchronously, so for up to 666 ms it holds the thread that called `execute()` or `input()`. Run sessions off the main thread, so a long program doesn't block a server or a page.
+```js
+const session = new Session(sourceCode, 'en', {maxSteps: 100000});
+```
+
+A program runs synchronously, so while it runs it holds the thread that called `run()` or `input()`. Run sessions off the main thread, so a long program doesn't block a server or a page, and stop a worker that takes too long by the clock: CMIL counts steps, not time.
 
 ## On a server
 
@@ -21,34 +24,42 @@ Run each session in a [worker thread](https://nodejs.org/api/worker_threads.html
 `session-worker.mjs`:
 ```js
 import {parentPort, workerData} from 'node:worker_threads';
-import CodeSubmit from 'cmil';
+import {Session} from 'cmil';
 
-const codeSubmit = new CodeSubmit(workerData.sourceCode, workerData.language);
-parentPort.on('message', input => codeSubmit.input(input));
+const session = new Session(workerData.sourceCode, workerData.language);
 
-codeSubmit
-  .onOutput(text => parentPort.postMessage({type: 'output', text}))
-  .onInputRequest(() => parentPort.postMessage({type: 'input'}))
-  .onSessionEnd(result => {
-    parentPort.postMessage({type: 'end', result});
-    parentPort.close();
-  })
-  .execute();
+const send = step => {
+  parentPort.postMessage(step);
+  if (step.state === 'end') parentPort.close();
+};
+
+parentPort.on('message', input => send(session.input(input)));
+send(session.run());
 ```
 
 The server:
 ```js
 import {Worker} from 'node:worker_threads';
+import {messageOf} from 'cmil';
 
 const worker = new Worker(new URL('./session-worker.mjs', import.meta.url), {
   workerData: {sourceCode: 'input name\noutput "Hello, " + name', language: 'en'},
   resourceLimits: {maxOldGenerationSizeMb: 64}
 });
 
-worker.on('message', message => {
-  if (message.type === 'output') console.log(message.text);
-  if (message.type === 'input') worker.postMessage('Ani');
-  if (message.type === 'end') console.log(message.result);
+//a worker that doesn't answer for 3 seconds is stopped
+let timer = setTimeout(() => worker.terminate(), 3000);
+
+worker.on('message', step => {
+  clearTimeout(timer);
+  step.output.forEach(line => console.log(line));
+
+  if (step.state === 'input') {
+    worker.postMessage('Ani');
+    timer = setTimeout(() => worker.terminate(), 3000);
+  } else if (step.error) {
+    console.error(messageOf(step.error, 'en'));
+  }
 });
 ```
 

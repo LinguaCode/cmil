@@ -1,13 +1,15 @@
 /**
  * Types shared by the lexer, the parser, the compiler and the interpreter.
  */
+import type {ERROR} from '../constants/index.ts';
 
 /** A value of a CMIL program. */
 export type Value = number | string | boolean;
 
-export type Token =
-  | {type: 'number'; value: number; line: number}
-  | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string; line: number};
+/** A token, with the line and the column, from 1, where it starts. */
+export type Token = (
+  {type: 'number'; value: number} | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string}
+) & {line: number; column: number};
 
 /** A line of the source code that contains tokens. */
 export type Line = {
@@ -18,7 +20,7 @@ export type Line = {
 
 export type Expression =
   | {type: 'value'; value: Value}
-  | {type: 'variable'; name: string}
+  | {type: 'variable'; name: string; column: number}
   | {type: 'call'; name: string; args: Expression[]}
   | {type: 'unary'; operator: string; operand: Expression}
   | {type: 'binary'; operator: string; left: Expression; right: Expression};
@@ -53,9 +55,10 @@ export type Program = {
   slots: number;
 };
 
-/** Details of an error: the line where it happened and the variable it is about. */
-export type ErrorParam = {
-  line?: number;
-  variable?: string;
-  language?: string;
-};
+/** An error of a program: its id, and where it is; the column counts from 1. */
+export type ProgramError =
+  | {id: typeof ERROR.SYNTAX_ERROR | typeof ERROR.ARGUMENT_ERROR; line: number; column?: number}
+  | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
+  | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
+  | {id: typeof ERROR.TIMEOUT}
+  | {id: typeof ERROR.UNKNOWN_LANGUAGE; language: string};

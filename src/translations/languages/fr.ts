@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Erreur de syntaxe à la ligne {line}.',
+    indentError: "Erreur d'indentation à la ligne {line} : indentez les blocs de 4 espaces.",
+    argumentError: 'Ligne {line} : une fonction mathématique a de mauvais arguments.',
+    undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
+    memoryLimit: 'Ligne {line} : un texte est devenu trop long.',
+    timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
+    unknownLanguage: 'Langue inconnue : {language}.'
   }
 };
 

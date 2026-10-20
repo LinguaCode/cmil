@@ -48,6 +48,16 @@ const translation: Translation = {
     then: 'Means afterwards; would فإن be better?',
     false: 'Feminine (lying); is خطأ the usual truth value?',
     true: 'Is صواب or صح the usual truth value?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'خطأ نحوي في السطر {line}.',
+    indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',
+    argumentError: 'السطر {line}: وسائط دالة رياضية غير صحيحة.',
+    undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
+    memoryLimit: 'السطر {line}: أصبح نص طويلًا جدًا.',
+    timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',
+    unknownLanguage: 'لغة غير معروفة: {language}.'
   }
 };
 

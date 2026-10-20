@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaxfehler in Zeile {line}.',
+    indentError: 'Einrückungsfehler in Zeile {line}: Blöcke um 4 Leerzeichen einrücken.',
+    argumentError: 'Zeile {line}: Eine Mathefunktion hat falsche Argumente.',
+    undefinedVariable: 'Zeile {line}: {variable} hat noch keinen Wert.',
+    memoryLimit: 'Zeile {line}: Ein Text wurde zu lang.',
+    timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',
+    unknownLanguage: 'Unbekannte Sprache: {language}.'
   }
 };
 

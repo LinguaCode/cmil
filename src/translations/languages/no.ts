@@ -45,6 +45,16 @@ const translation: Translation = {
   notes: {
     then: 'Is så more common after hvis?',
     while: 'Means during; would så_lenge be better?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaksfeil på linje {line}.',
+    indentError: 'Innrykksfeil på linje {line}: rykk inn blokker med 4 mellomrom.',
+    argumentError: 'Linje {line}: en matematisk funksjon har feil argumenter.',
+    undefinedVariable: 'Linje {line}: {variable} har ingen verdi ennå.',
+    memoryLimit: 'Linje {line}: en tekst ble for lang.',
+    timeout: 'Programmet kjørte for lenge uten å be om inndata.',
+    unknownLanguage: 'Ukjent språk: {language}.'
   }
 };
 

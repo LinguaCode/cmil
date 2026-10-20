@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Syntaktická chyba na riadku {line}.',
+    indentError: 'Chyba odsadenia na riadku {line}: odsadzujte bloky o 4 medzery.',
+    argumentError: 'Riadok {line}: matematická funkcia má zlé argumenty.',
+    undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
+    memoryLimit: 'Riadok {line}: text je príliš dlhý.',
+    timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',
+    unknownLanguage: 'Neznámy jazyk: {language}.'
   }
 };
 

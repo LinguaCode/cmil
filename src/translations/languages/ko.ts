@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     not: 'A fragment of -지 않다; which word should logical not be?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: '{line}번째 줄에 문법 오류가 있습니다.',
+    indentError: '{line}번째 줄 들여쓰기 오류: 블록은 4칸씩 들여 쓰세요.',
+    argumentError: '{line}번째 줄: 수학 함수의 인수가 잘못되었습니다.',
+    undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
+    memoryLimit: '{line}번째 줄: 텍스트가 너무 길어졌습니다.',
+    timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
+    unknownLanguage: '알 수 없는 언어: {language}'
   }
 };
 

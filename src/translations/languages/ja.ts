@@ -44,6 +44,15 @@ const translation: Translation = {
   },
   notes: {
     while: 'Means for a while; which word fits before the condition? DNCL puts the condition first: 〈condition〉の間.'
+  },
+  messages: {
+    syntaxError: '{line} 行目に構文エラーがあります。',
+    indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',
+    argumentError: '{line} 行目: 数学関数の引数が正しくありません。',
+    undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
+    memoryLimit: '{line} 行目: テキストが長くなりすぎました。',
+    timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
+    unknownLanguage: '不明な言語: {language}'
   }
 };
 

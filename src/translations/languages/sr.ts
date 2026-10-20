@@ -41,6 +41,16 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e', 'е']
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Синтаксна грешка у реду {line}.',
+    indentError: 'Грешка увлачења у реду {line}: увлачите блокове за 4 размака.',
+    argumentError: 'Ред {line}: математичка функција има погрешне аргументе.',
+    undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
+    memoryLimit: 'Ред {line}: текст је постао предугачак.',
+    timeout: 'Програм је радио предуго, а није тражио унос.',
+    unknownLanguage: 'Непознат језик: {language}.'
   }
 };
 

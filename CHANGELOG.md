@@ -2,6 +2,10 @@
 
   - **[change]** translations: each language file is a typed record of the words of each command, like `and: ['և', 'եւ', 'ու']`, instead of a list of definitions separated with `|`; TypeScript checks that every command has words. Notes for native speakers are in its `notes`.
   - **[change]** source: the constants are one file, `src/constants/index.ts`, and the command ids lose the `@` of the removed `@output` form. The debug logger is removed.
+  - **[change]** API: `Session` replaces `CodeSubmit`. `run()` starts a program and `input(value)` continues it; both return a step, `{state: 'input', output}` or `{state: 'end', output, error}`, with the lines printed since the last step, one per `output`. There are no callbacks, and no default export: CommonJS code uses `const {Session} = require('cmil')`.
+  - **[add]** API: `check(sourceCode, language)` returns the first error of a program before it runs, and `messageOf(error, language)` its message in every language; the messages are in `src/translations`.
+  - **[change]** errors: an error is `{id, …}` instead of `{errorId, param}`, with the column of its token, counted from 1, for syntax, argument and undefined variable errors. `functionArgumentSyntaxError` is renamed `argumentError`.
+  - **[change]** limits: a program may run 1,000,000 steps between two inputs, instead of 100,000 steps and 666 ms, so for example finding the primes below 3000 no longer times out; `new Session(sourceCode, language, {maxSteps})` sets another limit. The core has no clock any more and reads no environment variable; a host stops a hung worker itself.
 
 ## 0.7.0-alpha.0 (2026-10-20)
 

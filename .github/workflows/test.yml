@@ -26,6 +26,6 @@ jobs:
       - run: npm test
       - name: Run the built package
         run: >-
-          node --input-type=module -e "import CodeSubmit from 'cmil';
-          new CodeSubmit('output 1', 'en').onOutput(console.log).onInputRequest(() => {})
-          .onSessionEnd(result => { if (result.errorId) process.exit(1); }).execute();"
+          node --input-type=module -e "import {Session} from 'cmil';
+          const step = new Session('output 1', 'en').run(); console.log(step.output);
+          if (step.state !== 'end' || step.error) process.exit(1);"

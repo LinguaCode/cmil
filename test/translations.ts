@@ -6,7 +6,7 @@ import {describe, it} from 'node:test';
 
 import type {Command} from '../src/constants/index.ts';
 import translations from '../src/translations/index.ts';
-import CodeSubmit, {languages, type SessionEnd} from '../src/index.ts';
+import {Session, languages} from '../src/index.ts';
 import {DOCS_PATH, translationsTable} from '../scripts/translations-table.ts';
 
 const LANGUAGES_PATH = path.join(import.meta.dirname, '../src/translations/languages');
@@ -16,15 +16,7 @@ const commandsOf = (language: string) => Object.keys(translations[language].word
 //the first word of a command in a language
 const wordOf = (language: string, command: Command) => translations[language].words[command][0];
 
-const run = (code: string, language: string) =>
-  new Promise<{output: string[]; result: SessionEnd}>(resolve => {
-    const output: string[] = [];
-    new CodeSubmit(code, language)
-      .onOutput(text => output.push(text))
-      .onInputRequest(() => {})
-      .onSessionEnd(result => resolve({output, result}))
-      .execute();
-  });
+const run = (code: string, language: string) => new Session(code, language).run();
 
 describe('translations', () => {
   it('index lists every language file', () => {
@@ -62,7 +54,7 @@ describe('translations', () => {
       });
     });
 
-    it(`${language} runs its constants, booleans and ceil`, async () => {
+    it(`${language} runs its constants, booleans and ceil`, () => {
       const word = (command: Command) => wordOf(language, command);
       const lines = [
         `${word('output')} ${word('pi')} > 3`,
@@ -70,9 +62,8 @@ describe('translations', () => {
         `${word('output')} ${word('true')} ${word('and')} ${word('not')} ${word('false')}`,
         `${word('output')} ${word('ceil')}(1.2)`
       ];
-      const {output, result} = await run(lines.join('\n'), language);
-      assert.strictEqual(result.errorId, undefined, `${language}: ${JSON.stringify(result)}\n${lines.join('\n')}`);
-      assert.deepStrictEqual(output, ['<true/>\n<true/>\n<true/>\n2']);
+      const step = run(lines.join('\n'), language);
+      assert.deepStrictEqual(step, {state: 'end', output: ['<true/>', '<true/>', '<true/>', '2']}, lines.join('\n'));
     });
   });
 });

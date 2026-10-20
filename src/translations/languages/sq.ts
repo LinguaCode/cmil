@@ -44,6 +44,16 @@ const translation: Translation = {
   },
   notes: {
     input: 'Means data; would lexo (read) be better?'
+  },
+  //translated without a native speaker: the messages need a native review
+  messages: {
+    syntaxError: 'Gabim sintakse në rreshtin {line}.',
+    indentError: 'Gabim kryeradhe në rreshtin {line}: kryeradhi blloqet me 4 hapësira.',
+    argumentError: 'Rreshti {line}: një funksion matematik ka argumente të gabuara.',
+    undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
+    memoryLimit: 'Rreshti {line}: një tekst u bë shumë i gjatë.',
+    timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
+    unknownLanguage: 'Gjuhë e panjohur: {language}.'
   }
 };
 

@@ -8,9 +8,10 @@ import type {Line, Token} from './types.ts';
 
 const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', ','];
 
-const syntaxError = (line: number) => new CmilError(ERROR.SYNTAX_ERROR, {line});
+const syntaxError = (line: number, column: number) => new CmilError({id: ERROR.SYNTAX_ERROR, line, column});
 
-const readNumber = (text: string, start: number, lineNumber: number) => {
+//a number from start; offset is the column of the text before it
+const readNumber = (text: string, start: number, lineNumber: number, offset: number) => {
   let i = start;
   let digits = '';
 
@@ -24,7 +25,7 @@ const readNumber = (text: string, start: number, lineNumber: number) => {
 
   //like 1x
   if (i < text.length && IDENTIFIER_PART.test(text[i])) {
-    throw syntaxError(lineNumber);
+    throw syntaxError(lineNumber, offset + i + 1);
   }
 
   return {value: parseFloat(digits), end: i};
@@ -32,24 +33,27 @@ const readNumber = (text: string, start: number, lineNumber: number) => {
 
 /**
  * Adds the numbers and operators between the words and texts of a line.
+ *
+ * @param offset - the column of the line before text.
  */
-const tokenizeOther = (text: string, lineNumber: number, tokens: Token[]) => {
+const tokenizeOther = (text: string, offset: number, lineNumber: number, tokens: Token[]) => {
   let i = 0;
   while (i < text.length) {
     const symbol = text[i];
+    const column = offset + i + 1;
 
     if (/\s/.test(symbol)) {
       i++;
     } else if (DIGIT.test(symbol)) {
-      const number = readNumber(text, i, lineNumber);
-      tokens.push({type: 'number', value: number.value, line: lineNumber});
+      const number = readNumber(text, i, lineNumber, offset);
+      tokens.push({type: 'number', value: number.value, line: lineNumber, column});
       i = number.end;
     } else {
       const operator = OPERATORS.find(candidate => text.startsWith(candidate, i));
       if (!operator) {
-        throw syntaxError(lineNumber);
+        throw syntaxError(lineNumber, column);
       }
-      tokens.push({type: 'operator', value: operator, line: lineNumber});
+      tokens.push({type: 'operator', value: operator, line: lineNumber, column});
       i += operator.length;
     }
   }
@@ -59,25 +63,29 @@ const tokenizeOther = (text: string, lineNumber: number, tokens: Token[]) => {
  * Returns the tokens of one line, without its comment.
  *
  * @param text - the line without its indentation.
+ * @param indent - the length of the indentation.
  */
-const tokenizeLine = (text: string, lineNumber: number, language: string): Token[] => {
+const tokenizeLine = (text: string, indent: number, lineNumber: number, language: string): Token[] => {
   const tokens: Token[] = [];
+  let offset = indent;
 
   for (const segment of scan(text, language)) {
     if (segment.type === 'comment') break;
+    const position = {line: lineNumber, column: offset + 1};
 
     if (segment.type === 'keyword') {
-      tokens.push({type: 'command', value: segment.command, line: lineNumber});
+      tokens.push({type: 'command', value: segment.command, ...position});
     } else if (segment.type === 'name') {
-      tokens.push({type: 'identifier', value: segment.text.toLowerCase(), line: lineNumber});
+      tokens.push({type: 'identifier', value: segment.text.toLowerCase(), ...position});
     } else if (segment.type === 'string') {
       if (!segment.closed) {
-        throw syntaxError(lineNumber);
+        throw syntaxError(lineNumber, position.column);
       }
-      tokens.push({type: 'string', value: segment.value, line: lineNumber});
+      tokens.push({type: 'string', value: segment.value, ...position});
     } else {
-      tokenizeOther(segment.text, lineNumber, tokens);
+      tokenizeOther(segment.text, offset, lineNumber, tokens);
     }
+    offset += segment.text.length;
   }
 
   return tokens;
@@ -104,14 +112,14 @@ export const tokenize = (sourceCode: string, language: string): Line[] => {
 
   const misindented = lines.find(({spaces}) => spaces % INDENT_SIZE !== 0);
   if (misindented) {
-    throw new CmilError(ERROR.INDENT_ERROR, {line: misindented.number});
+    throw new CmilError({id: ERROR.INDENT_ERROR, line: misindented.number});
   }
 
   return lines
     .map(({number, spaces, text}) => ({
       number,
       level: spaces / INDENT_SIZE,
-      tokens: tokenizeLine(text, number, language)
+      tokens: tokenizeLine(text, spaces, number, language)
     }))
     .filter(line => line.tokens.length);
 };

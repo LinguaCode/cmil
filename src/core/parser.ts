@@ -6,8 +6,11 @@ import {COMMAND, ERROR, MAX_NESTING} from '../constants/index.ts';
 import {FUNCTIONS, CONSTANTS} from './values.ts';
 import type {Branch, Expression, Line, Statement, Token} from './types.ts';
 
-const syntaxError = (line: number) => new CmilError(ERROR.SYNTAX_ERROR, {line});
-const functionArgumentError = (line: number) => new CmilError(ERROR.FUNCTION_ARGUMENT_SYNTAX_ERROR, {line});
+//an error at a token, or at the end of the line without one
+const syntaxError = (line: number, token?: Token) =>
+  new CmilError({id: ERROR.SYNTAX_ERROR, line, ...(token && {column: token.column})});
+const argumentError = (line: number, token?: Token) =>
+  new CmilError({id: ERROR.ARGUMENT_ERROR, line, ...(token && {column: token.column})});
 
 const isCommand = (token: Token | undefined, command: string) =>
   !!token && token.type === 'command' && token.value === command;
@@ -25,7 +28,7 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   const peek = (): Token | undefined => tokens[index];
 
   const nest = (parse: () => Expression): Expression => {
-    if (++depth > MAX_NESTING) throw syntaxError(line);
+    if (++depth > MAX_NESTING) throw syntaxError(line, tokens[index - 1]);
     const node = parse();
     depth--;
     return node;
@@ -53,13 +56,14 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
         return {type: 'value', value: token.value};
       case 'identifier':
         //only the math functions can be called
-        if (isOperator(peek(), '(')) throw syntaxError(line);
-        return {type: 'variable', name: token.value};
+        if (isOperator(peek(), '(')) throw syntaxError(line, peek());
+        return {type: 'variable', name: token.value, column: token.column};
       case 'operator':
-        if (token.value !== '(') throw syntaxError(line);
+        if (token.value !== '(') throw syntaxError(line, token);
         return nest(() => {
           const node = parseOr();
-          if (!isOperator(tokens[index++], ')')) throw syntaxError(line);
+          const close = tokens[index++];
+          if (!isOperator(close, ')')) throw syntaxError(line, close);
           return node;
         });
     }
@@ -72,14 +76,15 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
       return {type: 'value', value: CONSTANTS[token.value]};
     }
     if (Object.hasOwn(FUNCTIONS, token.value)) {
-      return nest(() => parseCall(token.value));
+      return nest(() => parseCall(token));
     }
 
-    throw syntaxError(line);
+    throw syntaxError(line, token);
   };
 
-  const parseCall = (name: string): Expression => {
-    if (!isOperator(tokens[index++], '(')) throw functionArgumentError(line);
+  //the errors of a call are at the name of its function
+  const parseCall = (name: Token): Expression => {
+    if (!isOperator(tokens[index++], '(')) throw argumentError(line, name);
 
     const args: Expression[] = [];
     if (isOperator(peek(), ')')) {
@@ -89,14 +94,14 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
         args.push(parseOr());
         const token = tokens[index++];
         if (isOperator(token, ')')) break;
-        if (!isOperator(token, ',')) throw functionArgumentError(line);
+        if (!isOperator(token, ',')) throw argumentError(line, name);
       }
     }
 
-    const {min, max} = FUNCTIONS[name];
-    if (args.length < min || args.length > max) throw functionArgumentError(line);
+    const {min, max} = FUNCTIONS[String(name.value)];
+    if (args.length < min || args.length > max) throw argumentError(line, name);
 
-    return {type: 'call', name, args};
+    return {type: 'call', name: String(name.value), args};
   };
 
   const parseUnary = (): Expression => {
@@ -125,7 +130,7 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   const parseOr = binary(parseAnd, token => isCommand(token, COMMAND.OR));
 
   const node = parseOr();
-  if (index !== tokens.length) throw syntaxError(line);
+  if (index !== tokens.length) throw syntaxError(line, tokens[index]);
 
   return node;
 };
@@ -148,7 +153,7 @@ export const parse = (lines: Line[]): Statement[] => {
   const parseBody = (level: number, isLoop = false): Statement[] => {
     const next = lines[index];
     if (!next || next.level <= level) return [];
-    if (next.level > MAX_NESTING) throw syntaxError(next.number);
+    if (next.level > MAX_NESTING) throw syntaxError(next.number, next.tokens[0]);
 
     if (isLoop) loopDepth++;
     const body = parseBlock(next.level);
@@ -175,7 +180,7 @@ export const parse = (lines: Line[]): Statement[] => {
         elseBody = parseBody(level);
         break;
       } else {
-        throw syntaxError(number);
+        throw syntaxError(number, rest[0]);
       }
     }
 
@@ -190,14 +195,15 @@ export const parse = (lines: Line[]): Statement[] => {
       return {type: 'assign', name: first.value, expression: parseExpression(rest.slice(1), line), line};
     }
 
-    if (first.type !== 'command') throw syntaxError(line);
+    if (first.type !== 'command') throw syntaxError(line, first);
 
     switch (first.value) {
       case COMMAND.OUTPUT:
         return {type: 'output', expression: parseExpression(rest, line), line};
       case COMMAND.INPUT: {
         const [name] = rest;
-        if (rest.length !== 1 || name.type !== 'identifier') throw syntaxError(line);
+        if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
+        if (rest.length > 1) throw syntaxError(line, rest[1]);
         return {type: 'input', name: name.value, line};
       }
       case COMMAND.IF:
@@ -205,27 +211,28 @@ export const parse = (lines: Line[]): Statement[] => {
       case COMMAND.WHILE:
         return {type: 'while', condition: condition(rest, line), body: parseBody(level, true), line};
       case COMMAND.REPEAT: {
-        if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line);
+        if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {type: 'repeat', count: condition(rest, line, COMMAND.TIMES), body: parseBody(level, true), line};
       }
       case COMMAND.DO: {
-        if (rest.length) throw syntaxError(line);
+        if (rest.length) throw syntaxError(line, rest[0]);
         const body = parseBody(level, true);
 
         //the condition of do is the next line at the same level
         const next = lines[index];
-        if (!next || next.level !== level || !isCommand(next.tokens[0], COMMAND.WHILE)) throw syntaxError(line);
+        if (!next || next.level !== level || !isCommand(next.tokens[0], COMMAND.WHILE)) throw syntaxError(line, first);
         index++;
 
         return {type: 'doWhile', body, condition: condition(next.tokens.slice(1), next.number), line: next.number};
       }
       case COMMAND.BREAK:
       case COMMAND.CONTINUE:
-        if (rest.length || !loopDepth) throw syntaxError(line);
+        if (rest.length) throw syntaxError(line, rest[0]);
+        if (!loopDepth) throw syntaxError(line, first);
         return {type: first.value === COMMAND.BREAK ? 'break' : 'continue', line};
     }
 
-    throw syntaxError(line);
+    throw syntaxError(line, first);
   };
 
   const parseBlock = (level: number): Statement[] => {
@@ -236,7 +243,7 @@ export const parse = (lines: Line[]): Statement[] => {
 
     //deeper than the block, without a header
     if (lines[index] && lines[index].level > level) {
-      throw new CmilError(ERROR.INDENT_ERROR, {line: lines[index].number});
+      throw new CmilError({id: ERROR.INDENT_ERROR, line: lines[index].number});
     }
 
     return statements;

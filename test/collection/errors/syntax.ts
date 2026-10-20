@@ -44,7 +44,7 @@ const sources: Source[] = [
       {
         title: 'Function argument scope error',
         code: 'a = square(5\noutput a',
-        errorId: 'functionArgumentSyntaxError',
+        errorId: 'argumentError',
         errorParam: {
           line: 1
         }
