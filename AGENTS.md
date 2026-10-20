@@ -13,28 +13,27 @@ The project had no commits between 2020-05-30 and its revival. Expect obsolete t
 Verified on 2026-10-19. Update this section when a fact changes.
 
 - **Runtime:** Node.js, TypeScript with `strict`, published as ES modules. `engines.node` is `>= 24`. Imports between sources end in `.ts`; `tsc` rewrites them to `.js` in the build. Keep the syntax erasable (`erasableSyntaxOnly`: no enums, namespaces or parameter properties), because Node.js runs the sources directly in the tests. Browser use goes through the consumer's bundler.
-- **Public API:** `src/index.ts` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `input(value)`, `stop()`, `onOutput()`, `onInputRequest()` and `onSessionEnd()`, as the default and as a named export, plus `languages` (the language codes), `translate(sourceCode, from, to)` (a program in another language; an unknown language throws) and the types of its callbacks. Its state is in `#` private fields. An unknown language ends the session with `unknownLanguage`. The `'module.exports'` export lets CommonJS code `require('cmil')` the class.
-- **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/`, `src/translations/` and `src/translator/`. There is no `npm start`.
+- **Public API:** `src/index.ts` exports the class `CodeSubmit(sourceCode, language)` with `execute()`, `input(value)`, `stop()`, `onOutput()`, `onInputRequest()` and `onSessionEnd()`, as the default and as a named export, plus `languages` (the language codes), `translate(sourceCode, from, to)` (a program in another language: names that are commands there get a trailing `_`; an unknown language throws) and the types of its callbacks. Its state is in `#` private fields. An unknown language ends the session with `unknownLanguage`. The `'module.exports'` export lets CommonJS code `require('cmil')` the class.
+- **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/` and `src/translations/`. There is no `npm start`.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
 - **Playground:** https://linguacode.otanim.com runs CMIL in the browser. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. After a release, bump that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `test/translator.ts` covers code↔text conversion. All 321 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in-process against `CodeSubmit` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a step limit test that sets `TIMEOUT_IGNORE`. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 428 tests pass on Node.js 24 and 26.
 - **Types:** `npm run typecheck` checks `src/` and `test/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` (which builds `dist/`), `npm run lint`, `npm run typecheck`, `npm test` and a program through the built package, on Node.js 24 and 26 for every push and pull request.
 - **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, tutorials, and syntax, logic and restriction errors (190 cases).
-- **Core:** programs never run as JavaScript. `src/index.ts` translates the localized commands with `src/translator`, then `src/core/lexer.ts` splits lines into tokens, `parser.ts` builds the syntax tree, `compiler.ts` flattens it into instructions with jumps, and `interpreter.ts` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
+- **Core:** programs never run as JavaScript. `src/core/lexer.ts` splits lines into tokens, with the words of the program's language found by `words.ts`, `parser.ts` builds the syntax tree, `compiler.ts` flattens it into instructions with jumps, and `interpreter.ts` runs them in a loop. All state belongs to one `Session`, so sessions are independent.
 - **Errors:** syntax and indentation errors are found before the program runs. Every error reports its absolute line, except `timeout`. Output printed before an error is sent first.
 - **Output format:** boolean values, `NaN` and `Infinity` are printed as `<true/>`, `<false/>`, `<NaN/>` and `<Infinity/>` (LML standard), also when joined into text; words in texts stay as written.
 - **Limits** (`src/constants/index.ts`, see `docs/running.md`): between two inputs a program may run 666 ms and 100,000 steps (`timeout`); a text may be 1,000,000 characters and unsent output 10,000,000 (`memoryLimit`); blocks and expressions nest at most 100 levels (`syntaxError`).
 - **Dependencies:** none at runtime. The dev dependencies are TypeScript, c8, ESLint, typescript-eslint, Prettier and their configs. The former sibling packages live in this repository, each with its own license file:
   - `src/constants/`: statuses, syntax and commands, from `linguacode-constants` (MIT)
-  - `src/translator/`: converts code to text and text to code, from `linguacode-translator` (GPL-3.0)
   - `src/translations/`: the commands of each language, from `linguacode-translations` (MIT); `index.ts` lists the languages
   - `src/libs/logger.ts`: replaces `lingua-logger`; `log()` prints only when `DEBUG` is `true`
 
-  The old repositories are to be archived.
+  The old repositories are archived. `src/core/words.ts` replaces the translator of `linguacode-translator`.
 - **Lockfiles:** `package-lock.json` is committed; `yarn.lock` is gitignored.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
@@ -48,15 +47,16 @@ Read the files before relying on these descriptions.
 
 - `src/index.ts`: public API: runs a session, sends output, requests input, reports the end
 - `src/core/types.ts`: types of tokens, lines, the syntax tree, instructions and values
-- `src/core/lexer.ts`: tokens of each line; indentation, texts, numbers, identifiers and `@commands`
+- `src/core/words.ts`: the words of each language; `scan()` splits a line into keywords, names, texts and comments, `translateSource()` translates a program
+- `src/core/lexer.ts`: tokens of each line; indentation, texts, numbers, identifiers and commands
 - `src/core/parser.ts`: statements and blocks by indentation; expressions by precedence
 - `src/core/compiler.ts`: flat instructions with jumps for conditions and loops
 - `src/core/interpreter.ts`: the `Session` that runs instructions within the limits
 - `src/core/values.ts`: text conversion and markers, operators, math functions and constants
 - `src/core/error.ts`: `CmilError`, the `{errorId, param}` reported to `onSessionEnd`
 - `src/libs/logger.ts`: debug logging
-- `src/constants/`, `src/translator/`, `src/translations/`: see **Dependencies** above
-- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts` and `translator.ts`
+- `src/constants/`, `src/translations/`: see **Dependencies** above
+- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts` and `words.ts`
 - `tsconfig.json`: type checking of `src/` and `test/`; `tsconfig.build.json`: the build into `dist/`
 - `docs/language.md`: the language reference; keep it in line with `test/collection`
 - `docs/running.md`: limits and running sessions in a worker
@@ -67,7 +67,7 @@ Read the files before relying on these descriptions.
 npm install        # also builds dist/ through prepare
 npm run build      # tsc: src/ into dist/ with type declarations
 npm run typecheck  # tsc on src/ and test/, no output
-npm test           # node --test on the .ts sources: test/collection against CodeSubmit, core, translations, translator
+npm test           # node --test on the .ts sources: test/collection against CodeSubmit, core, translations, words
 npm run coverage   # the same under c8
 npm run lint       # ESLint and Prettier check
 npm run format     # Prettier rewrite
@@ -106,8 +106,8 @@ The repository is GPL-3.0 only (`LICENSE`, `"license": "GPL-3.0-only"`), except 
 ## Language Behaviour
 
 - The cases in `test/collection/` are the language specification. Never change an expected output just to make a test pass. A behaviour change needs the owner's approval and a `CHANGELOG.md` entry.
-- CMIL is multilingual. Keywords, statuses and messages come from `src/constants/`, `src/translator/` and `src/translations/`, so a change may need to span all three. Don't hard-code language-specific text into the core.
-- Keep Unicode identifiers working (`src/core/lexer.ts`).
+- CMIL is multilingual. Keywords, statuses and messages come from `src/constants/` and `src/translations/`, so a change may need to span both. Don't hard-code language-specific text into the core.
+- Keep Unicode identifiers working (`src/core/words.ts`).
 - Keep the core able to run in a browser unless the owner decides otherwise.
 
 ## No Legacy Support

@@ -1,52 +1,14 @@
 /**
- * Splits CMIL source code, whose commands are already converted to @commands by the translator,
- * into lines of tokens.
+ * Splits CMIL source code into lines of tokens; the commands are written in the words of the program's language.
  */
 import CmilError from './error.ts';
 import {STATUS} from '../constants/index.ts';
+import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan} from './words.ts';
 import type {Line, Token} from './types.ts';
-
-const QUOTES: Record<string, string> = {
-  '«': '»',
-  '"': '"',
-  "'": "'"
-};
-
-//the Armenian one dot leader is the decimal point on Armenian keyboards
-const DECIMAL_POINTS = ['.', '․'];
-
-const ESCAPES: Record<string, string> = {
-  n: '\n',
-  t: '\t'
-};
 
 const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', ','];
 
-const IDENTIFIER_START = /[\p{L}\p{M}_]/u;
-const IDENTIFIER_PART = /[\p{L}\p{M}\p{N}_]/u;
-const DIGIT = /[0-9]/;
-const COMMAND_PART = /[a-z_]/;
-
 const syntaxError = (line: number) => new CmilError(STATUS.SYNTAX_ERROR, {line});
-
-const readString = (text: string, start: number, lineNumber: number) => {
-  const closingQuote = QUOTES[text[start]];
-  let value = '';
-
-  for (let i = start + 1; i < text.length; i++) {
-    const symbol = text[i];
-    if (symbol === '\\' && i + 1 < text.length) {
-      const escaped = text[++i];
-      value += Object.hasOwn(ESCAPES, escaped) ? ESCAPES[escaped] : escaped;
-    } else if (symbol === closingQuote) {
-      return {value, end: i + 1};
-    } else {
-      value += symbol;
-    }
-  }
-
-  throw syntaxError(lineNumber);
-};
 
 const readNumber = (text: string, start: number, lineNumber: number) => {
   let i = start;
@@ -69,38 +31,19 @@ const readNumber = (text: string, start: number, lineNumber: number) => {
 };
 
 /**
- * Returns the tokens of one line, without its comment.
- *
- * @param text - the line without its indentation.
+ * Adds the numbers and operators between the words and texts of a line.
  */
-const tokenizeLine = (text: string, lineNumber: number): Token[] => {
-  const tokens: Token[] = [];
-
+const tokenizeOther = (text: string, lineNumber: number, tokens: Token[]) => {
   let i = 0;
   while (i < text.length) {
     const symbol = text[i];
 
     if (/\s/.test(symbol)) {
       i++;
-    } else if (symbol === '#') {
-      break;
-    } else if (Object.hasOwn(QUOTES, symbol)) {
-      const string = readString(text, i, lineNumber);
-      tokens.push({type: 'string', value: string.value, line: lineNumber});
-      i = string.end;
     } else if (DIGIT.test(symbol)) {
       const number = readNumber(text, i, lineNumber);
       tokens.push({type: 'number', value: number.value, line: lineNumber});
       i = number.end;
-    } else if (symbol === '@' && COMMAND_PART.test(text[i + 1] || '')) {
-      let command = '@';
-      i++;
-      while (i < text.length && COMMAND_PART.test(text[i])) command += text[i++];
-      tokens.push({type: 'command', value: command, line: lineNumber});
-    } else if (IDENTIFIER_START.test(symbol)) {
-      let name = '';
-      while (i < text.length && IDENTIFIER_PART.test(text[i])) name += text[i++];
-      tokens.push({type: 'identifier', value: name.toLowerCase(), line: lineNumber});
     } else {
       const operator = OPERATORS.find(candidate => text.startsWith(candidate, i));
       if (!operator) {
@@ -108,6 +51,32 @@ const tokenizeLine = (text: string, lineNumber: number): Token[] => {
       }
       tokens.push({type: 'operator', value: operator, line: lineNumber});
       i += operator.length;
+    }
+  }
+};
+
+/**
+ * Returns the tokens of one line, without its comment.
+ *
+ * @param text - the line without its indentation.
+ */
+const tokenizeLine = (text: string, lineNumber: number, language: string): Token[] => {
+  const tokens: Token[] = [];
+
+  for (const segment of scan(text, language)) {
+    if (segment.type === 'comment') break;
+
+    if (segment.type === 'keyword') {
+      tokens.push({type: 'command', value: segment.command, line: lineNumber});
+    } else if (segment.type === 'name') {
+      tokens.push({type: 'identifier', value: segment.text.toLowerCase(), line: lineNumber});
+    } else if (segment.type === 'string') {
+      if (!segment.closed) {
+        throw syntaxError(lineNumber);
+      }
+      tokens.push({type: 'string', value: segment.value, line: lineNumber});
+    } else {
+      tokenizeOther(segment.text, lineNumber, tokens);
     }
   }
 
@@ -121,8 +90,9 @@ const INDENT_SIZE = 4;
  * The indentation of every line is checked first, so an indentError is reported before any syntaxError.
  *
  * @param sourceCode - Unix or Windows line endings.
+ * @param language - a language of the translations.
  */
-export const tokenize = (sourceCode: string): Line[] => {
+export const tokenize = (sourceCode: string, language: string): Line[] => {
   const lines = sourceCode
     .replace(/\r/g, '')
     .split('\n')
@@ -141,7 +111,7 @@ export const tokenize = (sourceCode: string): Line[] => {
     .map(({number, spaces, text}) => ({
       number,
       level: spaces / INDENT_SIZE,
-      tokens: tokenizeLine(text, number)
+      tokens: tokenizeLine(text, number, language)
     }))
     .filter(line => line.tokens.length);
 };

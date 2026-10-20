@@ -14,8 +14,7 @@
   "files": [
     "dist",
     "src/constants/LICENSE",
-    "src/translations/LICENSE",
-    "src/translator/LICENSE"
+    "src/translations/LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
