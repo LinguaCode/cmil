@@ -39,9 +39,9 @@ CMIL is a library. A `Session` runs one program written in one of the [LinguaCod
 ```js
 import {Session, messageOf} from 'cmil';
 
-const session = new Session('output "What is your name?"\ninput name\noutput "Hello, " + name', 'en');
+const session = new Session('input "What is your name?" name\nprint "Hello, " + name', 'en');
 
-let step = session.run(); // {state: 'input', output: ['What is your name?']}
+let step = session.run(); // {state: 'input', output: [], prompt: 'What is your name?'}
 step = session.input('Ani'); // {state: 'end', output: ['Hello, Ani']}
 
 if (step.state === 'end' && step.error) {
@@ -50,13 +50,13 @@ if (step.state === 'end' && step.error) {
 ```
 - `run()`: starts the program, which runs until it waits for input or ends.
 - `input(value)`: gives the program the input it waits for; an empty input is asked for again.
-- Both return a step: `{state: 'input', output}` or `{state: 'end', output, error}`. `output` holds the lines printed since the last step. `error` is set when the program ended with one, for example `{id: 'undefinedVariable', line: 2, column: 8, variable: 'x'}`; output printed before the error comes with it.
+- Both return a step: `{state: 'input', output, prompt}` or `{state: 'end', output, error}`. `output` holds the lines printed since the last step, and `prompt` the prompt of the input when it has one, to show to the user. `error` is set when the program ended with one, for example `{id: 'undefinedVariable', line: 2, column: 8, variable: 'x'}`; output printed before the error comes with it.
 - `stop()`: ends the session, for example when the learner leaves; it takes no more input.
 - `new Session(sourceCode, language, {maxSteps})`: a program may run 1,000,000 steps, about half a second, in one step before it ends with `timeout`.
 
 `check(sourceCode, language)` returns the first error a program has before it runs, or `null`. `messageOf(error, language)` returns the message of an error in a language, for example `Syntax error on line 2.`
 
-`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('output "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`. Texts, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
+`import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('print "Hi"', 'en', 'hy-AM')` returns `'տպել "Hi"'`. Texts, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their steps and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 

@@ -18,6 +18,8 @@ class Interpreter {
   position = 0;
   line = 0;
   input: Value | undefined = undefined;
+  //the prompt of the input the program waits for
+  prompt: string | undefined = undefined;
   output: string[] = [];
   outputLength = 0;
 
@@ -141,8 +143,10 @@ class Interpreter {
       let next = this.position + 1;
 
       switch (instruction.op) {
-        case 'output': {
-          const text = values.toText(this.evaluate(instruction.expression), this.booleans);
+        case 'print': {
+          const text = instruction.expressions
+            .map(expression => values.toText(this.evaluate(expression), this.booleans))
+            .join(' ');
           if (text !== '') {
             this.outputLength += text.length + 1;
             if (this.outputLength > MAX_OUTPUT_LENGTH) {
@@ -153,9 +157,13 @@ class Interpreter {
           break;
         }
         case 'input':
-          if (this.input === undefined) return STATE.INPUT;
+          if (this.input === undefined) {
+            if (instruction.prompt) this.prompt = values.toText(this.evaluate(instruction.prompt), this.booleans);
+            return STATE.INPUT;
+          }
           this.variables.set(instruction.name, this.input);
           this.input = undefined;
+          this.prompt = undefined;
           break;
         case 'assign':
           this.variables.set(instruction.name, this.evaluate(instruction.expression));

@@ -9,7 +9,7 @@ const sources: Source[] = [
         sources: [
           {
             title: 'error in 2nd line',
-            code: 'if 1 < 2\n     output 617',
+            code: 'if 1 < 2\n     print 617',
             errorId: 'indentError',
             errorParam: {
               line: 2
@@ -17,7 +17,7 @@ const sources: Source[] = [
           },
           {
             title: 'error in 3rd line',
-            code: 'x = 12\nif 1 < 2\n     output 617',
+            code: 'x = 12\nif 1 < 2\n     print 617',
             errorId: 'indentError',
             errorParam: {
               line: 3
@@ -27,7 +27,7 @@ const sources: Source[] = [
       },
       {
         title: 'Syntax error',
-        code: 'output 1x',
+        code: 'print 1x',
         errorId: 'syntaxError',
         errorParam: {
           line: 1
@@ -35,7 +35,7 @@ const sources: Source[] = [
       },
       {
         title: 'Syntax error before the last line',
-        code: 'output 1x\noutput 2',
+        code: 'print 1x\nprint 2',
         errorId: 'syntaxError',
         errorParam: {
           line: 1
@@ -43,8 +43,32 @@ const sources: Source[] = [
       },
       {
         title: 'Function argument scope error',
-        code: 'a = square(5\noutput a',
+        code: 'a = square(5\nprint a',
         errorId: 'argumentError',
+        errorParam: {
+          line: 1
+        }
+      },
+      {
+        title: '= in a condition',
+        code: 'x = 5\nif x = 5\n    print 1',
+        errorId: 'equalsError',
+        errorParam: {
+          line: 2
+        }
+      },
+      {
+        title: '= in print',
+        code: 'print 1 = 1',
+        errorId: 'equalsError',
+        errorParam: {
+          line: 1
+        }
+      },
+      {
+        title: 'input without a name',
+        code: 'input "Your name?"',
+        errorId: 'syntaxError',
         errorParam: {
           line: 1
         }

@@ -4,7 +4,7 @@
  */
 export const COMMAND = {
   INPUT: 'input',
-  OUTPUT: 'output',
+  PRINT: 'print',
 
   IF: 'if',
   ELSE: 'else',
@@ -45,11 +45,11 @@ export const COMMAND = {
   SIN: 'sin',
   COS: 'cos',
   TAN: 'tan',
-  CTG: 'ctg',
+  COT: 'cot',
   ARCSIN: 'arcsin',
   ARCCOS: 'arccos',
   ARCTAN: 'arctan',
-  ARCCTG: 'arcctg',
+  ARCCOT: 'arccot',
 
   RANDOM: 'random',
 
@@ -64,6 +64,7 @@ export const ERROR = {
   SYNTAX_ERROR: 'syntaxError',
   INDENT_ERROR: 'indentError',
   ARGUMENT_ERROR: 'argumentError',
+  EQUALS_ERROR: 'equalsError',
   UNDEFINED_VARIABLE: 'undefinedVariable',
   TYPE_ERROR: 'typeError',
   CONDITION_ERROR: 'conditionError',

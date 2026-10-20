@@ -157,7 +157,7 @@ const tan = (value: Value) => {
   return trigonometric(Math.tan(number(value)));
 };
 
-const ctg = (value: Value) => {
+const cot = (value: Value) => {
   if (trigonometric(Math.sin(number(value))) === 0) throw new ValueError(ERROR.MATH_ERROR);
   return trigonometric(1 / Math.tan(number(value)));
 };
@@ -210,11 +210,11 @@ export const FUNCTIONS: Record<string, MathFunction> = {
   [COMMAND.ARCSIN]: one(Math.asin),
   [COMMAND.ARCCOS]: one(Math.acos),
   [COMMAND.ARCTAN]: one(Math.atan),
-  [COMMAND.ARCCTG]: one(value => Math.PI / 2 - Math.atan(value)),
+  [COMMAND.ARCCOT]: one(value => Math.PI / 2 - Math.atan(value)),
   [COMMAND.SIN]: one(value => trigonometric(Math.sin(value))),
   [COMMAND.COS]: one(value => trigonometric(Math.cos(value))),
   [COMMAND.TAN]: {min: 1, max: 1, apply: tan},
-  [COMMAND.CTG]: {min: 1, max: 1, apply: ctg}
+  [COMMAND.COT]: {min: 1, max: 1, apply: cot}
 };
 
 export const CONSTANTS: Record<string, number> = {

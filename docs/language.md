@@ -4,7 +4,7 @@ CMIL programs are written with the commands of the learner's language. The examp
 
 | Command | English | Armenian (`hy-AM`) | Russian (`ru`) |
 |---|---|---|---|
-| output | `output` | `տպել` | `вывести` |
+| print | `print` | `տպել` | `вывести` |
 | input | `input` | `մուտքագրել` | `ввести` |
 | if, else, then | `if`, `else`, `then` | `եթե`, `այլապես`, `ապա` | `если`, `иначе`, `тогда` |
 | while, do | `while`, `do` | `մինչ`, `անել` | `пока`, `сделать` |
@@ -20,11 +20,11 @@ The test cases in [`test/collection`](../test/collection) are the specification 
 - One statement per line. A block is the lines indented under its command, 4 spaces per level.
 - `#` starts a comment until the end of the line. Blank lines are ignored.
 - Commands and variable names are case-insensitive: `X` and `x` are the same variable.
-- A command is a whole word: `output_x` is a variable name. The words of a two-word command, like Albanian `e vërtetë` (true), may be separated by any spaces.
+- A command is a whole word: `print_x` is a variable name. The words of a two-word command, like Albanian `e vërtetë` (true), may be separated by any spaces.
 
 ```
 # say hello
-output "Hello"
+print "Hello"
 ```
 
 ## Values
@@ -43,17 +43,17 @@ Values are never converted into another type: `"5" == 5` is `false`, and an oper
 ```
 դրամ = 300
 դրամ = դրամ + 200
-output դրամ
+print դրամ
 ```
 prints `500`.
 
 ## Output and input
 
-`output expression` prints a value. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is requested again.
+`print expression` prints a value on a line, and `print a, b, c` several values separated by spaces. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. A prompt before the name, `input "Your name?" name`, is shown to the user while the program waits; it can be any value, like `"Your " + item + "?"`.
 
 ```
 input name
-output "Hello, " + name
+print "Hello, " + name
 ```
 
 ## Operators
@@ -78,11 +78,11 @@ Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becom
 ```
 input age
 if age < 18
-    output "Only for adults"
+    print "Only for adults"
 else if age > 18 then
-    output "Welcome"
+    print "Welcome"
 else
-    output "Limited access"
+    print "Limited access"
 ```
 
 `then` is optional. A condition must be `true` or `false`; any other value is a `conditionError`.
@@ -92,7 +92,7 @@ else
 ```
 a = 0
 while a < 3
-    output a
+    print a
     a = a + 1
 
 do
@@ -100,7 +100,7 @@ do
 while password != "secret"
 
 repeat 3 times
-    output "a"
+    print "a"
 ```
 
 - `while` checks its condition before every pass, `do … while` after every pass.
@@ -116,8 +116,8 @@ repeat 3 times
 | `round(x)`, `round(x, digits)` | nearest whole number, or nearest number with that many decimals: `round(3.14159, 2)` is `3.14` |
 | `floor(x)`, `ceil(x)` | lower, higher whole number |
 | `absolute_value(x)` | `x` without its sign |
-| `sin(x)`, `cos(x)`, `tan(x)`, `ctg(x)` | trigonometry in radians, rounded to 12 decimals, so `sin(pi)` is `0` |
-| `arcsin(x)`, `arccos(x)`, `arctan(x)`, `arcctg(x)` | inverse trigonometry |
+| `sin(x)`, `cos(x)`, `tan(x)`, `cot(x)` | trigonometry in radians, rounded to 12 decimals, so `sin(pi)` is `0` |
+| `arcsin(x)`, `arccos(x)`, `arctan(x)`, `arccot(x)` | inverse trigonometry |
 | `log(base, x)`, `ln(x)`, `lg(x)` | logarithms: any base, `e`, 10 |
 | `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included; `min`, `max` must be whole |
 
@@ -125,7 +125,7 @@ Math functions take numbers. Another count of arguments, or a missing `)`, is an
 
 ## Output format
 
-Every `output` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, and texts as written.
+Every `print` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, and texts as written.
 
 ## Errors
 
@@ -136,6 +136,7 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
 | `argumentError` | a math function with a missing `)` or another count of arguments | `line`, `column` of the function |
+| `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
 | `typeError` | an operator, function or `repeat` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`, the word of the program's language |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |

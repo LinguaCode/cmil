@@ -27,8 +27,8 @@ export type Expression =
   | {type: 'binary'; operator: string; left: Expression; right: Expression; column: number};
 
 export type Statement =
-  | {type: 'output'; expression: Expression; line: number}
-  | {type: 'input'; name: string; line: number}
+  | {type: 'print'; expressions: Expression[]; line: number}
+  | {type: 'input'; name: string; prompt?: Expression; line: number}
   | {type: 'assign'; name: string; expression: Expression; line: number}
   | {type: 'if'; branches: Branch[]; elseBody: Statement[]; line: number}
   | {type: 'while'; condition: Expression; body: Statement[]; line: number}
@@ -43,8 +43,8 @@ export type Branch = {
 };
 
 export type Instruction =
-  | {op: 'output'; expression: Expression; line: number}
-  | {op: 'input'; name: string; line: number}
+  | {op: 'print'; expressions: Expression[]; line: number}
+  | {op: 'input'; name: string; prompt?: Expression; line: number}
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'jump'; target: number; line?: number}
   | {op: 'jumpUnless' | 'jumpIf'; expression: Expression; target: number; line: number}
@@ -59,6 +59,7 @@ export type Program = {
 /** An error of a program: its id, and where it is; the column counts from 1. */
 export type ProgramError =
   | {id: typeof ERROR.SYNTAX_ERROR | typeof ERROR.ARGUMENT_ERROR; line: number; column?: number}
+  | {id: typeof ERROR.EQUALS_ERROR; line: number; column: number}
   | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
   | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
   | {id: typeof ERROR.TYPE_ERROR | typeof ERROR.MATH_ERROR; line: number; column?: number; operator: string}

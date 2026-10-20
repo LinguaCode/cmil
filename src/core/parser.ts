@@ -22,6 +22,10 @@ const isOperator = (token: Token | undefined, operator: string) =>
  * or, and, not, == !=, < > <= >=, + -, * / %, unary - +, values.
  */
 const parseExpression = (tokens: Token[], line: number): Expression => {
+  //= only stores a value, at the start of a statement; in an expression it is meant as ==
+  const equals = tokens.find(token => isOperator(token, '='));
+  if (equals) throw new CmilError({id: ERROR.EQUALS_ERROR, line, column: equals.column});
+
   let index = 0;
   let depth = 0;
 
@@ -136,6 +140,19 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   return node;
 };
 
+//the parts of a line between the commas outside parentheses
+const splitAtCommas = (tokens: Token[]): Token[][] => {
+  const parts: Token[][] = [[]];
+  let depth = 0;
+  for (const token of tokens) {
+    if (isOperator(token, '(')) depth++;
+    if (isOperator(token, ')')) depth--;
+    if (!depth && isOperator(token, ',')) parts.push([]);
+    else parts[parts.length - 1].push(token);
+  }
+  return parts;
+};
+
 /**
  * Builds the statements of a program; a block is the lines indented deeper than its header.
  *
@@ -199,13 +216,15 @@ export const parse = (lines: Line[]): Statement[] => {
     if (first.type !== 'command') throw syntaxError(line, first);
 
     switch (first.value) {
-      case COMMAND.OUTPUT:
-        return {type: 'output', expression: parseExpression(rest, line), line};
+      case COMMAND.PRINT:
+        return {type: 'print', expressions: splitAtCommas(rest).map(part => parseExpression(part, line)), line};
       case COMMAND.INPUT: {
-        const [name] = rest;
+        //input name, or input with a prompt before the name: input "Your name?" name
+        const name = rest[rest.length - 1];
         if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
-        if (rest.length > 1) throw syntaxError(line, rest[1]);
-        return {type: 'input', name: name.value, line};
+        const statement: Statement = {type: 'input', name: name.value, line};
+        if (rest.length > 1) statement.prompt = parseExpression(rest.slice(0, -1), line);
+        return statement;
       }
       case COMMAND.IF:
         return parseIf(rest, line, level);

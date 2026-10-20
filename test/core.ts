@@ -31,38 +31,38 @@ describe('core', () => {
   describe('loops', () => {
     it('break leaves the innermost loop', () => {
       const {output} = run(
-        'repeat 3 times\n    a = 0\n    while 1 < 2\n        a = a + 1\n        if a == 2\n            break\n    output a'
+        'repeat 3 times\n    a = 0\n    while 1 < 2\n        a = a + 1\n        if a == 2\n            break\n    print a'
       );
       assert.deepStrictEqual(output, ['2', '2', '2']);
     });
 
     it('continue skips to the next iteration', () => {
-      const {output} = run('a = 0\ndo\n    a = a + 1\n    if a == 2\n        continue\n    output a\nwhile a < 4');
+      const {output} = run('a = 0\ndo\n    a = a + 1\n    if a == 2\n        continue\n    print a\nwhile a < 4');
       assert.deepStrictEqual(output, ['1', '3', '4']);
     });
 
     it('break outside a loop is a syntax error', () => {
-      assert.deepStrictEqual(run('output 1\nbreak').error, {id: 'syntaxError', line: 2, column: 1});
+      assert.deepStrictEqual(run('print 1\nbreak').error, {id: 'syntaxError', line: 2, column: 1});
     });
   });
 
   describe('structure', () => {
     it('an unexpected indent is an indent error', () => {
-      assert.deepStrictEqual(run('output 1\n    output 2').error, {id: 'indentError', line: 2});
+      assert.deepStrictEqual(run('print 1\n    print 2').error, {id: 'indentError', line: 2});
     });
 
     it('a dedent to no open block is an indent error', () => {
-      assert.deepStrictEqual(run('if 1 < 2\n        output 1\n    output 2').error, {id: 'indentError', line: 3});
+      assert.deepStrictEqual(run('if 1 < 2\n        print 1\n    print 2').error, {id: 'indentError', line: 3});
     });
 
     it('comments and blank lines are not indented', () => {
-      const {output, error} = run('  # comment\n\n  \noutput "a # b"');
+      const {output, error} = run('  # comment\n\n  \nprint "a # b"');
       assert.deepStrictEqual(output, ['a # b']);
       assert.strictEqual(error, undefined);
     });
 
     it('deeply nested expressions are a syntax error', () => {
-      assert.strictEqual(run(`output ${'('.repeat(1000)}1${')'.repeat(1000)}`).error?.id, 'syntaxError');
+      assert.strictEqual(run(`print ${'('.repeat(1000)}1${')'.repeat(1000)}`).error?.id, 'syntaxError');
     });
 
     it('deeply nested blocks are a syntax error', () => {
@@ -71,15 +71,15 @@ describe('core', () => {
     });
 
     it('a math function with a wrong count of arguments', () => {
-      assert.deepStrictEqual(run('output power(2)').error, {id: 'argumentError', line: 1, column: 8});
+      assert.deepStrictEqual(run('print power(2)').error, {id: 'argumentError', line: 1, column: 7});
     });
 
     it('an unterminated text is a syntax error', () => {
-      assert.deepStrictEqual(run('x = 1\noutput "abc').error, {id: 'syntaxError', line: 2, column: 8});
+      assert.deepStrictEqual(run('x = 1\nprint "abc').error, {id: 'syntaxError', line: 2, column: 7});
     });
 
     it('else with more words is a syntax error', () => {
-      assert.deepStrictEqual(run('if 1 < 2\n    output 1\nelse 5').error, {id: 'syntaxError', line: 3, column: 6});
+      assert.deepStrictEqual(run('if 1 < 2\n    print 1\nelse 5').error, {id: 'syntaxError', line: 3, column: 6});
     });
 
     it('a statement starting with a value is a syntax error', () => {
@@ -87,23 +87,23 @@ describe('core', () => {
     });
 
     it('remainder', () => {
-      assert.deepStrictEqual(run('output 17 % 5').output, ['2']);
+      assert.deepStrictEqual(run('print 17 % 5').output, ['2']);
     });
   });
 
   describe('columns', () => {
     it('point at the token of the error, counting the indentation', () => {
-      assert.deepStrictEqual(run('if 1 < 2\n    output 1 +* 2').error, {id: 'syntaxError', line: 2, column: 15});
-      assert.deepStrictEqual(run('output 1x').error, {id: 'syntaxError', line: 1, column: 9});
-      assert.deepStrictEqual(run('output 1 & 2').error, {id: 'syntaxError', line: 1, column: 10});
-      assert.deepStrictEqual(run('output (1').error, {id: 'syntaxError', line: 1});
+      assert.deepStrictEqual(run('if 1 < 2\n    print 1 +* 2').error, {id: 'syntaxError', line: 2, column: 14});
+      assert.deepStrictEqual(run('print 1x').error, {id: 'syntaxError', line: 1, column: 8});
+      assert.deepStrictEqual(run('print 1 & 2').error, {id: 'syntaxError', line: 1, column: 9});
+      assert.deepStrictEqual(run('print (1').error, {id: 'syntaxError', line: 1});
     });
 
     it('point at an undefined variable', () => {
-      assert.deepStrictEqual(run('a = 1\noutput a + b').error, {
+      assert.deepStrictEqual(run('a = 1\nprint a + b').error, {
         id: 'undefinedVariable',
         line: 2,
-        column: 12,
+        column: 11,
         variable: 'b'
       });
     });
@@ -111,21 +111,21 @@ describe('core', () => {
 
   describe('values', () => {
     it("an error of a value names its operator in the program's language, at its column", () => {
-      assert.deepStrictEqual(run('output 1 + true').error, {id: 'typeError', line: 1, column: 10, operator: '+'});
+      assert.deepStrictEqual(run('print 1 + true').error, {id: 'typeError', line: 1, column: 9, operator: '+'});
       assert.deepStrictEqual(run('տպել ոչ 5', [], 'hy-AM').error, {
         id: 'typeError',
         line: 1,
         column: 6,
         operator: 'ոչ'
       });
-      assert.deepStrictEqual(run('output square_root(-4)').error, {
+      assert.deepStrictEqual(run('print square_root(-4)').error, {
         id: 'mathError',
         line: 1,
-        column: 8,
+        column: 7,
         operator: 'square_root'
       });
-      assert.deepStrictEqual(run('output 1 / 0').error, {id: 'divisionByZero', line: 1, column: 10});
-      assert.deepStrictEqual(run('repeat "a" times\n    output 1').error, {
+      assert.deepStrictEqual(run('print 1 / 0').error, {id: 'divisionByZero', line: 1, column: 9});
+      assert.deepStrictEqual(run('repeat "a" times\n    print 1').error, {
         id: 'typeError',
         line: 1,
         operator: 'repeat'
@@ -138,7 +138,7 @@ describe('core', () => {
     });
 
     it('and and or skip their right side when the left one decides', () => {
-      assert.deepStrictEqual(run('output false and x\noutput true or x').output, ['false', 'true']);
+      assert.deepStrictEqual(run('print false and x\nprint true or x').output, ['false', 'true']);
     });
   });
 
@@ -148,7 +148,7 @@ describe('core', () => {
     });
 
     it('too much output in one step', () => {
-      const {output, error} = run('x = "a"\nrepeat 19 times\n    x = x + x\nrepeat 20 times\n    output x');
+      const {output, error} = run('x = "a"\nrepeat 19 times\n    x = x + x\nrepeat 20 times\n    print x');
       assert.deepStrictEqual(error, {id: 'memoryLimit', line: 5});
       assert.strictEqual(output.join('\n').length, 19 * (524288 + 1) - 1);
     });
@@ -157,13 +157,13 @@ describe('core', () => {
   describe('input and output', () => {
     it('many inputs', () => {
       const inputs = Array.from({length: 2000}, (_, index) => index);
-      const {output, error} = run('s = 0\nrepeat 2000 times\n    input n\n    s = s + n\noutput s', inputs);
+      const {output, error} = run('s = 0\nrepeat 2000 times\n    input n\n    s = s + n\nprint s', inputs);
       assert.deepStrictEqual(output, ['1999000']);
       assert.strictEqual(error, undefined);
     });
 
     it('an empty input is asked for again', () => {
-      const {steps} = run('input x\noutput x', ['', 'a']);
+      const {steps} = run('input x\nprint x', ['', 'a']);
       assert.deepStrictEqual(steps, [
         {state: 'input', output: []},
         {state: 'input', output: []},
@@ -172,26 +172,37 @@ describe('core', () => {
     });
 
     it('every step returns the lines printed since the last one', () => {
-      const {steps} = run('output 1\noutput 2\ninput x\noutput x', ['3']);
+      const {steps} = run('print 1\nprint 2\ninput x\nprint x', ['3']);
       assert.deepStrictEqual(steps, [
         {state: 'input', output: ['1', '2']},
         {state: 'end', output: ['3']}
       ]);
     });
 
+    it('the prompt of an input comes with its step', () => {
+      const session = new Session('input "Your name?" name\nprint "Hi " + name\ninput age', 'en');
+      assert.deepStrictEqual(session.run(), {state: 'input', output: [], prompt: 'Your name?'});
+      assert.deepStrictEqual(session.input(''), {state: 'input', output: [], prompt: 'Your name?'});
+      assert.deepStrictEqual(session.input('Ani'), {state: 'input', output: ['Hi Ani']});
+    });
+
+    it('= in an expression points at the =', () => {
+      assert.deepStrictEqual(run('x = 5\nif x = 5\n    print 1').error, {id: 'equalsError', line: 2, column: 6});
+    });
+
     it('a text with a new line is one line of output', () => {
-      assert.deepStrictEqual(run('output "a\\nb"').output, ['a\nb']);
+      assert.deepStrictEqual(run('print "a\\nb"').output, ['a\nb']);
     });
 
     it('empty text is not printed', () => {
-      assert.deepStrictEqual(run('output ""\noutput 1').output, ['1']);
+      assert.deepStrictEqual(run('print ""\nprint 1').output, ['1']);
     });
   });
 
   describe('session', () => {
     it('an unknown language ends the session with unknownLanguage', () => {
       for (const language of ['xx', 'constructor']) {
-        assert.deepStrictEqual(new Session('output 1', language).run(), {
+        assert.deepStrictEqual(new Session('print 1', language).run(), {
           state: 'end',
           output: [],
           error: {id: 'unknownLanguage', language}
@@ -204,7 +215,7 @@ describe('core', () => {
     });
 
     it('run() again, and input after the end, return the state without output', () => {
-      const session = new Session('input name\noutput name', 'en');
+      const session = new Session('input name\nprint name', 'en');
       assert.deepStrictEqual(session.run(), {state: 'input', output: []});
       assert.deepStrictEqual(session.run(), {state: 'input', output: []});
       assert.deepStrictEqual(session.input('Ani'), {state: 'end', output: ['Ani']});
@@ -212,21 +223,21 @@ describe('core', () => {
     });
 
     it('the error stays with the ended session', () => {
-      const session = new Session('output 1\noutput x', 'en');
-      const error = {id: 'undefinedVariable', line: 2, column: 8, variable: 'x'};
+      const session = new Session('print 1\nprint x', 'en');
+      const error = {id: 'undefinedVariable', line: 2, column: 7, variable: 'x'};
       assert.deepStrictEqual(session.run(), {state: 'end', output: ['1'], error});
       assert.deepStrictEqual(session.run(), {state: 'end', output: [], error});
     });
 
     it('stop ends a session waiting for input', () => {
-      const session = new Session('input name\noutput name', 'en');
+      const session = new Session('input name\nprint name', 'en');
       session.run();
       session.stop();
       assert.deepStrictEqual(session.input('Ani'), {state: 'end', output: []});
     });
 
     it('maxSteps counts each step on its own', () => {
-      const code = 'repeat 3 times\n    input x\n    n = 0\n    while n < 20\n        n = n + 1\n    output x';
+      const code = 'repeat 3 times\n    input x\n    n = 0\n    while n < 20\n        n = n + 1\n    print x';
       const session = new Session(code, 'en', {maxSteps: 100});
       session.run();
       assert.deepStrictEqual(session.input(1), {state: 'input', output: ['1']});
@@ -239,26 +250,27 @@ describe('core', () => {
     });
 
     it('the state of a session is private', () => {
-      assert.deepStrictEqual(Object.keys(new Session('output 1', 'en')), []);
+      assert.deepStrictEqual(Object.keys(new Session('print 1', 'en')), []);
     });
   });
 
   describe('check', () => {
     it('returns null for a program without errors before it runs', () => {
-      assert.strictEqual(check('input x\noutput y', 'en'), null);
+      assert.strictEqual(check('input x\nprint y', 'en'), null);
     });
 
     it('returns the first syntax, indentation, argument or language error', () => {
-      assert.deepStrictEqual(check('output 1\noutput (', 'en'), {id: 'syntaxError', line: 2});
-      assert.deepStrictEqual(check('output 1\n  output 2', 'en'), {id: 'indentError', line: 2});
-      assert.deepStrictEqual(check('output sin(1, 2)', 'en'), {id: 'argumentError', line: 1, column: 8});
-      assert.deepStrictEqual(check('output 1', 'xx'), {id: 'unknownLanguage', language: 'xx'});
+      assert.deepStrictEqual(check('print 1\nprint (', 'en'), {id: 'syntaxError', line: 2});
+      assert.deepStrictEqual(check('print 1\n  output 2', 'en'), {id: 'indentError', line: 2});
+      assert.deepStrictEqual(check('print sin(1, 2)', 'en'), {id: 'argumentError', line: 1, column: 7});
+      assert.deepStrictEqual(check('print 1', 'xx'), {id: 'unknownLanguage', language: 'xx'});
     });
   });
 
   describe('messages', () => {
     const errors: ProgramError[] = [
       {id: 'syntaxError', line: 2, column: 3},
+      {id: 'equalsError', line: 2, column: 3},
       {id: 'indentError', line: 2},
       {id: 'argumentError', line: 2},
       {id: 'undefinedVariable', line: 2, column: 3, variable: 'abc'},
@@ -292,8 +304,9 @@ describe('core', () => {
     });
 
     it('fills the placeholders', () => {
-      assert.strictEqual(messageOf(errors[3], 'en'), 'Line 2: abc has no value yet.');
-      assert.strictEqual(messageOf(errors[0], 'hy-AM'), 'Շարահյուսական սխալ 2-րդ տողում։');
+      const byId = (id: string) => errors.find(error => error.id === id) as ProgramError;
+      assert.strictEqual(messageOf(byId('undefinedVariable'), 'en'), 'Line 2: abc has no value yet.');
+      assert.strictEqual(messageOf(byId('syntaxError'), 'hy-AM'), 'Շարահյուսական սխալ 2-րդ տողում։');
       languages.forEach(language => {
         errors.forEach(error => assert.doesNotMatch(messageOf(error, language), /\{\w+\}/, `${language}: ${error.id}`));
       });

@@ -4,7 +4,7 @@ import type {Translation} from '../types.ts';
 const translation: Translation = {
   words: {
     input: ['المدخلات'],
-    output: ['الإخراج'],
+    print: ['الإخراج'],
     if: ['إذا'],
     else: ['وإلا'],
     then: ['ثم'],
@@ -31,11 +31,11 @@ const translation: Translation = {
     sin: ['sin'],
     cos: ['cos'],
     tan: ['tan'],
-    ctg: ['ctg'],
+    cot: ['ctg'],
     arcsin: ['arcsin'],
     arccos: ['arccos'],
     arctan: ['arctan'],
-    arcctg: ['arcctg'],
+    arccot: ['arcctg'],
     log: ['log'],
     ln: ['ln'],
     lg: ['lg'],
@@ -44,7 +44,7 @@ const translation: Translation = {
   },
   notes: {
     input: 'Plural (the inputs); would أدخل be better?',
-    output: 'Also means directing a film; would اطبع (print) be better?',
+    print: 'Also means directing a film; would اطبع (print) be better?',
     then: 'Means afterwards; would فإن be better?',
     false: 'Feminine (lying); is خطأ the usual truth value?',
     true: 'Is صواب or صح the usual truth value?'
@@ -54,6 +54,7 @@ const translation: Translation = {
     syntaxError: 'خطأ نحوي في السطر {line}.',
     indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',
     argumentError: 'السطر {line}: وسائط دالة رياضية غير صحيحة.',
+    equalsError: 'السطر {line}: للمقارنة اكتب == بدلًا من =.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
     typeError: 'السطر {line}: لا يعمل {operator} مع هذه القيم.',
     conditionError: 'السطر {line}: يجب أن يكون الشرط صحيحًا أو خاطئًا.',

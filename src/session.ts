@@ -13,10 +13,12 @@ import type {Program, ProgramError} from './core/types.ts';
 
 /**
  * What a program did in one call of run() or input(): the lines it printed,
- * and whether it waits for input or has ended, with its error if it has one.
+ * and whether it waits for input, with the prompt of the input if it has one,
+ * or has ended, with its error if it has one.
  */
 export type Step =
-  {state: typeof STATE.INPUT; output: string[]} | {state: typeof STATE.END; output: string[]; error?: ProgramError};
+  | {state: typeof STATE.INPUT; output: string[]; prompt?: string}
+  | {state: typeof STATE.END; output: string[]; error?: ProgramError};
 
 export type SessionOptions = {
   /** The steps a program may run in one call of run() or input() before it ends with timeout. */
@@ -86,7 +88,7 @@ export class Session {
   input(value: string | number): Step {
     if (this.#state === 'new') throw new Error('Call run() before input().');
     if (this.#state !== STATE.INPUT || !this.#interpreter) return this.#current();
-    if (value === '' || value === undefined) return {state: STATE.INPUT, output: []};
+    if (value === '' || value === undefined) return this.#current();
 
     try {
       this.#interpreter.setInput(value);
@@ -115,9 +117,18 @@ export class Session {
 
     const output = interpreter.takeOutput();
     this.#state = state;
-    if (state === STATE.END) this.#interpreter = null;
+    if (state === STATE.END) {
+      this.#interpreter = null;
+      return {state, output};
+    }
 
-    return {state, output};
+    return this.#waiting(output);
+  }
+
+  //the input step, with the prompt of the input when it has one
+  #waiting(output: string[]): Step {
+    const prompt = this.#interpreter?.prompt;
+    return prompt ? {state: STATE.INPUT, output, prompt} : {state: STATE.INPUT, output};
   }
 
   //output printed before the error is returned with it
@@ -132,7 +143,7 @@ export class Session {
   }
 
   #current(): Step {
-    if (this.#state === STATE.INPUT) return {state: STATE.INPUT, output: []};
+    if (this.#state === STATE.INPUT) return this.#waiting([]);
     return this.#error ? {state: STATE.END, output: [], error: this.#error} : {state: STATE.END, output: []};
   }
 }
