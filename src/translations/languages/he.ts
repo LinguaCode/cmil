@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['הוסף'],
     into: ['אל'],
     function: ['פונקציה'],
+    return: ['החזר'],
     random: ['אקראי'],
     pow: ['חזקה'],
     sqr: ['ריבוע'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'שורה {line}: לפונקציה יש ארגומנטים שגויים.',
     equalsError: 'שורה {line}: כדי להשוות כתבו == במקום =.',
     undefinedVariable: 'שורה {line}: ל-{variable} עדיין אין ערך.',
+    undefinedFunction: 'שורה {line}: אין פונקציה {function}.',
+    noValue: 'שורה {line}: {function} לא מחזירה ערך.',
     typeError: 'שורה {line}: {operator} לא עובד עם הערכים האלה.',
     conditionError: 'שורה {line}: תנאי חייב להיות אמת או שקר.',
     divisionByZero: 'שורה {line}: חלוקה באפס.',
     mathError: 'שורה {line}: ל-{operator} אין תוצאה עבור הערך הזה.',
     indexError: 'שורה {line}: אין פריט מספר {index}.',
     memoryLimit: 'שורה {line}: טקסט או רשימה נעשו ארוכים מדי.',
+    recursionLimit: 'שורה {line}: יותר מדי קריאות מקוננות לפונקציות.',
     timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',
     unknownLanguage: 'שפה לא מוכרת: {language}.'
   }

@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['dodaj'],
     into: ['na_konec'],
     function: ['funkcija'],
+    return: ['vrni'],
     random: ['naključno'],
     pow: ['potenca'],
     sqr: ['kvadrat'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Vrstica {line}: funkcija ima napačne argumente.',
     equalsError: 'Vrstica {line}: za primerjavo pišite == namesto =.',
     undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
+    undefinedFunction: 'Vrstica {line}: funkcije {function} ni.',
+    noValue: 'Vrstica {line}: {function} ne vrne vrednosti.',
     typeError: 'Vrstica {line}: {operator} ne deluje s temi vrednostmi.',
     conditionError: 'Vrstica {line}: pogoj mora biti resničen ali neresničen.',
     divisionByZero: 'Vrstica {line}: deljenje z nič.',
     mathError: 'Vrstica {line}: {operator} za to vrednost nima rezultata.',
     indexError: 'Vrstica {line}: elementa {index} ni.',
     memoryLimit: 'Vrstica {line}: besedilo ali seznam je postal predolg.',
+    recursionLimit: 'Vrstica {line}: preveč gnezdenih klicev funkcij.',
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
     unknownLanguage: 'Neznan jezik: {language}.'
   }

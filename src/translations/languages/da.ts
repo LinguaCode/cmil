@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['tilføj'],
     into: ['i_listen'],
     function: ['funktion'],
+    return: ['returner'],
     random: ['tilfældig'],
     pow: ['potens'],
     sqr: ['kvadrat'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Linje {line}: en funktion har forkerte argumenter.',
     equalsError: 'Linje {line}: skriv == i stedet for = for at sammenligne.',
     undefinedVariable: 'Linje {line}: {variable} har endnu ingen værdi.',
+    undefinedFunction: 'Linje {line}: der er ingen funktion {function}.',
+    noValue: 'Linje {line}: {function} returnerer ingen værdi.',
     typeError: 'Linje {line}: {operator} virker ikke med disse værdier.',
     conditionError: 'Linje {line}: en betingelse skal være sand eller falsk.',
     divisionByZero: 'Linje {line}: division med nul.',
     mathError: 'Linje {line}: {operator} har intet resultat for denne værdi.',
     indexError: 'Linje {line}: der er intet element {index}.',
     memoryLimit: 'Linje {line}: en tekst eller en liste blev for lang.',
+    recursionLimit: 'Linje {line}: for mange indlejrede funktionskald.',
     timeout: 'Programmet kørte for længe uden at bede om inddata.',
     unknownLanguage: 'Ukendt sprog: {language}.'
   }

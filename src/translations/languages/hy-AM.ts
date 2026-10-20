@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['ավելացնել'],
     into: ['մեջ'],
     function: ['ֆունկցիա'],
+    return: ['վերադարձնել'],
     random: ['պատահականություն'],
     pow: ['աստիճան'],
     sqr: ['քառակուսի'],
@@ -60,12 +61,15 @@ const translation: Translation = {
     argumentError: '{line}-րդ տող․ ֆունկցիայի արգումենտները սխալ են։',
     equalsError: '{line}-րդ տող․ համեմատելու համար գրեք ==, ոչ թե =։',
     undefinedVariable: '{line}-րդ տող․ {variable}-ը դեռ արժեք չունի։',
+    undefinedFunction: '{line}-րդ տող․ {function} ֆունկցիա չկա։',
+    noValue: '{line}-րդ տող․ {function} ֆունկցիան արժեք չի վերադարձնում։',
     typeError: '{line}-րդ տող․ {operator}-ը չի աշխատում այս արժեքների հետ։',
     conditionError: '{line}-րդ տող․ պայմանը պետք է լինի ճիշտ կամ սխալ։',
     divisionByZero: '{line}-րդ տող․ զրոյի վրա բաժանում։',
     mathError: '{line}-րդ տող․ {operator}-ը այս արժեքի համար արդյունք չունի։',
     indexError: '{line}-րդ տող․ {index} համարով տարր չկա։',
     memoryLimit: '{line}-րդ տող․ տեքստը կամ ցուցակը չափազանց երկար դարձավ։',
+    recursionLimit: '{line}-րդ տող․ չափազանց շատ ներդրված ֆունկցիաների կանչեր։',
     timeout: 'Ծրագիրը չափազանց երկար աշխատեց՝ առանց մուտքագրում խնդրելու։',
     unknownLanguage: 'Անհայտ լեզու՝ {language}։'
   }

@@ -12,6 +12,7 @@ CMIL programs are written with the commands of the learner's language. The examp
 | for … from … to … step | `for`, `from`, `to`, `step` | `յուրաքանչյուր`, `սկսած`, `մինչև`, `քայլ` | `для`, `от`, `до`, `шаг` |
 | for … in | `for`, `in` | `յուրաքանչյուր`, `ից` | `для`, `из` |
 | add … into | `add`, `into` | `ավելացնել`, `մեջ` | `добавить`, `в_конец` |
+| function, return | `function`, `return` | `ֆունկցիա`, `վերադարձնել` | `функция`, `вернуть` |
 | break, continue | `break`, `continue` | `դադարեցնել`, `շարունակել` | `прервать`, `продолжать` |
 | and, or, not | `and`, `or`, `not` | `և` (`եւ`, `ու`), `կամ`, `ոչ` | `и`, `или`, `не` |
 | true, false | `true`, `false` | `ճիշտ`, `սխալ` | `правда`, `ложь` |
@@ -163,32 +164,51 @@ Math functions take numbers. Another count of arguments, or a missing `)`, is an
 
 Another value than these functions take is a `typeError`.
 
+## Functions
+
+```
+function area(width, height)
+    return width * height
+
+function greet(name)
+    print "Hello, " + name
+
+print area(3, 4)
+greet("Ani")
+```
+prints `12` and `Hello, Ani`.
+
+- `function name(a, b)` defines a function with its parameters, and the block under it is its body. Functions are defined at the top of the program, not inside a block, and can be called before their definition.
+- `name(1, 2)` calls it, in an expression or as a line of its own. A call gives every parameter a value: another count of arguments is an `argumentError`, and a name without a function is an `undefinedFunction`, both found before the program runs.
+- `return value` ends the function and gives the value of its call; `return` alone, or the end of the body, ends it without a value. Using the value of a call that has none, like `x = greet("Ani")`, is a `noValue` error.
+- A function knows only its parameters and its own variables: the variables of the program and of other calls are not visible in it, and its variables are gone when it returns. A list given to a function is shared, so the function can change it.
+- A function can call other functions and itself, up to 1000 calls inside each other; deeper is a `recursionLimit`. A function can wait for input like the program.
+
 ## Output format
 
 Every `print` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, texts as written, and lists as described under **Lists**.
 
 ## Errors
 
-A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation and argument errors are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
+A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation, argument and `undefinedFunction` errors are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
 
 | `id` | When | Also |
 |---|---|---|
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
-| `argumentError` | a function with a missing `)` or another count of arguments | `line`, `column` of the function |
+| `argumentError` | a call with a missing `)` or another count of arguments | `line`, `column` of the function |
 | `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
+| `undefinedFunction` | a call of a function the program doesn't define | `line`, `column`, `function` |
+| `noValue` | the value of a call of a function that returned without one | `line`, `column`, `function` |
 | `typeError` | an operator, function, index, `repeat`, `for … in` or `add` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
 | `divisionByZero` | `/` or `%` by `0` | `line`, `column` |
 | `mathError` | a math function or operator has no result, like `square_root(-1)` | `line`, `column`, `operator` |
 | `indexError` | an index outside a list or a text, like `[1, 2][3]` | `line`, `column` of the `[`, `index` |
 | `memoryLimit` | a text, a list, or the output of one step, grows too long | `line` |
+| `recursionLimit` | more than 1000 calls of functions inside each other | `line` |
 | `timeout` | the program runs more steps than its limit between two inputs | none |
 | `unknownLanguage` | the session's language isn't one of the languages | `language` |
 
 The limits are in [running.md](running.md).
-
-## Reserved
-
-`function` has a word in every language but is not supported yet; using it is a `syntaxError`.

@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['shto'],
     into: ['te'],
     function: ['funksioni'],
+    return: ['kthe'],
     random: ['të_rastit'],
     pow: ['fuqi'],
     sqr: ['katror'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Rreshti {line}: një funksion ka argumente të gabuara.',
     equalsError: 'Rreshti {line}: për të krahasuar, shkruaj == në vend të =.',
     undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
+    undefinedFunction: 'Rreshti {line}: nuk ka funksion {function}.',
+    noValue: 'Rreshti {line}: {function} nuk kthen asnjë vlerë.',
     typeError: 'Rreshti {line}: {operator} nuk punon me këto vlera.',
     conditionError: 'Rreshti {line}: një kusht duhet të jetë i vërtetë ose i rremë.',
     divisionByZero: 'Rreshti {line}: pjesëtim me zero.',
     mathError: 'Rreshti {line}: {operator} nuk ka rezultat për këtë vlerë.',
     indexError: 'Rreshti {line}: nuk ka element {index}.',
     memoryLimit: 'Rreshti {line}: një tekst ose një listë u bë shumë i gjatë.',
+    recursionLimit: 'Rreshti {line}: shumë thirrje funksionesh brenda njëra-tjetrës.',
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
     unknownLanguage: 'Gjuhë e panjohur: {language}.'
   }

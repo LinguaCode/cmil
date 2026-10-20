@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['추가'],
     into: ['에'],
     function: ['함수'],
+    return: ['반환'],
     random: ['난수'],
     pow: ['거듭제곱'],
     sqr: ['제곱'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: '{line}번째 줄: 함수의 인수가 잘못되었습니다.',
     equalsError: '{line}번째 줄: 비교하려면 = 대신 ==를 쓰세요.',
     undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
+    undefinedFunction: '{line}번째 줄: {function} 함수가 없습니다.',
+    noValue: '{line}번째 줄: {function}은(는) 값을 반환하지 않습니다.',
     typeError: '{line}번째 줄: {operator}은(는) 이 값들과 함께 쓸 수 없습니다.',
     conditionError: '{line}번째 줄: 조건은 참이나 거짓이어야 합니다.',
     divisionByZero: '{line}번째 줄: 0으로 나눌 수 없습니다.',
     mathError: '{line}번째 줄: 이 값에서는 {operator}의 결과가 없습니다.',
     indexError: '{line}번째 줄: {index}번째 항목이 없습니다.',
     memoryLimit: '{line}번째 줄: 텍스트나 목록이 너무 길어졌습니다.',
+    recursionLimit: '{line}번째 줄: 함수 호출이 너무 깊게 중첩되었습니다.',
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
     unknownLanguage: '알 수 없는 언어: {language}'
   }

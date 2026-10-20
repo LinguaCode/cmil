@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['lägg_till'],
     into: ['i_listan'],
     function: ['funktion'],
+    return: ['returnera'],
     random: ['slumptal'],
     pow: ['potens'],
     sqr: ['kvadrat'],
@@ -67,7 +68,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -76,12 +78,15 @@ const translation: Translation = {
     argumentError: 'Rad {line}: en funktion har fel argument.',
     equalsError: 'Rad {line}: skriv == i stället för = för att jämföra.',
     undefinedVariable: 'Rad {line}: {variable} har inget värde än.',
+    undefinedFunction: 'Rad {line}: det finns ingen funktion {function}.',
+    noValue: 'Rad {line}: {function} returnerar inget värde.',
     typeError: 'Rad {line}: {operator} fungerar inte med de här värdena.',
     conditionError: 'Rad {line}: ett villkor måste vara sant eller falskt.',
     divisionByZero: 'Rad {line}: division med noll.',
     mathError: 'Rad {line}: {operator} har inget resultat för det här värdet.',
     indexError: 'Rad {line}: det finns inget element {index}.',
     memoryLimit: 'Rad {line}: en text eller en lista blev för lång.',
+    recursionLimit: 'Rad {line}: för många nästlade funktionsanrop.',
     timeout: 'Programmet körde för länge utan att be om indata.',
     unknownLanguage: 'Okänt språk: {language}.'
   }

@@ -36,6 +36,7 @@ export const COMMAND = {
   NOT: 'not',
 
   FUNCTION: 'function',
+  RETURN: 'return',
 
   //math
   SQR: 'sqr',
@@ -83,12 +84,15 @@ export const ERROR = {
   ARGUMENT_ERROR: 'argumentError',
   EQUALS_ERROR: 'equalsError',
   UNDEFINED_VARIABLE: 'undefinedVariable',
+  UNDEFINED_FUNCTION: 'undefinedFunction',
+  NO_VALUE: 'noValue',
   TYPE_ERROR: 'typeError',
   CONDITION_ERROR: 'conditionError',
   DIVISION_BY_ZERO: 'divisionByZero',
   MATH_ERROR: 'mathError',
   INDEX_ERROR: 'indexError',
   MEMORY_LIMIT: 'memoryLimit',
+  RECURSION_LIMIT: 'recursionLimit',
   TIMEOUT: 'timeout',
   UNKNOWN_LANGUAGE: 'unknownLanguage'
 } as const;
@@ -111,6 +115,9 @@ export const MAX_OUTPUT_LENGTH = 10000000;
 
 //nesting of blocks and of expressions
 export const MAX_NESTING = 100;
+
+//calls of functions that haven't returned yet, like a function that calls itself
+export const MAX_RECURSION = 1000;
 
 //the significant digits numbers are printed and compared with, so 0.1 + 0.2 is 0.3
 export const NUMBER_PRECISION = 12;

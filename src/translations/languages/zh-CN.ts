@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['添加'],
     into: ['进'],
     function: ['函数'],
+    return: ['返回'],
     random: ['随机的'],
     pow: ['乘方'],
     sqr: ['平方'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: '第 {line} 行：函数的参数不对。',
     equalsError: '第 {line} 行：比较时请用 ==，不要用 =。',
     undefinedVariable: '第 {line} 行：{variable} 还没有值。',
+    undefinedFunction: '第 {line} 行：没有函数 {function}。',
+    noValue: '第 {line} 行：{function} 没有返回值。',
     typeError: '第 {line} 行：{operator} 不能用于这些值。',
     conditionError: '第 {line} 行：条件必须为真或假。',
     divisionByZero: '第 {line} 行：除数为零。',
     mathError: '第 {line} 行：{operator} 对这个值没有结果。',
     indexError: '第 {line} 行：没有第 {index} 项。',
     memoryLimit: '第 {line} 行：文本或列表太长了。',
+    recursionLimit: '第 {line} 行：函数嵌套调用太深了。',
     timeout: '程序运行太久，却没有请求输入。',
     unknownLanguage: '未知语言：{language}'
   }

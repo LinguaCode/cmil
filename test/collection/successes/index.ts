@@ -3,5 +3,6 @@ import values from './values.ts';
 import printInput from './print-input.ts';
 import forLoops from './for.ts';
 import lists from './lists.ts';
+import functions from './functions.ts';
 
-export default [...commands, ...values, ...printInput, ...forLoops, ...lists];
+export default [...commands, ...values, ...printInput, ...forLoops, ...lists, ...functions];

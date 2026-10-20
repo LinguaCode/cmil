@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['追加'],
     into: ['へ'],
     function: ['関数'],
+    return: ['返す'],
     random: ['乱数'],
     pow: ['べき乗'],
     sqr: ['二乗'],
@@ -63,12 +64,15 @@ const translation: Translation = {
     argumentError: '{line} 行目: 関数の引数が正しくありません。',
     equalsError: '{line} 行目: 比べるときは = ではなく == を使います。',
     undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
+    undefinedFunction: '{line} 行目: 関数 {function} はありません。',
+    noValue: '{line} 行目: {function} は値を返しません。',
     typeError: '{line} 行目: {operator} はこれらの値には使えません。',
     conditionError: '{line} 行目: 条件は真か偽でなければなりません。',
     divisionByZero: '{line} 行目: 0 で割ることはできません。',
     mathError: '{line} 行目: この値では {operator} の結果がありません。',
     indexError: '{line} 行目: {index} 番目の要素はありません。',
     memoryLimit: '{line} 行目: テキストかリストが長くなりすぎました。',
+    recursionLimit: '{line} 行目: 関数の呼び出しが深すぎます。',
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
     unknownLanguage: '不明な言語: {language}'
   }

@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['aggiungi'],
     into: ['in'],
     function: ['funzione'],
+    return: ['restituisci'],
     random: ['casuale'],
     pow: ['potenza'],
     sqr: ['quadrato'],
@@ -68,7 +69,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -77,12 +79,15 @@ const translation: Translation = {
     argumentError: 'Riga {line}: una funzione ha argomenti sbagliati.',
     equalsError: 'Riga {line}: per confrontare, scrivi == invece di =.',
     undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
+    undefinedFunction: 'Riga {line}: non esiste la funzione {function}.',
+    noValue: 'Riga {line}: {function} non restituisce un valore.',
     typeError: 'Riga {line}: {operator} non funziona con questi valori.',
     conditionError: 'Riga {line}: una condizione deve essere vera o falsa.',
     divisionByZero: 'Riga {line}: divisione per zero.',
     mathError: 'Riga {line}: {operator} non ha risultato per questo valore.',
     indexError: "Riga {line}: non c'è l'elemento {index}.",
     memoryLimit: 'Riga {line}: un testo o una lista è diventato troppo lungo.',
+    recursionLimit: 'Riga {line}: troppe chiamate di funzioni annidate.',
     timeout: 'Il programma è andato avanti troppo a lungo senza chiedere input.',
     unknownLanguage: 'Lingua sconosciuta: {language}.'
   }

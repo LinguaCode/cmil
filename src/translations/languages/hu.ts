@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['hozzáad'],
     into: ['ehhez'],
     function: ['funkció'],
+    return: ['visszaad'],
     random: ['véletlen'],
     pow: ['hatvány'],
     sqr: ['négyzet'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: '{line}. sor: egy függvény argumentumai hibásak.',
     equalsError: '{line}. sor: összehasonlításhoz == kell, nem =.',
     undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
+    undefinedFunction: '{line}. sor: nincs {function} nevű függvény.',
+    noValue: '{line}. sor: a(z) {function} nem ad vissza értéket.',
     typeError: '{line}. sor: a(z) {operator} nem működik ezekkel az értékekkel.',
     conditionError: '{line}. sor: a feltételnek igaznak vagy hamisnak kell lennie.',
     divisionByZero: '{line}. sor: nullával osztás.',
     mathError: '{line}. sor: a(z) {operator} értéke ennél az értéknél nem létezik.',
     indexError: '{line}. sor: nincs {index}. elem.',
     memoryLimit: '{line}. sor: egy szöveg vagy lista túl hosszú lett.',
+    recursionLimit: '{line}. sor: túl sok egymásba ágyazott függvényhívás.',
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
     unknownLanguage: 'Ismeretlen nyelv: {language}.'
   }

@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['add'],
     into: ['into'],
     function: ['function'],
+    return: ['return'],
     random: ['random'],
     pow: ['power'],
     sqr: ['square'],
@@ -60,12 +61,15 @@ const translation: Translation = {
     argumentError: 'Line {line}: a function has the wrong arguments.',
     equalsError: 'Line {line}: to compare, use == instead of =.',
     undefinedVariable: 'Line {line}: {variable} has no value yet.',
+    undefinedFunction: 'Line {line}: there is no function {function}.',
+    noValue: 'Line {line}: {function} returns no value.',
     typeError: "Line {line}: {operator} doesn't work with these values.",
     conditionError: 'Line {line}: a condition must be true or false.',
     divisionByZero: 'Line {line}: division by zero.',
     mathError: 'Line {line}: {operator} has no result for this value.',
     indexError: 'Line {line}: there is no item {index}.',
     memoryLimit: 'Line {line}: a text or a list grew too long.',
+    recursionLimit: 'Line {line}: too many calls of functions inside each other.',
     timeout: 'The program ran too long without asking for input.',
     unknownLanguage: 'Unknown language: {language}.'
   }

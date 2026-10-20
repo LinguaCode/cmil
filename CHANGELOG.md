@@ -4,6 +4,8 @@
   - **[add]** lists: `[1, 2, "a"]` and `[]`, items read with `list[1]`, counted from 1, and replaced with `list[1] = x`, `add x into list`, and `for x in list`, which also passes the letters of a text. A list is shared when it is assigned, printed like `[1, 2, "a"]`, and equal to another list with equal items. An index outside a list or a text is the new error `indexError`, with its `index`. A list may have 1,000,000 items (`memoryLimit`).
   - **[add]** texts: `text[1]` reads a letter, and the functions `length_of(x)`, `uppercase(t)`, `lowercase(t)`, `to_number(t)` and `to_text(x)`. The words of the new commands are in every language; those of 28 languages need a native review.
   - **[change]** messages: `argumentError` says "a function" instead of "a math function", and `memoryLimit` names lists too.
+  - **[add]** functions: `function name(a, b)` with a body under it, `return value` or `return`, and calls like `name(1, 2)` in expressions or on their own line. Functions are defined at the top of the program and can be called before their definition; a function knows only its parameters and its own variables, and can wait for input. The new errors are `undefinedFunction` and an argument count that doesn't fit, found before the program runs, `noValue` for the value of a call that has none, and `recursionLimit` for more than 1000 calls inside each other. The word `return` is in every language; those of 28 languages need a native review.
+  - **[change]** errors: a call of a name that isn't a function, like `eval("1")`, is an `undefinedFunction` instead of a `syntaxError`.
 
 ## 0.8.0-alpha.0 (2026-10-20)
 

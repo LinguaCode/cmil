@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['thêm'],
     into: ['vào'],
     function: ['hàm'],
+    return: ['trả_về'],
     random: ['ngẫu_nhiên'],
     pow: ['lũy_thừa'],
     sqr: ['bình_phương'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Dòng {line}: một hàm có đối số sai.',
     equalsError: 'Dòng {line}: để so sánh, hãy viết == thay vì =.',
     undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
+    undefinedFunction: 'Dòng {line}: không có hàm {function}.',
+    noValue: 'Dòng {line}: {function} không trả về giá trị.',
     typeError: 'Dòng {line}: {operator} không dùng được với các giá trị này.',
     conditionError: 'Dòng {line}: điều kiện phải đúng hoặc sai.',
     divisionByZero: 'Dòng {line}: chia cho không.',
     mathError: 'Dòng {line}: {operator} không có kết quả cho giá trị này.',
     indexError: 'Dòng {line}: không có phần tử thứ {index}.',
     memoryLimit: 'Dòng {line}: một văn bản hoặc danh sách đã quá dài.',
+    recursionLimit: 'Dòng {line}: có quá nhiều lời gọi hàm lồng nhau.',
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
     unknownLanguage: 'Ngôn ngữ không xác định: {language}.'
   }

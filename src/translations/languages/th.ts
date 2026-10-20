@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['เพิ่ม'],
     into: ['เข้า'],
     function: ['ฟังก์ชัน'],
+    return: ['คืนค่า'],
     random: ['แบบสุ่ม'],
     pow: ['ยกกำลัง'],
     sqr: ['กำลังสอง'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'บรรทัดที่ {line}: ฟังก์ชันมีอาร์กิวเมนต์ไม่ถูกต้อง',
     equalsError: 'บรรทัดที่ {line}: ถ้าจะเปรียบเทียบ ให้ใช้ == แทน =',
     undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
+    undefinedFunction: 'บรรทัดที่ {line}: ไม่มีฟังก์ชัน {function}',
+    noValue: 'บรรทัดที่ {line}: {function} ไม่คืนค่า',
     typeError: 'บรรทัดที่ {line}: {operator} ใช้กับค่าเหล่านี้ไม่ได้',
     conditionError: 'บรรทัดที่ {line}: เงื่อนไขต้องเป็นจริงหรือเท็จ',
     divisionByZero: 'บรรทัดที่ {line}: หารด้วยศูนย์',
     mathError: 'บรรทัดที่ {line}: {operator} ไม่มีผลลัพธ์สำหรับค่านี้',
     indexError: 'บรรทัดที่ {line}: ไม่มีรายการที่ {index}',
     memoryLimit: 'บรรทัดที่ {line}: ข้อความหรือรายการยาวเกินไป',
+    recursionLimit: 'บรรทัดที่ {line}: เรียกฟังก์ชันซ้อนกันลึกเกินไป',
     timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',
     unknownLanguage: 'ไม่รู้จักภาษา: {language}'
   }

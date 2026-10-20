@@ -4,6 +4,7 @@
 import CmilError from './error.ts';
 import {COMMAND, ERROR, MAX_NESTING} from '../constants/index.ts';
 import {FUNCTIONS, CONSTANTS} from './values.ts';
+import {callsOf} from './tree.ts';
 import type {Branch, Expression, Line, Statement, Token} from './types.ts';
 
 //an error at a token, or at the end of the line without one
@@ -75,9 +76,8 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
       case 'string':
         return {type: 'value', value: token.value};
       case 'identifier':
-        //only the functions of the language can be called
-        if (isOperator(peek(), '(')) throw syntaxError(line, peek());
-        return {type: 'variable', name: token.value, column: token.column};
+        if (!isOperator(peek(), '(')) return {type: 'variable', name: token.value, column: token.column};
+        return nest(() => ({type: 'userCall', name: token.value, ...parseArguments(token)}));
       case 'operator':
         if (token.value === '[') return nest(parseList);
         if (token.value !== '(') throw syntaxError(line, token);
@@ -121,8 +121,8 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     return node;
   };
 
-  //the errors of a call are at the name of its function
-  const parseCall = (name: Token): Expression => {
+  //the arguments of a call in parentheses; the errors of a call are at the name of its function
+  const parseArguments = (name: Token) => {
     if (!isOperator(tokens[index++], '(')) throw argumentError(line, name);
 
     const args: Expression[] = [];
@@ -137,10 +137,15 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
       }
     }
 
-    const {min, max} = FUNCTIONS[String(name.value)];
-    if (args.length < min || args.length > max) throw argumentError(line, name);
+    return {args, column: name.column};
+  };
 
-    return {type: 'call', name: String(name.value), args, column: name.column};
+  const parseCall = (name: Token): Expression => {
+    const call = parseArguments(name);
+    const {min, max} = FUNCTIONS[String(name.value)];
+    if (call.args.length < min || call.args.length > max) throw argumentError(line, name);
+
+    return {type: 'call', name: String(name.value), ...call};
   };
 
   const parseUnary = (): Expression => {
@@ -201,14 +206,107 @@ const findEquals = (tokens: Token[]): number => {
   });
 };
 
+//the parameters of a function, like (a, b), and nothing after them
+const parseParameters = (tokens: Token[], line: number): string[] => {
+  const [open, ...rest] = tokens;
+  if (!isOperator(open, '(')) throw syntaxError(line, open);
+
+  const parameters: string[] = [];
+  let i = 0;
+  if (isOperator(rest[0], ')')) {
+    i = 1;
+  } else {
+    for (;;) {
+      const name = rest[i++];
+      if (!name || name.type !== 'identifier' || parameters.includes(name.value)) throw syntaxError(line, name);
+      parameters.push(name.value);
+      const next = rest[i++];
+      if (isOperator(next, ')')) break;
+      if (!isOperator(next, ',')) throw syntaxError(line, next);
+    }
+  }
+  if (i < rest.length) throw syntaxError(line, rest[i]);
+
+  return parameters;
+};
+
+//the expressions of a statement, without those of its blocks
+const expressionsOf = (statement: Statement): (Expression | undefined)[] => {
+  switch (statement.type) {
+    case 'print':
+      return statement.expressions;
+    case 'input':
+      return [statement.prompt];
+    case 'assign':
+    case 'return':
+      return [statement.expression];
+    case 'setItem':
+      return [statement.target, statement.index, statement.expression];
+    case 'add':
+      return [statement.expression, statement.target];
+    case 'call':
+      return [statement.call];
+    case 'while':
+      return [statement.condition];
+    case 'repeat':
+      return [statement.count];
+    case 'for':
+      return [statement.from, statement.to, statement.step];
+    case 'forEach':
+      return [statement.expression];
+    default:
+      return [];
+  }
+};
+
+//every call names a function of the program and gives it its count of arguments; checked in the order of the lines
+const checkCalls = (statements: Statement[], functions: Map<string, number>): void => {
+  const check = (expressions: (Expression | undefined)[], line: number) =>
+    expressions.forEach(expression =>
+      callsOf(expression).forEach(call => {
+        const parameters = functions.get(call.name);
+        if (parameters === undefined) {
+          throw new CmilError({id: ERROR.UNDEFINED_FUNCTION, line, column: call.column, function: call.name});
+        }
+        if (call.args.length !== parameters) throw new CmilError({id: ERROR.ARGUMENT_ERROR, line, column: call.column});
+      })
+    );
+
+  const visit = (statement: Statement): void => {
+    switch (statement.type) {
+      case 'if':
+        statement.branches.forEach(branch => {
+          check([branch.condition], branch.line);
+          branch.body.forEach(visit);
+        });
+        statement.elseBody.forEach(visit);
+        return;
+      //the condition of do … while is on its last line
+      case 'doWhile':
+        statement.body.forEach(visit);
+        check([statement.condition], statement.line);
+        return;
+    }
+
+    check(expressionsOf(statement), statement.line);
+    if ('body' in statement) statement.body.forEach(visit);
+  };
+
+  statements.forEach(visit);
+};
+
 /**
  * Builds the statements of a program; a block is the lines indented deeper than its header.
+ * Functions are defined at the top level and can be called before their definition.
  *
  * @param lines - lines from the lexer.
  */
 export const parse = (lines: Line[]): Statement[] => {
   let index = 0;
   let loopDepth = 0;
+  let inFunction = false;
+  //the count of parameters of each function
+  const functions = new Map<string, number>();
 
   const condition = (tokens: Token[], line: number, tail?: string): Expression => {
     const last = tokens[tokens.length - 1];
@@ -259,6 +357,12 @@ export const parse = (lines: Line[]): Statement[] => {
 
     if (first.type === 'identifier' && isOperator(rest[0], '=')) {
       return {type: 'assign', name: first.value, expression: parseExpression(rest.slice(1), line), line};
+    }
+
+    if (first.type === 'identifier' && isOperator(rest[0], '(')) {
+      const call = parseExpression(tokens, line);
+      if (call.type !== 'userCall') throw syntaxError(line, first);
+      return {type: 'call', call, line};
     }
 
     const equals = first.type === 'identifier' && isOperator(rest[0], '[') ? findEquals(tokens) : -1;
@@ -338,6 +442,29 @@ export const parse = (lines: Line[]): Statement[] => {
 
         return {type: 'doWhile', body, condition: condition(next.tokens.slice(1), next.number), line: next.number};
       }
+      case COMMAND.FUNCTION: {
+        //function name(a, b), at the top level
+        const [name, ...header] = rest;
+        if (level || inFunction) throw syntaxError(line, first);
+        if (!name || name.type !== 'identifier' || functions.has(name.value)) throw syntaxError(line, name ?? first);
+        const parameters = parseParameters(header, line);
+        functions.set(name.value, parameters.length);
+
+        inFunction = true;
+        const loops = loopDepth;
+        loopDepth = 0;
+        const body = parseBody(level);
+        loopDepth = loops;
+        inFunction = false;
+
+        return {type: 'function', name: name.value, parameters, body, line};
+      }
+      case COMMAND.RETURN: {
+        if (!inFunction) throw syntaxError(line, first);
+        const statement: Statement = {type: 'return', line};
+        if (rest.length) statement.expression = parseExpression(rest, line);
+        return statement;
+      }
       case COMMAND.BREAK:
       case COMMAND.CONTINUE:
         if (rest.length) throw syntaxError(line, rest[0]);
@@ -362,5 +489,7 @@ export const parse = (lines: Line[]): Statement[] => {
     return statements;
   };
 
-  return parseBlock(0);
+  const statements = parseBlock(0);
+  checkCalls(statements, functions);
+  return statements;
 };

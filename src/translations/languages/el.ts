@@ -27,6 +27,7 @@ const translation: Translation = {
     add: ['πρόσθεσε'],
     into: ['στο_τέλος'],
     function: ['συνάρτηση'],
+    return: ['επίστρεψε'],
     random: ['τυχαία'],
     pow: ['δύναμη'],
     sqr: ['τετράγωνο'],
@@ -66,7 +67,8 @@ const translation: Translation = {
     upper: 'A new word; it needs a native review.',
     lower: 'A new word; it needs a native review.',
     number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.'
+    text: 'A new word; it needs a native review.',
+    return: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
@@ -75,12 +77,15 @@ const translation: Translation = {
     argumentError: 'Γραμμή {line}: μια συνάρτηση έχει λάθος ορίσματα.',
     equalsError: 'Γραμμή {line}: για σύγκριση γράψτε == αντί για =.',
     undefinedVariable: 'Γραμμή {line}: το {variable} δεν έχει ακόμα τιμή.',
+    undefinedFunction: 'Γραμμή {line}: δεν υπάρχει συνάρτηση {function}.',
+    noValue: 'Γραμμή {line}: η {function} δεν επιστρέφει τιμή.',
     typeError: 'Γραμμή {line}: το {operator} δεν λειτουργεί με αυτές τις τιμές.',
     conditionError: 'Γραμμή {line}: μια συνθήκη πρέπει να είναι αληθής ή ψευδής.',
     divisionByZero: 'Γραμμή {line}: διαίρεση με το μηδέν.',
     mathError: 'Γραμμή {line}: το {operator} δεν έχει αποτέλεσμα για αυτή την τιμή.',
     indexError: 'Γραμμή {line}: δεν υπάρχει στοιχείο {index}.',
     memoryLimit: 'Γραμμή {line}: ένα κείμενο ή μια λίστα έγινε πολύ μεγάλο.',
+    recursionLimit: 'Γραμμή {line}: πάρα πολλές εμφωλευμένες κλήσεις συναρτήσεων.',
     timeout: 'Το πρόγραμμα έτρεξε πολλή ώρα χωρίς να ζητήσει είσοδο.',
     unknownLanguage: 'Άγνωστη γλώσσα: {language}.'
   }

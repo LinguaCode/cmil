@@ -7,7 +7,7 @@ const sources: Source[] = [
       {
         title: 'JavaScript function call',
         code: 'print eval("1")',
-        errorId: 'syntaxError',
+        errorId: 'undefinedFunction',
         errorParam: {
           line: 1
         }
