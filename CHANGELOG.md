@@ -1,4 +1,4 @@
-## Unreleased
+## 0.8.0-alpha.0 (2026-10-20)
 
   - **[change]** translations: each language file is a typed record of the words of each command, like `and: ['և', 'եւ', 'ու']`, instead of a list of definitions separated with `|`; TypeScript checks that every command has words. Notes for native speakers are in its `notes`.
   - **[change]** source: the constants are one file, `src/constants/index.ts`, and the command ids lose the `@` of the removed `@output` form. The debug logger is removed.
