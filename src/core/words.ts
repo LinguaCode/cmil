@@ -25,7 +25,7 @@ type Lexicon = {
 };
 
 //the quotes of texts in every language, besides the language's own
-const QUOTES: Quotes[] = [
+export const QUOTES: Quotes[] = [
   ['"', '"'],
   ["'", "'"],
   ['«', '»']

@@ -17,15 +17,16 @@ Verified on 2026-10-20. Update this section when a fact changes.
   - `Session(sourceCode, language, {maxSteps})` (`src/session.ts`), whose `run()` and `input(value)` return a step, `{state: 'input', output, prompt?}` or `{state: 'end', output, error?}`, and `stop()`. Its state is in `#` private fields; an unknown language ends it with `unknownLanguage`.
   - `check(sourceCode, language)`, the first error before running, or `null`.
   - `messageOf(error, language)` (`src/messages.ts`), from the `messages` of each language.
+  - `segmentsOf(line, language)`, `commandsOf(language)` and `quotesOf(language)` (`src/editor.ts`), for editors that color and complete programs.
   - `languages`, the language codes, and `translate(sourceCode, from, to)`, a program in another language: names that are commands there get a trailing `_`, and an unknown language throws.
-  - the types `Step`, `SessionOptions` and `ProgramError`.
+  - the types `Step`, `SessionOptions`, `ProgramError`, `LineSegment`, `CommandKind` and `Quotes`.
 
   CommonJS code uses `const {Session} = require('cmil')`.
 - **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/` and `src/translations/`. There is no `npm start`.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
 - **Playground:** https://linguacode.otanim.com runs CMIL in the browser. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. Its tests drive the page in Chromium, Firefox and WebKit on every push and pull request. After a release, bump that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, and `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language. All 622 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language, and `test/editor.ts` covers the editor functions. All 628 tests pass on Node.js 24 and 26.
 - **Types:** `npm run typecheck` checks `src/`, `test/` and `scripts/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
@@ -55,6 +56,7 @@ Read the files before relying on these descriptions.
 - `src/index.ts`: the public API
 - `src/session.ts`: `Session` and `check()`: compiles a program and runs it step by step
 - `src/messages.ts`: `messageOf()`
+- `src/editor.ts`: `segmentsOf()`, `commandsOf()` and `quotesOf()`, with the kind of every command
 - `src/core/types.ts`: types of tokens, lines, the syntax tree, instructions and values
 - `src/core/words.ts`: the words of each language; `scan()` splits a line into keywords, names, texts and comments, `translateSource()` translates a program
 - `src/core/lexer.ts`: tokens of each line; indentation, texts, numbers, identifiers and commands
@@ -65,7 +67,7 @@ Read the files before relying on these descriptions.
 - `src/core/values.ts`: text conversion, operators, lists, functions and constants
 - `src/core/error.ts`: `CmilError`, which carries the `ProgramError` a session returns
 - `src/constants/`, `src/translations/`: see **Dependencies** above
-- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts` and `words.ts`
+- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts`, `words.ts` and `editor.ts`
 - `scripts/translations-table.ts`: writes `docs/translations.md`
 - `tsconfig.json`: type checking of `src/`, `test/` and `scripts/`; `tsconfig.build.json`: the build into `dist/`
 - `docs/language.md`: the language reference; keep it in line with `test/collection`

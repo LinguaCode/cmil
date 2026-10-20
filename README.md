@@ -58,6 +58,8 @@ if (step.state === 'end' && step.error) {
 
 `import {languages, translate} from 'cmil'`: `languages` lists the language codes, and `translate(sourceCode, from, to)` translates a program into another language, for example `translate('print "Hi"', 'en', 'hy-AM')` returns `'տպել «Hi»'`. Texts are written in the main quotes of the other language, and their values, comments and names stay as written, except a name that is a command in the other language, which gets a trailing `_`.
 
+For editors, `segmentsOf(line, language)` splits a line into the parts to color, with the command of each keyword (`{type: 'keyword', text: 'տպել', command: 'print'}`), and names, texts, numbers, comments, operators, spaces and other characters, which are syntax errors. `commandsOf(language)` lists the commands of a language with their words and their kind: `block` (like `if`, which indents the next line), `statement`, `part`, `operator`, `value` or `function`. `quotesOf(language)` lists the quotes of texts in a language, its main quotes first.
+
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their steps and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 
 #### Development

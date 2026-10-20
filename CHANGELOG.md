@@ -6,6 +6,7 @@
   - **[add]** lists: `x in list` is `true` when a list has a value, and `text in text` when a text has another; `remove x out of list` takes out the first item `==` to x, and a value the list doesn't have is the new `itemError`.
   - **[add]** texts: `split(text)` gives the words of a text, `split(text, separator)` its parts, and `join(list, separator)` joins the items of a list into a text.
   - **[change]** words: `in` reads in conditions too, so in Armenian it is `մեջ` instead of `ից`, and `into` is `վերջում` instead of `մեջ`; in Russian `in` is `среди`, in Japanese `の中`, in Czech `mezi`, Slovak `medzi`, Slovenian `med`, Serbian `међу` and Hungarian `között`. The words of `remove`, `out of`, `split` and `join` are in every language; those of 28 languages need a native review.
+  - **[add]** API: `segmentsOf(line, language)` splits a line into the parts an editor colors, `commandsOf(language)` lists the commands of a language with their words and kinds, and `quotesOf(language)` its quotes.
   - **[change]** errors: an `argumentError` has the `function` as written and the counts `min` and `max` of values it takes, and its message says so, like "Line 3: power takes 2 values."; a call of a function of the program without its `)` is a `syntaxError`. Messages may have plural forms, chosen with `Intl.PluralRules`.
 
 ## 0.9.0-alpha.0 (2026-10-20)

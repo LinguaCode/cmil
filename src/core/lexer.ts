@@ -6,7 +6,7 @@ import {ERROR} from '../constants/index.ts';
 import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan} from './words.ts';
 import type {Line, Token} from './types.ts';
 
-const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', '[', ']', ','];
+export const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', '[', ']', ','];
 
 const syntaxError = (line: number, column: number) => new CmilError({id: ERROR.SYNTAX_ERROR, line, column});
 
