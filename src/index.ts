@@ -15,8 +15,9 @@ export const languages: readonly string[] = Object.freeze(Object.keys(TRANSLATIO
 
 /**
  * Translates a program from one language into another, for example from 'en' to 'hy-AM'.
- * Texts, comments and spacing stay as written, and so do names, except a name that is a command
- * in the other language, which gets a trailing _. An unknown language throws an error.
+ * Texts are written in the main quotes of the other language, like «…» in Armenian; their values, comments and spacing
+ * stay as written, and so do names, except a name that is a command in the other language, which gets a trailing _.
+ * An unknown language throws an error.
  */
 export const translate = (sourceCode: string, from: string, to: string): string => {
   for (const language of [from, to]) {

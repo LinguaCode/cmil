@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['რიცხვად'],
     text: ['ტექსტად']
   },
+  quotes: [['„', '“']],
   notes: {
     input: 'Genitive (of input); should it be შეყვანა?',
     print: 'Means release; should it be გამოტანა?',

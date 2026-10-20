@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['a_número'],
     text: ['a_texto']
   },
+  quotes: [['«', '»']],
   notes: {
     break: 'Harsh for children; would interrumpir or salir be better?',
     for: 'A new word; it needs a native review.',

@@ -2,7 +2,7 @@
  * The words of the commands in each language, and the scanner that finds them in a line of source code.
  * The lexer turns the segments into tokens, and translate() replaces the words of one language with another's.
  */
-import TRANSLATION from '../translations/index.ts';
+import TRANSLATION, {type Quotes} from '../translations/index.ts';
 
 export type Segment =
   | {type: 'keyword'; command: string; text: string}
@@ -18,17 +18,44 @@ type Lexicon = {
   double: Map<string, Map<string, string>>;
   //the first word of each command, used when translating into this language
   first: Map<string, string>;
+  //the opening quotes of texts and their closing ones
+  quotes: Map<string, string>;
+  //the quotes translate() writes
+  main: Quotes;
 };
 
-export const QUOTES: Record<string, string> = {
-  '«': '»',
-  '"': '"',
-  "'": "'"
-};
+//the quotes of texts in every language, besides the language's own
+const QUOTES: Quotes[] = [
+  ['"', '"'],
+  ["'", "'"],
+  ['«', '»']
+];
 
 const ESCAPES: Record<string, string> = {
   n: '\n',
   t: '\t'
+};
+
+//the letters of the escapes of the characters that have one
+const ESCAPED = new Map(Object.entries(ESCAPES).map(([letter, symbol]) => [symbol, letter]));
+
+/**
+ * Writes a value as a text in quotes, with the escapes readString() reads: a backslash before \ and before the closing
+ * quote, \n for a new line and \t for a tab.
+ *
+ * @example
+ * quote('a » b', ['«', '»']);
+ * // returns '«a \\» b»'
+ */
+export const quote = (value: string, [open, close]: Quotes): string => {
+  let text = open;
+  for (const symbol of value) {
+    const escape = ESCAPED.get(symbol);
+    if (escape) text += `\\${escape}`;
+    else if (symbol === '\\' || symbol === close) text += `\\${symbol}`;
+    else text += symbol;
+  }
+  return text + close;
 };
 
 //the Armenian one dot leader is the decimal point on Armenian keyboards
@@ -48,8 +75,16 @@ export const wordsOf = (language: string): Lexicon => {
   const cached = cache.get(language);
   if (cached) return cached;
 
-  const words: Lexicon = {single: new Map(), double: new Map(), first: new Map()};
-  for (const [command, alternatives] of Object.entries(TRANSLATION[language].words)) {
+  const {words: commands, quotes} = TRANSLATION[language];
+  const words: Lexicon = {
+    single: new Map(),
+    double: new Map(),
+    first: new Map(),
+    //the language's own quotes win over the quotes of every language
+    quotes: new Map([...QUOTES, ...quotes]),
+    main: quotes[0]
+  };
+  for (const [command, alternatives] of Object.entries(commands)) {
     words.first.set(command, alternatives[0]);
 
     for (const alternative of alternatives) {
@@ -73,8 +108,7 @@ const readWord = (line: string, start: number) => {
   return line.slice(start, end);
 };
 
-const readString = (line: string, start: number) => {
-  const closingQuote = QUOTES[line[start]];
+const readString = (line: string, start: number, closingQuote: string) => {
   let value = '';
 
   for (let i = start + 1; i < line.length; i++) {
@@ -114,7 +148,7 @@ const readNumber = (line: string, start: number) => {
  * // returns keyword 'print', other ' 1<', keyword 'pi'
  */
 export const scan = (line: string, language: string): Segment[] => {
-  const {single, double} = wordsOf(language);
+  const {single, double, quotes} = wordsOf(language);
   const segments: Segment[] = [];
 
   const pushOther = (text: string) => {
@@ -130,8 +164,8 @@ export const scan = (line: string, language: string): Segment[] => {
     if (symbol === '#') {
       segments.push({type: 'comment', text: line.slice(i)});
       break;
-    } else if (Object.hasOwn(QUOTES, symbol)) {
-      const string = readString(line, i);
+    } else if (quotes.has(symbol)) {
+      const string = readString(line, i, quotes.get(symbol) as string);
       segments.push({type: 'string', ...string});
       i += string.text.length;
     } else if (DIGIT.test(symbol)) {
@@ -167,7 +201,8 @@ export const scan = (line: string, language: string): Segment[] => {
 };
 
 /**
- * Replaces the commands of one language with the first words of another; texts, comments and spacing stay.
+ * Replaces the commands of one language with the first words of another, and the quotes of texts with its main quotes;
+ * the values of texts, comments and spacing stay.
  * A name that is a command in the other language gets a trailing _, the same everywhere in the program.
  *
  * @param from - a language of the translations.
@@ -195,6 +230,7 @@ export const translateSource = (sourceCode: string, from: string, to: string): s
         .map(segment => {
           if (segment.type === 'keyword') return target.first.get(segment.command) ?? segment.text;
           if (segment.type === 'name') return segment.text + (renames.get(segment.text.toLowerCase()) ?? '');
+          if (segment.type === 'string' && segment.closed) return quote(segment.value, target.main);
           return segment.text;
         })
         .join('')

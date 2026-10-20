@@ -9,6 +9,7 @@ import CmilError from './error.ts';
 import * as values from './values.ts';
 import {COMMAND, ERROR, STATE, MAX_TEXT_LENGTH, MAX_OUTPUT_LENGTH, MAX_RECURSION} from '../constants/index.ts';
 import type {UserCall} from './tree.ts';
+import type {Quotes} from '../translations/index.ts';
 import type {Expression, Instruction, Program, UserFunction, Value} from './types.ts';
 
 export type RunStatus = (typeof STATE)[keyof typeof STATE];
@@ -41,7 +42,7 @@ class Interpreter {
   replays: boolean[];
   maxSteps: number;
   wordOf: (command: string) => string;
-  booleans: values.Booleans;
+  format: values.Format;
   counters: number[];
   //the bounds of each for loop, and the passes it has made
   ranges: {from: number; to: number; step: number; passes: number}[] = [];
@@ -66,18 +67,20 @@ class Interpreter {
   /**
    * @param maxSteps - the steps the program may run in one call of run().
    * @param wordOf - the word of a command in the program's language, or an operator as it is; output and errors use it.
+   * @param quotes - the quotes of texts in printed lists.
    */
   constructor(
     {instructions, slots, functions, replays}: Program,
     maxSteps: number,
-    wordOf: (command: string) => string
+    wordOf: (command: string) => string,
+    quotes: Quotes
   ) {
     this.instructions = instructions;
     this.functions = functions;
     this.replays = replays;
     this.maxSteps = maxSteps;
     this.wordOf = wordOf;
-    this.booleans = {true: wordOf(COMMAND.TRUE), false: wordOf(COMMAND.FALSE)};
+    this.format = {true: wordOf(COMMAND.TRUE), false: wordOf(COMMAND.FALSE), quotes};
     this.counters = new Array<number>(slots).fill(0);
   }
 
@@ -108,7 +111,7 @@ class Interpreter {
 
   //a value as it is printed; a list printed longer than a text may be is a memoryLimit
   text(value: Value): string {
-    return this.apply({}, '', () => values.toText(value, this.booleans));
+    return this.apply({}, '', () => values.toText(value, this.format));
   }
 
   /**
@@ -196,9 +199,7 @@ class Interpreter {
       }
       case 'call': {
         const args = node.args.map(arg => this.evaluate(arg));
-        return this.checkText(
-          this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(args, this.booleans))
-        );
+        return this.checkText(this.apply(node, node.name, () => values.FUNCTIONS[node.name].apply(args, this.format)));
       }
       case 'userCall':
         throw new Error('A call of a function in an instruction without calls.');
@@ -219,7 +220,7 @@ class Interpreter {
         }
 
         const right = this.evaluate(node.right);
-        return this.checkText(this.apply(node, operator, () => values.binary(operator, left, right, this.booleans)));
+        return this.checkText(this.apply(node, operator, () => values.binary(operator, left, right, this.format)));
       }
     }
   }

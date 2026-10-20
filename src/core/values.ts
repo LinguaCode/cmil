@@ -3,6 +3,8 @@
  * Values are never converted: an operator or a function with values it doesn't take throws a ValueError.
  */
 import {COMMAND, ERROR, MAX_LIST_LENGTH, MAX_TEXT_LENGTH, NUMBER_PRECISION} from '../constants/index.ts';
+import {quote} from './words.ts';
+import type {Quotes} from '../translations/index.ts';
 import type {Value} from './types.ts';
 
 /** A value that doesn't fit its operator or function; the interpreter adds where it happened. */
@@ -25,8 +27,8 @@ export class ValueError extends Error {
 
 const typeError = () => new ValueError(ERROR.TYPE_ERROR);
 
-/** The words a program's language prints for true and false. */
-export type Booleans = {true: string; false: string};
+/** How a program's language prints values: its words for true and false, and the quotes of texts in lists. */
+export type Format = {true: string; false: string; quotes: Quotes};
 
 /**
  * A number as it is printed and compared: whole numbers as they are, others with 12 significant digits,
@@ -48,13 +50,10 @@ const digits = (value: number): string => {
     : value.toLocaleString('en-US', {useGrouping: false, maximumFractionDigits: 0});
 };
 
-//a text inside a list is quoted, with the escapes of the source code
-const quote = (value: string) =>
-  '"' + value.replace(/[\\"]/g, '\\$&').replace(/\n/g, '\\n').replace(/\t/g, '\\t') + '"';
-
-//a list as [1, 2, "a"], built without recursion so deep lists can't overflow the stack;
+//a list as [1, 2, "a"], with the texts in the quotes of the language, built without recursion so deep lists can't
+//overflow the stack;
 //a list inside itself is [...], and a text longer than a text may be is a memoryLimit
-const listText = (root: Value[], booleans: Booleans): string => {
+const listText = (root: Value[], format: Format): string => {
   let printed = '[';
   const open = new Set([root]);
   const stack = [{list: root, index: 0}];
@@ -71,7 +70,7 @@ const listText = (root: Value[], booleans: Booleans): string => {
     if (frame.index) printed += ', ';
     const next = frame.list[frame.index++];
     if (!Array.isArray(next)) {
-      printed += typeof next === 'string' ? quote(next) : toText(next, booleans);
+      printed += typeof next === 'string' ? quote(next, format.quotes) : toText(next, format);
     } else if (open.has(next)) {
       printed += '[...]';
     } else {
@@ -90,13 +89,13 @@ const listText = (root: Value[], booleans: Booleans): string => {
  * Converts a value into text; booleans become the words of the program's language.
  *
  * @example
- * values.toText(4 > 2, {true: 'ճիշտ', false: 'սխալ'});
+ * values.toText(4 > 2, {true: 'ճիշտ', false: 'սխալ', quotes: ['«', '»']});
  * // returns 'ճիշտ'
  */
-export const toText = (value: Value, booleans: Booleans): string => {
-  if (typeof value === 'boolean') return value ? booleans.true : booleans.false;
+export const toText = (value: Value, format: Format): string => {
+  if (typeof value === 'boolean') return value ? format.true : format.false;
   if (typeof value === 'number') return digits(rounded(value) || 0);
-  if (Array.isArray(value)) return listText(value, booleans);
+  if (Array.isArray(value)) return listText(value, format);
   return value;
 };
 
@@ -174,11 +173,11 @@ const equals = (left: Value, right: Value): boolean => {
 /**
  * Applies a binary operator. + adds numbers, or joins a text with any value; == compares lists by their items.
  */
-export const binary = (operator: string, left: Value, right: Value, booleans: Booleans): Value => {
+export const binary = (operator: string, left: Value, right: Value, format: Format): Value => {
   switch (operator) {
     case '+':
       if (typeof left === 'string' || typeof right === 'string') {
-        return toText(left, booleans) + toText(right, booleans);
+        return toText(left, format) + toText(right, format);
       }
       return finite(number(left) + number(right));
     case '-':
@@ -304,7 +303,7 @@ export const sequence = (value: Value): Value[] =>
 type BuiltIn = {
   min: number;
   max: number;
-  apply: (args: Value[], booleans: Booleans) => Value;
+  apply: (args: Value[], format: Format) => Value;
 };
 
 const one = (apply: (value: number) => number): BuiltIn => ({
@@ -362,7 +361,7 @@ export const FUNCTIONS: Record<string, BuiltIn> = {
       return result;
     }
   },
-  [COMMAND.TEXT]: {min: 1, max: 1, apply: ([value], booleans) => toText(value, booleans)}
+  [COMMAND.TEXT]: {min: 1, max: 1, apply: ([value], format) => toText(value, format)}
 };
 
 export const CONSTANTS: Record<string, number> = {

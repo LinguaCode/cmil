@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['számmá'],
     text: ['szöveggé']
   },
+  quotes: [['„', '”']],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

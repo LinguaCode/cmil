@@ -9,9 +9,14 @@ export type Notes = Partial<Record<Command, string>>;
 /** The message of each error, with placeholders like {line}. */
 export type Messages = Record<ErrorId, string>;
 
-/** The commands and the error messages of one language. */
+/** A pair of quotes around texts, like « and ». */
+export type Quotes = [open: string, close: string];
+
+/** The commands, the quotes and the error messages of one language. */
 export type Translation = {
   words: Words;
   notes?: Notes;
+  /** The quotes of texts in the language, besides "…", '…' and «…», which every language has; translate() writes the first. */
+  quotes: Quotes[];
   messages: Messages;
 };

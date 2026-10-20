@@ -1,3 +1,9 @@
+## Unreleased
+
+  - **[add]** texts: each language has its own quotes besides `«…»`, `"…"` and `'…'`, like `“…”` in English, `„…“` in German or `「…」` in Japanese; `docs/translations.md` lists them.
+  - **[change]** `translate()`: texts are written in the main quotes of the language a program is translated into, like `«…»` in Armenian, with their escapes.
+  - **[change]** output: a list prints its texts in the main quotes of the program's language, like `[«ա»]` in Armenian.
+
 ## 0.9.0-alpha.0 (2026-10-20)
 
   - **[add]** loops: `for i from 1 to 10`, with an optional `step 2` or a negative step to count down; the bounds are read once and both ends are included. The words `for`, `from`, `to` and `step` are in every language; those of 28 languages need a native review.

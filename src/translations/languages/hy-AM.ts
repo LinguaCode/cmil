@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['թիվ_դարձնել'],
     text: ['տեքստ_դարձնել']
   },
+  quotes: [['«', '»']],
   messages: {
     syntaxError: 'Շարահյուսական սխալ {line}-րդ տողում։',
     indentError: 'Նահանջի սխալ {line}-րդ տողում․ բլոկները նահանջեք 4 բացատով։',

@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['كرقم'],
     text: ['كنص']
   },
+  quotes: [['«', '»']],
   notes: {
     input: 'Plural (the inputs); would أدخل be better?',
     print: 'Also means directing a film; would اطبع (print) be better?',

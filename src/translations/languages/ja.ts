@@ -55,6 +55,10 @@ const translation: Translation = {
     number: ['数値化'],
     text: ['文字列化']
   },
+  quotes: [
+    ['「', '」'],
+    ['『', '』']
+  ],
   notes: {
     while: 'Means for a while; which word fits before the condition? DNCL puts the condition first: 〈condition〉の間.'
   },

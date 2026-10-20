@@ -2,7 +2,7 @@
 import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
-import {scan} from '../src/core/words.ts';
+import {quote, scan, wordsOf} from '../src/core/words.ts';
 import translations from '../src/translations/index.ts';
 import {Session, languages, translate} from '../src/index.ts';
 import successes from './collection/successes/index.ts';
@@ -47,6 +47,38 @@ const sameBooleans = (lines: string[], from: string, to: string) => {
   const alternatives = [...words.keys()].map(word => word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
   const pattern = new RegExp(`(?<![\\p{L}\\p{M}\\p{N}_])(${alternatives})(?![\\p{L}\\p{M}\\p{N}_])`, 'gu');
   return lines.map(line => line.replace(pattern, word => words.get(word) ?? word));
+};
+
+//a program prints the texts in its lists in the quotes of its language; these are the quotes of another language
+const sameQuotes = (lines: string[], from: string, to: string) => {
+  const [open, close] = wordsOf(from).main;
+  const target = wordsOf(to).main;
+
+  return lines.map(line => {
+    let result = '';
+    let depth = 0;
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '[') depth++;
+      if (line[i] === ']') depth--;
+      if (!depth || line[i] !== open) {
+        result += line[i];
+        continue;
+      }
+
+      //a text in a list, with its escapes
+      let value = '';
+      for (i++; i < line.length && line[i] !== close; i++) {
+        if (line[i] !== '\\') {
+          value += line[i];
+        } else {
+          const escaped = line[++i];
+          value += escaped === 'n' ? '\n' : escaped === 't' ? '\t' : escaped;
+        }
+      }
+      result += quote(value, target);
+    }
+    return result;
+  });
 };
 
 const casesOf = (sources: Source[]): Case[] =>
@@ -170,11 +202,38 @@ describe('words', () => {
   describe('translate', () => {
     const program = 'input name\nif name == "Ani" then\n    print "output " + name\nelse\n    print name';
 
-    it('translates commands and keeps texts and names', () => {
+    it('translates commands and the quotes of texts, and keeps names', () => {
       assert.strictEqual(
         translate(program, 'en', 'hy-AM'),
-        'մուտքագրել name\nեթե name == "Ani" ապա\n    տպել "output " + name\nայլապես\n    տպել name'
+        'մուտքագրել name\nեթե name == «Ani» ապա\n    տպել «output » + name\nայլապես\n    տպել name'
       );
+    });
+
+    it('writes texts in the quotes of the language, with their escapes', () => {
+      assert.strictEqual(translate('print "a » b"', 'en', 'hy-AM'), 'տպել «a \\» b»');
+      assert.strictEqual(translate('print "a\\\\b\\n\\tc"', 'en', 'de'), 'ausgeben „a\\\\b\\n\\tc“');
+      assert.strictEqual(translate('出力 「a」 + 『b』', 'ja', 'en'), 'print "a" + "b"');
+      //an unclosed text stays as written
+      assert.strictEqual(translate('print "a', 'en', 'ru'), 'вывести "a');
+    });
+
+    it('reads the quotes of every language, and those of every language in each', () => {
+      languages.forEach(language => {
+        const own = translations[language].quotes;
+        [...own, ['"', '"'], ["'", "'"], ['«', '»']].forEach(([open, close]) => {
+          const segments = scan(`x = ${open}a ${close === open ? '' : open}b${close}`, language);
+          assert.deepStrictEqual(
+            segments.filter(segment => segment.type === 'string').map(segment => 'value' in segment && segment.value),
+            [`a ${close === open ? '' : open}b`],
+            `${language}: ${open}${close}`
+          );
+        });
+        assert.strictEqual(
+          translate('print "a"', 'en', language).endsWith(own[0][0] + 'a' + own[0][1]),
+          true,
+          language
+        );
+      });
     });
 
     it('translates back to the same program', () => {
@@ -214,7 +273,7 @@ describe('words', () => {
           const translated = translate(source.code || '', language, to);
           const result = run(translated, to, source.inputs);
           assert.deepStrictEqual(
-            {...result, output: sameBooleans(result.output, to, language)},
+            {...result, output: sameQuotes(sameBooleans(result.output, to, language), to, language)},
             expected,
             `${source.title}:\n${translated}`
           );

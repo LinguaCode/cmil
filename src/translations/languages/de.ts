@@ -55,6 +55,10 @@ const translation: Translation = {
     number: ['zu_zahl'],
     text: ['zu_text']
   },
+  quotes: [
+    ['„', '“'],
+    ['»', '«']
+  ],
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',

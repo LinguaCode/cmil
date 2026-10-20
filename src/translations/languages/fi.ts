@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['luvuksi'],
     text: ['tekstiksi']
   },
+  quotes: [['”', '”']],
   notes: {
     while: 'Means when; is there a short word for as long as?',
     for: 'A new word; it needs a native review.',

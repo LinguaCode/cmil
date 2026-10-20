@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['숫자로'],
     text: ['문자열로']
   },
+  quotes: [['“', '”']],
   notes: {
     not: 'A fragment of -지 않다; which word should logical not be?',
     for: 'A new word; it needs a native review.',

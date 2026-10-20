@@ -34,7 +34,7 @@ print "Hello"
 ## Values
 
 - **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point. Whole numbers are printed whole, others with 12 significant digits, and numbers are compared as they are printed: `0.1 + 0.2` prints `0.3` and equals `0.3`. Numbers are always printed with all their digits, like `0.0000001`, never as `1e-7`.
-- **Texts** in `«…»`, `"…"` or `'…'`. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab.
+- **Texts** in `«…»`, `"…"` or `'…'` in every language, and in the quotes of the program's language, like `“…”` in English, `„…“` in German or `「…」` in Japanese; [translations.md](translations.md) lists them. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab. `translate()` writes texts in the main quotes of the language it translates into, like `«…»` in Armenian.
 - **Booleans:** `true` and `false`, printed in the words of the program's language, for example `ճիշտ` in Armenian.
 - **Lists:** `[1, 2, "a"]`, or `[]` for an empty list. A list holds any values, also lists. See **Lists** below.
 - **Constants:** `pi` and `e`.
@@ -135,7 +135,7 @@ prints `["cherry", "pear", "plum"] 3 plum`.
 - `add value into list` puts the value at the end of the list.
 - `text[i]` is a letter of a text; letters can be read but not replaced. An emoji is one letter.
 - A list is shared, not copied, when it is assigned: after `b = a`, `add 1 into b` adds to `a` too.
-- A list is printed with its items in brackets, texts quoted: `[1, "a", true]`. A list inside itself is printed as `[...]`.
+- A list is printed with its items in brackets, texts in the main quotes of the program's language: `[1, "a", true]` in English, `[1, «ա», ճիշտ]` in Armenian. A list inside itself is printed as `[...]`.
 
 ## Math functions
 

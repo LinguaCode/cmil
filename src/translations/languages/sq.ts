@@ -55,6 +55,7 @@ const translation: Translation = {
     number: ['në_numër'],
     text: ['në_tekst']
   },
+  quotes: [['«', '»']],
   notes: {
     input: 'Means data; would lexo (read) be better?',
     for: 'A new word; it needs a native review.',
