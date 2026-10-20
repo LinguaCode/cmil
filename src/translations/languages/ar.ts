@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['من'],
     to: ['إلى'],
     step: ['بخطوة'],
+    in: ['في'],
+    add: ['أضف'],
+    into: ['ضمن'],
     function: ['دالة'],
     random: ['عشوائية'],
     pow: ['قوة'],
@@ -44,7 +47,12 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['طول'],
+    upper: ['أحرف_كبيرة'],
+    lower: ['أحرف_صغيرة'],
+    number: ['كرقم'],
+    text: ['كنص']
   },
   notes: {
     input: 'Plural (the inputs); would أدخل be better?',
@@ -55,20 +63,29 @@ const translation: Translation = {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'خطأ نحوي في السطر {line}.',
     indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',
-    argumentError: 'السطر {line}: وسائط دالة رياضية غير صحيحة.',
+    argumentError: 'السطر {line}: وسائط دالة غير صحيحة.',
     equalsError: 'السطر {line}: للمقارنة اكتب == بدلًا من =.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
     typeError: 'السطر {line}: لا يعمل {operator} مع هذه القيم.',
     conditionError: 'السطر {line}: يجب أن يكون الشرط صحيحًا أو خاطئًا.',
     divisionByZero: 'السطر {line}: قسمة على صفر.',
     mathError: 'السطر {line}: ليس لـ {operator} نتيجة لهذه القيمة.',
-    memoryLimit: 'السطر {line}: أصبح نص طويلًا جدًا.',
+    indexError: 'السطر {line}: لا يوجد عنصر رقم {index}.',
+    memoryLimit: 'السطر {line}: أصبح نص أو قائمة طويلًا جدًا.',
     timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',
     unknownLanguage: 'لغة غير معروفة: {language}.'
   }

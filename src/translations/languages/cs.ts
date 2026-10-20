@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['krok'],
+    in: ['ze'],
+    add: ['přidej'],
+    into: ['na_konec'],
     function: ['funkce'],
     random: ['náhodné'],
     pow: ['mocnina'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['délka'],
+    upper: ['velká_písmena'],
+    lower: ['malá_písmena'],
+    number: ['na_číslo'],
+    text: ['na_text']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaktická chyba na řádku {line}.',
     indentError: 'Chyba odsazení na řádku {line}: odsazujte bloky o 4 mezery.',
-    argumentError: 'Řádek {line}: matematická funkce má špatné argumenty.',
+    argumentError: 'Řádek {line}: funkce má špatné argumenty.',
     equalsError: 'Řádek {line}: pro porovnání pište == místo =.',
     undefinedVariable: 'Řádek {line}: {variable} zatím nemá hodnotu.',
     typeError: 'Řádek {line}: {operator} s těmito hodnotami nefunguje.',
     conditionError: 'Řádek {line}: podmínka musí být pravdivá, nebo nepravdivá.',
     divisionByZero: 'Řádek {line}: dělení nulou.',
     mathError: 'Řádek {line}: {operator} pro tuto hodnotu nemá výsledek.',
-    memoryLimit: 'Řádek {line}: text je příliš dlouhý.',
+    indexError: 'Řádek {line}: prvek {index} neexistuje.',
+    memoryLimit: 'Řádek {line}: text nebo seznam je příliš dlouhý.',
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',
     unknownLanguage: 'Neznámý jazyk: {language}.'
   }

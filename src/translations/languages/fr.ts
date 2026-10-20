@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['de'],
     to: ['à'],
     step: ['pas'],
+    in: ['dans'],
+    add: ['ajouter'],
+    into: ['à_la_liste'],
     function: ['fonction'],
     random: ['aléatoire'],
     pow: ['puissance'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['longueur_de'],
+    upper: ['majuscules'],
+    lower: ['minuscules'],
+    number: ['en_nombre'],
+    text: ['en_texte']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Erreur de syntaxe à la ligne {line}.',
     indentError: "Erreur d'indentation à la ligne {line} : indentez les blocs de 4 espaces.",
-    argumentError: 'Ligne {line} : une fonction mathématique a de mauvais arguments.',
+    argumentError: 'Ligne {line} : une fonction a de mauvais arguments.',
     equalsError: 'Ligne {line} : pour comparer, écrivez == au lieu de =.',
     undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
     typeError: 'Ligne {line} : {operator} ne fonctionne pas avec ces valeurs.',
     conditionError: 'Ligne {line} : une condition doit être vraie ou fausse.',
     divisionByZero: 'Ligne {line} : division par zéro.',
     mathError: 'Ligne {line} : {operator} n’a pas de résultat pour cette valeur.',
-    memoryLimit: 'Ligne {line} : un texte est devenu trop long.',
+    indexError: "Ligne {line} : il n'y a pas d'élément {index}.",
+    memoryLimit: 'Ligne {line} : un texte ou une liste est devenu trop long.',
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
     unknownLanguage: 'Langue inconnue : {language}.'
   }

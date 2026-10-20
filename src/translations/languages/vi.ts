@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['từ'],
     to: ['đến'],
     step: ['bước'],
+    in: ['trong'],
+    add: ['thêm'],
+    into: ['vào'],
     function: ['hàm'],
     random: ['ngẫu_nhiên'],
     pow: ['lũy_thừa'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['độ_dài'],
+    upper: ['chữ_hoa'],
+    lower: ['chữ_thường'],
+    number: ['thành_số'],
+    text: ['thành_chuỗi']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Lỗi cú pháp ở dòng {line}.',
     indentError: 'Lỗi thụt lề ở dòng {line}: hãy thụt lề các khối 4 dấu cách.',
-    argumentError: 'Dòng {line}: một hàm toán học có đối số sai.',
+    argumentError: 'Dòng {line}: một hàm có đối số sai.',
     equalsError: 'Dòng {line}: để so sánh, hãy viết == thay vì =.',
     undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
     typeError: 'Dòng {line}: {operator} không dùng được với các giá trị này.',
     conditionError: 'Dòng {line}: điều kiện phải đúng hoặc sai.',
     divisionByZero: 'Dòng {line}: chia cho không.',
     mathError: 'Dòng {line}: {operator} không có kết quả cho giá trị này.',
-    memoryLimit: 'Dòng {line}: một văn bản đã quá dài.',
+    indexError: 'Dòng {line}: không có phần tử thứ {index}.',
+    memoryLimit: 'Dòng {line}: một văn bản hoặc danh sách đã quá dài.',
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
     unknownLanguage: 'Ngôn ngữ không xác định: {language}.'
   }

@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['από'],
     to: ['μέχρι'],
     step: ['με_βήμα'],
+    in: ['σε'],
+    add: ['πρόσθεσε'],
+    into: ['στο_τέλος'],
     function: ['συνάρτηση'],
     random: ['τυχαία'],
     pow: ['δύναμη'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['μήκος'],
+    upper: ['κεφαλαία'],
+    lower: ['πεζά'],
+    number: ['σε_αριθμό'],
+    text: ['σε_κείμενο']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Συντακτικό σφάλμα στη γραμμή {line}.',
     indentError: 'Σφάλμα εσοχής στη γραμμή {line}: κάντε εσοχή στα μπλοκ με 4 κενά.',
-    argumentError: 'Γραμμή {line}: μια μαθηματική συνάρτηση έχει λάθος ορίσματα.',
+    argumentError: 'Γραμμή {line}: μια συνάρτηση έχει λάθος ορίσματα.',
     equalsError: 'Γραμμή {line}: για σύγκριση γράψτε == αντί για =.',
     undefinedVariable: 'Γραμμή {line}: το {variable} δεν έχει ακόμα τιμή.',
     typeError: 'Γραμμή {line}: το {operator} δεν λειτουργεί με αυτές τις τιμές.',
     conditionError: 'Γραμμή {line}: μια συνθήκη πρέπει να είναι αληθής ή ψευδής.',
     divisionByZero: 'Γραμμή {line}: διαίρεση με το μηδέν.',
     mathError: 'Γραμμή {line}: το {operator} δεν έχει αποτέλεσμα για αυτή την τιμή.',
-    memoryLimit: 'Γραμμή {line}: ένα κείμενο έγινε πολύ μεγάλο.',
+    indexError: 'Γραμμή {line}: δεν υπάρχει στοιχείο {index}.',
+    memoryLimit: 'Γραμμή {line}: ένα κείμενο ή μια λίστα έγινε πολύ μεγάλο.',
     timeout: 'Το πρόγραμμα έτρεξε πολλή ώρα χωρίς να ζητήσει είσοδο.',
     unknownLanguage: 'Άγνωστη γλώσσα: {language}.'
   }

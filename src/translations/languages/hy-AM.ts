@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['սկսած'],
     to: ['մինչև', 'մինչեւ'],
     step: ['քայլ'],
+    in: ['ից'],
+    add: ['ավելացնել'],
+    into: ['մեջ'],
     function: ['ֆունկցիա'],
     random: ['պատահականություն'],
     pow: ['աստիճան'],
@@ -44,19 +47,25 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['երկարությունը'],
+    upper: ['մեծատառ'],
+    lower: ['փոքրատառ'],
+    number: ['թիվ_դարձնել'],
+    text: ['տեքստ_դարձնել']
   },
   messages: {
     syntaxError: 'Շարահյուսական սխալ {line}-րդ տողում։',
     indentError: 'Նահանջի սխալ {line}-րդ տողում․ բլոկները նահանջեք 4 բացատով։',
-    argumentError: '{line}-րդ տող․ մաթեմատիկական ֆունկցիայի արգումենտները սխալ են։',
+    argumentError: '{line}-րդ տող․ ֆունկցիայի արգումենտները սխալ են։',
     equalsError: '{line}-րդ տող․ համեմատելու համար գրեք ==, ոչ թե =։',
     undefinedVariable: '{line}-րդ տող․ {variable}-ը դեռ արժեք չունի։',
     typeError: '{line}-րդ տող․ {operator}-ը չի աշխատում այս արժեքների հետ։',
     conditionError: '{line}-րդ տող․ պայմանը պետք է լինի ճիշտ կամ սխալ։',
     divisionByZero: '{line}-րդ տող․ զրոյի վրա բաժանում։',
     mathError: '{line}-րդ տող․ {operator}-ը այս արժեքի համար արդյունք չունի։',
-    memoryLimit: '{line}-րդ տող․ տեքստը չափազանց երկար դարձավ։',
+    indexError: '{line}-րդ տող․ {index} համարով տարր չկա։',
+    memoryLimit: '{line}-րդ տող․ տեքստը կամ ցուցակը չափազանց երկար դարձավ։',
     timeout: 'Ծրագիրը չափազանց երկար աշխատեց՝ առանց մուտքագրում խնդրելու։',
     unknownLanguage: 'Անհայտ լեզու՝ {language}։'
   }

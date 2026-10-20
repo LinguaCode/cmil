@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['od'],
     to: ['do'],
     step: ['krok'],
+    in: ['zo'],
+    add: ['pridaj'],
+    into: ['na_koniec'],
     function: ['funkcia'],
     random: ['náhodný'],
     pow: ['mocnina'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['dĺžka'],
+    upper: ['veľké_písmená'],
+    lower: ['malé_písmená'],
+    number: ['na_číslo'],
+    text: ['na_text']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaktická chyba na riadku {line}.',
     indentError: 'Chyba odsadenia na riadku {line}: odsadzujte bloky o 4 medzery.',
-    argumentError: 'Riadok {line}: matematická funkcia má zlé argumenty.',
+    argumentError: 'Riadok {line}: funkcia má zlé argumenty.',
     equalsError: 'Riadok {line}: na porovnanie píšte == namiesto =.',
     undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
     typeError: 'Riadok {line}: {operator} s týmito hodnotami nefunguje.',
     conditionError: 'Riadok {line}: podmienka musí byť pravdivá alebo nepravdivá.',
     divisionByZero: 'Riadok {line}: delenie nulou.',
     mathError: 'Riadok {line}: {operator} pre túto hodnotu nemá výsledok.',
-    memoryLimit: 'Riadok {line}: text je príliš dlhý.',
+    indexError: 'Riadok {line}: prvok {index} neexistuje.',
+    memoryLimit: 'Riadok {line}: text alebo zoznam je príliš dlhý.',
     timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',
     unknownLanguage: 'Neznámy jazyk: {language}.'
   }

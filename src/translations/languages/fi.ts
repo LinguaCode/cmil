@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['alkaen'],
     to: ['asti'],
     step: ['askel'],
+    in: ['joukossa'],
+    add: ['lisää'],
+    into: ['listaan'],
     function: ['funktio'],
     random: ['satunnainen'],
     pow: ['potenssi'],
@@ -44,27 +47,41 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['pituus'],
+    upper: ['isot_kirjaimet'],
+    lower: ['pienet_kirjaimet'],
+    number: ['luvuksi'],
+    text: ['tekstiksi']
   },
   notes: {
     while: 'Means when; is there a short word for as long as?',
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Syntaksivirhe rivillä {line}.',
     indentError: 'Sisennysvirhe rivillä {line}: sisennä lohkot 4 välilyönnillä.',
-    argumentError: 'Rivi {line}: matemaattisella funktiolla on väärät argumentit.',
+    argumentError: 'Rivi {line}: funktiolla on väärät argumentit.',
     equalsError: 'Rivi {line}: vertaa kirjoittamalla == eikä =.',
     undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
     typeError: 'Rivi {line}: {operator} ei toimi näillä arvoilla.',
     conditionError: 'Rivi {line}: ehdon täytyy olla tosi tai epätosi.',
     divisionByZero: 'Rivi {line}: jako nollalla.',
     mathError: 'Rivi {line}: {operator} ei anna tulosta tälle arvolle.',
-    memoryLimit: 'Rivi {line}: teksti kasvoi liian pitkäksi.',
+    indexError: 'Rivi {line}: alkiota {index} ei ole.',
+    memoryLimit: 'Rivi {line}: teksti tai lista kasvoi liian pitkäksi.',
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
     unknownLanguage: 'Tuntematon kieli: {language}.'
   }

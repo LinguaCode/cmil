@@ -64,10 +64,13 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.WHILE]: 'repeats the block below while its condition is true; also ends do … while',
   [COMMAND.REPEAT]: 'repeats the block below, in repeat … times',
   [COMMAND.TIMES]: 'ends repeat … times',
-  [COMMAND.FOR]: 'counts with a variable, in for … from … to …',
+  [COMMAND.FOR]: 'counts with a variable, in for … from … to …, or passes the items of a list, in for … in …',
   [COMMAND.FROM]: 'the first value of for',
   [COMMAND.TO]: 'the last value of for',
   [COMMAND.STEP]: 'how much for adds each pass, 1 unless given',
+  [COMMAND.IN]: 'the list or text whose items for … in passes',
+  [COMMAND.ADD]: 'adds a value at the end of a list, in add … into …',
+  [COMMAND.INTO]: 'the list of add',
   [COMMAND.BREAK]: 'leaves the innermost loop',
   [COMMAND.CONTINUE]: 'starts the next pass of the innermost loop',
   [COMMAND.FUNCTION]: 'reserved, not supported yet',
@@ -91,7 +94,12 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.LN]: 'natural logarithm',
   [COMMAND.LG]: 'logarithm in base 10',
   [COMMAND.PI]: 'the constant π, 3.14159…',
-  [COMMAND.E]: 'the constant e, 2.71828…'
+  [COMMAND.E]: 'the constant e, 2.71828…',
+  [COMMAND.LENGTH]: 'the count of items of a list, or of letters of a text',
+  [COMMAND.UPPER]: 'a text in capital letters',
+  [COMMAND.LOWER]: 'a text in small letters',
+  [COMMAND.NUMBER]: 'the number a text holds',
+  [COMMAND.TEXT]: 'a value as it is printed'
 };
 
 const code = (words: string[]) => words.map(word => `\`${word}\``).join(', ');

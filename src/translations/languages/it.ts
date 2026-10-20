@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['da'],
     to: ['a'],
     step: ['passo'],
+    in: ['tra'],
+    add: ['aggiungi'],
+    into: ['in'],
     function: ['funzione'],
     random: ['casuale'],
     pow: ['potenza'],
@@ -44,7 +47,12 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi_numero'],
-    e: ['e_numero']
+    e: ['e_numero'],
+    length: ['lunghezza_di'],
+    upper: ['maiuscolo'],
+    lower: ['minuscolo'],
+    number: ['in_numero'],
+    text: ['in_testo']
   },
   notes: {
     input: 'An electronics term; would leggi (read) be better?',
@@ -52,20 +60,29 @@ const translation: Translation = {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Errore di sintassi alla riga {line}.',
     indentError: 'Errore di rientro alla riga {line}: rientra i blocchi di 4 spazi.',
-    argumentError: 'Riga {line}: una funzione matematica ha argomenti sbagliati.',
+    argumentError: 'Riga {line}: una funzione ha argomenti sbagliati.',
     equalsError: 'Riga {line}: per confrontare, scrivi == invece di =.',
     undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
     typeError: 'Riga {line}: {operator} non funziona con questi valori.',
     conditionError: 'Riga {line}: una condizione deve essere vera o falsa.',
     divisionByZero: 'Riga {line}: divisione per zero.',
     mathError: 'Riga {line}: {operator} non ha risultato per questo valore.',
-    memoryLimit: 'Riga {line}: un testo è diventato troppo lungo.',
+    indexError: "Riga {line}: non c'è l'elemento {index}.",
+    memoryLimit: 'Riga {line}: un testo o una lista è diventato troppo lungo.',
     timeout: 'Il programma è andato avanti troppo a lungo senza chiedere input.',
     unknownLanguage: 'Lingua sconosciuta: {language}.'
   }

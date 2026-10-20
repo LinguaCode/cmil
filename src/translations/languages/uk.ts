@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['від'],
     to: ['до'],
     step: ['крок'],
+    in: ['серед'],
+    add: ['додати'],
+    into: ['в_кінець'],
     function: ['функція'],
     random: ['випадковий'],
     pow: ['степінь'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e', 'е']
+    e: ['e', 'е'],
+    length: ['довжина'],
+    upper: ['великі_літери'],
+    lower: ['малі_літери'],
+    number: ['в_число'],
+    text: ['в_текст']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Синтаксична помилка в рядку {line}.',
     indentError: 'Помилка відступу в рядку {line}: робіть відступи блоків у 4 пробіли.',
-    argumentError: 'Рядок {line}: математична функція має неправильні аргументи.',
+    argumentError: 'Рядок {line}: функція має неправильні аргументи.',
     equalsError: 'Рядок {line}: для порівняння пишіть == замість =.',
     undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
     typeError: 'Рядок {line}: {operator} не працює з цими значеннями.',
     conditionError: 'Рядок {line}: умова має бути істинною або хибною.',
     divisionByZero: 'Рядок {line}: ділення на нуль.',
     mathError: 'Рядок {line}: {operator} не має результату для цього значення.',
-    memoryLimit: 'Рядок {line}: текст став задовгим.',
+    indexError: 'Рядок {line}: немає елемента з номером {index}.',
+    memoryLimit: 'Рядок {line}: текст або список став задовгим.',
     timeout: 'Програма працювала задовго, не запитуючи введення.',
     unknownLanguage: 'Невідома мова: {language}.'
   }

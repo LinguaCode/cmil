@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['de'],
     to: ['a'],
     step: ['pas'],
+    in: ['en'],
+    add: ['afegir'],
+    into: ['dins'],
     function: ['funció'],
     random: ['aleatori'],
     pow: ['potència'],
@@ -44,26 +47,40 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['longitud_de'],
+    upper: ['majúscules'],
+    lower: ['minúscules'],
+    number: ['a_nombre'],
+    text: ['a_text']
   },
   notes: {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Error de sintaxi a la línia {line}.',
     indentError: 'Error de sagnat a la línia {line}: sagna els blocs amb 4 espais.',
-    argumentError: 'Línia {line}: una funció matemàtica té arguments incorrectes.',
+    argumentError: 'Línia {line}: una funció té arguments incorrectes.',
     equalsError: 'Línia {line}: per comparar, escriu == en lloc de =.',
     undefinedVariable: 'Línia {line}: {variable} encara no té valor.',
     typeError: 'Línia {line}: {operator} no funciona amb aquests valors.',
     conditionError: 'Línia {line}: una condició ha de ser certa o falsa.',
     divisionByZero: 'Línia {line}: divisió per zero.',
     mathError: 'Línia {line}: {operator} no té resultat per a aquest valor.',
-    memoryLimit: 'Línia {line}: un text ha esdevingut massa llarg.',
+    indexError: 'Línia {line}: no hi ha cap element {index}.',
+    memoryLimit: 'Línia {line}: un text o una llista ha esdevingut massa llarg.',
     timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",
     unknownLanguage: 'Llengua desconeguda: {language}.'
   }

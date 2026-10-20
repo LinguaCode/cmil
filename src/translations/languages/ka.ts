@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['საწყისი'],
     to: ['ბოლო'],
     step: ['ბიჯი'],
+    in: ['შორის'],
+    add: ['დაამატე'],
+    into: ['შიგ'],
     function: ['ფუნქცია'],
     random: ['შემთხვევითი'],
     pow: ['ხარისხი'],
@@ -44,7 +47,12 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['e']
+    e: ['e'],
+    length: ['სიგრძე'],
+    upper: ['მთავრული'],
+    lower: ['მხედრული'],
+    number: ['რიცხვად'],
+    text: ['ტექსტად']
   },
   notes: {
     input: 'Genitive (of input); should it be შეყვანა?',
@@ -54,20 +62,29 @@ const translation: Translation = {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'სინტაქსური შეცდომა {line}-ე ხაზზე.',
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
-    argumentError: '{line}-ე ხაზი: მათემატიკურ ფუნქციას არასწორი არგუმენტები აქვს.',
+    argumentError: '{line}-ე ხაზი: ფუნქციას არასწორი არგუმენტები აქვს.',
     equalsError: '{line}-ე ხაზი: შესადარებლად დაწერეთ == და არა =.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
     typeError: '{line}-ე ხაზი: {operator} არ მუშაობს ამ მნიშვნელობებთან.',
     conditionError: '{line}-ე ხაზი: პირობა უნდა იყოს ჭეშმარიტი ან მცდარი.',
     divisionByZero: '{line}-ე ხაზი: ნულზე გაყოფა.',
     mathError: '{line}-ე ხაზი: {operator}-ს ამ მნიშვნელობისთვის შედეგი არ აქვს.',
-    memoryLimit: '{line}-ე ხაზი: ტექსტი ზედმეტად გრძელი გახდა.',
+    indexError: '{line}-ე ხაზი: {index} ნომრის ელემენტი არ არსებობს.',
+    memoryLimit: '{line}-ე ხაზი: ტექსტი ან სია ზედმეტად გრძელი გახდა.',
     timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',
     unknownLanguage: 'უცნობი ენა: {language}.'
   }

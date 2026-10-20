@@ -9,6 +9,9 @@ CMIL programs are written with the commands of the learner's language. The examp
 | if, else, then | `if`, `else`, `then` | `եթե`, `այլապես`, `ապա` | `если`, `иначе`, `тогда` |
 | while, do | `while`, `do` | `մինչ`, `անել` | `пока`, `сделать` |
 | repeat … times | `repeat`, `times` | `կրկնել`, `անգամ` | `повторять`, `раз` |
+| for … from … to … step | `for`, `from`, `to`, `step` | `յուրաքանչյուր`, `սկսած`, `մինչև`, `քայլ` | `для`, `от`, `до`, `шаг` |
+| for … in | `for`, `in` | `յուրաքանչյուր`, `ից` | `для`, `из` |
+| add … into | `add`, `into` | `ավելացնել`, `մեջ` | `добавить`, `в_конец` |
 | break, continue | `break`, `continue` | `դադարեցնել`, `շարունակել` | `прервать`, `продолжать` |
 | and, or, not | `and`, `or`, `not` | `և` (`եւ`, `ու`), `կամ`, `ոչ` | `и`, `или`, `не` |
 | true, false | `true`, `false` | `ճիշտ`, `սխալ` | `правда`, `ложь` |
@@ -32,6 +35,7 @@ print "Hello"
 - **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point. Whole numbers are printed whole, others with 12 significant digits, and numbers are compared as they are printed: `0.1 + 0.2` prints `0.3` and equals `0.3`. Numbers are always printed with all their digits, like `0.0000001`, never as `1e-7`.
 - **Texts** in `«…»`, `"…"` or `'…'`. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab.
 - **Booleans:** `true` and `false`, printed in the words of the program's language, for example `ճիշտ` in Armenian.
+- **Lists:** `[1, 2, "a"]`, or `[]` for an empty list. A list holds any values, also lists. See **Lists** below.
 - **Constants:** `pi` and `e`.
 
 Values are never converted into another type: `"5" == 5` is `false`, and an operator or function with a value it doesn't take is a `typeError`.
@@ -70,8 +74,9 @@ From the lowest to the highest precedence:
 | `+`, `-` | add, subtract | numbers; `+` also joins a text with any value |
 | `*`, `/`, `%` | multiply, divide, remainder | numbers; dividing by `0` is a `divisionByZero` |
 | `-`, `+` before a value | negative, positive | a number |
+| `x[i]` | the item `i` of a list, or the letter `i` of a text | see **Lists** |
 
-Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: true`.
+Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: true`. Two lists are equal when their items are equal, in the same order.
 
 ## Conditions
 
@@ -104,12 +109,32 @@ repeat 3 times
 
 for i from 1 to 10 step 2
     print i
+
+for fruit in ["apple", "pear"]
+    print fruit
 ```
 
 - `while` checks its condition before every pass, `do … while` after every pass.
 - `repeat N times` reads `N` once, before the first pass, so changing `N` in the loop doesn't change the passes. `N` must be a whole number, not below 0.
 - `for i from a to b` gives `i` the values from `a` to `b`, both included, one pass each; `step c` adds `c` instead of 1, and a negative step counts down. `a`, `b` and `c` are read once, before the first pass, and are numbers; a step of 0 is a `typeError`. Each value is counted from `a`, so `step 0.1` doesn't add up errors, and `i` keeps its last value after the loop.
+- `for x in list` gives `x` each item of the list, in order, one pass each; `for x in text` gives it each letter. The items are taken once, before the first pass, so adding to the list in the loop doesn't add passes. Any other value is a `typeError`, and `x` keeps its last value after the loop.
 - `break` leaves the innermost loop and `continue` starts its next pass; outside a loop they are a `syntaxError`.
+
+## Lists
+
+```
+fruits = ["apple", "pear"]
+add "plum" into fruits
+fruits[1] = "cherry"
+print fruits, length_of(fruits), fruits[3]
+```
+prints `["cherry", "pear", "plum"] 3 plum`.
+
+- `list[i]` is the item at `i`, counted from 1, and `list[i] = value` replaces it. An `i` that isn't a whole number from 1 to the length of the list is an `indexError`. Lists in lists have items of items: `table[2][1]`.
+- `add value into list` puts the value at the end of the list.
+- `text[i]` is a letter of a text; letters can be read but not replaced. An emoji is one letter.
+- A list is shared, not copied, when it is assigned: after `b = a`, `add 1 into b` adds to `a` too.
+- A list is printed with its items in brackets, texts quoted: `[1, "a", true]`. A list inside itself is printed as `[...]`.
 
 ## Math functions
 
@@ -127,9 +152,20 @@ for i from 1 to 10 step 2
 
 Math functions take numbers. Another count of arguments, or a missing `)`, is an `argumentError`; an argument that isn't a number is a `typeError`; and a result that doesn't exist, like `square_root(-1)`, `ln(0)` or `tan(pi / 2)`, is a `mathError`.
 
+## Text and list functions
+
+| Function | Result |
+|---|---|
+| `length_of(x)` | the count of items of a list, or of letters of a text |
+| `uppercase(t)`, `lowercase(t)` | a text in capital or small letters |
+| `to_number(t)` | the number a text holds, read like an input: `to_number("2.5")` is `2.5`; a text that isn't a number is a `typeError` |
+| `to_text(x)` | a value as it is printed: `to_text(5) + to_text(5)` is `55` |
+
+Another value than these functions take is a `typeError`.
+
 ## Output format
 
-Every `print` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, and texts as written.
+Every `print` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, texts as written, and lists as described under **Lists**.
 
 ## Errors
 
@@ -139,14 +175,15 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 |---|---|---|
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
-| `argumentError` | a math function with a missing `)` or another count of arguments | `line`, `column` of the function |
+| `argumentError` | a function with a missing `)` or another count of arguments | `line`, `column` of the function |
 | `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
-| `typeError` | an operator, function or `repeat` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`, the word of the program's language |
+| `typeError` | an operator, function, index, `repeat`, `for … in` or `add` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
 | `divisionByZero` | `/` or `%` by `0` | `line`, `column` |
 | `mathError` | a math function or operator has no result, like `square_root(-1)` | `line`, `column`, `operator` |
-| `memoryLimit` | a text, or the output of one step, grows too long | `line` |
+| `indexError` | an index outside a list or a text, like `[1, 2][3]` | `line`, `column` of the `[`, `index` |
+| `memoryLimit` | a text, a list, or the output of one step, grows too long | `line` |
 | `timeout` | the program runs more steps than its limit between two inputs | none |
 | `unknownLanguage` | the session's language isn't one of the languages | `language` |
 

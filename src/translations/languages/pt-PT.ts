@@ -23,6 +23,9 @@ const translation: Translation = {
     from: ['de'],
     to: ['até'],
     step: ['passo'],
+    in: ['em'],
+    add: ['adicionar'],
+    into: ['à_lista'],
     function: ['função'],
     random: ['aleatória'],
     pow: ['potência'],
@@ -44,7 +47,12 @@ const translation: Translation = {
     ln: ['ln'],
     lg: ['lg'],
     pi: ['pi'],
-    e: ['euler']
+    e: ['euler'],
+    length: ['comprimento_de'],
+    upper: ['maiúsculas'],
+    lower: ['minúsculas'],
+    number: ['para_número'],
+    text: ['para_texto']
   },
   notes: {
     random: 'Feminine; should it be aleatório?',
@@ -52,20 +60,29 @@ const translation: Translation = {
     for: 'A new word; it needs a native review.',
     from: 'A new word; it needs a native review.',
     to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.'
+    step: 'A new word; it needs a native review.',
+    in: 'A new word; it needs a native review.',
+    add: 'A new word; it needs a native review.',
+    into: 'A new word; it needs a native review.',
+    length: 'A new word; it needs a native review.',
+    upper: 'A new word; it needs a native review.',
+    lower: 'A new word; it needs a native review.',
+    number: 'A new word; it needs a native review.',
+    text: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Erro de sintaxe na linha {line}.',
     indentError: 'Erro de indentação na linha {line}: indente os blocos com 4 espaços.',
-    argumentError: 'Linha {line}: uma função matemática tem argumentos errados.',
+    argumentError: 'Linha {line}: uma função tem argumentos errados.',
     equalsError: 'Linha {line}: para comparar, escreva == em vez de =.',
     undefinedVariable: 'Linha {line}: {variable} ainda não tem valor.',
     typeError: 'Linha {line}: {operator} não funciona com estes valores.',
     conditionError: 'Linha {line}: uma condição tem de ser verdadeira ou falsa.',
     divisionByZero: 'Linha {line}: divisão por zero.',
     mathError: 'Linha {line}: {operator} não tem resultado para este valor.',
-    memoryLimit: 'Linha {line}: um texto ficou demasiado longo.',
+    indexError: 'Linha {line}: não existe o elemento {index}.',
+    memoryLimit: 'Linha {line}: um texto ou uma lista ficou demasiado longo.',
     timeout: 'O programa correu demasiado tempo sem pedir entrada.',
     unknownLanguage: 'Língua desconhecida: {language}.'
   }
