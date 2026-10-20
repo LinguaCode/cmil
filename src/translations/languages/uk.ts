@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['раз'],
     break: ['перервати'],
     continue: ['далі'],
+    for: ['для'],
+    from: ['від'],
+    to: ['до'],
+    step: ['крок'],
     function: ['функція'],
     random: ['випадковий'],
     pow: ['степінь'],
@@ -41,6 +45,12 @@ const translation: Translation = {
     lg: ['lg'],
     pi: ['pi'],
     e: ['e', 'е']
+  },
+  notes: {
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

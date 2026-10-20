@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['ganger'],
     break: ['avbryt'],
     continue: ['fortsett'],
+    for: ['for'],
+    from: ['fra'],
+    to: ['til'],
+    step: ['steg'],
     function: ['funksjon'],
     random: ['tilfeldig'],
     pow: ['potens'],
@@ -44,7 +48,11 @@ const translation: Translation = {
   },
   notes: {
     then: 'Is så more common after hvis?',
-    while: 'Means during; would så_lenge be better?'
+    while: 'Means during; would så_lenge be better?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

@@ -55,6 +55,18 @@ const sources: Source[] = [
         code: 'repeat -1 times\n    print 1',
         errorId: 'typeError',
         errorParam: {line: 1}
+      },
+      {
+        title: 'for to a text',
+        code: 'for i from 1 to "a"\n    print i',
+        errorId: 'typeError',
+        errorParam: {line: 1}
+      },
+      {
+        title: 'for with a step of 0',
+        code: 'for i from 1 to 5 step 0\n    print i',
+        errorId: 'typeError',
+        errorParam: {line: 1}
       }
     ]
   }

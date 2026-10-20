@@ -34,6 +34,7 @@ export type Statement =
   | {type: 'while'; condition: Expression; body: Statement[]; line: number}
   | {type: 'doWhile'; body: Statement[]; condition: Expression; line: number}
   | {type: 'repeat'; count: Expression; body: Statement[]; line: number}
+  | {type: 'for'; name: string; from: Expression; to: Expression; step?: Expression; body: Statement[]; line: number}
   | {type: 'break' | 'continue'; line: number};
 
 export type Branch = {
@@ -49,7 +50,9 @@ export type Instruction =
   | {op: 'jump'; target: number; line?: number}
   | {op: 'jumpUnless' | 'jumpIf'; expression: Expression; target: number; line: number}
   | {op: 'repeatStart'; slot: number; expression: Expression; line: number}
-  | {op: 'repeatTest'; slot: number; target: number; line: number};
+  | {op: 'repeatTest'; slot: number; target: number; line: number}
+  | {op: 'forStart'; slot: number; from: Expression; to: Expression; step?: Expression; line: number}
+  | {op: 'forTest'; slot: number; name: string; target: number; line: number};
 
 export type Program = {
   instructions: Instruction[];

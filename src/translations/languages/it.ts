@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['volte'],
     break: ['fermare'],
     continue: ['proseguire'],
+    for: ['per'],
+    from: ['da'],
+    to: ['a'],
+    step: ['passo'],
     function: ['funzione'],
     random: ['casuale'],
     pow: ['potenza'],
@@ -44,7 +48,11 @@ const translation: Translation = {
   },
   notes: {
     input: 'An electronics term; would leggi (read) be better?',
-    print: 'An electronics term; would scrivi (write) be better?'
+    print: 'An electronics term; would scrivi (write) be better?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

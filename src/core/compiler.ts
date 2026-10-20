@@ -6,6 +6,7 @@
  * - print {expressions}, input {name, prompt}, assign {name, expression}
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
+ * - forStart {slot, from, to, step}, forTest {slot, name, target}: the bounds of a for loop, read once, and its passes
  */
 import type {Instruction, Program, Statement} from './types.ts';
 
@@ -91,6 +92,17 @@ export const compile = (statements: Statement[]): Program => {
         const slot = slots++;
         emit({op: 'repeatStart', slot, expression: node.count, line});
         const test = emit({op: 'repeatTest', slot, target: UNPATCHED, line});
+        const body = loop(test, () => block(node.body));
+        emit({op: 'jump', target: test});
+        patch(test, here());
+        body.continueAt();
+        body.end(here());
+        break;
+      }
+      case 'for': {
+        const slot = slots++;
+        emit({op: 'forStart', slot, from: node.from, to: node.to, step: node.step, line});
+        const test = emit({op: 'forTest', slot, name: node.name, target: UNPATCHED, line});
         const body = loop(test, () => block(node.body));
         emit({op: 'jump', target: test});
         patch(test, here());

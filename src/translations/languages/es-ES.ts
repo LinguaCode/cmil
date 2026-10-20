@@ -19,6 +19,10 @@ const translation: Translation = {
     times: ['veces'],
     break: ['abortar'],
     continue: ['continuar'],
+    for: ['para'],
+    from: ['desde'],
+    to: ['hasta'],
+    step: ['paso'],
     function: ['función'],
     random: ['aleatorio'],
     pow: ['potencia'],
@@ -43,7 +47,11 @@ const translation: Translation = {
     e: ['e']
   },
   notes: {
-    break: 'Harsh for children; would interrumpir or salir be better?'
+    break: 'Harsh for children; would interrumpir or salir be better?',
+    for: 'A new word; it needs a native review.',
+    from: 'A new word; it needs a native review.',
+    to: 'A new word; it needs a native review.',
+    step: 'A new word; it needs a native review.'
   },
   //translated without a native speaker: the messages need a native review
   messages: {

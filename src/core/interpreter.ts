@@ -14,6 +14,8 @@ class Interpreter {
   wordOf: (command: string) => string;
   booleans: values.Booleans;
   counters: number[];
+  //the bounds of each for loop, and the passes it has made
+  ranges: {from: number; to: number; step: number; passes: number}[] = [];
   variables = new Map<string, Value>();
   position = 0;
   line = 0;
@@ -107,7 +109,7 @@ class Interpreter {
    *
    * @param operator - an operator, or the command of a function or of not, and or or.
    */
-  apply(node: {column?: number}, operator: string, compute: () => Value): Value {
+  apply<T>(node: {column?: number}, operator: string, compute: () => T): T {
     try {
       return compute();
     } catch (error) {
@@ -180,7 +182,29 @@ class Interpreter {
         case 'repeatStart': {
           //the count of passes is read once
           const count = this.evaluate(instruction.expression);
-          this.counters[instruction.slot] = this.apply({}, COMMAND.REPEAT, () => values.passes(count)) as number;
+          this.counters[instruction.slot] = this.apply({}, COMMAND.REPEAT, () => values.passes(count));
+          break;
+        }
+        case 'forStart': {
+          //the bounds are read once
+          const from = this.evaluate(instruction.from);
+          const to = this.evaluate(instruction.to);
+          const step = instruction.step ? this.evaluate(instruction.step) : 1;
+          const range = this.apply({}, COMMAND.FOR, () => values.bounds(from, to, step));
+          this.apply({}, COMMAND.STEP, () => values.nonZero(range[2]));
+          this.ranges[instruction.slot] = {from: range[0], to: values.rounded(range[1]), step: range[2], passes: 0};
+          break;
+        }
+        case 'forTest': {
+          //each value is counted from the start, so a step like 0.1 doesn't add up errors
+          const range = this.ranges[instruction.slot];
+          const value = values.rounded(range.from + range.passes * range.step);
+          if (range.step > 0 ? value <= range.to : value >= range.to) {
+            this.variables.set(instruction.name, value);
+            range.passes++;
+          } else {
+            next = instruction.target;
+          }
           break;
         }
         case 'repeatTest':

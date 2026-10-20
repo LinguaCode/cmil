@@ -234,6 +234,28 @@ export const parse = (lines: Line[]): Statement[] => {
         if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {type: 'repeat', count: condition(rest, line, COMMAND.TIMES), body: parseBody(level, true), line};
       }
+      case COMMAND.FOR: {
+        //for name from a to b, or for name from a to b step c
+        const [name, from] = rest;
+        if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
+        if (!isCommand(from, COMMAND.FROM)) throw syntaxError(line, from ?? name);
+        const to = rest.findIndex(token => isCommand(token, COMMAND.TO));
+        if (to < 0) throw syntaxError(line, rest[rest.length - 1]);
+        const step = rest.findIndex(token => isCommand(token, COMMAND.STEP));
+
+        const statement: Statement = {
+          type: 'for',
+          name: name.value,
+          from: parseExpression(rest.slice(2, to), line),
+          to: parseExpression(rest.slice(to + 1, step < 0 ? undefined : step), line),
+          body: [],
+          line
+        };
+        if (step > to) statement.step = parseExpression(rest.slice(step + 1), line);
+        else if (step >= 0) throw syntaxError(line, rest[step]);
+        statement.body = parseBody(level, true);
+        return statement;
+      }
       case COMMAND.DO: {
         if (rest.length) throw syntaxError(line, rest[0]);
         const body = parseBody(level, true);

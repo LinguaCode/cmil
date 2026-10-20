@@ -223,6 +223,20 @@ export const CONSTANTS: Record<string, number> = {
 };
 
 /**
+ * The bounds of for … from … to … step: numbers, with a step that isn't 0.
+ */
+export const bounds = (from: Value, to: Value, step: Value): [number, number, number] => [
+  number(from),
+  number(to),
+  number(step)
+];
+
+export const nonZero = (value: number): number => {
+  if (value === 0) throw typeError();
+  return value;
+};
+
+/**
  * The passes of repeat … times: a whole number, not below 0.
  */
 export const passes = (value: Value): number => {

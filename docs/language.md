@@ -101,10 +101,14 @@ while password != "secret"
 
 repeat 3 times
     print "a"
+
+for i from 1 to 10 step 2
+    print i
 ```
 
 - `while` checks its condition before every pass, `do … while` after every pass.
 - `repeat N times` reads `N` once, before the first pass, so changing `N` in the loop doesn't change the passes. `N` must be a whole number, not below 0.
+- `for i from a to b` gives `i` the values from `a` to `b`, both included, one pass each; `step c` adds `c` instead of 1, and a negative step counts down. `a`, `b` and `c` are read once, before the first pass, and are numbers; a step of 0 is a `typeError`. Each value is counted from `a`, so `step 0.1` doesn't add up errors, and `i` keeps its last value after the loop.
 - `break` leaves the innermost loop and `continue` starts its next pass; outside a loop they are a `syntaxError`.
 
 ## Math functions
