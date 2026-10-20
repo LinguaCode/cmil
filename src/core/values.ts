@@ -21,14 +21,24 @@ const typeError = () => new ValueError(ERROR.TYPE_ERROR);
 export type Booleans = {true: string; false: string};
 
 /**
- * A number as it is printed and compared: whole numbers as they are, others with 12 significant digits.
+ * A number as it is printed and compared: whole numbers as they are, others with 12 significant digits,
+ * also whole numbers too large to be exact.
  *
  * @example
  * values.rounded(0.1 + 0.2);
  * // returns 0.3
  */
 export const rounded = (value: number): number =>
-  Number.isInteger(value) ? value : Number(value.toPrecision(NUMBER_PRECISION));
+  Number.isSafeInteger(value) ? value : Number(value.toPrecision(NUMBER_PRECISION));
+
+//all the digits of a number, never 1e-7 or 1e+21, which programs can't write
+const digits = (value: number): string => {
+  const text = String(value);
+  if (!text.includes('e')) return text;
+  return Math.abs(value) < 1
+    ? value.toLocaleString('en-US', {useGrouping: false, maximumSignificantDigits: NUMBER_PRECISION})
+    : value.toLocaleString('en-US', {useGrouping: false, maximumFractionDigits: 0});
+};
 
 /**
  * Converts a value into text; booleans become the words of the program's language.
@@ -39,7 +49,7 @@ export const rounded = (value: number): number =>
  */
 export const toText = (value: Value, booleans: Booleans): string => {
   if (typeof value === 'boolean') return value ? booleans.true : booleans.false;
-  if (typeof value === 'number') return String(rounded(value) || 0);
+  if (typeof value === 'number') return digits(rounded(value) || 0);
   return value;
 };
 

@@ -14,6 +14,11 @@ const sources: Source[] = [
           },
           {title: 'compared as printed', code: 'output 0.1 + 0.2 == 0.3\noutput 1 - 0.9 < 0.1', output: 'true\nfalse'},
           {
+            title: 'very small and very large numbers printed with all their digits',
+            code: 'output 1 / 10000000\noutput -1 / 30000000\noutput power(10, 21)\noutput 1.5 * power(10, 25)',
+            output: '0.0000001\n-0.0000000333333333333\n1000000000000000000000\n15000000000000000000000000'
+          },
+          {
             title: 'whole numbers printed whole',
             code: 'output 123456789012345\noutput 2 / 4',
             output: '123456789012345\n0.5'

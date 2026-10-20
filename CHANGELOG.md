@@ -8,7 +8,7 @@
   - **[change]** limits: a program may run 1,000,000 steps between two inputs, instead of 100,000 steps and 666 ms, so for example finding the primes below 3000 no longer times out; `new Session(sourceCode, language, {maxSteps})` sets another limit. The core has no clock any more and reads no environment variable; a host stops a hung worker itself.
   - **[change]** values: values are never converted into another type. Arithmetic takes numbers, `+` also joins a text with any value, `==` never converts (`"5" == 5` is false), and `<`, `>` compare two numbers or two texts. Conditions, `and`, `or` and `not` take booleans. Anything else is one of the new errors `typeError`, `conditionError`, `divisionByZero` or `mathError`, with the line, the column and, for `typeError` and `mathError`, the operator in the words of the program's language. NaN and Infinity no longer exist.
   - **[change]** output: booleans are printed in the words of the program's language, like `ճիշտ` in Armenian, instead of `<true/>` and `<false/>`.
-  - **[change]** numbers: printed and compared with 12 significant digits, so `0.1 + 0.2` prints `0.3` and equals `0.3`. Trigonometry is rounded to 12 decimals instead of 10, so `sin(pi)` is still `0`.
+  - **[change]** numbers: printed and compared with 12 significant digits, so `0.1 + 0.2` prints `0.3` and equals `0.3`, and always with all their digits, like `0.0000001` instead of `1e-7`. Trigonometry is rounded to 12 decimals instead of 10, so `sin(pi)` is still `0`.
   - **[fix]** loops: `repeat N times` reads N once, so changing N in the loop no longer makes it endless. N must be a whole number, not below 0.
   - **[add]** math: `round(x, digits)` rounds to a count of decimals.
 
