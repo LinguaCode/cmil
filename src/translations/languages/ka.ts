@@ -25,7 +25,7 @@ const translation: Translation = {
     step: ['ბიჯი'],
     in: ['შორის'],
     add: ['დაამატე'],
-    into: ['შიგ'],
+    into: ['სიაში'],
     remove: ['ამოიღე'],
     outOf: ['სიიდან'],
     function: ['ფუნქცია'],

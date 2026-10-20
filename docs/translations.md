@@ -309,7 +309,7 @@ Quotes: «…», also "…" and '…'
 | add | adds a value at the end of a list, in add … into … | `afegir` |
 | into | the list of add | `dins` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `treure` |
-| out of | the list of remove | `del` |
+| out of | the list of remove | `de_la_llista` |
 | function | defines a function, in function name(a, b) | `funció` |
 | return | ends a function, with the value it gives back | `retorna` |
 | random | a random whole number | `aleatori` |
@@ -351,7 +351,7 @@ To check:
 - `afegir` (add): A new word; it needs a native review.
 - `dins` (into): A new word; it needs a native review.
 - `treure` (remove): A new word; it needs a native review.
-- `del` (out of): A new word; it needs a native review.
+- `de_la_llista` (out of): A new word; it needs a native review.
 - `retorna` (return): A new word; it needs a native review.
 - `longitud_de` (length_of): A new word; it needs a native review.
 - `majúscules` (uppercase): A new word; it needs a native review.
@@ -879,7 +879,7 @@ Quotes: «…», also "…" and '…'
 | add | adds a value at the end of a list, in add … into … | `ajouter` |
 | into | the list of add | `à_la_liste` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `retirer` |
-| out of | the list of remove | `du` |
+| out of | the list of remove | `de_la_liste` |
 | function | defines a function, in function name(a, b) | `fonction` |
 | return | ends a function, with the value it gives back | `retourner` |
 | random | a random whole number | `aléatoire` |
@@ -921,7 +921,7 @@ To check:
 - `ajouter` (add): A new word; it needs a native review.
 - `à_la_liste` (into): A new word; it needs a native review.
 - `retirer` (remove): A new word; it needs a native review.
-- `du` (out of): A new word; it needs a native review.
+- `de_la_liste` (out of): A new word; it needs a native review.
 - `retourner` (return): A new word; it needs a native review.
 - `longueur_de` (length_of): A new word; it needs a native review.
 - `majuscules` (uppercase): A new word; it needs a native review.
@@ -961,7 +961,7 @@ Quotes: „…“, also "…", '…' and «…»
 | step | how much for adds each pass, 1 unless given | `ბიჯი` |
 | in | the list or text whose items for … in passes; also true when a list has a value, or a text has a text | `შორის` |
 | add | adds a value at the end of a list, in add … into … | `დაამატე` |
-| into | the list of add | `შიგ` |
+| into | the list of add | `სიაში` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `ამოიღე` |
 | out of | the list of remove | `სიიდან` |
 | function | defines a function, in function name(a, b) | `ფუნქცია` |
@@ -1007,7 +1007,7 @@ To check:
 - `ბიჯი` (step): A new word; it needs a native review.
 - `შორის` (in): A new word; it needs a native review.
 - `დაამატე` (add): A new word; it needs a native review.
-- `შიგ` (into): A new word; it needs a native review.
+- `სიაში` (into): A new word; it needs a native review.
 - `ამოიღე` (remove): A new word; it needs a native review.
 - `სიიდან` (out of): A new word; it needs a native review.
 - `დააბრუნე` (return): A new word; it needs a native review.
@@ -1135,7 +1135,7 @@ Quotes: «…», also "…" and '…'
 | add | adds a value at the end of a list, in add … into … | `πρόσθεσε` |
 | into | the list of add | `στο_τέλος` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `αφαίρεσε` |
-| out of | the list of remove | `έξω_από` |
+| out of | the list of remove | `από_τη_λίστα` |
 | function | defines a function, in function name(a, b) | `συνάρτηση` |
 | return | ends a function, with the value it gives back | `επίστρεψε` |
 | random | a random whole number | `τυχαία` |
@@ -1177,7 +1177,7 @@ To check:
 - `πρόσθεσε` (add): A new word; it needs a native review.
 - `στο_τέλος` (into): A new word; it needs a native review.
 - `αφαίρεσε` (remove): A new word; it needs a native review.
-- `έξω_από` (out of): A new word; it needs a native review.
+- `από_τη_λίστα` (out of): A new word; it needs a native review.
 - `επίστρεψε` (return): A new word; it needs a native review.
 - `μήκος` (length_of): A new word; it needs a native review.
 - `κεφαλαία` (uppercase): A new word; it needs a native review.
@@ -1301,9 +1301,9 @@ Quotes: „…”, also "…", '…' and «…»
 | step | how much for adds each pass, 1 unless given | `lépés` |
 | in | the list or text whose items for … in passes; also true when a list has a value, or a text has a text | `között` |
 | add | adds a value at the end of a list, in add … into … | `hozzáad` |
-| into | the list of add | `ehhez` |
+| into | the list of add | `listához` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `töröl` |
-| out of | the list of remove | `ebből` |
+| out of | the list of remove | `listából` |
 | function | defines a function, in function name(a, b) | `funkció` |
 | return | ends a function, with the value it gives back | `visszaad` |
 | random | a random whole number | `véletlen` |
@@ -1343,9 +1343,9 @@ To check:
 - `lépés` (step): A new word; it needs a native review.
 - `között` (in): A new word; it needs a native review.
 - `hozzáad` (add): A new word; it needs a native review.
-- `ehhez` (into): A new word; it needs a native review.
+- `listához` (into): A new word; it needs a native review.
 - `töröl` (remove): A new word; it needs a native review.
-- `ebből` (out of): A new word; it needs a native review.
+- `listából` (out of): A new word; it needs a native review.
 - `visszaad` (return): A new word; it needs a native review.
 - `hossza` (length_of): A new word; it needs a native review.
 - `nagybetűs` (uppercase): A new word; it needs a native review.
@@ -1387,7 +1387,7 @@ Quotes: «…», also "…" and '…'
 | add | adds a value at the end of a list, in add … into … | `aggiungi` |
 | into | the list of add | `in` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `rimuovi` |
-| out of | the list of remove | `dalla` |
+| out of | the list of remove | `dalla_lista` |
 | function | defines a function, in function name(a, b) | `funzione` |
 | return | ends a function, with the value it gives back | `restituisci` |
 | random | a random whole number | `casuale` |
@@ -1431,7 +1431,7 @@ To check:
 - `aggiungi` (add): A new word; it needs a native review.
 - `in` (into): A new word; it needs a native review.
 - `rimuovi` (remove): A new word; it needs a native review.
-- `dalla` (out of): A new word; it needs a native review.
+- `dalla_lista` (out of): A new word; it needs a native review.
 - `restituisci` (return): A new word; it needs a native review.
 - `lunghezza_di` (length_of): A new word; it needs a native review.
 - `maiuscolo` (uppercase): A new word; it needs a native review.
@@ -1796,7 +1796,7 @@ Quotes: «…», also "…" and '…'
 | add | adds a value at the end of a list, in add … into … | `adicionar` |
 | into | the list of add | `à_lista` |
 | remove | removes the first item equal to a value from a list, in remove … out of … | `remover` |
-| out of | the list of remove | `da` |
+| out of | the list of remove | `da_lista` |
 | function | defines a function, in function name(a, b) | `função` |
 | return | ends a function, with the value it gives back | `devolver` |
 | random | a random whole number | `aleatória` |
@@ -1838,7 +1838,7 @@ To check:
 - `adicionar` (add): A new word; it needs a native review.
 - `à_lista` (into): A new word; it needs a native review.
 - `remover` (remove): A new word; it needs a native review.
-- `da` (out of): A new word; it needs a native review.
+- `da_lista` (out of): A new word; it needs a native review.
 - `devolver` (return): A new word; it needs a native review.
 - `aleatória` (random): Feminine; should it be aleatório?
 - `chão` (floor): Brazil uses piso; which word is used in Portugal?
