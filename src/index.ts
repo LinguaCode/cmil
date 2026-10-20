@@ -5,9 +5,8 @@ import * as compiler from './core/compiler.ts';
 import {translateSource} from './core/words.ts';
 import Session from './core/interpreter.ts';
 import CmilError from './core/error.ts';
-import {STATUS} from './constants/index.ts';
+import {ERROR, STATE} from './constants/index.ts';
 import TRANSLATION from './translations/index.ts';
-import * as logger from './libs/logger.ts';
 import type {ErrorParam, Program} from './core/types.ts';
 
 export type {ErrorParam} from './core/types.ts';
@@ -62,7 +61,6 @@ class CodeSubmit {
    * an input while the program doesn't wait for one is ignored.
    */
   input(value?: string | number): this {
-    logger.log(`CMIL: input: '${value}' received`);
     if (this.#hasEnded || !this.#isWaitingForInput || !this.#session) return this;
 
     if (value === '' || value === undefined) {
@@ -91,7 +89,7 @@ class CodeSubmit {
     this.#session = null;
 
     if (!Object.hasOwn(TRANSLATION, this.#language)) {
-      return this.#end(new CmilError(STATUS.UNKNOWN_LANGUAGE, {language: this.#language}));
+      return this.#end(new CmilError(ERROR.UNKNOWN_LANGUAGE, {language: this.#language}));
     }
 
     let program: Program;
@@ -158,7 +156,7 @@ class CodeSubmit {
         return this;
       }
 
-      if (status === STATUS.SESSION_END) {
+      if (status === STATE.SESSION_END) {
         this.#isRunning = false;
         return this.#end();
       }

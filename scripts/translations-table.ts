@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
-import {COMMAND} from '../src/constants/index.ts';
+import {COMMAND, type Command} from '../src/constants/index.ts';
 import translations from '../src/translations/index.ts';
 
 export const DOCS_PATH = path.join(import.meta.dirname, '../docs/translations.md');
@@ -49,7 +49,7 @@ const NAMES: Record<string, [string, string]> = {
   'zh-CN': ['Chinese', '中文']
 };
 
-const MEANINGS: Record<string, string> = {
+const MEANINGS: Record<Command, string> = {
   [COMMAND.INPUT]: 'waits for the user and stores the answer in a variable',
   [COMMAND.OUTPUT]: 'prints a value',
   [COMMAND.IF]: 'runs the block below when its condition is true',
@@ -90,11 +90,7 @@ const MEANINGS: Record<string, string> = {
   [COMMAND.E]: 'the constant e, 2.71828…'
 };
 
-const words = (definition: string) =>
-  definition
-    .split('|')
-    .map(word => `\`${word}\``)
-    .join(', ');
+const code = (words: string[]) => words.map(word => `\`${word}\``).join(', ');
 
 //the anchor GitHub gives a heading
 const anchor = (heading: string) =>
@@ -107,36 +103,31 @@ const anchor = (heading: string) =>
  * Returns the contents of docs/translations.md.
  */
 export const translationsTable = (): string => {
-  const commands = translations.en.map(({command}) => command);
+  const commands = Object.keys(translations.en.words) as Command[];
+  const english = (command: Command) => translations.en.words[command][0];
   const languages = Object.keys(translations).sort((a, b) => NAMES[a][0].localeCompare(NAMES[b][0], 'en'));
 
   const sections = languages.map(language => {
     const [name, native] = NAMES[language];
-    const byCommand = new Map(translations[language].map(translation => [translation.command, translation]));
-    const notes = translations[language].filter(({note}) => note);
+    const {words, notes = {}} = translations[language];
+    const checks = commands.filter(command => notes[command]);
 
-    const rows = commands.map(command => {
-      const {definition} = byCommand.get(command) ?? {definition: ''};
-      return `| ${translations.en.find(translation => translation.command === command)?.definition} | ${MEANINGS[command]} | ${words(definition)} |`;
-    });
+    const rows = commands.map(command => `| ${english(command)} | ${MEANINGS[command]} | ${code(words[command])} |`);
 
     return [
       `## ${name} (${language})`,
       '',
-      `${native}${notes.length ? ` · ${notes.length} to check` : ''}`,
+      `${native}${checks.length ? ` · ${checks.length} to check` : ''}`,
       '',
       `| English | Meaning | ${name} |`,
       '|---|---|---|',
       ...rows,
-      ...(notes.length
+      ...(checks.length
         ? [
             '',
             'To check:',
             '',
-            ...notes.map(
-              ({command, definition, note}) =>
-                `- ${words(definition)} (${translations.en.find(translation => translation.command === command)?.definition}): ${note}`
-            )
+            ...checks.map(command => `- ${code(words[command])} (${english(command)}): ${notes[command]}`)
           ]
         : [])
     ].join('\n');
@@ -144,7 +135,7 @@ export const translationsTable = (): string => {
 
   const index = languages.map(language => {
     const [name] = NAMES[language];
-    const count = translations[language].filter(({note}) => note).length;
+    const count = Object.keys(translations[language].notes ?? {}).length;
     return `- [${name} (${language})](#${anchor(`${name} (${language})`)})${count ? `, ${count} to check` : ''}`;
   });
 

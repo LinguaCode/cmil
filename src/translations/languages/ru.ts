@@ -1,159 +1,47 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Russian
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'ввести'
-  },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'вывести'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'если'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'иначе'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'тогда'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'или'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'и'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'не'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'ложь'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'правда'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'сделать'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'пока'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'повторять'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'раз'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'прервать'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'продолжать'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'функция'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'случайное'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'степень'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'квадрат'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'корень'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'округлить'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'округлить_вниз'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'округлить_вверх'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'модуль'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+const translation: Translation = {
+  words: {
+    input: ['ввести'],
+    output: ['вывести'],
+    if: ['если'],
+    else: ['иначе'],
+    then: ['тогда'],
+    or: ['или'],
+    and: ['и'],
+    not: ['не'],
+    false: ['ложь'],
+    true: ['правда'],
+    do: ['сделать'],
+    while: ['пока'],
+    repeat: ['повторять'],
+    times: ['раз'],
+    break: ['прервать'],
+    continue: ['продолжать'],
+    function: ['функция'],
+    random: ['случайное'],
+    pow: ['степень'],
+    sqr: ['квадрат'],
+    sqrt: ['корень'],
+    round: ['округлить'],
+    floor: ['округлить_вниз'],
+    ceil: ['округлить_вверх'],
+    abs: ['модуль'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   }
-];
+};
 
 export default translation;

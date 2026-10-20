@@ -1,160 +1,50 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Albanian
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'të_dhëna',
-    note: 'Means data; would lexo (read) be better?'
+const translation: Translation = {
+  words: {
+    input: ['të_dhëna'],
+    output: ['shkruaj'],
+    if: ['nëse'],
+    else: ['përndryshe'],
+    then: ['atëherë'],
+    or: ['ose'],
+    and: ['dhe'],
+    not: ['jo'],
+    false: ['e rreme'],
+    true: ['e vërtetë'],
+    do: ['bëj'],
+    while: ['përderisa'],
+    repeat: ['përsërit'],
+    times: ['herë'],
+    break: ['ndalo'],
+    continue: ['vazhdo'],
+    function: ['funksioni'],
+    random: ['të_rastit'],
+    pow: ['fuqi'],
+    sqr: ['katror'],
+    sqrt: ['rrënja_katrore'],
+    round: ['rrumbullakos'],
+    floor: ['rrumbullakos_poshtë'],
+    ceil: ['rrumbullakos_lart'],
+    abs: ['vlera_absolute'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'shkruaj'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'nëse'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'përndryshe'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'atëherë'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'ose'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'dhe'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'jo'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'e rreme'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'e vërtetë'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'bëj'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'përderisa'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'përsërit'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'herë'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'ndalo'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'vazhdo'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'funksioni'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'të_rastit'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'fuqi'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'katror'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'rrënja_katrore'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'rrumbullakos'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'rrumbullakos_poshtë'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'rrumbullakos_lart'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'vlera_absolute'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+  notes: {
+    input: 'Means data; would lexo (read) be better?'
   }
-];
+};
 
 export default translation;

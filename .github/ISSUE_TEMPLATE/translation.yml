@@ -34,7 +34,7 @@ body:
     id: suggested
     attributes:
       label: Suggested word
-      description: Join the words of a phrase with _, like tant_que. More than one word is fine; separate them with |, the first is the main one.
+      description: Join the words of a phrase with _, like tant_que. More than one word is fine; the first is the main one.
       placeholder: plancher
     validations:
       required: true

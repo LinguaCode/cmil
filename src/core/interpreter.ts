@@ -3,7 +3,15 @@
  */
 import CmilError from './error.ts';
 import * as values from './values.ts';
-import {COMMAND, STATUS, TIMEOUT_TIME, MAX_STEPS, MAX_TEXT_LENGTH, MAX_OUTPUT_LENGTH} from '../constants/index.ts';
+import {
+  COMMAND,
+  ERROR,
+  STATE,
+  TIMEOUT_TIME,
+  MAX_STEPS,
+  MAX_TEXT_LENGTH,
+  MAX_OUTPUT_LENGTH
+} from '../constants/index.ts';
 import type {Expression, Instruction, Program, Value} from './types.ts';
 
 const isTimeoutIgnored = () => typeof process !== 'undefined' && !!process.env.TIMEOUT_IGNORE;
@@ -11,7 +19,7 @@ const isTimeoutIgnored = () => typeof process !== 'undefined' && !!process.env.T
 //a condition fails only on false
 const isPassed = (value: Value) => value !== false;
 
-export type RunStatus = typeof STATUS.SESSION_END | typeof STATUS.WAITS_FOR_INPUT;
+export type RunStatus = (typeof STATE)[keyof typeof STATE];
 
 class Session {
   instructions: Instruction[];
@@ -48,7 +56,7 @@ class Session {
 
   checkText(value: Value): Value {
     if (typeof value === 'string' && value.length > MAX_TEXT_LENGTH) {
-      throw new CmilError(STATUS.MEMORY_LIMIT, {line: this.line});
+      throw new CmilError(ERROR.MEMORY_LIMIT, {line: this.line});
     }
     return value;
   }
@@ -60,7 +68,7 @@ class Session {
       case 'variable': {
         const value = this.variables.get(node.name);
         if (value === undefined) {
-          throw new CmilError(STATUS.UNDEFINED_VARIABLE, {variable: node.name, line: this.line});
+          throw new CmilError(ERROR.UNDEFINED_VARIABLE, {variable: node.name, line: this.line});
         }
         return value;
       }
@@ -90,7 +98,7 @@ class Session {
 
     while (this.position < this.instructions.length) {
       if (++steps > MAX_STEPS || (!isTimeoutIgnored() && Date.now() - startTime > TIMEOUT_TIME)) {
-        throw new CmilError(STATUS.TIMEOUT);
+        throw new CmilError(ERROR.TIMEOUT);
       }
 
       const instruction = this.instructions[this.position];
@@ -103,14 +111,14 @@ class Session {
           if (text !== '') {
             this.outputLength += text.length + 1;
             if (this.outputLength > MAX_OUTPUT_LENGTH) {
-              throw new CmilError(STATUS.MEMORY_LIMIT, {line: this.line});
+              throw new CmilError(ERROR.MEMORY_LIMIT, {line: this.line});
             }
             this.output.push(text);
           }
           break;
         }
         case 'input':
-          if (this.input === undefined) return STATUS.WAITS_FOR_INPUT;
+          if (this.input === undefined) return STATE.WAITS_FOR_INPUT;
           this.variables.set(instruction.name, this.input);
           this.input = undefined;
           break;
@@ -141,7 +149,7 @@ class Session {
       this.position = next;
     }
 
-    return STATUS.SESSION_END;
+    return STATE.SESSION_END;
   }
 }
 

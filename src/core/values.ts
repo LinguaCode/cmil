@@ -1,10 +1,10 @@
 /**
  * Values of CMIL programs: numbers, texts and booleans, their operators and the math functions.
  */
-import {COMMAND, BOOLEAN_DEFINITION} from '../constants/index.ts';
+import {COMMAND} from '../constants/index.ts';
 import type {Value} from './types.ts';
 
-const marker = (word: keyof typeof BOOLEAN_DEFINITION) => `<${BOOLEAN_DEFINITION[word]}/>`;
+const marker = (word: 'true' | 'false' | 'NaN' | 'Infinity') => `<${word}/>`;
 
 //operators and math functions convert mixed values like JavaScript does, for example '6' * 2 is 12
 const num = (value: Value | undefined): number => value as number;

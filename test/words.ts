@@ -49,7 +49,7 @@ describe('words', () => {
   describe('scan', () => {
     it('splits a line into keywords, names, texts, a comment and the rest', () => {
       assert.deepStrictEqual(scan('output x + «output» # output', 'en'), [
-        {type: 'keyword', command: '@output', text: 'output'},
+        {type: 'keyword', command: 'output', text: 'output'},
         {type: 'other', text: ' '},
         {type: 'name', text: 'x'},
         {type: 'other', text: ' + '},
@@ -62,18 +62,18 @@ describe('words', () => {
     it('finds keywords next to operators', () => {
       assert.deepStrictEqual(scan('1<pi', 'en'), [
         {type: 'other', text: '1<'},
-        {type: 'keyword', command: '@pi', text: 'pi'}
+        {type: 'keyword', command: 'pi', text: 'pi'}
       ]);
     });
 
     it('reads a two-word keyword as one', () => {
-      assert.deepStrictEqual(scan('e vërtetë', 'sq'), [{type: 'keyword', command: '@true', text: 'e vërtetë'}]);
+      assert.deepStrictEqual(scan('e vërtetë', 'sq'), [{type: 'keyword', command: 'true', text: 'e vërtetë'}]);
     });
 
     Object.keys(translations).forEach(language => {
       it(`${language}: every word is its own keyword, in any case`, () => {
-        translations[language].forEach(({command, definition}) => {
-          definition.split('|').forEach(word => {
+        Object.entries(translations[language].words).forEach(([command, words]) => {
+          words.forEach(word => {
             for (const text of [word, word.toUpperCase()]) {
               assert.deepStrictEqual(scan(text, language), [{type: 'keyword', command, text}], `${language}: ${text}`);
             }
@@ -82,8 +82,8 @@ describe('words', () => {
       });
 
       it(`${language}: a word with more letters is a name`, () => {
-        translations[language].forEach(({definition}) => {
-          definition.split('|').forEach(word => {
+        Object.values(translations[language].words).forEach(words => {
+          words.forEach(word => {
             const text = `${word.replace(/\s+/g, '_')}_x`;
             assert.deepStrictEqual(scan(text, language), [{type: 'name', text}], `${language}: ${text}`);
           });

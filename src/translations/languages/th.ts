@@ -1,159 +1,47 @@
-import {COMMAND} from '../../constants/index.ts';
-import type {Translation} from '../index.ts';
+//the words of the CMIL commands in Thai
+import type {Translation} from '../types.ts';
 
-const translation: Translation[] = [
-  {
-    command: COMMAND.INPUT,
-    definition: 'นำเข้าข้อมูล'
-  },
-  {
-    command: COMMAND.OUTPUT,
-    definition: 'ส่งออก'
-  },
-  {
-    command: COMMAND.IF,
-    definition: 'ถ้า'
-  },
-  {
-    command: COMMAND.ELSE,
-    definition: 'มิฉะนั้น'
-  },
-  {
-    command: COMMAND.THEN,
-    definition: 'แล้ว'
-  },
-  {
-    command: COMMAND.OR,
-    definition: 'หรือ'
-  },
-  {
-    command: COMMAND.AND,
-    definition: 'และ'
-  },
-  {
-    command: COMMAND.NOT,
-    definition: 'ไม่'
-  },
-  {
-    command: COMMAND.FALSE,
-    definition: 'เท็จ'
-  },
-  {
-    command: COMMAND.TRUE,
-    definition: 'จริง'
-  },
-  {
-    command: COMMAND.DO,
-    definition: 'ทำ'
-  },
-  {
-    command: COMMAND.WHILE,
-    definition: 'ในขณะที่'
-  },
-  {
-    command: COMMAND.REPEAT,
-    definition: 'ทำซ้ำ'
-  },
-  {
-    command: COMMAND.TIMES,
-    definition: 'ครั้ง'
-  },
-  {
-    command: COMMAND.BREAK,
-    definition: 'หยุด'
-  },
-  {
-    command: COMMAND.CONTINUE,
-    definition: 'ทำต่อไป'
-  },
-  {
-    command: COMMAND.FUNCTION,
-    definition: 'ฟังก์ชัน'
-  },
-  {
-    command: COMMAND.RANDOM,
-    definition: 'แบบสุ่ม'
-  },
-  {
-    command: COMMAND.POW,
-    definition: 'ยกกำลัง'
-  },
-  {
-    command: COMMAND.SQR,
-    definition: 'กำลังสอง'
-  },
-  {
-    command: COMMAND.SQRT,
-    definition: 'รากที่สอง'
-  },
-  {
-    command: COMMAND.ROUND,
-    definition: 'ปัดเศษ'
-  },
-  {
-    command: COMMAND.FLOOR,
-    definition: 'ปัดลง'
-  },
-  {
-    command: COMMAND.CEIL,
-    definition: 'ปัดขึ้น'
-  },
-  {
-    command: COMMAND.ABS,
-    definition: 'ค่าสัมบูรณ์'
-  },
-  {
-    command: COMMAND.SIN,
-    definition: 'sin'
-  },
-  {
-    command: COMMAND.COS,
-    definition: 'cos'
-  },
-  {
-    command: COMMAND.TAN,
-    definition: 'tan'
-  },
-  {
-    command: COMMAND.CTG,
-    definition: 'ctg'
-  },
-  {
-    command: COMMAND.ARCSIN,
-    definition: 'arcsin'
-  },
-  {
-    command: COMMAND.ARCCOS,
-    definition: 'arccos'
-  },
-  {
-    command: COMMAND.ARCTAN,
-    definition: 'arctan'
-  },
-  {
-    command: COMMAND.ARCCTG,
-    definition: 'arcctg'
-  },
-  {
-    command: COMMAND.LOG,
-    definition: 'log'
-  },
-  {
-    command: COMMAND.LN,
-    definition: 'ln'
-  },
-  {
-    command: COMMAND.LG,
-    definition: 'lg'
-  },
-  {
-    command: COMMAND.PI,
-    definition: 'pi'
-  },
-  {
-    command: COMMAND.E,
-    definition: 'e'
+const translation: Translation = {
+  words: {
+    input: ['นำเข้าข้อมูล'],
+    output: ['ส่งออก'],
+    if: ['ถ้า'],
+    else: ['มิฉะนั้น'],
+    then: ['แล้ว'],
+    or: ['หรือ'],
+    and: ['และ'],
+    not: ['ไม่'],
+    false: ['เท็จ'],
+    true: ['จริง'],
+    do: ['ทำ'],
+    while: ['ในขณะที่'],
+    repeat: ['ทำซ้ำ'],
+    times: ['ครั้ง'],
+    break: ['หยุด'],
+    continue: ['ทำต่อไป'],
+    function: ['ฟังก์ชัน'],
+    random: ['แบบสุ่ม'],
+    pow: ['ยกกำลัง'],
+    sqr: ['กำลังสอง'],
+    sqrt: ['รากที่สอง'],
+    round: ['ปัดเศษ'],
+    floor: ['ปัดลง'],
+    ceil: ['ปัดขึ้น'],
+    abs: ['ค่าสัมบูรณ์'],
+    sin: ['sin'],
+    cos: ['cos'],
+    tan: ['tan'],
+    ctg: ['ctg'],
+    arcsin: ['arcsin'],
+    arccos: ['arccos'],
+    arctan: ['arctan'],
+    arcctg: ['arcctg'],
+    log: ['log'],
+    ln: ['ln'],
+    lg: ['lg'],
+    pi: ['pi'],
+    e: ['e']
   }
-];
+};
 
 export default translation;
