@@ -6,11 +6,11 @@ Guidance for AI coding agents (Claude Code, Codex and others) working in this re
 
 CMIL (Clarified Multilingual Intermediate Language) is the language core behind LinguaCode, a platform that teaches children programming in their native language. This file owns agent behaviour for the whole repository.
 
-The project had no commits between 2020-05-30 and its revival. Expect obsolete tooling, and verify anything below against the code before acting on it.
+The project had no commits between 2020-05-30 and its revival in 2026, which rebuilt its tooling, core and tests. Verify anything below against the code before acting on it.
 
 ## Current State
 
-Verified on 2026-10-20. Update this section when a fact changes.
+Verified on 2026-10-22. Update this section when a fact changes.
 
 - **Runtime:** Node.js, TypeScript with `strict`, published as ES modules. `engines.node` is `>= 24`. Imports between sources end in `.ts`; `tsc` rewrites them to `.js` in the build. Keep the syntax erasable (`erasableSyntaxOnly`: no enums, namespaces or parameter properties), because Node.js runs the sources directly in the tests. Browser use goes through the consumer's bundler.
 - **Public API:** `src/index.ts` exports only named exports:
@@ -24,14 +24,14 @@ Verified on 2026-10-20. Update this section when a fact changes.
   CommonJS code uses `const {Session} = require('cmil')`.
 - **Package entry:** `exports`, `main` and `types` point to `dist/`, which `npm run build` compiles from `src/` with type declarations (`tsconfig.build.json`). `prepare` runs the build on `npm install` in a clone and before `npm publish`. `dist/` is gitignored. `files` limits the package to it and to the license files of `src/constants/` and `src/translations/`. There is no `npm start`.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
-- **Playground:** https://linguacode.otanim.com runs CMIL in the browser. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. Its tests drive the page in Chromium, Firefox and WebKit on every push and pull request. After a release, bump that tag there.
+- **LinguaCode, the website:** https://linguacode.otanim.com runs CMIL in the browser, with lessons in every language. It lives in `LinguaCode/linguacode.github.io`, pins cmil to a release tag in its `package.json`, and deploys to GitHub Pages on every push to `main`. Its tests drive the page in Chromium, Firefox and WebKit on every push and pull request. After a release, bump that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
 - **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language, and `test/editor.ts` covers the editor functions. All 631 tests pass on Node.js 24 and 26.
 - **Types:** `npm run typecheck` checks `src/`, `test/` and `scripts/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
 - **CI:** GitHub Actions (`.github/workflows/test.yml`) runs `npm ci` (which builds `dist/`), `npm run lint`, `npm run typecheck`, `npm test` and a program through the built package, on Node.js 24 and 26 for every push and pull request.
-- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, values, loops, lists, functions, tutorials, and syntax, logic, restriction, value, list and function errors (351 cases).
+- **Language specification:** the cases in `test/collection/` define expected language behaviour. They cover successes, values, loops, lists, functions, tutorials, and syntax, logic, restriction, value, list and function errors (352 cases).
 - **Core:** programs never run as JavaScript. `src/core/lexer.ts` splits lines into tokens, with the words of the program's language found by `words.ts`, `parser.ts` builds the syntax tree, `compiler.ts` flattens it into instructions with jumps, and `interpreter.ts` runs them in a loop. All state belongs to one session, so sessions are independent. The functions of a program run in the same loop, with a stack of frames, so they can wait for input: an instruction with a call stops at the call, and when the function returns it runs again with the values it recorded before the call, so values are computed once and from left to right.
 - **Errors:** `{id, …}` (`ProgramError` in `src/core/types.ts`). Syntax, indentation, argument and undefined function errors are found before the program runs. Every error reports its absolute line, except `timeout` and `unknownLanguage`, and the column, from 1, where it points at a token. Output printed before an error comes with it.
 - **Values** (`src/core/values.ts`): numbers, texts, booleans and lists, never converted into another type. Operators, conditions, functions, indexes and loops take only their types and report `typeError`, `conditionError`, `divisionByZero`, `mathError`, `indexError` or `itemError`; NaN and Infinity never appear. Lists are JavaScript arrays shared by reference, as in Python; printing and comparing them doesn't recurse, so deep lists and lists inside themselves can't overflow the stack. Numbers are printed, and compared, with 12 significant digits (`NUMBER_PRECISION`).
@@ -80,7 +80,7 @@ Read the files before relying on these descriptions.
 npm install        # also builds dist/ through prepare
 npm run build      # tsc: src/ into dist/ with type declarations
 npm run typecheck  # tsc on src/, test/ and scripts/, no output
-npm test           # node --test on the .ts sources: test/collection in a Session, core, translations, words
+npm test           # node --test on the .ts sources: test/collection in a Session, core, translations, words, editor
 npm run coverage   # the same under c8
 npm run lint       # ESLint and Prettier check
 npm run format     # Prettier rewrite
@@ -126,7 +126,7 @@ The repository is GPL-3.0 only (`LICENSE`, `"license": "GPL-3.0-only"`), except 
 
 ## No Legacy Support
 
-The project is pre-1.0 (`0.6.0-alpha`).
+The project is pre-1.0 (see **Version and changelog** above).
 
 - Keep internal formats, configuration and APIs on the current version only.
 - Don't add fallback readers, dual-write paths, legacy aliases or compatibility branches.
@@ -149,11 +149,10 @@ The revival raises choices that belong to the owner. Present the options with tr
 10. Translation platform: decided, translations come as pull requests to this repository. Crowdin and Transifex are retired.
 11. Publishing: decided, npm as `cmil` (the `@linguacode` npm scope belongs to someone else) from the first release candidate, semver, released by the release workflow, under the `latest` tag. Alpha and beta versions are GitHub Releases only.
 
-A safe first step that needs no decision is a baseline report. Install on the current Node.js LTS, run the tests, and record exactly what fails and why, without changing anything.
 
 ## Working Style
 
-- **Web search:** use it to check current versions, LTS status, deprecations and migration guides. This codebase's dependencies date from 2016–2020, and your training data may be out of date.
+- **Web search:** use it to check current versions, LTS status, deprecations and migration guides. Your training data may be out of date.
 - **Scope:** do what was asked. Finish safe follow-ups that are within that scope, and report other issues you notice instead of silently expanding the change.
 - **Lint, test and type errors:** when asked to fix them, fix all of them, including pre-existing errors and warnings.
 - **Bug fixes:** after each fix, check the tests. If a test passed without catching the bug, fix its assertions. If nothing covers that code path, add a regression test.
