@@ -19,7 +19,7 @@ Please read and follow the steps in the [CONTRIBUTING.md](https://github.com/Lin
 AI coding agents should follow [AGENTS.md](https://github.com/LinguaCode/cmil/blob/master/AGENTS.md).
 
 ## How to get started?
-Try CMIL in your browser, in any of its 32 languages, at the [CMIL playground](https://linguacode.otanim.com).
+Try CMIL in your browser, in any of its 32 languages, at [LinguaCode](https://linguacode.otanim.com), with lessons from a first `print` to functions.
 
 #### Requirements
 [Node.js](https://nodejs.org) 24 or newer.
@@ -71,7 +71,7 @@ npm test
 ```
 CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`npm run build`), and `npm run typecheck` checks the types.
 
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()` and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()`, the editor functions and the translations; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, lists, functions and errors.
