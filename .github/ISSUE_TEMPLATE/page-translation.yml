@@ -1,0 +1,51 @@
+name: Page translation
+description: Suggest a better text for a lesson or the interface of LinguaCode in your language
+title: '[translation] '
+labels: [translation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping children learn to program in their own language at [LinguaCode](https://linguacode.otanim.com). This form is for the texts of its lessons and its interface. For a word of a command, like `print`, use [the translation form](https://github.com/LinguaCode/cmil/issues/new?template=translation.yml).
+  - type: input
+    id: language
+    attributes:
+      label: Language
+      description: Its name or code.
+      placeholder: Հայերեն (hy-AM)
+    validations:
+      required: true
+  - type: input
+    id: lesson
+    attributes:
+      label: Lesson
+      description: The lesson the text is in, if it is in one.
+      placeholder: countdown
+  - type: textarea
+    id: current
+    attributes:
+      label: Current text
+      description: The text as the playground shows it.
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested text
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What is wrong with the current text, for example its grammar, a word children don't know, or a meaning that isn't the English one.
+  - type: dropdown
+    id: native
+    attributes:
+      label: Is this your native language?
+      options:
+        - 'Yes'
+        - 'No, but I speak it well'
+        - 'No'
+    validations:
+      required: true
