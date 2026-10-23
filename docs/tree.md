@@ -1,12 +1,12 @@
 # The program tree
 
-`programOf(sourceCode, language)` gives the tree of a program, for tools like converters, or `{error}` with the first error the program has before it runs, like `check()`. This is format 1 (`TREE_FORMAT`). A change of the tree changes the format.
+`programOf(sourceCode, language)` gives the tree of a program, for tools like converters, or `{error}` with the first error the program has before it runs, like `check()`. This is format 2 (`TREE_FORMAT`). A change of the tree changes the format.
 
 ```js
 import {programOf} from 'cmil';
 
 programOf('# hello\nTotal = pi\nprint(total)', 'en');
-// {format: 1, language: 'en',
+// {format: 2, language: 'en',
 //  statements: [{type: 'assign', name: 'total', expression: {type: 'value', value: 3.14159…, constant: 'pi'}, line: 2},
 //               {type: 'print', expression: {type: 'variable', name: 'total', column: 7}, line: 3}],
 //  comments: [{line: 1, column: 1, text: '# hello', trailing: false}],
@@ -44,6 +44,7 @@ Each has its `line`.
 | `type` | Fields |
 |---|---|
 | `value` | `value`: a number, a text or a boolean; `constant` is `pi` or `e` for those |
+| `template` | `parts`: the texts, and the expressions in braces, in order, of a text like `"Hi, {name}"`; `column` |
 | `list` | `items` |
 | `variable` | `name`, `column` |
 | `index` | `target`, `index`, `column` of the `[` |

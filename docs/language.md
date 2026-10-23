@@ -34,7 +34,7 @@ print("Hello")
 ## Values
 
 - **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point. Whole numbers are printed whole, others with 12 significant digits, and numbers are compared as they are printed: `0.1 + 0.2` prints `0.3` and equals `0.3`. Numbers are always printed with all their digits, like `0.0000001`, never as `1e-7`.
-- **Texts** in `«…»`, `"…"` or `'…'` in every language, and in the quotes of the program's language, like `“…”` in English, `„…“` in German or `「…」` in Japanese; [translations.md](translations.md) lists them. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab. `translate()` writes texts in the main quotes of the language it translates into, like `«…»` in Armenian.
+- **Texts** in `«…»`, `"…"` or `'…'` in every language, and in the quotes of the program's language, like `“…”` in English, `„…“` in German or `「…」` in Japanese; [translations.md](translations.md) lists them. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab. Code in braces puts its value into the text (see **Values in texts** below), so a brace that stays a brace is written `\{`. `translate()` writes texts in the main quotes of the language it translates into, like `«…»` in Armenian.
 - **Booleans:** `true` and `false`, printed in the words of the program's language, for example `ճիշտ` in Armenian.
 - **Lists:** `[1, 2, "a"]`, or `[]` for an empty list. A list holds any values, also lists. See **Lists** below.
 - **Constants:** `pi` and `e`.
@@ -65,6 +65,21 @@ print("Hello, " + name)
 ```
 
 `print`, `add` and `remove` are lines of their own: they give no value, so `x = print(1)` is a `noValue` error, found before the program runs.
+
+## Values in texts
+
+Code in braces in a text puts its value into the text, written as `print` writes it:
+
+```
+name = "Ani"
+apples = 3
+print("Hi, {name}! You have {apples} apples, and {apples * 2} after a gift.")
+```
+prints `Hi, Ani! You have 3 apples, and 6 after a gift.`
+
+- Any expression goes in the braces, like `{length_of(fruits)}`, `{age + 1}` or `{input()}`, also with texts of its own: `{name + "!"}`. Their values are joined into the text as `+` joins them, from left to right.
+- `\{` is a brace that stays a brace; a `}` outside code is a `}`. Braces without code, `{}`, and a `{` that isn't closed are a `syntaxError`.
+- Every text reads braces, in every quote: `«{x}»`, `"{x}"` and `'{x}'`.
 
 ## Operators
 

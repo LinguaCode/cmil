@@ -1,3 +1,9 @@
+## Unreleased
+
+  - **[add]** texts: code in braces puts its value into a text, in every quote, like `print("Hi, {name}! Next year you will be {age + 1}.")`, written as `print` writes it; any expression goes in the braces. A brace that stays a brace is written `\{`; `{}` and a `{` that isn't closed are a `syntaxError`. `translate()` translates the code in the braces, and editors color it (`segmentsOf()`).
+  - **[change]** the program tree is format 2, with the new expression `template`.
+  - **[change]** tests: `print("${1 + 1}")` prints `$2`, since its braces are CMIL code; JavaScript still never runs.
+
 ## 0.17.0-alpha.0 (2026-10-23)
 
   - **[add]** API: `convert(sourceCode, language, target)` writes a program in C++ or Python, as a teacher would, printing what CMIL prints, with the CMIL line of each line, its comments and its blank lines; `targets` lists the languages. A typed language gives the `problems` of a value with two types, whose messages `problemOf(problem, language)` gives in every language. `docs/converting.md` lists how each construct is written and how each language differs.

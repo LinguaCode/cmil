@@ -163,6 +163,9 @@ export const typesOf = (statements: Statement[]): Types => {
         case 'value':
           if (typeof node.value === 'number') return Number.isInteger(node.value) && !node.constant ? 'whole' : 'real';
           return typeof node.value === 'string' ? 'text' : 'boolean';
+        case 'template':
+          node.parts.forEach(part => typeof part !== 'string' && typeOf(part));
+          return 'text';
         case 'list': {
           //a list with items of two types is one conflict, not one more for each variable it is in
           const item = node.items.map(typeOf).reduce(joinTypes, 'unknown');

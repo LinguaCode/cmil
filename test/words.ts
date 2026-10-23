@@ -105,6 +105,31 @@ describe('words', () => {
       ]);
     });
 
+    it('reads the code in the braces of a text, with texts in it, and \\{ as a brace', () => {
+      const [, , text] = scan('x = "a {length_of("}")} \\{b}"', 'en');
+      assert.deepStrictEqual(text, {
+        type: 'string',
+        text: '"a {length_of("}")} \\{b}"',
+        value: 'a  {b}',
+        closed: true,
+        parts: [
+          {type: 'text', text: 'a ', value: 'a '},
+          {
+            type: 'code',
+            text: '{length_of("}")}',
+            segments: [
+              {type: 'keyword', command: 'length', text: 'length_of'},
+              {type: 'other', text: '('},
+              {type: 'string', text: '"}"', value: '}', closed: true},
+              {type: 'other', text: ')'}
+            ],
+            closed: true
+          },
+          {type: 'text', text: ' \\{b}', value: ' {b}'}
+        ]
+      });
+    });
+
     it('finds keywords next to operators', () => {
       assert.deepStrictEqual(scan('1<pi', 'en'), [
         {type: 'other', text: '1<'},
@@ -220,6 +245,11 @@ describe('words', () => {
       assert.strictEqual(translate('出力(「a」 + 『b』)', 'ja', 'en'), 'print("a" + "b")');
       //an unclosed text stays as written
       assert.strictEqual(translate('print("a', 'en', 'ru'), 'вывести("a');
+      //the code in the braces of a text is translated too, and a brace that stays one keeps its \\
+      assert.strictEqual(
+        translate('i = "Ani"\nprint("Hi, {i}! {length_of(i)} \\{i}")', 'en', 'ca'),
+        'i_ = «Ani»\nsortida(«Hi, {i_}! {longitud_de(i_)} \\{i}»)'
+      );
     });
 
     it('reads the quotes of every language, and those of every language in each', () => {

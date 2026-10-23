@@ -4,10 +4,18 @@
  */
 import TRANSLATION, {type Quotes} from '../translations/index.ts';
 
+/**
+ * A part of a text: a text as written, with its value, or code in braces, which puts its value into the text; text
+ * is the part as written, with the braces of code.
+ */
+export type TextPart =
+  {type: 'text'; text: string; value: string} | {type: 'code'; text: string; segments: Segment[]; closed: boolean};
+
+/** A part of a line; a text with code in braces, like "Hi, {name}", has its parts. */
 export type Segment =
   | {type: 'keyword'; command: string; text: string}
   | {type: 'name'; text: string}
-  | {type: 'string'; text: string; value: string; closed: boolean}
+  | {type: 'string'; text: string; value: string; closed: boolean; parts?: TextPart[]}
   | {type: 'comment'; text: string}
   | {type: 'other'; text: string};
 
@@ -57,6 +65,11 @@ export const quote = (value: string, [open, close]: Quotes): string => {
   }
   return text + close;
 };
+
+/**
+ * Writes a value as a text in a program, like quote(), with \\{ before a brace, which would start code.
+ */
+export const quoteCode = (value: string, quotes: Quotes): string => quote(value, quotes).replaceAll('{', '\\{');
 
 //the Armenian one dot leader is the decimal point on Armenian keyboards
 export const DECIMAL_POINTS = ['.', '․'];
@@ -108,22 +121,39 @@ const readWord = (line: string, start: number) => {
   return line.slice(start, end);
 };
 
-const readString = (line: string, start: number, closingQuote: string) => {
+//a text from its opening quote: its value, and its parts when it has code in braces, which is read like a line
+const readString = (line: string, start: number, closingQuote: string, language: string) => {
+  const parts: TextPart[] = [];
   let value = '';
+  let from = start + 1;
+  const text = (end: number) => (end > from ? [{type: 'text' as const, text: line.slice(from, end), value}] : []);
+  const result = (end: number, closed: boolean) => {
+    const all = [...parts, ...text(closed ? end - 1 : end)];
+    const whole = all.map(part => (part.type === 'text' ? part.value : '')).join('');
+    return {text: line.slice(start, end), value: whole, closed, ...(parts.length ? {parts: all} : {})};
+  };
 
   for (let i = start + 1; i < line.length; i++) {
     const symbol = line[i];
     if (symbol === '\\' && i + 1 < line.length) {
       const escaped = line[++i];
       value += Object.hasOwn(ESCAPES, escaped) ? ESCAPES[escaped] : escaped;
+    } else if (symbol === '{') {
+      parts.push(...text(i));
+      const code = scanCode(line, i + 1, language);
+      parts.push({type: 'code', text: line.slice(i, code.end), segments: code.segments, closed: code.closed});
+      from = code.end;
+      value = '';
+      if (!code.closed) return result(line.length, false);
+      i = code.end - 1;
     } else if (symbol === closingQuote) {
-      return {text: line.slice(start, i + 1), value, closed: true};
+      return result(i + 1, true);
     } else {
       value += symbol;
     }
   }
 
-  return {text: line.slice(start), value, closed: false};
+  return result(line.length, false);
 };
 
 //a number with the letters right after it, like 1x, which the lexer reports as a syntax error
@@ -147,7 +177,13 @@ const readNumber = (line: string, start: number) => {
  * scan('print(1<pi)', 'en');
  * // returns keyword 'print', other '(1<', keyword 'pi', other ')'
  */
-export const scan = (line: string, language: string): Segment[] => {
+export const scan = (line: string, language: string): Segment[] => read(line, 0, language, false).segments;
+
+//the code in the braces of a text, up to its }, and where it ends, after the }
+const scanCode = (line: string, start: number, language: string) => read(line, start, language, true);
+
+//the segments of a line from start; in braces, up to the } that ends them, where # is no comment
+const read = (line: string, start: number, language: string, braces: boolean) => {
   const {single, double, quotes} = wordsOf(language);
   const segments: Segment[] = [];
 
@@ -157,15 +193,17 @@ export const scan = (line: string, language: string): Segment[] => {
     else segments.push({type: 'other', text});
   };
 
-  let i = 0;
+  let i = start;
   while (i < line.length) {
     const symbol = line[i];
 
-    if (symbol === '#') {
+    if (braces && symbol === '}') {
+      return {segments, end: i + 1, closed: true};
+    } else if (symbol === '#' && !braces) {
       segments.push({type: 'comment', text: line.slice(i)});
       break;
     } else if (quotes.has(symbol)) {
-      const string = readString(line, i, quotes.get(symbol) as string);
+      const string = readString(line, i, quotes.get(symbol) as string, language);
       segments.push({type: 'string', ...string});
       i += string.text.length;
     } else if (DIGIT.test(symbol)) {
@@ -197,7 +235,7 @@ export const scan = (line: string, language: string): Segment[] => {
     }
   }
 
-  return segments;
+  return {segments, end: line.length, closed: false};
 };
 
 /**
@@ -212,7 +250,14 @@ export const translateSource = (sourceCode: string, from: string, to: string): s
   const target = wordsOf(to);
   const lines = sourceCode.split('\n').map(line => scan(line, from));
 
-  const names = new Set(lines.flat().flatMap(segment => (segment.type === 'name' ? [segment.text.toLowerCase()] : [])));
+  //the names of the program, also those in the braces of texts
+  const namesIn = (segments: Segment[]): string[] =>
+    segments.flatMap(segment => {
+      if (segment.type === 'name') return [segment.text.toLowerCase()];
+      if (segment.type !== 'string' || !segment.parts) return [];
+      return segment.parts.flatMap(part => (part.type === 'code' ? namesIn(part.segments) : []));
+    });
+  const names = new Set(lines.flatMap(namesIn));
   const taken = new Set(names);
   const renames = new Map<string, string>();
   for (const name of names) {
@@ -224,16 +269,23 @@ export const translateSource = (sourceCode: string, from: string, to: string): s
     renames.set(name, suffix);
   }
 
-  return lines
-    .map(segments =>
-      segments
-        .map(segment => {
-          if (segment.type === 'keyword') return target.first.get(segment.command) ?? segment.text;
-          if (segment.type === 'name') return segment.text + (renames.get(segment.text.toLowerCase()) ?? '');
-          if (segment.type === 'string' && segment.closed) return quote(segment.value, target.main);
-          return segment.text;
-        })
-        .join('')
-    )
-    .join('\n');
+  const [open, close] = target.main;
+  const write = (segments: Segment[]): string =>
+    segments
+      .map(segment => {
+        if (segment.type === 'keyword') return target.first.get(segment.command) ?? segment.text;
+        if (segment.type === 'name') return segment.text + (renames.get(segment.text.toLowerCase()) ?? '');
+        if (segment.type !== 'string' || !segment.closed) return segment.text;
+        if (!segment.parts) return quoteCode(segment.value, target.main);
+        //a text with code in braces: its texts in the new quotes, and its code translated
+        const parts = segment.parts.map(part =>
+          part.type === 'text'
+            ? quoteCode(part.value, target.main).slice(open.length, -close.length)
+            : `{${write(part.segments)}${part.closed ? '}' : ''}`
+        );
+        return open + parts.join('') + close;
+      })
+      .join('');
+
+  return lines.map(write).join('\n');
 };

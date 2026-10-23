@@ -419,6 +419,18 @@ describe('core', () => {
       );
     });
 
+    it('code in a text points at its error, and its values are printed in the words of the language', () => {
+      assert.deepStrictEqual(check('print("a {} b")', 'en'), {id: 'syntaxError', line: 1, column: 10});
+      assert.deepStrictEqual(run('x = 1\nprint("{x} {y}")').error, {
+        id: 'undefinedVariable',
+        line: 2,
+        column: 13,
+        variable: 'y'
+      });
+      assert.deepStrictEqual(run('արտածել(«{2 > 1} {[«ա»]}»)', [], 'hy-AM').output, ['ճիշտ [«ա»]']);
+      assert.deepStrictEqual(run('print("{")').error, {id: 'syntaxError', line: 1, column: 7});
+    });
+
     it('= in an expression points at the =', () => {
       assert.deepStrictEqual(run('x = 5\nif x = 5\n    print(1)').error, {id: 'equalsError', line: 2, column: 6});
     });

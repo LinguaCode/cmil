@@ -13,6 +13,7 @@ import {
   callsIn,
   changedIn,
   fromZero,
+  isJoined,
   joinedParts,
   namesIn,
   ownNames,
@@ -354,6 +355,8 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
       case 'list':
         includes.add('vector');
         return [`${cppType(typeOf(node))}${braced(node)}`, ATOM];
+      case 'template':
+        return joinText(node);
       case 'variable':
         return [names.of(node.name), ATOM];
       case 'index': {
@@ -379,19 +382,24 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
     }
   };
 
+  //values joined into one text, with + or in a text with code in braces
+  const joinText = (node: Expression): [string, number] => {
+    const parts = joinedParts(node, types).map(asText);
+    //two texts in quotes can't be added in C++, so the first one becomes a std::string
+    if (parts.length > 1 && !parts[0][1] && !parts[1][1]) {
+      includes.add('string');
+      parts[0][0] = `std::string(${parts[0][0]})`;
+    }
+    return parts.length === 1
+      ? [parts[0][0], PRECEDENCE['+']]
+      : [parts.map(([text]) => text).join(' + '), PRECEDENCE['+']];
+  };
+
   const binary = (node: Expression & {type: 'binary'}): [string, number] => {
     const left = typeOf(node.left);
     const right = typeOf(node.right);
 
-    if (node.operator === '+' && typeOf(node) === 'text') {
-      const parts = joinedParts(node, types).map(asText);
-      //two texts in quotes can't be added in C++, so the first one becomes a std::string
-      if (!parts[0][1] && !parts[1][1]) {
-        includes.add('string');
-        parts[0][0] = `std::string(${parts[0][0]})`;
-      }
-      return [parts.map(([text]) => text).join(' + '), PRECEDENCE['+']];
-    }
+    if (node.operator === '+' && typeOf(node) === 'text') return joinText(node);
     if (node.operator === COMMAND.IN) {
       if (isList(right)) {
         includes.add('algorithm');
@@ -513,7 +521,7 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
 
   //the values print prints, each after <<
   const printed = (node: Expression): string[] =>
-    (node.type === 'binary' && typeOf(node) === 'text' ? joinedParts(node, types) : [node]).map(part => {
+    (isJoined(node, types) ? joinedParts(node, types) : [node]).map(part => {
       const type = typeOf(part);
       if (type === 'real') printsReal = true;
       if (type === 'boolean' && !english) return inWords(part);

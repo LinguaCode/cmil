@@ -8,7 +8,10 @@ export type Value = number | string | boolean | Value[];
 
 /** A token, with the line and the column, from 1, where it starts; a command keeps its word as written. */
 export type Token = (
-  {type: 'number'; value: number} | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string}
+  | {type: 'number'; value: number}
+  | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string}
+  //a text with code in braces: its texts, and the tokens of each code, with the column of its {
+  | {type: 'template'; value: string; parts: (string | {tokens: Token[]; column: number})[]}
 ) & {line: number; column: number; text?: string};
 
 /** A comment, from its #: on a line of its own, or trailing after code. */
@@ -25,6 +28,8 @@ export type Line = {
 export type Expression =
   //a constant, like pi, keeps its command
   | {type: 'value'; value: number | string | boolean; constant?: string}
+  //a text with code in braces, like "Hi, {name}": its texts and the expressions whose values go between them
+  | {type: 'template'; parts: (string | Expression)[]; column: number}
   | {type: 'list'; items: Expression[]}
   | {type: 'index'; target: Expression; index: Expression; column: number}
   | {type: 'variable'; name: string; column: number}

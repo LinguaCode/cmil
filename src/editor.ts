@@ -3,7 +3,7 @@
  */
 import {COMMAND, type Command} from './constants/index.ts';
 import {OPERATORS} from './core/lexer.ts';
-import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, QUOTES, scan} from './core/words.ts';
+import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, QUOTES, scan, type Segment} from './core/words.ts';
 import TRANSLATION, {type Quotes} from './translations/index.ts';
 
 /** A part of a line of source code; a keyword has its command. */
@@ -122,12 +122,32 @@ const splitOther = (text: string): LineSegment[] => {
  */
 export const segmentsOf = (line: string, language: string): LineSegment[] => {
   known(language);
-  return scan(line, language).flatMap((segment): LineSegment[] => {
+  return lineSegments(scan(line, language));
+};
+
+//a text with code in braces is its texts, with the quotes, and the code with its braces as operators
+const lineSegments = (segments: Segment[]): LineSegment[] =>
+  segments.flatMap((segment): LineSegment[] => {
     if (segment.type === 'keyword') return [{type: 'keyword', text: segment.text, command: segment.command}];
     if (segment.type === 'other') return splitOther(segment.text);
-    return [{type: segment.type, text: segment.text}];
+    if (segment.type !== 'string' || !segment.parts) return [{type: segment.type, text: segment.text}];
+
+    const parts: LineSegment[] = [];
+    let text = segment.text[0];
+    for (const part of segment.parts) {
+      if (part.type === 'text') {
+        text += part.text;
+        continue;
+      }
+      if (text) parts.push({type: 'string', text});
+      text = '';
+      parts.push({type: 'operator', text: '{'}, ...lineSegments(part.segments));
+      if (part.closed) parts.push({type: 'operator', text: '}'});
+    }
+    const written = parts.reduce((length, part) => length + part.text.length, text.length);
+    text += segment.text.slice(written);
+    return text ? [...parts, {type: 'string', text}] : parts;
   });
-};
 
 /**
  * The commands of a language, each with its words, the first of which translate() writes, and its kind.

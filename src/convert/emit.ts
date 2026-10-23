@@ -214,6 +214,9 @@ const nodesOf = (node: Expression | undefined, visit: (node: Expression) => void
     case 'list':
       node.items.forEach(item => nodesOf(item, visit));
       break;
+    case 'template':
+      node.parts.forEach(part => typeof part !== 'string' && nodesOf(part, visit));
+      break;
     case 'index':
       nodesOf(node.target, visit);
       nodesOf(node.index, visit);
@@ -313,11 +316,30 @@ export const callsIn = (statement: Statement): Set<string> => {
   return calls;
 };
 
-/** The values joined with + into a text, in order: "a" + 1 + b is "a", 1 and b. */
-export const joinedParts = (node: Expression, types: Types): Expression[] =>
-  node.type === 'binary' && node.operator === '+' && types.expressions.get(node) === 'text'
+/**
+ * The values joined into a text, in order: "a" + 1 + b is "a", 1 and b, and so is "a{1}{b}", whose texts are values
+ * of the text type.
+ */
+export const joinedParts = (node: Expression, types: Types): Expression[] => {
+  if (node.type === 'template') {
+    return node.parts
+      .filter(part => part !== '')
+      .flatMap(part => {
+        if (typeof part !== 'string') return joinedParts(part, types);
+        const value: Expression = {type: 'value', value: part};
+        types.expressions.set(value, 'text');
+        return [value];
+      });
+  }
+  return node.type === 'binary' && node.operator === '+' && types.expressions.get(node) === 'text'
     ? [...joinedParts(node.left, types), ...joinedParts(node.right, types)]
     : [node];
+};
+
+/** Whether an expression is values joined into a text, with + or in a text with code in braces. */
+export const isJoined = (node: Expression, types: Types): boolean =>
+  node.type === 'template' ||
+  (node.type === 'binary' && node.operator === '+' && types.expressions.get(node) === 'text');
 
 /** The index from 0 of an index from 1: a number one less, else the index minus 1. */
 export const fromZero = (node: Expression, write: (node: Expression) => string): string =>

@@ -28,7 +28,7 @@ const codeOf = (code: string, target: string, language = 'en') => {
 describe('program tree', () => {
   it('has the statements, the comments, the first spelling of each name and the constants', () => {
     const program = tree('# hello\nTotal = pi # a circle\nprint(total)');
-    assert.strictEqual(program.format, 1);
+    assert.strictEqual(program.format, 2);
     assert.deepStrictEqual(program.names, {total: 'Total'});
     assert.deepStrictEqual(program.comments, [
       {line: 1, column: 1, text: '# hello', trailing: false},
@@ -40,6 +40,29 @@ describe('program tree', () => {
       expression: {type: 'value', value: Math.PI, constant: 'pi'},
       line: 2
     });
+  });
+
+  it('has the texts with code in braces, and no comment in them', () => {
+    const program = tree('x = 1\nprint("# {x + 1}") # one');
+    assert.deepStrictEqual(program.statements[1], {
+      type: 'print',
+      expression: {
+        type: 'template',
+        parts: [
+          '# ',
+          {
+            type: 'binary',
+            operator: '+',
+            left: {type: 'variable', name: 'x', column: 11},
+            right: {type: 'value', value: 1},
+            column: 13
+          }
+        ],
+        column: 7
+      },
+      line: 2
+    });
+    assert.deepStrictEqual(program.comments, [{line: 2, column: 20, text: '# one', trailing: true}]);
   });
 
   it('has the lines of else and of do', () => {
@@ -285,7 +308,8 @@ const UNWRITTEN: Record<string, string[]> = {
     'lists > a list inside itself',
     'lists > in: a value in a list',
     'texts > a list into a text',
-    'texts > join the items of a list'
+    'texts > join the items of a list',
+    'print and input > values in a text as print writes them'
   ],
   python: []
 };

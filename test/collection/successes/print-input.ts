@@ -56,6 +56,31 @@ const sources: Source[] = [
         inputs: [21, 'ab'],
         output: 'A number?\n42\nabab'
       },
+      {title: 'a variable in a text', code: 'name = "Ani"\nprint("Hi, {name}!")', output: 'Hi, Ani!'},
+      {
+        title: 'an expression in a text',
+        code: 'apples = 3\npears = 5\nprint("{apples} apples and {pears} pears make {apples + pears} fruits.")',
+        output: '3 apples and 5 pears make 8 fruits.'
+      },
+      {
+        title: 'values in a text as print writes them',
+        code: 'print("{0.1 + 0.2} {2 > 1} {[1, "a"]} {7 / 2}")',
+        output: '0.3 true [1, "a"] 3.5'
+      },
+      {title: 'a brace that stays a brace', code: 'print("\\{x} and }")', output: '{x} and }'},
+      {title: 'a text in the braces of a text', code: 'name = "Ani"\nprint("{name + "!"}")', output: 'Ani!'},
+      {
+        title: 'a call in a text',
+        code: 'function twice(x)\n    return x * 2\nprint("{twice(21)} and {twice(1)}")',
+        output: '42 and 2'
+      },
+      {
+        title: 'an input in the braces of a text',
+        code: 'print("Your name?")\nprint("Hi, {input()}!")',
+        inputs: ['Ani'],
+        output: 'Your name?\nHi, Ani!'
+      },
+      {title: 'code in texts in every quote', code: 'x = 1\nprint(«{x}» + \'{x}\' + "{x}")', output: '111'},
       {title: 'cot and arccot', code: 'print(round(cot(1), 3))\nprint(round(arccot(1), 3))', output: '0.642\n0.785'}
     ]
   }

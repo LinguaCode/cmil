@@ -89,6 +89,17 @@ const parseExpression = (tokens: Token[], line: number, action = false): Express
       case 'number':
       case 'string':
         return {type: 'value', value: token.value};
+      case 'template':
+        return {
+          type: 'template',
+          parts: token.parts.map(part => {
+            if (typeof part === 'string') return part;
+            //{} has no code in it
+            if (!part.tokens.length) throw syntaxError(line, {...token, column: part.column});
+            return parseExpression(part.tokens, line);
+          }),
+          column: token.column
+        };
       case 'identifier':
         if (!isOperator(peek(), '(')) return {type: 'variable', name: token.value, column: token.column};
         return nest(() => ({type: 'userCall', name: token.value, ...parseArguments(token)}));

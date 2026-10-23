@@ -9,7 +9,7 @@ import TRANSLATION from './translations/index.ts';
 import type {Comment, ProgramError, Statement} from './core/types.ts';
 
 /** The format of the tree, which changes when the tree does. */
-export const TREE_FORMAT = 1;
+export const TREE_FORMAT = 2;
 
 /**
  * A program as a tree: names are in small letters, as CMIL compares them, and names has the first spelling of each;

@@ -29,9 +29,9 @@ const sources: Source[] = [
         }
       },
       {
-        title: 'template literal syntax in text',
+        title: 'template literal syntax in text: the braces are CMIL code, never JavaScript',
         code: 'print("${1 + 1}")',
-        output: '${1 + 1}'
+        output: '$2'
       },
       {
         title: 'JavaScript in an input value',

@@ -196,6 +196,11 @@ class Interpreter {
         return node.value;
       case 'list':
         return node.items.map(item => this.evaluate(item));
+      //the values in braces are joined into the text, as + joins them
+      case 'template':
+        return this.checkText(
+          node.parts.map(part => (typeof part === 'string' ? part : this.text(this.evaluate(part)))).join('')
+        );
       case 'index': {
         const target = this.evaluate(node.target);
         const index = this.evaluate(node.index);

@@ -156,6 +156,30 @@ const sources: Source[] = [
     ]
   },
   {
+    group: 'code in texts',
+    sources: [
+      {title: 'braces without code', code: 'print("a {} b")', errorId: 'syntaxError', errorParam: {line: 1}},
+      {
+        title: 'a brace that is not closed',
+        code: 'print(1)\nprint("a {b")',
+        errorId: 'syntaxError',
+        errorParam: {line: 2}
+      },
+      {
+        title: '= in the braces of a text',
+        code: 'x = 1\nprint("{x = 2}")',
+        errorId: 'equalsError',
+        errorParam: {line: 2}
+      },
+      {
+        title: 'a variable without a value in a text',
+        code: 'print("{y}")',
+        errorId: 'undefinedVariable',
+        errorParam: {line: 1, variable: 'y'}
+      }
+    ]
+  },
+  {
     group: 'commands as names',
     sources: [
       {title: 'a command as a variable', code: 'x = 1\nstep = 2', errorId: 'nameError', errorParam: {line: 2}},

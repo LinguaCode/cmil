@@ -184,6 +184,8 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
         return [String(node.value), ATOM];
       case 'list':
         return [`[${node.items.map(item => expression(item)).join(', ')}]`, ATOM];
+      case 'template':
+        return [joined(joinedParts(node, types)), ATOM];
       case 'variable':
         return [names.of(node.name), ATOM];
       case 'index':

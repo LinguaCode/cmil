@@ -45,7 +45,7 @@ C++20, as g++ compiles it.
 | CMIL | C++ |
 |---|---|
 | a whole number, a real number, a text, a boolean, a list | `int`, `double`, `std::string`, `bool`, `std::vector<…>` |
-| `print(a + " " + b)` | `std::cout << a << " " << b << '\n';` |
+| `print(a + " " + b)`, `print("{a} {b}")` | `std::cout << a << " " << b << '\n';` |
 | `name = input()` | `std::string name;` `std::getline(std::cin >> std::ws, name);`, or `std::cin >> age;` for a number |
 | `repeat n times` | `for (int i = 0; i < n; i++)` |
 | `for i from 1 to 10 step 2` | `for (int i = 1; i <= 10; i += 2)`, with `>=` and `--` for a negative step |
@@ -78,7 +78,7 @@ Booleans are printed with `std::boolalpha` in English programs, and in the words
 
 | CMIL | Python |
 |---|---|
-| `print(a + " " + b)` | `print(f"{a} {b}")`, a real number as `{x:.12g}` |
+| `print(a + " " + b)`, `print("{a} {b}")` | `print(f"{a} {b}")`, a real number as `{x:.12g}` |
 | `name = input()` | `name = input()`, or `age = float(input())` for a number |
 | `repeat n times` | `for _ in range(n):` |
 | `for i from 1 to 10 step 2` | `for i in range(1, 11, 2):`; a real start or step counts with `while` |

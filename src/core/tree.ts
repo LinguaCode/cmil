@@ -17,6 +17,9 @@ export const pausesOf = (node: Expression | undefined, pauses: Pause[] = []): Pa
     case 'list':
       node.items.forEach(item => pausesOf(item, pauses));
       break;
+    case 'template':
+      node.parts.forEach(part => typeof part !== 'string' && pausesOf(part, pauses));
+      break;
     case 'index':
       pausesOf(node.target, pauses);
       pausesOf(node.index, pauses);

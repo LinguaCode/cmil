@@ -3,7 +3,7 @@
  */
 import CmilError from './error.ts';
 import {ERROR} from '../constants/index.ts';
-import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan} from './words.ts';
+import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan, type Segment} from './words.ts';
 import type {Comment, Line, Token} from './types.ts';
 
 export const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', '[', ']', ','];
@@ -65,15 +65,30 @@ const tokenizeOther = (text: string, offset: number, lineNumber: number, tokens:
  * @param text - the line without its indentation.
  * @param indent - the length of the indentation.
  */
-const tokenizeLine = (text: string, indent: number, lineNumber: number, language: string): Token[] => {
-  const tokens: Token[] = [];
-  let offset = indent;
+const tokenizeLine = (text: string, indent: number, lineNumber: number, language: string): Token[] =>
+  tokenize_(scan(text, language), indent, lineNumber);
 
-  for (const segment of scan(text, language)) {
+//the tokens of segments that start after offset characters of the line; code in braces has its own tokens
+const tokenize_ = (segments: Segment[], offset: number, lineNumber: number): Token[] => {
+  const tokens: Token[] = [];
+
+  for (const segment of segments) {
     if (segment.type === 'comment') break;
     const position = {line: lineNumber, column: offset + 1};
 
-    if (segment.type === 'keyword') {
+    if (segment.type === 'string' && segment.parts) {
+      if (!segment.closed) throw syntaxError(lineNumber, position.column);
+      //after the opening quote
+      let column = offset + 2;
+      const parts = segment.parts.map(part => {
+        const start = column;
+        column += part.text.length;
+        if (part.type === 'text') return part.value;
+        //code in braces: the column of its {, and its tokens after it
+        return {tokens: tokenize_(part.segments, start, lineNumber), column: start};
+      });
+      tokens.push({type: 'template', value: segment.value, parts, ...position});
+    } else if (segment.type === 'keyword') {
       tokens.push({type: 'command', value: segment.command, text: segment.text, ...position});
     } else if (segment.type === 'name') {
       tokens.push({type: 'identifier', value: segment.text.toLowerCase(), text: segment.text, ...position});

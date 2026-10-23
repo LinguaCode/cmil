@@ -27,6 +27,22 @@ describe('editor', () => {
       ]);
     });
 
+    it('splits a text with code into its texts, its braces and its code', () => {
+      assert.deepStrictEqual(
+        segmentsOf('print("Hi, {name}!")', 'en').map(({type, text}) => `${type}:${text}`),
+        [
+          'keyword:print',
+          'operator:(',
+          'string:"Hi, ',
+          'operator:{',
+          'name:name',
+          'operator:}',
+          'string:!"',
+          'operator:)'
+        ]
+      );
+    });
+
     it('reads the texts and numbers of the language, and marks the rest as other', () => {
       assert.deepStrictEqual(
         segmentsOf('արտածել(«ա» >= 2․5, 1x @)', 'hy-AM').map(({type, text}) => `${type}:${text}`),
