@@ -1,4 +1,4 @@
-## Unreleased
+## 0.18.0-alpha.0 (2026-10-24)
 
   - **[add]** texts: code in braces puts its value into a text, in every quote, like `print("Hi, {name}! Next year you will be {age + 1}.")`, written as `print` writes it; any expression goes in the braces. A brace that stays a brace is written `\{`; `{}` and a `{` that isn't closed are a `syntaxError`. `translate()` translates the code in the braces, and editors color it (`segmentsOf()`).
   - **[change]** the program tree is format 2, with the new expression `template`.
