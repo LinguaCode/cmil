@@ -1,4 +1,4 @@
-## Unreleased
+## 0.13.0-alpha.0 (2026-10-23)
 
   - **[change]** print: `print` prints one value, and values are joined into one text with `+`, like `print "Fruits: " + (3 + 5)`. A comma between values, like `print "Fruits:", 3 + 5`, is a `syntaxError` at the comma, and so is a decimal comma, like `print 2,5`, which printed `2 5`.
 
