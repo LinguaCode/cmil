@@ -1,4 +1,4 @@
-## Unreleased
+## 0.15.0-alpha.0 (2026-10-23)
 
   - **[change]** words: `print` and `input` are verbs in Arabic, `اطبع` and `أدخل` instead of the nouns `الإخراج` and `المدخلات`, and in Italian `scrivi` and `leggi` instead of the electronics terms `uscita` and `ingresso`; in Georgian they are `გამოტანა` and `შეყვანა` instead of `გამოშვება` (release) and `შეყვანის` (of input), and `input` is `lexo` in Albanian instead of `të_dhëna` (data).
   - **[change]** words: `while` says "as long as": `så_længe` in Danish, `så_lenge` in Norwegian and `så_länge` in Swedish instead of `mens` and `medan` (during), `niin_kauan_kuin` in Finnish instead of `kun` (when), and `間` in Japanese instead of `しばらくの間` (for a while).
