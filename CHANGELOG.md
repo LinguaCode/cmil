@@ -1,4 +1,4 @@
-## Unreleased
+## 0.16.0-alpha.0 (2026-10-23)
 
   - **[change]** math: `random(max)` gives a whole number from 1 to `max`, like a die and like the items of a list, instead of from 0, so `fruits[random(3)]` is always an item; `random(0)` is a `mathError`.
   - **[fix]** input: an answer is a number only when it is written in decimal, like `25`, `-2.5` or `1e3`; `0x10` and `0b101` are texts, which `input()` and `to_number()` read as `0` before.

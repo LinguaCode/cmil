@@ -47,7 +47,7 @@ Verified on 2026-10-23. Update this section when a fact changes.
 - **Browser:** the core runs in browsers through a bundler; it touches `process` only behind a `typeof` check.
 - **Badges:** the README shows the GitHub Actions and license badges. Travis CI, Coveralls and Code Climate are retired.
 - **Translations:** translators send pull requests that change `src/translations/languages/` (see `CONTRIBUTING.md`), or suggest a word with the issue form `.github/ISSUE_TEMPLATE/translation.yml`. Anyone suggests a better text for the lessons or the interface of the website with `.github/ISSUE_TEMPLATE/page-translation.yml`, which the page fills in with the language and the lesson. `docs/translations.md` is generated from the translations by `npm run translations-table` (`scripts/translations-table.ts`, which also holds each language's name and each command's meaning). Each language file is a typed record of words per command id, the first word the main one; no word is marked for a review, and anyone may suggest a better one. Crowdin and Transifex are no longer used.
-- **Version and changelog:** the version is `0.15.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
+- **Version and changelog:** the version is `0.16.0-alpha.0`. `CHANGELOG.md` entries use the tags `**[add]**`, `**[optimize]**`, `**[fix]**`, `**[change]**` and `**[status]**`. Entries up to 0.2.1 also use `**[new]**`.
 - **Branches:** `master` (default).
 
 ## Source Map
