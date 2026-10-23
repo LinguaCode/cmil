@@ -153,7 +153,12 @@ describe('words', () => {
         outputOf('sortida(arrodonir(2.5))\nsortida(arrodonir_avall(2.5))\nsortida(arrodonir_amunt(2.2))', 'ca'),
         '3\n2\n3'
       );
-      assert.strictEqual(outputOf('uscita(e_numero > 2 e vero)', 'it'), 'vero');
+      assert.strictEqual(outputOf('scrivi(e_numero > 2 e vero)', 'it'), 'vero');
+      assert.strictEqual(outputOf('i = 0\nså_lenge i < 2\n    i = i + 1\nhvis i == 2 så\n    skriv_ut(i)', 'no'), '2');
+      assert.strictEqual(
+        outputOf('i = 0\nniin_kauan_kuin i < 2\n    i = i + 1\njos i == 2 niin\n    tulosta(i)', 'fi'),
+        '2'
+      );
       assert.strictEqual(
         outputOf('вывести(округлить(2.5))\nвывести(округлить_вниз(2.5))\nвывести(округлить_вверх(2.2))', 'ru'),
         '3\n2\n3'

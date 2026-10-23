@@ -28,7 +28,7 @@ const translation: Translation = {
     remove: ['remover'],
     function: ['função'],
     return: ['devolver'],
-    random: ['aleatória'],
+    random: ['aleatório'],
     pow: ['potência'],
     sqr: ['quadrado'],
     sqrt: ['raiz_quadrada'],

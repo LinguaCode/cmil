@@ -47,7 +47,7 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Albanian |
 |---|---|---|
-| input | waits for the user and gives the answer, in name = input() | `të_dhëna` |
+| input | waits for the user and gives the answer, in name = input() | `lexo` |
 | print | prints a value on a line, in print(value) | `shkruaj` |
 | if | runs the block below when its condition is true | `nëse` |
 | else | runs the block below when the conditions before it are false | `përndryshe` |
@@ -109,15 +109,15 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Arabic |
 |---|---|---|
-| input | waits for the user and gives the answer, in name = input() | `المدخلات` |
-| print | prints a value on a line, in print(value) | `الإخراج` |
+| input | waits for the user and gives the answer, in name = input() | `أدخل` |
+| print | prints a value on a line, in print(value) | `اطبع` |
 | if | runs the block below when its condition is true | `إذا` |
 | else | runs the block below when the conditions before it are false | `وإلا` |
-| then | may end the condition of if | `ثم` |
+| then | may end the condition of if | `فإن` |
 | or | true when either side is true | `أو` |
 | and | true when both sides are true | `و` |
 | not | the opposite of a boolean | `لا` |
-| false | the boolean false | `كاذبة` |
+| false | the boolean false | `خطأ` |
 | true | the boolean true | `صحيح` |
 | do | starts a loop whose condition comes after it, in do … while | `افعل` |
 | while | repeats the block below while its condition is true; also ends do … while | `طالما` |
@@ -430,7 +430,7 @@ Quotes: »…«, also "…", '…' and «…»
 | false | the boolean false | `falsk` |
 | true | the boolean true | `sandt` |
 | do | starts a loop whose condition comes after it, in do … while | `gøre` |
-| while | repeats the block below while its condition is true; also ends do … while | `mens` |
+| while | repeats the block below while its condition is true; also ends do … while | `så_længe` |
 | repeat | repeats the block below, in repeat … times | `gentag` |
 | times | ends repeat … times | `gange` |
 | break | leaves the innermost loop | `afbryd` |
@@ -616,7 +616,7 @@ Quotes: ”…”, also "…", '…' and «…»
 | false | the boolean false | `epätosi` |
 | true | the boolean true | `tosi` |
 | do | starts a loop whose condition comes after it, in do … while | `tehdä` |
-| while | repeats the block below while its condition is true; also ends do … while | `kun` |
+| while | repeats the block below while its condition is true; also ends do … while | `niin_kauan_kuin` |
 | repeat | repeats the block below, in repeat … times | `toista` |
 | times | ends repeat … times | `kertaa` |
 | break | leaves the innermost loop | `keskeytä` |
@@ -729,16 +729,16 @@ Quotes: „…“, also "…", '…' and «…»
 
 | English | Meaning | Georgian |
 |---|---|---|
-| input | waits for the user and gives the answer, in name = input() | `შეყვანის` |
-| print | prints a value on a line, in print(value) | `გამოშვება` |
+| input | waits for the user and gives the answer, in name = input() | `შეყვანა` |
+| print | prints a value on a line, in print(value) | `გამოტანა` |
 | if | runs the block below when its condition is true | `თუ` |
-| else | runs the block below when the conditions before it are false | `სხვა` |
+| else | runs the block below when the conditions before it are false | `სხვა_შემთხვევაში` |
 | then | may end the condition of if | `მაშინ` |
 | or | true when either side is true | `ან` |
 | and | true when both sides are true | `და` |
 | not | the opposite of a boolean | `არა` |
-| false | the boolean false | `ცრუ` |
-| true | the boolean true | `მართალია` |
+| false | the boolean false | `მცდარი` |
+| true | the boolean true | `ჭეშმარიტი` |
 | do | starts a loop whose condition comes after it, in do … while | `გააკეთე` |
 | while | repeats the block below while its condition is true; also ends do … while | `სანამ` |
 | repeat | repeats the block below, in repeat … times | `გაიმეორე` |
@@ -1039,8 +1039,8 @@ Quotes: «…», also "…" and '…'
 
 | English | Meaning | Italian |
 |---|---|---|
-| input | waits for the user and gives the answer, in name = input() | `ingresso` |
-| print | prints a value on a line, in print(value) | `uscita` |
+| input | waits for the user and gives the answer, in name = input() | `leggi` |
+| print | prints a value on a line, in print(value) | `scrivi` |
 | if | runs the block below when its condition is true | `se` |
 | else | runs the block below when the conditions before it are false | `altrimenti` |
 | then | may end the condition of if | `allora` |
@@ -1112,7 +1112,7 @@ Quotes: 「…」, also 『…』, "…", '…' and «…»
 | false | the boolean false | `偽` |
 | true | the boolean true | `真` |
 | do | starts a loop whose condition comes after it, in do … while | `する` |
-| while | repeats the block below while its condition is true; also ends do … while | `しばらくの間` |
+| while | repeats the block below while its condition is true; also ends do … while | `間` |
 | repeat | repeats the block below, in repeat … times | `繰り返す` |
 | times | ends repeat … times | `回` |
 | break | leaves the innermost loop | `中断` |
@@ -1170,7 +1170,7 @@ Quotes: “…”, also "…", '…' and «…»
 | then | may end the condition of if | `그러면` |
 | or | true when either side is true | `또는` |
 | and | true when both sides are true | `그리고` |
-| not | the opposite of a boolean | `지` |
+| not | the opposite of a boolean | `아님` |
 | false | the boolean false | `거짓` |
 | true | the boolean true | `참` |
 | do | starts a loop whose condition comes after it, in do … while | `실행` |
@@ -1229,14 +1229,14 @@ Quotes: «…», also "…" and '…'
 | print | prints a value on a line, in print(value) | `skriv_ut` |
 | if | runs the block below when its condition is true | `hvis` |
 | else | runs the block below when the conditions before it are false | `ellers` |
-| then | may end the condition of if | `da` |
+| then | may end the condition of if | `så` |
 | or | true when either side is true | `eller` |
 | and | true when both sides are true | `og` |
 | not | the opposite of a boolean | `ikke` |
 | false | the boolean false | `usann` |
 | true | the boolean true | `sann` |
 | do | starts a loop whose condition comes after it, in do … while | `gjøre` |
-| while | repeats the block below while its condition is true; also ends do … while | `mens` |
+| while | repeats the block below while its condition is true; also ends do … while | `så_lenge` |
 | repeat | repeats the block below, in repeat … times | `gjenta` |
 | times | ends repeat … times | `ganger` |
 | break | leaves the innermost loop | `avbryt` |
@@ -1374,7 +1374,7 @@ Quotes: «…», also "…" and '…'
 | remove | removes the first item equal to a value from a list, in remove(list, value) | `remover` |
 | function | defines a function, in function name(a, b) | `função` |
 | return | ends a function, with the value it gives back | `devolver` |
-| random | a random whole number | `aleatória` |
+| random | a random whole number | `aleatório` |
 | power | x to the power of y | `potência` |
 | square | x squared | `quadrado` |
 | square_root | the square root of x | `raiz_quadrada` |
@@ -1436,7 +1436,7 @@ Quotes: „…”, also "…", '…' and «…»
 | remove | removes the first item equal to a value from a list, in remove(list, value) | `elimină` |
 | function | defines a function, in function name(a, b) | `funcție` |
 | return | ends a function, with the value it gives back | `returnează` |
-| random | a random whole number | `aleatoare` |
+| random | a random whole number | `aleator` |
 | power | x to the power of y | `putere` |
 | square | x squared | `pătrat` |
 | square_root | the square root of x | `rădăcină_pătrată` |
@@ -1663,7 +1663,7 @@ Quotes: „…“, also "…", '…' and «…»
 | print | prints a value on a line, in print(value) | `izhod` |
 | if | runs the block below when its condition is true | `če` |
 | else | runs the block below when the conditions before it are false | `sicer` |
-| then | may end the condition of if | `nato` |
+| then | may end the condition of if | `potem` |
 | or | true when either side is true | `ali` |
 | and | true when both sides are true | `in` |
 | not | the opposite of a boolean | `ne` |
@@ -1735,7 +1735,7 @@ Quotes: «…», also "…" and '…'
 | while | repeats the block below while its condition is true; also ends do … while | `mientras` |
 | repeat | repeats the block below, in repeat … times | `repetir` |
 | times | ends repeat … times | `veces` |
-| break | leaves the innermost loop | `abortar` |
+| break | leaves the innermost loop | `salir` |
 | continue | starts the next pass of the innermost loop | `continuar` |
 | for | counts with a variable, in for … from … to …, or passes the items of a list, in for … in … | `para` |
 | from | the first value of for | `desde` |
@@ -1794,7 +1794,7 @@ Quotes: ”…”, also "…", '…' and «…»
 | false | the boolean false | `falskt` |
 | true | the boolean true | `sant` |
 | do | starts a loop whose condition comes after it, in do … while | `göra` |
-| while | repeats the block below while its condition is true; also ends do … while | `medan` |
+| while | repeats the block below while its condition is true; also ends do … while | `så_länge` |
 | repeat | repeats the block below, in repeat … times | `upprepa` |
 | times | ends repeat … times | `gånger` |
 | break | leaves the innermost loop | `avbryt` |

@@ -14,7 +14,7 @@ const translation: Translation = {
     false: ['falskt'],
     true: ['sant'],
     do: ['göra'],
-    while: ['medan'],
+    while: ['så_länge'],
     repeat: ['upprepa'],
     times: ['gånger'],
     break: ['avbryt'],

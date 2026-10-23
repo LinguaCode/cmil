@@ -7,7 +7,7 @@ const translation: Translation = {
     print: ['izhod'],
     if: ['če'],
     else: ['sicer'],
-    then: ['nato'],
+    then: ['potem'],
     or: ['ali'],
     and: ['in'],
     not: ['ne'],

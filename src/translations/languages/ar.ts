@@ -3,15 +3,15 @@ import type {Translation} from '../types.ts';
 
 const translation: Translation = {
   words: {
-    input: ['المدخلات'],
-    print: ['الإخراج'],
+    input: ['أدخل'],
+    print: ['اطبع'],
     if: ['إذا'],
     else: ['وإلا'],
-    then: ['ثم'],
+    then: ['فإن'],
     or: ['أو'],
     and: ['و'],
     not: ['لا'],
-    false: ['كاذبة'],
+    false: ['خطأ'],
     true: ['صحيح'],
     do: ['افعل'],
     while: ['طالما'],

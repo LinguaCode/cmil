@@ -3,16 +3,16 @@ import type {Translation} from '../types.ts';
 
 const translation: Translation = {
   words: {
-    input: ['შეყვანის'],
-    print: ['გამოშვება'],
+    input: ['შეყვანა'],
+    print: ['გამოტანა'],
     if: ['თუ'],
-    else: ['სხვა'],
+    else: ['სხვა_შემთხვევაში'],
     then: ['მაშინ'],
     or: ['ან'],
     and: ['და'],
     not: ['არა'],
-    false: ['ცრუ'],
-    true: ['მართალია'],
+    false: ['მცდარი'],
+    true: ['ჭეშმარიტი'],
     do: ['გააკეთე'],
     while: ['სანამ'],
     repeat: ['გაიმეორე'],

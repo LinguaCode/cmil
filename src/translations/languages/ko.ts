@@ -10,7 +10,7 @@ const translation: Translation = {
     then: ['그러면'],
     or: ['또는'],
     and: ['그리고'],
-    not: ['지'],
+    not: ['아님'],
     false: ['거짓'],
     true: ['참'],
     do: ['실행'],

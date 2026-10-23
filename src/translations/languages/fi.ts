@@ -14,7 +14,7 @@ const translation: Translation = {
     false: ['epätosi'],
     true: ['tosi'],
     do: ['tehdä'],
-    while: ['kun'],
+    while: ['niin_kauan_kuin'],
     repeat: ['toista'],
     times: ['kertaa'],
     break: ['keskeytä'],

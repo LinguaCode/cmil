@@ -1,5 +1,9 @@
 ## Unreleased
 
+  - **[change]** words: `print` and `input` are verbs in Arabic, `اطبع` and `أدخل` instead of the nouns `الإخراج` and `المدخلات`, and in Italian `scrivi` and `leggi` instead of the electronics terms `uscita` and `ingresso`; in Georgian they are `გამოტანა` and `შეყვანა` instead of `გამოშვება` (release) and `შეყვანის` (of input), and `input` is `lexo` in Albanian instead of `të_dhëna` (data).
+  - **[change]** words: `while` says "as long as": `så_længe` in Danish, `så_lenge` in Norwegian and `så_länge` in Swedish instead of `mens` and `medan` (during), `niin_kauan_kuin` in Finnish instead of `kun` (when), and `間` in Japanese instead of `しばらくの間` (for a while).
+  - **[change]** words: `then` is `فإن` in Arabic instead of `ثم` (afterwards), `så` in Norwegian instead of `da` and `potem` in Slovenian instead of `nato`; `else` is `სხვა_შემთხვევაში` (in the other case) in Georgian instead of `სხვა` (other).
+  - **[change]** words: false is `خطأ` in Arabic instead of `كاذبة` (lying), and the booleans are `ჭეშმარიტი` and `მცდარი` in Georgian instead of `მართალია` (it is true) and `ცრუ` (lying); `not` is `아님` in Korean instead of `지`, a part of -지 않다; `break` is `salir` in Spanish instead of `abortar`; and `random` agrees with number: `aleatório` in Portuguese and `aleator` in Romanian.
   - **[change]** translations: the words of a language no longer carry notes that ask a native speaker to check them, and `docs/translations.md` lists the words of each language without words to check. Anyone may suggest a better word.
 
 ## 0.14.0-alpha.0 (2026-10-23)

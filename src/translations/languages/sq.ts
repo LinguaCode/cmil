@@ -3,7 +3,7 @@ import type {Translation} from '../types.ts';
 
 const translation: Translation = {
   words: {
-    input: ['të_dhëna'],
+    input: ['lexo'],
     print: ['shkruaj'],
     if: ['nëse'],
     else: ['përndryshe'],

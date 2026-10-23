@@ -14,7 +14,7 @@ const translation: Translation = {
     false: ['偽'],
     true: ['真'],
     do: ['する'],
-    while: ['しばらくの間'],
+    while: ['間'],
     repeat: ['繰り返す'],
     times: ['回'],
     break: ['中断'],

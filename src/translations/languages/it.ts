@@ -3,8 +3,8 @@ import type {Translation} from '../types.ts';
 
 const translation: Translation = {
   words: {
-    input: ['ingresso'],
-    print: ['uscita'],
+    input: ['leggi'],
+    print: ['scrivi'],
     if: ['se'],
     else: ['altrimenti'],
     then: ['allora'],

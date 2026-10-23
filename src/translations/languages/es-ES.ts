@@ -17,7 +17,7 @@ const translation: Translation = {
     while: ['mientras'],
     repeat: ['repetir'],
     times: ['veces'],
-    break: ['abortar'],
+    break: ['salir'],
     continue: ['continuar'],
     for: ['para'],
     from: ['desde'],

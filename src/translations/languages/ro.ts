@@ -28,7 +28,7 @@ const translation: Translation = {
     remove: ['elimină'],
     function: ['funcție'],
     return: ['returnează'],
-    random: ['aleatoare'],
+    random: ['aleator'],
     pow: ['putere'],
     sqr: ['pătrat'],
     sqrt: ['rădăcină_pătrată'],
