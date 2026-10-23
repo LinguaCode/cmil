@@ -4,8 +4,13 @@ const sources: Source[] = [
   {
     group: 'print and input',
     sources: [
-      {title: 'print several values', code: 'print 1, "a", true', output: '1 a true'},
-      {title: 'commas of a function stay in it', code: 'print power(2, 3), 1', output: '8 1'},
+      {title: 'a text joined with a value', code: 'print "Fruits: " + (3 + 5)', output: 'Fruits: 8'},
+      {title: 'values are joined from left to right', code: 'print "Fruits: " + 3 + 5', output: 'Fruits: 35'},
+      {
+        title: 'the commas of a function and a list stay in them',
+        code: 'print power(2, 3) + length_of([1, 2])',
+        output: '10'
+      },
       {title: 'texts in the quotes of every language', code: 'print «a» + "b" + \'c\'', output: 'abc'},
       {title: 'texts in the quotes of English', code: 'print “Hi, ” + "Ani"', output: 'Hi, Ani'},
       {

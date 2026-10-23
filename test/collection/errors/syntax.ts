@@ -66,6 +66,22 @@ const sources: Source[] = [
         }
       },
       {
+        title: 'print with a comma: values are joined with +',
+        code: 'print "Fruits:", 3 + 5',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 1
+        }
+      },
+      {
+        title: 'a number with a decimal comma',
+        code: 'print 1\nprint 2,5',
+        errorId: 'syntaxError',
+        errorParam: {
+          line: 2
+        }
+      },
+      {
         title: 'input without a name',
         code: 'input "Your name?"',
         errorId: 'syntaxError',

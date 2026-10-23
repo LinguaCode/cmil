@@ -280,7 +280,7 @@ class Interpreter {
       try {
         switch (instruction.op) {
           case 'print': {
-            const text = instruction.expressions.map(expression => this.text(this.evaluate(expression))).join(' ');
+            const text = this.text(this.evaluate(instruction.expression));
             if (text !== '') {
               this.outputLength += text.length + 1;
               if (this.outputLength > MAX_OUTPUT_LENGTH) {

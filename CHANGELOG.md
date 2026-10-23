@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[change]** print: `print` prints one value, and values are joined into one text with `+`, like `print "Fruits: " + (3 + 5)`. A comma between values, like `print "Fruits:", 3 + 5`, is a `syntaxError` at the comma, and so is a decimal comma, like `print 2,5`, which printed `2 5`.
+
 ## 0.12.0-alpha.0 (2026-10-20)
 
   - **[change]** words: `print` is `արտածել` in Armenian instead of `տպել`, which says more exactly what it does: it outputs.

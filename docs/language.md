@@ -55,7 +55,7 @@ prints `500`.
 
 ## Output and input
 
-`print expression` prints a value on a line, and `print a, b, c` several values separated by spaces. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. `input` only reads: what the user should type is printed before it, like `print "Your name?"`, and anything between `input` and the name is a syntax error.
+`print expression` prints a value on a line. Values are joined into one text with `+`: `print "Fruits: " + (3 + 5)` prints `Fruits: 8`, and without the parentheses `print "Fruits: " + 3 + 5` joins from left to right and prints `Fruits: 35`. A comma between values, like `print "Fruits:", 8`, is a syntax error. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. `input` only reads: what the user should type is printed before it, like `print "Your name?"`, and anything between `input` and the name is a syntax error.
 
 ```
 print "What is your name?"
@@ -130,9 +130,11 @@ for fruit in ["apple", "pear"]
 fruits = ["apple", "pear"]
 add "plum" into fruits
 fruits[1] = "cherry"
-print fruits, length_of(fruits), fruits[3]
+print fruits
+print length_of(fruits)
+print fruits[3]
 ```
-prints `["cherry", "pear", "plum"] 3 plum`.
+prints `["cherry", "pear", "plum"]`, `3` and `plum`.
 
 - `list[i]` is the item at `i`, counted from 1, and `list[i] = value` replaces it. An `i` that isn't a whole number from 1 to the length of the list is an `indexError`. Lists in lists have items of items: `table[2][1]`.
 - `add value into list` puts the value at the end of the list, and `remove value out of list` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`.

@@ -117,6 +117,12 @@ describe('core', () => {
       assert.deepStrictEqual(run('print (1').error, {id: 'syntaxError', line: 1});
     });
 
+    it('point at the comma of a print of several values', () => {
+      assert.deepStrictEqual(run('print "Fruits:", 3 + 5').error, {id: 'syntaxError', line: 1, column: 16});
+      assert.deepStrictEqual(run('print 2,5').error, {id: 'syntaxError', line: 1, column: 8});
+      assert.deepStrictEqual(run('արտածել «Միրգ՝», 8', [], 'hy-AM').error, {id: 'syntaxError', line: 1, column: 16});
+    });
+
     it('point at an undefined variable', () => {
       assert.deepStrictEqual(run('a = 1\nprint a + b').error, {
         id: 'undefinedVariable',
@@ -206,18 +212,21 @@ describe('core', () => {
     });
 
     it('lists inside themselves compare', () => {
-      const code = 'a = [1]\nadd a into a\nb = [1]\nadd b into b\nc = [2]\nadd c into c\nprint a == b, a == c';
-      assert.deepStrictEqual(run(code).output, ['true false']);
+      const code = 'a = [1]\nadd a into a\nb = [1]\nadd b into b\nc = [2]\nadd c into c\nprint a == b\nprint a == c';
+      assert.deepStrictEqual(run(code).output, ['true', 'false']);
     });
 
     it('deep lists print and compare without overflowing the stack', () => {
-      const code = 'x = []\ny = []\nrepeat 100000 times\n    x = [x]\n    y = [y]\nprint x == y, length_of(to_text(x))';
-      assert.deepStrictEqual(run(code).output, ['true 200002']);
+      const code =
+        'x = []\ny = []\nrepeat 100000 times\n    x = [x]\n    y = [y]\nprint x == y\nprint length_of(to_text(x))';
+      assert.deepStrictEqual(run(code).output, ['true', '200002']);
     });
 
     it('a list shared many times is printed until its text is too long', () => {
-      const {error} = run('b = []\nrepeat 40 times\n    b = [b, b]\nprint b == b, length_of(b)\nprint to_text(b)');
-      assert.deepStrictEqual(error, {id: 'memoryLimit', line: 5});
+      const {error} = run(
+        'b = []\nrepeat 40 times\n    b = [b, b]\nprint b == b\nprint length_of(b)\nprint to_text(b)'
+      );
+      assert.deepStrictEqual(error, {id: 'memoryLimit', line: 6});
     });
 
     it('a list grows to MAX_LIST_LENGTH items', () => {

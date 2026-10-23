@@ -190,19 +190,6 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
 const opens = (token: Token) => isOperator(token, '(') || isOperator(token, '[');
 const closes = (token: Token) => isOperator(token, ')') || isOperator(token, ']');
 
-//the parts of a line between the commas outside parentheses and brackets
-const splitAtCommas = (tokens: Token[]): Token[][] => {
-  const parts: Token[][] = [[]];
-  let depth = 0;
-  for (const token of tokens) {
-    if (opens(token)) depth++;
-    if (closes(token)) depth--;
-    if (!depth && isOperator(token, ',')) parts.push([]);
-    else parts[parts.length - 1].push(token);
-  }
-  return parts;
-};
-
 //the = of an assignment to an item, like list[1] = 5: the first one outside parentheses and brackets
 const findEquals = (tokens: Token[]): number => {
   let depth = 0;
@@ -240,10 +227,9 @@ const parseParameters = (tokens: Token[], line: number): string[] => {
 //the expressions of a statement, without those of its blocks
 const expressionsOf = (statement: Statement): (Expression | undefined)[] => {
   switch (statement.type) {
-    case 'print':
-      return statement.expressions;
     case 'input':
       return [];
+    case 'print':
     case 'assign':
     case 'return':
       return [statement.expression];
@@ -387,7 +373,7 @@ export const parse = (lines: Line[]): Statement[] => {
 
     switch (first.value) {
       case COMMAND.PRINT:
-        return {type: 'print', expressions: splitAtCommas(rest).map(part => parseExpression(part, line)), line};
+        return {type: 'print', expression: parseExpression(rest, line), line};
       case COMMAND.INPUT: {
         //input name: it only reads, so a question is printed before it
         const [name, extra] = rest;

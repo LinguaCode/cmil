@@ -15,7 +15,7 @@ const sources: Source[] = [
         code: 'print ["say \\"hi\\"", "a\\\\b", "one\\ntwo"]',
         output: '["say \\"hi\\"", "a\\\\b", "one\\ntwo"]'
       },
-      {title: 'items count from 1', code: 'a = [10, 20, 30]\nprint a[1], a[3]', output: '10 30'},
+      {title: 'items count from 1', code: 'a = [10, 20, 30]\nprint a[1]\nprint a[3]', output: '10\n30'},
       {title: 'an index can be computed', code: 'a = [10, 20, 30]\ni = 1\nprint a[i + 1]', output: '20'},
       {title: 'an item of an item', code: 'm = [[1, 2], [3, 4]]\nprint m[2][1]', output: '3'},
       {title: 'an item of a list written in place', code: 'print [5, 6][2]', output: '6'},
@@ -34,13 +34,13 @@ const sources: Source[] = [
       {title: 'add into an item', code: 'm = [[], []]\nadd 5 into m[2]\nprint m', output: '[[], [5]]'},
       {
         title: 'the length of a list and of a text',
-        code: 'print length_of([1, 2, 3]), length_of([]), length_of("abc")',
-        output: '3 0 3'
+        code: 'print length_of([1, 2, 3])\nprint length_of([])\nprint length_of("abc")',
+        output: '3\n0\n3'
       },
       {
         title: 'an emoji is one letter',
-        code: 'print length_of("😀!"), "😀!"[1]',
-        output: '2 😀'
+        code: 'print length_of("😀!")\nprint "😀!"[1]',
+        output: '2\n😀'
       },
       {
         title: 'a list is shared by the variables it is assigned to',
@@ -49,18 +49,18 @@ const sources: Source[] = [
       },
       {
         title: 'lists are equal when their items are',
-        code: 'print [1, [2, "a"]] == [1, [2, "a"]], [1, 2] == [2, 1], [1] != [1], [] == ""',
-        output: 'true false false false'
+        code: 'print [1, [2, "a"]] == [1, [2, "a"]]\nprint [1, 2] == [2, 1]\nprint [1] != [1]\nprint [] == ""',
+        output: 'true\nfalse\nfalse\nfalse'
       },
       {title: 'numbers in lists compare like numbers', code: 'print [0.1 + 0.2] == [0.3]', output: 'true'},
       {title: 'a list joined into a text', code: 'print "items: " + [1, "a"]', output: 'items: [1, "a"]'},
       {title: 'a list inside itself', code: 'a = [1]\nadd a into a\nprint a', output: '[1, [...]]'},
       {
         title: 'in: a value in a list',
-        code: 'basket = ["🍎", "🍐"]\nprint "🍎" in basket, "🍋" in basket, [1] in [[1], 2]',
-        output: 'true false true'
+        code: 'basket = ["🍎", "🍐"]\nprint "🍎" in basket\nprint "🍋" in basket\nprint [1] in [[1], 2]',
+        output: 'true\nfalse\ntrue'
       },
-      {title: 'in: a text in a text', code: 'print "ell" in "hello", "x" in "hello"', output: 'true false'},
+      {title: 'in: a text in a text', code: 'print "ell" in "hello"\nprint "x" in "hello"', output: 'true\nfalse'},
       {
         title: 'not in, with parentheses',
         code: 'basket = ["🍎"]\nif not ("🍋" in basket)\n    add "🍋" into basket\nprint basket',
@@ -111,17 +111,29 @@ const sources: Source[] = [
   {
     group: 'texts',
     sources: [
-      {title: 'uppercase and lowercase', code: 'print uppercase("Hello"), lowercase("Hello")', output: 'HELLO hello'},
+      {
+        title: 'uppercase and lowercase',
+        code: 'print uppercase("Hello")\nprint lowercase("Hello")',
+        output: 'HELLO\nhello'
+      },
       {title: 'uppercase of any alphabet', code: 'print uppercase("բարի")', output: 'ԲԱՐԻ'},
-      {title: 'a text into a number', code: 'print to_number("12.5") + 1, to_number(" -3 ") * 2', output: '13.5 -6'},
+      {
+        title: 'a text into a number',
+        code: 'print to_number("12.5") + 1\nprint to_number(" -3 ") * 2',
+        output: '13.5\n-6'
+      },
       {title: 'a number stays a number', code: 'print to_number(7) + 1', output: '8'},
-      {title: 'a number into a text', code: 'print to_text(5) + to_text(5), to_text(0.1 + 0.2)', output: '55 0.3'},
+      {
+        title: 'a number into a text',
+        code: 'print to_text(5) + to_text(5)\nprint to_text(0.1 + 0.2)',
+        output: '55\n0.3'
+      },
       {title: 'a boolean into a text', code: 'print to_text(1 < 2) + "!"', output: 'true!'},
       {title: 'a list into a text', code: 'print length_of(to_text([1, "a"]))', output: '8'},
       {
         title: 'split a text into its words',
-        code: 'print split("  one two   three "), length_of(split(""))',
-        output: '["one", "two", "three"] 0'
+        code: 'print split("  one two   three ")\nprint length_of(split(""))',
+        output: '["one", "two", "three"]\n0'
       },
       {title: 'split at a separator', code: 'print split("a,b,,c", ",")', output: '["a", "b", "", "c"]'},
       {title: 'split into letters', code: 'print split("ab😀", "")', output: '["a", "b", "😀"]'},
