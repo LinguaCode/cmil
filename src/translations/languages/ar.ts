@@ -58,29 +58,6 @@ const translation: Translation = {
     join: ['ادمج']
   },
   quotes: [['«', '»']],
-  notes: {
-    input: 'Plural (the inputs); would أدخل be better?',
-    print: 'Also means directing a film; would اطبع (print) be better?',
-    then: 'Means afterwards; would فإن be better?',
-    false: 'Feminine (lying); is خطأ the usual truth value?',
-    true: 'Is صواب or صح the usual truth value?',
-    for: 'A new word; it needs a native review.',
-    from: 'A new word; it needs a native review.',
-    to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.',
-    in: 'A new word; it needs a native review.',
-    add: 'A new word; it needs a native review.',
-    length: 'A new word; it needs a native review.',
-    upper: 'A new word; it needs a native review.',
-    lower: 'A new word; it needs a native review.',
-    number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.',
-    remove: 'A new word; it needs a native review.',
-    split: 'A new word; it needs a native review.',
-    join: 'A new word; it needs a native review.'
-  },
-  //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'خطأ نحوي في السطر {line}.',
     indentError: 'خطأ في الإزاحة في السطر {line}: أزح الكتل 4 مسافات.',

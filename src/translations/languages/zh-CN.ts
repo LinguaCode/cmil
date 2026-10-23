@@ -58,24 +58,6 @@ const translation: Translation = {
     join: ['连接']
   },
   quotes: [['“', '”']],
-  notes: {
-    for: 'A new word; it needs a native review.',
-    from: 'A new word; it needs a native review.',
-    to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.',
-    in: 'A new word; it needs a native review.',
-    add: 'A new word; it needs a native review.',
-    length: 'A new word; it needs a native review.',
-    upper: 'A new word; it needs a native review.',
-    lower: 'A new word; it needs a native review.',
-    number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.',
-    remove: 'A new word; it needs a native review.',
-    split: 'A new word; it needs a native review.',
-    join: 'A new word; it needs a native review.'
-  },
-  //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: '第 {line} 行有语法错误。',
     indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',

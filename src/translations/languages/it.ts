@@ -58,26 +58,6 @@ const translation: Translation = {
     join: ['unisci']
   },
   quotes: [['«', '»']],
-  notes: {
-    input: 'An electronics term; would leggi (read) be better?',
-    print: 'An electronics term; would scrivi (write) be better?',
-    for: 'A new word; it needs a native review.',
-    from: 'A new word; it needs a native review.',
-    to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.',
-    in: 'A new word; it needs a native review.',
-    add: 'A new word; it needs a native review.',
-    length: 'A new word; it needs a native review.',
-    upper: 'A new word; it needs a native review.',
-    lower: 'A new word; it needs a native review.',
-    number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.',
-    remove: 'A new word; it needs a native review.',
-    split: 'A new word; it needs a native review.',
-    join: 'A new word; it needs a native review.'
-  },
-  //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'Errore di sintassi alla riga {line}.',
     indentError: 'Errore di rientro alla riga {line}: rientra i blocchi di 4 spazi.',

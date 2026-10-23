@@ -61,9 +61,6 @@ const translation: Translation = {
     ['「', '」'],
     ['『', '』']
   ],
-  notes: {
-    while: 'Means for a while; which word fits before the condition? DNCL puts the condition first: 〈condition〉の間.'
-  },
   messages: {
     syntaxError: '{line} 行目に構文エラーがあります。',
     indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',

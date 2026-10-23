@@ -58,28 +58,6 @@ const translation: Translation = {
     join: ['შეაერთე']
   },
   quotes: [['„', '“']],
-  notes: {
-    input: 'Genitive (of input); should it be შეყვანა?',
-    print: 'Means release; should it be გამოტანა?',
-    else: 'Means other; should it be თორემ?',
-    true: 'Means it is true; should it be ჭეშმარიტი?',
-    for: 'A new word; it needs a native review.',
-    from: 'A new word; it needs a native review.',
-    to: 'A new word; it needs a native review.',
-    step: 'A new word; it needs a native review.',
-    in: 'A new word; it needs a native review.',
-    add: 'A new word; it needs a native review.',
-    length: 'A new word; it needs a native review.',
-    upper: 'A new word; it needs a native review.',
-    lower: 'A new word; it needs a native review.',
-    number: 'A new word; it needs a native review.',
-    text: 'A new word; it needs a native review.',
-    return: 'A new word; it needs a native review.',
-    remove: 'A new word; it needs a native review.',
-    split: 'A new word; it needs a native review.',
-    join: 'A new word; it needs a native review.'
-  },
-  //translated without a native speaker: the messages need a native review
   messages: {
     syntaxError: 'სინტაქსური შეცდომა {line}-ე ხაზზე.',
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',

@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[change]** translations: the words of a language no longer carry notes that ask a native speaker to check them, and `docs/translations.md` lists the words of each language without words to check. Anyone may suggest a better word.
+
 ## 0.14.0-alpha.0 (2026-10-23)
 
   - **[change]** print: `print(value)` is called like a function and prints one value, like `print("Fruits: " + (3 + 5))`. Another count of values, like `print("Fruits:", 8)`, or `print "Fruits"` without the parentheses, is an `argumentError` that says print takes 1 value, instead of a `syntaxError`; anything after the `)`, like `print("a") + "b"`, is a `syntaxError`.

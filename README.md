@@ -76,7 +76,7 @@ CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`n
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, lists, functions and errors.
 - [Running CMIL programs](docs/running.md): limits, and running sessions in a worker.
-- [Translations](docs/translations.md): the words of every language, and the words to check.
+- [Translations](docs/translations.md): the words of every language.
 
 ## Screenshot
 
