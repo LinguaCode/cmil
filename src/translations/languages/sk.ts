@@ -68,6 +68,7 @@ const translation: Translation = {
       other: 'Riadok {line}: {function} berie {count} hodnôt.'
     },
     equalsError: 'Riadok {line}: na porovnanie píšte == namiesto =.',
+    nameError: 'Riadok {line}: {name} je príkaz, preto nemôže byť názvom; zvoľte iný.',
     undefinedVariable: 'Riadok {line}: {variable} ešte nemá hodnotu.',
     undefinedFunction: 'Riadok {line}: funkcia {function} neexistuje.',
     noValue: 'Riadok {line}: {function} nevracia žiadnu hodnotu.',

@@ -69,6 +69,7 @@ const translation: Translation = {
       other: 'Zeile {line}: {function} nimmt {count} Werte.'
     },
     equalsError: 'Zeile {line}: Zum Vergleichen == statt = schreiben.',
+    nameError: 'Zeile {line}: {name} ist ein Befehl und kann kein Name sein. Einen anderen Namen wählen.',
     undefinedVariable: 'Zeile {line}: {variable} hat noch keinen Wert.',
     undefinedFunction: 'Zeile {line}: Es gibt keine Funktion {function}.',
     noValue: 'Zeile {line}: {function} gibt keinen Wert zurück.',

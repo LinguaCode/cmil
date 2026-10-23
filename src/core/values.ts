@@ -105,7 +105,9 @@ export const toText = (value: Value, format: Format): string => {
   return value;
 };
 
-const isNumeric = (value: string | number) => !isNaN(parseFloat(String(value))) && isFinite(Number(value));
+//a decimal number, like 25, -2.5, .5 or 1e3, with spaces around it; 0x10 is a text, not 16 or 0
+const DECIMAL = /^\s*[+-]?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?\s*$/i;
+const isNumeric = (value: string | number) => DECIMAL.test(String(value)) && isFinite(Number(value));
 
 /**
  * Converts an input into a number when it is numeric, else into a text.
@@ -356,7 +358,8 @@ export const FUNCTIONS: Record<string, BuiltIn> = {
     min: 1,
     max: 2,
     apply: ([first, second], _format, random) => {
-      const [min, max] = second === undefined ? [0, whole(first)] : [whole(first), whole(second)];
+      //from 1, like a die and the items of a list
+      const [min, max] = second === undefined ? [1, whole(first)] : [whole(first), whole(second)];
       if (min > max) throw new ValueError(ERROR.MATH_ERROR);
       return Math.floor(random() * (max - min + 1) + min);
     }

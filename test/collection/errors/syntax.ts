@@ -154,6 +154,40 @@ const sources: Source[] = [
         }
       }
     ]
+  },
+  {
+    group: 'commands as names',
+    sources: [
+      {title: 'a command as a variable', code: 'x = 1\nstep = 2', errorId: 'nameError', errorParam: {line: 2}},
+      {title: 'a constant as a variable', code: 'PI = 3', errorId: 'nameError', errorParam: {line: 1}},
+      {title: 'an item of a command', code: 'times[1] = 2', errorId: 'nameError', errorParam: {line: 1}},
+      {
+        title: 'e as the variable of for',
+        code: 'for e in [1, 2]\n    print(e)',
+        errorId: 'nameError',
+        errorParam: {line: 1}
+      },
+      {
+        title: 'to as the variable of for',
+        code: 'for to from 1 to 3\n    print(1)',
+        errorId: 'nameError',
+        errorParam: {line: 1}
+      },
+      {
+        title: 'a function named like a command',
+        code: 'function round(x)\n    return x',
+        errorId: 'nameError',
+        errorParam: {line: 1}
+      },
+      {
+        title: 'a parameter named like a command',
+        code: 'function area(width, times)\n    return width * times',
+        errorId: 'nameError',
+        errorParam: {line: 1},
+        output: ''
+      },
+      {title: 'a name that contains a command', code: 'step_count = 2\nprint(step_count)', output: '2'}
+    ]
   }
 ];
 

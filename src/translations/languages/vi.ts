@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: 'Lỗi thụt lề ở dòng {line}: hãy thụt lề các khối 4 dấu cách.',
     argumentError: 'Dòng {line}: {function} nhận {count} giá trị.',
     equalsError: 'Dòng {line}: để so sánh, hãy viết == thay vì =.',
+    nameError: 'Dòng {line}: {name} là một lệnh nên không thể làm tên; hãy chọn tên khác.',
     undefinedVariable: 'Dòng {line}: {variable} chưa có giá trị.',
     undefinedFunction: 'Dòng {line}: không có hàm {function}.',
     noValue: 'Dòng {line}: {function} không trả về giá trị.',

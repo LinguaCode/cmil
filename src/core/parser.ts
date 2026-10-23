@@ -10,6 +10,9 @@ import type {Branch, Expression, Line, Statement, Token} from './types.ts';
 //an error at a token, or at the end of the line without one
 const syntaxError = (line: number, token?: Token) =>
   new CmilError({id: ERROR.SYNTAX_ERROR, line, ...(token && {column: token.column})});
+//a command where a program gives a name: a variable it stores, the variable of a for loop, a function or a parameter
+const nameError = (line: number, token: Token) =>
+  new CmilError({id: ERROR.NAME_ERROR, line, column: token.column, name: token.text ?? String(token.value)});
 //a call of a function with another count of arguments than it takes, or without its parentheses
 const argumentError = (line: number, column: number, name: string, {min, max}: {min: number; max: number}) =>
   new CmilError({id: ERROR.ARGUMENT_ERROR, line, column, function: name, min, max});
@@ -239,6 +242,7 @@ const parseParameters = (tokens: Token[], line: number): string[] => {
   } else {
     for (;;) {
       const name = rest[i++];
+      if (name?.type === 'command') throw nameError(line, name);
       if (!name || name.type !== 'identifier' || parameters.includes(name.value)) throw syntaxError(line, name);
       parameters.push(name.value);
       const next = rest[i++];
@@ -395,6 +399,8 @@ export const parse = (lines: Line[]): Statement[] => {
     }
 
     if (first.type !== 'command') throw syntaxError(line, first);
+    //a command can't be a variable: step = 1, or e[1] = 2
+    if (isOperator(rest[0], '=') || (isOperator(rest[0], '[') && findEquals(tokens) > 0)) throw nameError(line, first);
 
     if (Object.hasOwn(ACTIONS, first.value)) {
       const {args} = parseExpression(tokens, line, true) as Expression & {type: 'call'};
@@ -415,6 +421,7 @@ export const parse = (lines: Line[]): Statement[] => {
       case COMMAND.FOR: {
         //for name from a to b, for name from a to b step c, or for name in a list or a text
         const [name, from] = rest;
+        if (name?.type === 'command') throw nameError(line, name);
         if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
         if (isCommand(from, COMMAND.IN)) {
           const expression = parseExpression(rest.slice(2), line);
@@ -453,6 +460,7 @@ export const parse = (lines: Line[]): Statement[] => {
         //function name(a, b), at the top level
         const [name, ...header] = rest;
         if (level || inFunction) throw syntaxError(line, first);
+        if (name?.type === 'command') throw nameError(line, name);
         if (!name || name.type !== 'identifier' || functions.has(name.value)) throw syntaxError(line, name ?? first);
         const parameters = parseParameters(header, line);
         functions.set(name.value, parameters.length);

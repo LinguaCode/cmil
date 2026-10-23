@@ -344,6 +344,15 @@ describe('core', () => {
       assert.strictEqual(error, undefined);
     });
 
+    it('an answer is a number only when it is written in decimal', () => {
+      const code = 'x = input()\nprint(x + 1)';
+      assert.deepStrictEqual(run(code, [' 2.5 ']).output, ['3.5']);
+      assert.deepStrictEqual(run(code, ['1e3']).output, ['1001']);
+      assert.deepStrictEqual(run(code, ['0x10']).output, ['0x101']);
+      assert.deepStrictEqual(run(code, ['0b101']).output, ['0b1011']);
+      assert.deepStrictEqual(run('print(to_number("0x10"))').error?.id, 'typeError');
+    });
+
     it('an empty input is asked for again', () => {
       const {steps} = run('x = input()\nprint(x)', ['', 'a']);
       assert.deepStrictEqual(steps, [
@@ -387,6 +396,27 @@ describe('core', () => {
       assert.deepStrictEqual(session.run(), {state: 'input', output: ['call']});
       assert.deepStrictEqual(session.input(10), {state: 'input', output: ['call']});
       assert.deepStrictEqual(session.input(100), {state: 'end', output: ['112']});
+    });
+
+    it('a command where a program gives a name points at it, as written, before the program runs', () => {
+      assert.deepStrictEqual(check('print(1)\nStep = 2', 'en'), {id: 'nameError', line: 2, column: 1, name: 'Step'});
+      assert.deepStrictEqual(check('for e in [1]\n    print(e)', 'en'), {
+        id: 'nameError',
+        line: 1,
+        column: 5,
+        name: 'e'
+      });
+      assert.deepStrictEqual(check('function f(a, times)\n    return a', 'en'), {
+        id: 'nameError',
+        line: 1,
+        column: 15,
+        name: 'times'
+      });
+      assert.deepStrictEqual(check('քայլ = 1', 'hy-AM'), {id: 'nameError', line: 1, column: 1, name: 'քայլ'});
+      assert.strictEqual(
+        messageOf(check('step = 1', 'en') as ProgramError, 'en'),
+        "Line 1: step is a command, so it can't be a name; choose another one."
+      );
     });
 
     it('= in an expression points at the =', () => {
@@ -460,8 +490,15 @@ describe('core', () => {
       };
       const code = 'repeat 4 times\n    print(random(1, 6))\nprint(random(10))';
       const first = new Session(code, 'en', {random: numbers()}).run();
-      assert.deepStrictEqual(first, {state: 'end', output: ['1', '4', '6', '1', '5']});
+      assert.deepStrictEqual(first, {state: 'end', output: ['1', '4', '6', '1', '6']});
       assert.deepStrictEqual(new Session(code, 'en', {random: numbers()}).run(), first);
+    });
+
+    it('random(max) counts from 1, like the items of a list', () => {
+      const code = 'fruits = ["apple", "pear", "plum"]\nprint(fruits[random(3)])\nprint(random(3))';
+      assert.deepStrictEqual(new Session(code, 'en', {random: () => 0}).run().output, ['apple', '1']);
+      assert.deepStrictEqual(new Session(code, 'en', {random: () => 0.99}).run().output, ['plum', '3']);
+      assert.deepStrictEqual(run('print(random(0))').error, {id: 'mathError', line: 1, column: 7, operator: 'random'});
     });
 
     it('the state of a session is private', () => {
@@ -493,6 +530,7 @@ describe('core', () => {
     const errors: ProgramError[] = [
       {id: 'syntaxError', line: 2, column: 3},
       {id: 'equalsError', line: 2, column: 3},
+      {id: 'nameError', line: 2, column: 3, name: 'step'},
       {id: 'indentError', line: 2},
       {id: 'argumentError', line: 2, column: 3, function: 'power', min: 2, max: 2},
       {id: 'undefinedVariable', line: 2, column: 3, variable: 'abc'},

@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Γραμμή {line}: η {function} παίρνει {count} τιμές.'
     },
     equalsError: 'Γραμμή {line}: για σύγκριση γράψτε == αντί για =.',
+    nameError: 'Γραμμή {line}: το {name} είναι εντολή, οπότε δεν μπορεί να είναι όνομα· διαλέξτε άλλο.',
     undefinedVariable: 'Γραμμή {line}: το {variable} δεν έχει ακόμα τιμή.',
     undefinedFunction: 'Γραμμή {line}: δεν υπάρχει συνάρτηση {function}.',
     noValue: 'Γραμμή {line}: η {function} δεν επιστρέφει τιμή.',

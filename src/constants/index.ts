@@ -85,6 +85,7 @@ export const ERROR = {
   INDENT_ERROR: 'indentError',
   ARGUMENT_ERROR: 'argumentError',
   EQUALS_ERROR: 'equalsError',
+  NAME_ERROR: 'nameError',
   UNDEFINED_VARIABLE: 'undefinedVariable',
   UNDEFINED_FUNCTION: 'undefinedFunction',
   NO_VALUE: 'noValue',

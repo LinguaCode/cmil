@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Riga {line}: {function} prende {count} valori.'
     },
     equalsError: 'Riga {line}: per confrontare, scrivi == invece di =.',
+    nameError: 'Riga {line}: {name} è un comando, quindi non può essere un nome; scegline un altro.',
     undefinedVariable: 'Riga {line}: {variable} non ha ancora un valore.',
     undefinedFunction: 'Riga {line}: non esiste la funzione {function}.',
     noValue: 'Riga {line}: {function} non restituisce un valore.',

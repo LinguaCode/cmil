@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Rad {line}: {function} tar {count} värden.'
     },
     equalsError: 'Rad {line}: skriv == i stället för = för att jämföra.',
+    nameError: 'Rad {line}: {name} är ett kommando och kan därför inte vara ett namn; välj ett annat.',
     undefinedVariable: 'Rad {line}: {variable} har inget värde än.',
     undefinedFunction: 'Rad {line}: det finns ingen funktion {function}.',
     noValue: 'Rad {line}: {function} returnerar inget värde.',

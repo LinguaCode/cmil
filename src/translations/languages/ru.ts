@@ -71,6 +71,7 @@ const translation: Translation = {
       other: 'Строка {line}: {function} принимает {count} значения.'
     },
     equalsError: 'Строка {line}: для сравнения пишите == вместо =.',
+    nameError: 'Строка {line}: {name} — команда, поэтому это не может быть именем; выберите другое.',
     undefinedVariable: 'Строка {line}: у {variable} ещё нет значения.',
     undefinedFunction: 'Строка {line}: нет функции {function}.',
     noValue: 'Строка {line}: функция {function} не возвращает значения.',

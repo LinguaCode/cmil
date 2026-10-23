@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Rreshti {line}: {function} merr {count} vlera.'
     },
     equalsError: 'Rreshti {line}: për të krahasuar, shkruaj == në vend të =.',
+    nameError: 'Rreshti {line}: {name} është një komandë, ndaj nuk mund të jetë emër; zgjidh një tjetër.',
     undefinedVariable: 'Rreshti {line}: {variable} nuk ka ende vlerë.',
     undefinedFunction: 'Rreshti {line}: nuk ka funksion {function}.',
     noValue: 'Rreshti {line}: {function} nuk kthen asnjë vlerë.',

@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Línia {line}: {function} rep {count} valors.'
     },
     equalsError: 'Línia {line}: per comparar, escriu == en lloc de =.',
+    nameError: "Línia {line}: {name} és una ordre, així que no pot ser un nom; tria'n un altre.",
     undefinedVariable: 'Línia {line}: {variable} encara no té valor.',
     undefinedFunction: 'Línia {line}: no existeix la funció {function}.',
     noValue: 'Línia {line}: {function} no retorna cap valor.',

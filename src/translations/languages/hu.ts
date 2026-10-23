@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: 'Behúzási hiba a(z) {line}. sorban: a blokkokat 4 szóközzel húzd be.',
     argumentError: '{line}. sor: a(z) {function} {count} értéket vár.',
     equalsError: '{line}. sor: összehasonlításhoz == kell, nem =.',
+    nameError: '{line}. sor: {name} parancs, ezért nem lehet név; válassz másikat.',
     undefinedVariable: '{line}. sor: {variable} még nem kapott értéket.',
     undefinedFunction: '{line}. sor: nincs {function} nevű függvény.',
     noValue: '{line}. sor: a(z) {function} nem ad vissza értéket.',

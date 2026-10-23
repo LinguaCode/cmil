@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Ligne {line} : {function} prend {count} valeurs.'
     },
     equalsError: 'Ligne {line} : pour comparer, écrivez == au lieu de =.',
+    nameError: 'Ligne {line} : {name} est une commande et ne peut pas être un nom ; choisissez-en un autre.',
     undefinedVariable: 'Ligne {line} : {variable} n’a pas encore de valeur.',
     undefinedFunction: "Ligne {line} : il n'y a pas de fonction {function}.",
     noValue: 'Ligne {line} : {function} ne renvoie pas de valeur.',

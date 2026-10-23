@@ -68,6 +68,7 @@ const translation: Translation = {
       other: 'Wiersz {line}: {function} przyjmuje {count} wartości.'
     },
     equalsError: 'Wiersz {line}: aby porównać, pisz == zamiast =.',
+    nameError: 'Wiersz {line}: {name} to polecenie, więc nie może być nazwą; wybierz inną.',
     undefinedVariable: 'Wiersz {line}: {variable} nie ma jeszcze wartości.',
     undefinedFunction: 'Wiersz {line}: nie ma funkcji {function}.',
     noValue: 'Wiersz {line}: {function} nie zwraca wartości.',

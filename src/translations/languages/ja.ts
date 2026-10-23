@@ -66,6 +66,7 @@ const translation: Translation = {
     indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',
     argumentError: '{line} 行目: {function} の引数は {count} 個です。',
     equalsError: '{line} 行目: 比べるときは = ではなく == を使います。',
+    nameError: '{line} 行目: {name} は命令なので、名前には使えません。別の名前にしてください。',
     undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
     undefinedFunction: '{line} 行目: 関数 {function} はありません。',
     noValue: '{line} 行目: {function} は値を返しません。',

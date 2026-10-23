@@ -68,6 +68,7 @@ const translation: Translation = {
       other: 'السطر {line}: الدالة {function} تأخذ {count} قيمة.'
     },
     equalsError: 'السطر {line}: للمقارنة اكتب == بدلًا من =.',
+    nameError: 'السطر {line}: {name} أمر، فلا يمكن أن يكون اسمًا؛ اختر اسمًا آخر.',
     undefinedVariable: 'السطر {line}: ليست للمتغير {variable} قيمة بعد.',
     undefinedFunction: 'السطر {line}: لا توجد دالة باسم {function}.',
     noValue: 'السطر {line}: الدالة {function} لا ترجع قيمة.',

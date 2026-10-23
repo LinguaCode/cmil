@@ -68,6 +68,7 @@ const translation: Translation = {
       other: 'Řádek {line}: {function} bere {count} hodnot.'
     },
     equalsError: 'Řádek {line}: pro porovnání pište == místo =.',
+    nameError: 'Řádek {line}: {name} je příkaz, takže nemůže být názvem; zvolte jiný.',
     undefinedVariable: 'Řádek {line}: {variable} zatím nemá hodnotu.',
     undefinedFunction: 'Řádek {line}: funkce {function} neexistuje.',
     noValue: 'Řádek {line}: {function} nevrací žádnou hodnotu.',

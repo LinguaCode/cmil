@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: '第 {line} 行缩进错误：代码块请缩进 4 个空格。',
     argumentError: '第 {line} 行：{function} 需要 {count} 个值。',
     equalsError: '第 {line} 行：比较时请用 ==，不要用 =。',
+    nameError: '第 {line} 行：{name} 是命令，不能当作名字，请换一个名字。',
     undefinedVariable: '第 {line} 行：{variable} 还没有值。',
     undefinedFunction: '第 {line} 行：没有函数 {function}。',
     noValue: '第 {line} 行：{function} 没有返回值。',

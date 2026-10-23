@@ -68,6 +68,7 @@ const translation: Translation = {
       other: 'Vrstica {line}: {function} sprejme {count} vrednosti.'
     },
     equalsError: 'Vrstica {line}: za primerjavo pišite == namesto =.',
+    nameError: 'Vrstica {line}: {name} je ukaz, zato ne more biti ime; izberite drugo.',
     undefinedVariable: 'Vrstica {line}: {variable} še nima vrednosti.',
     undefinedFunction: 'Vrstica {line}: funkcije {function} ni.',
     noValue: 'Vrstica {line}: {function} ne vrne vrednosti.',

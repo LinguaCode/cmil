@@ -67,6 +67,7 @@ const translation: Translation = {
       other: 'Linia {line}: {function} primește {count} de valori.'
     },
     equalsError: 'Linia {line}: pentru a compara, scrie == în loc de =.',
+    nameError: 'Linia {line}: {name} este o comandă, deci nu poate fi un nume; alege altul.',
     undefinedVariable: 'Linia {line}: {variable} nu are încă o valoare.',
     undefinedFunction: 'Linia {line}: nu există funcția {function}.',
     noValue: 'Linia {line}: {function} nu returnează nicio valoare.',

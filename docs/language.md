@@ -43,7 +43,7 @@ Values are never converted into another type: `"5" == 5` is `false`, and an oper
 
 ## Variables
 
-`name = expression` stores a value. Names use letters of any alphabet, digits and `_`, and start with a letter or `_`. Reading a variable before it is stored is an `undefinedVariable` error.
+`name = expression` stores a value. Names use letters of any alphabet, digits and `_`, and start with a letter or `_`. A command can't be a name, so `step = 1` or `for e in list` is a `nameError`; a name may contain one, like `step_count`. Reading a variable before it is stored is an `undefinedVariable` error.
 
 ```
 դրամ = 300
@@ -158,7 +158,7 @@ prints `["cherry", "pear", "plum"]`, `3` and `plum`.
 | `sin(x)`, `cos(x)`, `tan(x)`, `cot(x)` | trigonometry in radians, rounded to 12 decimals, so `sin(pi)` is `0` |
 | `arcsin(x)`, `arccos(x)`, `arctan(x)`, `arccot(x)` | inverse trigonometry |
 | `log(base, x)`, `ln(x)`, `lg(x)` | logarithms: any base, `e`, 10 |
-| `random(max)`, `random(min, max)` | a whole number from 0 or `min` to `max`, both included; `min`, `max` must be whole |
+| `random(max)`, `random(min, max)` | a whole number from 1 or `min` to `max`, both included, so `random(6)` is a die and `list[random(length_of(list))]` an item of a list; `min`, `max` must be whole |
 
 Math functions take numbers. Another count of arguments, or a missing `(` or `)`, is an `argumentError`, whose message names the function and the count of values it takes; an argument that isn't a number is a `typeError`; and a result that doesn't exist, like `square_root(-1)`, `ln(0)` or `tan(pi / 2)`, is a `mathError`.
 
@@ -201,7 +201,7 @@ Every `print` prints one line, also an empty one. Booleans are printed in the wo
 
 ## Errors
 
-A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation, argument and `undefinedFunction` errors, and the `noValue` of `print`, `add` and `remove`, are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
+A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation, argument, name and `undefinedFunction` errors, and the `noValue` of `print`, `add` and `remove`, are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
 
 | `id` | When | Also |
 |---|---|---|
@@ -209,6 +209,7 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
 | `argumentError` | a call with another count of arguments, or a function of the language, like `print` or `input`, without its `(` or `)` | `line`, `column` and `function`, the name as written, and `min` and `max`, the counts of values it takes |
 | `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
+| `nameError` | a command where a program gives a name: a variable it stores, the variable of a `for` loop, a function or a parameter, like `step = 1` or `for e in list` | `line`, `column`, `name`, the command as written |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
 | `undefinedFunction` | a call of a function the program doesn't define | `line`, `column`, `function` |
 | `noValue` | the value of a call of a function that returned without one, or of `print`, `add` or `remove`, which give none | `line`, `column`, `function` |

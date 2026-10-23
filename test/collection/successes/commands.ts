@@ -921,8 +921,8 @@ const sources: Source[] = [
             output: '1.10714871779'
           },
           {
-            title: 'random: single argument',
-            code: 'X = 1000\nZ = random(X)\nprint(Z >= 0 and Z <= 1000)',
+            title: 'random: single argument, from 1',
+            code: 'X = 1000\nZ = random(X)\nprint(Z >= 1 and Z <= 1000)',
             output: 'true'
           },
           {

@@ -67,6 +67,7 @@ const translation: Translation = {
       other: 'Ред {line}: {function} прима {count} вредности.'
     },
     equalsError: 'Ред {line}: за поређење пишите == уместо =.',
+    nameError: 'Ред {line}: {name} је наредба, па не може бити име; изаберите друго.',
     undefinedVariable: 'Ред {line}: {variable} још нема вредност.',
     undefinedFunction: 'Ред {line}: не постоји функција {function}.',
     noValue: 'Ред {line}: {function} не враћа вредност.',

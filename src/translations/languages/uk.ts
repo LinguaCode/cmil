@@ -71,6 +71,7 @@ const translation: Translation = {
       other: 'Рядок {line}: {function} приймає {count} значення.'
     },
     equalsError: 'Рядок {line}: для порівняння пишіть == замість =.',
+    nameError: 'Рядок {line}: {name} — команда, тому це не може бути іменем; виберіть інше.',
     undefinedVariable: 'Рядок {line}: {variable} ще не має значення.',
     undefinedFunction: 'Рядок {line}: немає функції {function}.',
     noValue: 'Рядок {line}: функція {function} не повертає значення.',

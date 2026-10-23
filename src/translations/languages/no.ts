@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Linje {line}: {function} tar {count} verdier.'
     },
     equalsError: 'Linje {line}: skriv == i stedet for = for å sammenligne.',
+    nameError: 'Linje {line}: {name} er en kommando, så det kan ikke være et navn; velg et annet.',
     undefinedVariable: 'Linje {line}: {variable} har ingen verdi ennå.',
     undefinedFunction: 'Linje {line}: det finnes ingen funksjon {function}.',
     noValue: 'Linje {line}: {function} returnerer ingen verdi.',

@@ -1,3 +1,9 @@
+## Unreleased
+
+  - **[change]** math: `random(max)` gives a whole number from 1 to `max`, like a die and like the items of a list, instead of from 0, so `fruits[random(3)]` is always an item; `random(0)` is a `mathError`.
+  - **[fix]** input: an answer is a number only when it is written in decimal, like `25`, `-2.5` or `1e3`; `0x10` and `0b101` are texts, which `input()` and `to_number()` read as `0` before.
+  - **[add]** errors: a command where a program gives a name, like `step = 1`, `for e in list`, `function round(x)` or a parameter `times`, is the new `nameError`, with the command as written, found before the program runs, instead of a `syntaxError`.
+
 ## 0.15.0-alpha.0 (2026-10-23)
 
   - **[change]** words: `print` and `input` are verbs in Arabic, `اطبع` and `أدخل` instead of the nouns `الإخراج` and `المدخلات`, and in Italian `scrivi` and `leggi` instead of the electronics terms `uscita` and `ingresso`; in Georgian they are `გამოტანა` and `შეყვანა` instead of `გამოშვება` (release) and `შეყვანის` (of input), and `input` is `lexo` in Albanian instead of `të_dhëna` (data).

@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Rivi {line}: {function} ottaa {count} arvoa.'
     },
     equalsError: 'Rivi {line}: vertaa kirjoittamalla == eikä =.',
+    nameError: 'Rivi {line}: {name} on komento, joten se ei voi olla nimi; valitse toinen.',
     undefinedVariable: 'Rivi {line}: muuttujalla {variable} ei ole vielä arvoa.',
     undefinedFunction: 'Rivi {line}: funktiota {function} ei ole.',
     noValue: 'Rivi {line}: {function} ei palauta arvoa.',

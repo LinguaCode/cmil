@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: 'დაშორების შეცდომა {line}-ე ხაზზე: ბლოკები დააშორეთ 4 ჰარით.',
     argumentError: '{line}-ე ხაზი: {function} იღებს {count} მნიშვნელობას.',
     equalsError: '{line}-ე ხაზი: შესადარებლად დაწერეთ == და არა =.',
+    nameError: '{line}-ე ხაზი: {name} ბრძანებაა, ამიტომ სახელი ვერ იქნება; აირჩიეთ სხვა.',
     undefinedVariable: '{line}-ე ხაზი: {variable}-ს ჯერ მნიშვნელობა არ აქვს.',
     undefinedFunction: '{line}-ე ხაზი: ფუნქცია {function} არ არსებობს.',
     noValue: '{line}-ე ხაზი: {function} მნიშვნელობას არ აბრუნებს.',

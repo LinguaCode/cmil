@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: 'Նահանջի սխալ {line}-րդ տողում․ բլոկները նահանջեք 4 բացատով։',
     argumentError: '{line}-րդ տող․ {function} ֆունկցիան ընդունում է {count} արժեք։',
     equalsError: '{line}-րդ տող․ համեմատելու համար գրեք ==, ոչ թե =։',
+    nameError: '{line}-րդ տող․ {name}-ը հրաման է, ուստի չի կարող անուն լինել․ ընտրեք ուրիշ անուն։',
     undefinedVariable: '{line}-րդ տող․ {variable}-ը դեռ արժեք չունի։',
     undefinedFunction: '{line}-րդ տող․ {function} ֆունկցիա չկա։',
     noValue: '{line}-րդ տող․ {function} ֆունկցիան արժեք չի վերադարձնում։',

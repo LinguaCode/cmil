@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'Regel {line}: {function} neemt {count} waarden.'
     },
     equalsError: 'Regel {line}: schrijf == in plaats van = om te vergelijken.',
+    nameError: 'Regel {line}: {name} is een opdracht en kan dus geen naam zijn; kies een andere.',
     undefinedVariable: 'Regel {line}: {variable} heeft nog geen waarde.',
     undefinedFunction: 'Regel {line}: er is geen functie {function}.',
     noValue: 'Regel {line}: {function} geeft geen waarde terug.',

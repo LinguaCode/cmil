@@ -93,6 +93,8 @@ export type ProgramError =
   //a call with another count of arguments than its function takes, from min to max, or without its )
   | {id: typeof ERROR.ARGUMENT_ERROR; line: number; column: number; function: string; min: number; max: number}
   | {id: typeof ERROR.EQUALS_ERROR; line: number; column: number}
+  //a command where a program gives a name, as written
+  | {id: typeof ERROR.NAME_ERROR; line: number; column: number; name: string}
   | {id: typeof ERROR.INDENT_ERROR | typeof ERROR.MEMORY_LIMIT; line: number}
   | {id: typeof ERROR.UNDEFINED_VARIABLE; line: number; column: number; variable: string}
   | {id: typeof ERROR.UNDEFINED_FUNCTION | typeof ERROR.NO_VALUE; line: number; column: number; function: string}

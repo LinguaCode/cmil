@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: '{line}번째 줄 들여쓰기 오류: 블록은 4칸씩 들여 쓰세요.',
     argumentError: '{line}번째 줄: {function}은(는) 값을 {count}개 받습니다.',
     equalsError: '{line}번째 줄: 비교하려면 = 대신 ==를 쓰세요.',
+    nameError: '{line}번째 줄: {name}은(는) 명령이라서 이름으로 쓸 수 없습니다. 다른 이름을 고르세요.',
     undefinedVariable: '{line}번째 줄: {variable}에 아직 값이 없습니다.',
     undefinedFunction: '{line}번째 줄: {function} 함수가 없습니다.',
     noValue: '{line}번째 줄: {function}은(는) 값을 반환하지 않습니다.',

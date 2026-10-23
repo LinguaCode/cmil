@@ -66,6 +66,7 @@ const translation: Translation = {
       other: 'שורה {line}: {function} מקבלת {count} ערכים.'
     },
     equalsError: 'שורה {line}: כדי להשוות כתבו == במקום =.',
+    nameError: 'שורה {line}: {name} היא פקודה, ולכן אי אפשר להשתמש בה כשם; בחרו שם אחר.',
     undefinedVariable: 'שורה {line}: ל-{variable} עדיין אין ערך.',
     undefinedFunction: 'שורה {line}: אין פונקציה {function}.',
     noValue: 'שורה {line}: {function} לא מחזירה ערך.',

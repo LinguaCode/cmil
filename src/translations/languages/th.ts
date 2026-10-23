@@ -63,6 +63,7 @@ const translation: Translation = {
     indentError: 'ย่อหน้าผิดในบรรทัดที่ {line}: ให้ย่อหน้าบล็อกทีละ 4 ช่อง',
     argumentError: 'บรรทัดที่ {line}: {function} รับค่า {count} ค่า',
     equalsError: 'บรรทัดที่ {line}: ถ้าจะเปรียบเทียบ ให้ใช้ == แทน =',
+    nameError: 'บรรทัดที่ {line}: {name} เป็นคำสั่ง จึงใช้เป็นชื่อไม่ได้ ให้เลือกชื่ออื่น',
     undefinedVariable: 'บรรทัดที่ {line}: {variable} ยังไม่มีค่า',
     undefinedFunction: 'บรรทัดที่ {line}: ไม่มีฟังก์ชัน {function}',
     noValue: 'บรรทัดที่ {line}: {function} ไม่คืนค่า',
