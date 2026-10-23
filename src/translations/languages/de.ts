@@ -83,6 +83,12 @@ const translation: Translation = {
     recursionLimit: 'Zeile {line}: Zu viele verschachtelte Funktionsaufrufe.',
     timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',
     unknownLanguage: 'Unbekannte Sprache: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Zeile {line}: {target} kann dieses Programm nicht schreiben: {name} bekommt Werte zweier Arten, etwa eine Zahl und einen Text.',
+    mixedItems:
+      'Zeile {line}: {target} kann dieses Programm nicht schreiben: Eine Liste hat Elemente zweier Arten, etwa Zahlen und Texte.'
   }
 };
 

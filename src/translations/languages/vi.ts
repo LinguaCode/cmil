@@ -77,6 +77,12 @@ const translation: Translation = {
     recursionLimit: 'Dòng {line}: có quá nhiều lời gọi hàm lồng nhau.',
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
     unknownLanguage: 'Ngôn ngữ không xác định: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Dòng {line}: {target} không viết được chương trình này: {name} nhận giá trị thuộc hai loại, như một số và một văn bản.',
+    mixedItems:
+      'Dòng {line}: {target} không viết được chương trình này: một danh sách có phần tử thuộc hai loại, như số và văn bản.'
   }
 };
 

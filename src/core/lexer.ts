@@ -4,7 +4,7 @@
 import CmilError from './error.ts';
 import {ERROR} from '../constants/index.ts';
 import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, scan} from './words.ts';
-import type {Line, Token} from './types.ts';
+import type {Comment, Line, Token} from './types.ts';
 
 export const OPERATORS = ['==', '!=', '<=', '>=', '<', '>', '=', '+', '-', '*', '/', '%', '(', ')', '[', ']', ','];
 
@@ -76,7 +76,7 @@ const tokenizeLine = (text: string, indent: number, lineNumber: number, language
     if (segment.type === 'keyword') {
       tokens.push({type: 'command', value: segment.command, text: segment.text, ...position});
     } else if (segment.type === 'name') {
-      tokens.push({type: 'identifier', value: segment.text.toLowerCase(), ...position});
+      tokens.push({type: 'identifier', value: segment.text.toLowerCase(), text: segment.text, ...position});
     } else if (segment.type === 'string') {
       if (!segment.closed) {
         throw syntaxError(lineNumber, position.column);
@@ -92,6 +92,24 @@ const tokenizeLine = (text: string, indent: number, lineNumber: number, language
 };
 
 const INDENT_SIZE = 4;
+
+/**
+ * Returns the comments of the source code, on lines of their own or after code, with the column of their #.
+ */
+export const commentsOf = (sourceCode: string, language: string): Comment[] =>
+  sourceCode
+    .replace(/\r/g, '')
+    .split('\n')
+    .flatMap((text, index) => {
+      let column = 1;
+      for (const segment of scan(text, language)) {
+        if (segment.type === 'comment') {
+          return [{line: index + 1, column, text: segment.text, trailing: !!text.slice(0, column - 1).trim()}];
+        }
+        column += segment.text.length;
+      }
+      return [];
+    });
 
 /**
  * Returns the lines of the source code that contain tokens, with their indentation level.

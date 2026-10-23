@@ -4,6 +4,7 @@
 import TRANSLATION from './translations/index.ts';
 import {ERROR} from './constants/index.ts';
 import type {ProgramError} from './core/types.ts';
+import type {ConversionProblem} from './convert/index.ts';
 
 /**
  * Returns the message of an error in a language, or in English when the language is unknown.
@@ -32,6 +33,21 @@ export const messageOf = (error: ProgramError, language: string): string => {
       : (message[new Intl.PluralRules(known ? language : 'en').select(count)] ?? message.other);
 
   return text.replace(/\{(\w+)\}/g, (placeholder, name: string) =>
+    name in params ? String(params[name]) : placeholder
+  );
+};
+
+/**
+ * Returns the message of a problem of a conversion in a language, or in English when the language is unknown.
+ *
+ * @example
+ * problemOf({id: 'mixedItems', line: 1, target: 'C++'}, 'en');
+ * // returns "Line 1: C++ can't write this program: a list has items of two kinds, like numbers and texts."
+ */
+export const problemOf = (problem: ConversionProblem, language: string): string => {
+  const {conversion} = TRANSLATION[Object.hasOwn(TRANSLATION, language) ? language : 'en'];
+  const params: Record<string, unknown> = {...problem};
+  return conversion[problem.id].replace(/\{(\w+)\}/g, (placeholder, name: string) =>
     name in params ? String(params[name]) : placeholder
   );
 };

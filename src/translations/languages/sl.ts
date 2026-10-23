@@ -82,6 +82,12 @@ const translation: Translation = {
     recursionLimit: 'Vrstica {line}: preveč gnezdenih klicev funkcij.',
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
     unknownLanguage: 'Neznan jezik: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Vrstica {line}: {target} tega programa ne more zapisati: {name} dobi vrednosti dveh vrst, na primer število in besedilo.',
+    mixedItems:
+      'Vrstica {line}: {target} tega programa ne more zapisati: seznam ima elemente dveh vrst, na primer števila in besedila.'
   }
 };
 

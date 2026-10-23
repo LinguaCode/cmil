@@ -11,6 +11,9 @@ export type Token = (
   {type: 'number'; value: number} | {type: 'string' | 'identifier' | 'command' | 'operator'; value: string}
 ) & {line: number; column: number; text?: string};
 
+/** A comment, from its #: on a line of its own, or trailing after code. */
+export type Comment = {line: number; column: number; text: string; trailing: boolean};
+
 /** A line of the source code that contains tokens. */
 export type Line = {
   number: number;
@@ -20,7 +23,8 @@ export type Line = {
 
 /** An expression; column is where its variable, function or operator starts, and where the [ of an index is. */
 export type Expression =
-  | {type: 'value'; value: number | string | boolean}
+  //a constant, like pi, keeps its command
+  | {type: 'value'; value: number | string | boolean; constant?: string}
   | {type: 'list'; items: Expression[]}
   | {type: 'index'; target: Expression; index: Expression; column: number}
   | {type: 'variable'; name: string; column: number}
@@ -40,9 +44,10 @@ export type Statement =
   | {type: 'call'; call: Expression & {type: 'userCall'}; line: number}
   | {type: 'function'; name: string; parameters: string[]; body: Statement[]; line: number}
   | {type: 'return'; expression?: Expression; line: number}
-  | {type: 'if'; branches: Branch[]; elseBody: Statement[]; line: number}
+  | {type: 'if'; branches: Branch[]; elseBody: Statement[]; elseLine?: number; line: number}
   | {type: 'while'; condition: Expression; body: Statement[]; line: number}
-  | {type: 'doWhile'; body: Statement[]; condition: Expression; line: number}
+  //line is the line of its while, doLine that of its do
+  | {type: 'doWhile'; body: Statement[]; condition: Expression; doLine: number; line: number}
   | {type: 'repeat'; count: Expression; body: Statement[]; line: number}
   | {type: 'for'; name: string; from: Expression; to: Expression; step?: Expression; body: Statement[]; line: number}
   | {type: 'forEach'; name: string; expression: Expression; body: Statement[]; line: number}

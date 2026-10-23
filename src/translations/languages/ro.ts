@@ -81,6 +81,12 @@ const translation: Translation = {
     recursionLimit: 'Linia {line}: prea multe apeluri de funcții imbricate.',
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',
     unknownLanguage: 'Limbă necunoscută: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Linia {line}: {target} nu poate scrie acest program: {name} primește valori de două feluri, ca un număr și un text.',
+    mixedItems:
+      'Linia {line}: {target} nu poate scrie acest program: o listă are elemente de două feluri, ca numere și texte.'
   }
 };
 

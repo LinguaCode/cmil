@@ -77,6 +77,12 @@ const translation: Translation = {
     recursionLimit: '{line}. sor: túl sok egymásba ágyazott függvényhívás.',
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
     unknownLanguage: 'Ismeretlen nyelv: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: {name} kétféle értéket kap, például számot és szöveget.',
+    mixedItems:
+      '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: egy lista kétféle elemet tartalmaz, például számokat és szövegeket.'
   }
 };
 

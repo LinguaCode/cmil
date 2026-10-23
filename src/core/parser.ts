@@ -108,7 +108,7 @@ const parseExpression = (tokens: Token[], line: number, action = false): Express
       return {type: 'value', value: token.value === COMMAND.TRUE};
     }
     if (Object.hasOwn(CONSTANTS, token.value)) {
-      return {type: 'value', value: CONSTANTS[token.value]};
+      return {type: 'value', value: CONSTANTS[token.value], constant: token.value};
     }
     if (Object.hasOwn(FUNCTIONS, token.value)) {
       return nest(() => parseCall(token));
@@ -354,6 +354,7 @@ export const parse = (lines: Line[]): Statement[] => {
   const parseIf = (tokens: Token[], line: number, level: number): Statement => {
     const branches: Branch[] = [{condition: condition(tokens, line, COMMAND.THEN), body: parseBody(level), line}];
     let elseBody: Statement[] = [];
+    let elseLine: number | undefined;
 
     while (lines[index] && lines[index].level === level && isCommand(lines[index].tokens[0], COMMAND.ELSE)) {
       const {number, tokens: elseTokens} = lines[index++];
@@ -367,13 +368,14 @@ export const parse = (lines: Line[]): Statement[] => {
         });
       } else if (!rest.length) {
         elseBody = parseBody(level);
+        elseLine = number;
         break;
       } else {
         throw syntaxError(number, rest[0]);
       }
     }
 
-    return {type: 'if', branches, elseBody, line};
+    return {type: 'if', branches, elseBody, ...(elseLine && {elseLine}), line};
   };
 
   const parseStatement = (level: number): Statement => {
@@ -454,7 +456,13 @@ export const parse = (lines: Line[]): Statement[] => {
         if (!next || next.level !== level || !isCommand(next.tokens[0], COMMAND.WHILE)) throw syntaxError(line, first);
         index++;
 
-        return {type: 'doWhile', body, condition: condition(next.tokens.slice(1), next.number), line: next.number};
+        return {
+          type: 'doWhile',
+          body,
+          condition: condition(next.tokens.slice(1), next.number),
+          doLine: line,
+          line: next.number
+        };
       }
       case COMMAND.FUNCTION: {
         //function name(a, b), at the top level

@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Rreshti {line}: shumë thirrje funksionesh brenda njëra-tjetrës.',
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
     unknownLanguage: 'Gjuhë e panjohur: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: {name} merr vlera të dy llojeve, si një numër dhe një tekst.',
+    mixedItems:
+      'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: një listë ka elemente të dy llojeve, si numra dhe tekste.'
   }
 };
 

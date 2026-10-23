@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Línia {line}: massa crides de funcions imbricades.',
     timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",
     unknownLanguage: 'Llengua desconeguda: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Línia {line}: {target} no pot escriure aquest programa: {name} rep valors de dos tipus, com un nombre i un text.',
+    mixedItems:
+      'Línia {line}: {target} no pot escriure aquest programa: una llista té elements de dos tipus, com nombres i textos.'
   }
 };
 

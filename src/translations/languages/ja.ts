@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: '{line} 行目: 関数の呼び出しが深すぎます。',
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
     unknownLanguage: '不明な言語: {language}'
+  },
+  conversion: {
+    mixedTypes:
+      '{line} 行目: {target} ではこのプログラムを書けません。{name} に数と文字列のような 2 種類の値が入ります。',
+    mixedItems:
+      '{line} 行目: {target} ではこのプログラムを書けません。リストに数と文字列のような 2 種類の要素があります。'
   }
 };
 

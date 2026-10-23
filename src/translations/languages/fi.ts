@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Rivi {line}: liian monta sisäkkäistä funktiokutsua.',
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
     unknownLanguage: 'Tuntematon kieli: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: {name} saa kahdenlaisia arvoja, kuten luvun ja tekstin.',
+    mixedItems:
+      'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: listassa on kahdenlaisia alkioita, kuten lukuja ja tekstejä.'
   }
 };
 

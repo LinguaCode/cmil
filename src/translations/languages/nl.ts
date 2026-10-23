@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Regel {line}: te veel geneste functieaanroepen.',
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',
     unknownLanguage: 'Onbekende taal: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Regel {line}: {target} kan dit programma niet schrijven: {name} krijgt waarden van twee soorten, zoals een getal en een tekst.',
+    mixedItems:
+      'Regel {line}: {target} kan dit programma niet schrijven: een lijst heeft items van twee soorten, zoals getallen en teksten.'
   }
 };
 

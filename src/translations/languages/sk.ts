@@ -82,6 +82,12 @@ const translation: Translation = {
     recursionLimit: 'Riadok {line}: príliš veľa vnorených volaní funkcií.',
     timeout: 'Program bežal príliš dlho bez toho, aby požiadal o vstup.',
     unknownLanguage: 'Neznámy jazyk: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Riadok {line}: {target} tento program nedokáže napísať: {name} dostáva hodnoty dvoch druhov, napríklad číslo a text.',
+    mixedItems:
+      'Riadok {line}: {target} tento program nedokáže napísať: zoznam má položky dvoch druhov, napríklad čísla a texty.'
   }
 };
 

@@ -9,6 +9,9 @@ export type Plural = {other: string} & Partial<Record<Exclude<Intl.LDMLPluralRul
 /** The message of each error, with placeholders like {line}. */
 export type Messages = Record<ErrorId, string | Plural>;
 
+/** Why a program can't be converted into a language whose values have one type each, with {line} and {target}. */
+export type Conversion = {mixedTypes: string; mixedItems: string};
+
 /** A pair of quotes around texts, like « and ». */
 export type Quotes = [open: string, close: string];
 
@@ -18,4 +21,5 @@ export type Translation = {
   /** The quotes of texts in the language, besides "…", '…' and «…», which every language has; translate() writes the first. */
   quotes: Quotes[];
   messages: Messages;
+  conversion: Conversion;
 };

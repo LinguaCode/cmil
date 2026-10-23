@@ -80,6 +80,10 @@ const translation: Translation = {
     recursionLimit: 'שורה {line}: יותר מדי קריאות מקוננות לפונקציות.',
     timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',
     unknownLanguage: 'שפה לא מוכרת: {language}.'
+  },
+  conversion: {
+    mixedTypes: 'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: {name} מקבל ערכים משני סוגים, כמו מספר וטקסט.',
+    mixedItems: 'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: ברשימה יש פריטים משני סוגים, כמו מספרים וטקסטים.'
   }
 };
 

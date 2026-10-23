@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Linha {line}: demasiadas chamadas de funções encadeadas.',
     timeout: 'O programa correu demasiado tempo sem pedir entrada.',
     unknownLanguage: 'Língua desconhecida: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Linha {line}: {target} não consegue escrever este programa: {name} recebe valores de dois tipos, como um número e um texto.',
+    mixedItems:
+      'Linha {line}: {target} não consegue escrever este programa: uma lista tem itens de dois tipos, como números e textos.'
   }
 };
 

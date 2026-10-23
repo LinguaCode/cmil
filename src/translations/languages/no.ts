@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Linje {line}: for mange nøstede funksjonskall.',
     timeout: 'Programmet kjørte for lenge uten å be om inndata.',
     unknownLanguage: 'Ukjent språk: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Linje {line}: {target} kan ikke skrive dette programmet: {name} får verdier av to slag, som et tall og en tekst.',
+    mixedItems:
+      'Linje {line}: {target} kan ikke skrive dette programmet: en liste har elementer av to slag, som tall og tekster.'
   }
 };
 

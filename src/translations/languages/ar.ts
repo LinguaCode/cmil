@@ -82,6 +82,10 @@ const translation: Translation = {
     recursionLimit: 'السطر {line}: استدعاءات متداخلة للدوال كثيرة جدًا.',
     timeout: 'عمل البرنامج مدة طويلة جدًا دون أن يطلب إدخالًا.',
     unknownLanguage: 'لغة غير معروفة: {language}.'
+  },
+  conversion: {
+    mixedTypes: 'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج، فـ {name} يأخذ قيمًا من نوعين، مثل رقم ونص.',
+    mixedItems: 'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج، ففي القائمة عناصر من نوعين، مثل أرقام ونصوص.'
   }
 };
 

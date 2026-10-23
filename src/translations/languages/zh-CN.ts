@@ -77,6 +77,10 @@ const translation: Translation = {
     recursionLimit: '第 {line} 行：函数嵌套调用太深了。',
     timeout: '程序运行太久，却没有请求输入。',
     unknownLanguage: '未知语言：{language}'
+  },
+  conversion: {
+    mixedTypes: '第 {line} 行：{target} 写不了这个程序：{name} 的值有两种，比如数字和文本。',
+    mixedItems: '第 {line} 行：{target} 写不了这个程序：列表里的项有两种，比如数字和文本。'
   }
 };
 

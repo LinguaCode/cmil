@@ -1,3 +1,9 @@
+## Unreleased
+
+  - **[add]** API: `convert(sourceCode, language, target)` writes a program in C++ or Python, as a teacher would, printing what CMIL prints, with the CMIL line of each line, its comments and its blank lines; `targets` lists the languages. A typed language gives the `problems` of a value with two types, whose messages `problemOf(problem, language)` gives in every language. `docs/converting.md` lists how each construct is written and how each language differs.
+  - **[add]** API: `programOf(sourceCode, language)` gives the tree of a program for tools, with its comments, the first spelling of each name, its constants and the lines of `else` and `do`, documented in `docs/tree.md`.
+  - **[add]** tests: every spec program is converted into C++ and Python, compiled, run and compared with the spec.
+
 ## 0.16.0-alpha.0 (2026-10-23)
 
   - **[change]** math: `random(max)` gives a whole number from 1 to `max`, like a die and like the items of a list, instead of from 0, so `fruits[random(3)]` is always an item; `random(0)` is a `mathError`.

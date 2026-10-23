@@ -77,6 +77,12 @@ const translation: Translation = {
     recursionLimit: '{line}번째 줄: 함수 호출이 너무 깊게 중첩되었습니다.',
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
     unknownLanguage: '알 수 없는 언어: {language}'
+  },
+  conversion: {
+    mixedTypes:
+      '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. {name}에 숫자와 글자처럼 두 종류의 값이 들어갑니다.',
+    mixedItems:
+      '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. 목록에 숫자와 글자처럼 두 종류의 항목이 있습니다.'
   }
 };
 

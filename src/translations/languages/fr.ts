@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: "Ligne {line} : trop d'appels de fonctions imbriqués.",
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
     unknownLanguage: 'Langue inconnue : {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Ligne {line} : {target} ne peut pas écrire ce programme : {name} reçoit des valeurs de deux sortes, comme un nombre et un texte.',
+    mixedItems:
+      'Ligne {line} : {target} ne peut pas écrire ce programme : une liste a des éléments de deux sortes, comme des nombres et des textes.'
   }
 };
 

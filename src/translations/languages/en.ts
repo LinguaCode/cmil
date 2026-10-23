@@ -83,6 +83,11 @@ const translation: Translation = {
     recursionLimit: 'Line {line}: too many calls of functions inside each other.',
     timeout: 'The program ran too long without asking for input.',
     unknownLanguage: 'Unknown language: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      "Line {line}: {target} can't write this program: {name} gets values of two kinds, like a number and a text.",
+    mixedItems: "Line {line}: {target} can't write this program: a list has items of two kinds, like numbers and texts."
   }
 };
 

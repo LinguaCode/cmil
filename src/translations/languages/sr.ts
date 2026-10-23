@@ -81,6 +81,12 @@ const translation: Translation = {
     recursionLimit: 'Ред {line}: превише угнежђених позива функција.',
     timeout: 'Програм је радио предуго, а није тражио унос.',
     unknownLanguage: 'Непознат језик: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Ред {line}: {target} не може да напише овај програм: {name} добија вредности две врсте, као број и текст.',
+    mixedItems:
+      'Ред {line}: {target} не може да напише овај програм: листа има ставке две врсте, као бројеве и текстове.'
   }
 };
 

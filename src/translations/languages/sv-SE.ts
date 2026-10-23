@@ -80,6 +80,12 @@ const translation: Translation = {
     recursionLimit: 'Rad {line}: för många nästlade funktionsanrop.',
     timeout: 'Programmet körde för länge utan att be om indata.',
     unknownLanguage: 'Okänt språk: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Rad {line}: {target} kan inte skriva det här programmet: {name} får värden av två slag, som ett tal och en text.',
+    mixedItems:
+      'Rad {line}: {target} kan inte skriva det här programmet: en lista har element av två slag, som tal och texter.'
   }
 };
 

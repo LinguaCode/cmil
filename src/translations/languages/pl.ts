@@ -82,6 +82,12 @@ const translation: Translation = {
     recursionLimit: 'Wiersz {line}: za dużo zagnieżdżonych wywołań funkcji.',
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',
     unknownLanguage: 'Nieznany język: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Wiersz {line}: {target} nie może zapisać tego programu: {name} dostaje wartości dwóch rodzajów, np. liczbę i tekst.',
+    mixedItems:
+      'Wiersz {line}: {target} nie może zapisać tego programu: lista ma elementy dwóch rodzajów, np. liczby i teksty.'
   }
 };
 

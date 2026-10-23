@@ -77,6 +77,10 @@ const translation: Translation = {
     recursionLimit: 'บรรทัดที่ {line}: เรียกฟังก์ชันซ้อนกันลึกเกินไป',
     timeout: 'โปรแกรมทำงานนานเกินไปโดยไม่ขอข้อมูลเข้า',
     unknownLanguage: 'ไม่รู้จักภาษา: {language}'
+  },
+  conversion: {
+    mixedTypes: 'บรรทัดที่ {line}: {target} เขียนโปรแกรมนี้ไม่ได้ เพราะ {name} ได้ค่าสองชนิด เช่น ตัวเลขกับข้อความ',
+    mixedItems: 'บรรทัดที่ {line}: {target} เขียนโปรแกรมนี้ไม่ได้ เพราะรายการมีสมาชิกสองชนิด เช่น ตัวเลขกับข้อความ'
   }
 };
 

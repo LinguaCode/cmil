@@ -16,6 +16,8 @@ Verified on 2026-10-23. Update this section when a fact changes.
 - **Public API:** `src/index.ts` exports only named exports:
   - `Session(sourceCode, language, {maxSteps, random})` (`src/session.ts`), whose `run()` and `input(value)` return a step, `{state: 'input', output}` or `{state: 'end', output, error?}`, and `stop()`. `random` gives the numbers of `random()`, `Math.random` by default. Its state is in `#` private fields; an unknown language ends it with `unknownLanguage`.
   - `check(sourceCode, language)`, the first error before running, or `null`.
+  - `programOf(sourceCode, language)` (`src/program.ts`), the tree of a program for tools (`docs/tree.md`, format `TREE_FORMAT`), or `{error}`.
+  - `convert(sourceCode, language, target)` and `targets` (`src/convert/`), a program in C++ or Python with the CMIL line of each line, or the `problems` a typed language has with it, or `{error}`; `problemOf(problem, language)` gives their messages (`docs/converting.md`).
   - `messageOf(error, language)` (`src/messages.ts`), from the `messages` of each language.
   - `segmentsOf(line, language)`, `commandsOf(language)` and `quotesOf(language)` (`src/editor.ts`), for editors that color and complete programs.
   - `languages`, the language codes, and `translate(sourceCode, from, to)`, a program in another language: names that are commands there get a trailing `_`, and an unknown language throws.
@@ -26,7 +28,7 @@ Verified on 2026-10-23. Update this section when a fact changes.
 - **Releases:** `.github/workflows/release.yml` runs when a tag `v` plus the package version is pushed, or when it is run on `master` (Actions → release → Run workflow), which creates that tag on the commit. It checks the package, creates the GitHub Release with that version's `CHANGELOG.md` section as notes (alpha, beta and rc versions as pre-releases), and publishes to npm with trusted publishing (no token) under the `latest` tag. To release: set the version with `npm version <version> --no-git-tag-version`, give the CHANGELOG section that version and the date, merge, then run the workflow on `master` or push the tag. Cloud sessions can't push tags, so they run the workflow.
 - **LinguaCode, the website:** https://linguacode.otanim.com runs CMIL in the browser, with lessons in every language. Its source is in the owner's private repository, which pins cmil to a release tag and publishes the page to Cloudflare. After a release, the owner bumps that tag there.
 - **Publishing:** cmil goes to npm as `cmil` from its first release candidate; until then it installs from GitHub (npm 12 needs `--allow-git=root`). `release.yml` skips alpha and beta versions and versions already on npm.
-- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language, and `test/editor.ts` covers the editor functions. All 664 tests pass on Node.js 24 and 26.
+- **Tests:** the Node.js test runner (`npm test` runs `test/*.ts` on the TypeScript sources, no build needed). `test/cmil.ts` runs every case of `test/collection/` in a `Session` (`successes` and `errors` in `en`, `tutorials` in `hy-AM`), plus a sessions test and a `maxSteps` test. A case may carry `todo` or `skip`, passed to the test runner. `test/core.ts` covers the interpreter's mechanics, the session, columns, `check()` and the messages of every language, `test/translations.ts` checks that every language defines every command, gives every word one command, and runs its constants, booleans and `ceil`, and `docs/translations.md` is current, `test/words.ts` covers the keyword scanner and `translate()`, including every spec program translated into every language, `test/editor.ts` covers the editor functions, and `test/convert.ts` the program tree, the types and the conversion: it compiles and runs every spec program in each target whose tool is installed (`g++`, `python3`), and lists the cases of each target's differences. All 1186 tests pass on Node.js 24 and 26, 17 of them skipped as those differences.
 - **Types:** `npm run typecheck` checks `src/`, `test/` and `scripts/` with `tsc` (`tsconfig.json`). The syntax tree, instruction and value types are in `src/core/types.ts`.
 - **Coverage:** `npm run coverage` runs the tests under c8 and writes a text summary and `coverage/` (gitignored).
 - **Lint and format:** ESLint (`eslint.config.js`, the recommended rules of ESLint and typescript-eslint) and Prettier (`.prettierrc.json`, matching the existing style; Markdown is not formatted). `npm run lint` checks both, `npm run format` rewrites with Prettier.
@@ -56,7 +58,9 @@ Read the files before relying on these descriptions.
 
 - `src/index.ts`: the public API
 - `src/session.ts`: `Session` and `check()`: compiles a program and runs it step by step
-- `src/messages.ts`: `messageOf()`
+- `src/messages.ts`: `messageOf()` and `problemOf()`
+- `src/program.ts`: `programOf()`, the program tree for tools
+- `src/convert/`: `convert()`: `types.ts` works out the types typed languages need, `emit.ts` has what every target shares (lines with their CMIL line, comments and blank lines, names), and `targets/` writes each language
 - `src/editor.ts`: `segmentsOf()`, `commandsOf()` and `quotesOf()`, with the kind of every command
 - `src/core/types.ts`: types of tokens, lines, the syntax tree, instructions and values
 - `src/core/words.ts`: the words of each language; `scan()` splits a line into keywords, names, texts and comments, `translateSource()` translates a program
@@ -68,12 +72,14 @@ Read the files before relying on these descriptions.
 - `src/core/values.ts`: text conversion, operators, lists, functions and constants
 - `src/core/error.ts`: `CmilError`, which carries the `ProgramError` a session returns
 - `src/constants/`, `src/translations/`: see **Dependencies** above
-- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts`, `words.ts` and `editor.ts`
+- `test/`: test harness (`cmil.ts`), test cases (`collection/`, typed by `collection/types.ts`), `core.ts`, `translations.ts`, `words.ts`, `editor.ts` and `convert.ts`
 - `scripts/translations-table.ts`: writes `docs/translations.md`
 - `tsconfig.json`: type checking of `src/`, `test/` and `scripts/`; `tsconfig.build.json`: the build into `dist/`
 - `docs/language.md`: the language reference; keep it in line with `test/collection`
 - `docs/running.md`: limits and running sessions in a worker
 - `docs/translations.md`: the words of every language, generated; don't edit it by hand
+- `docs/converting.md`: how programs are written in each target, and how each differs from CMIL; keep it in line with `test/convert.ts`
+- `docs/tree.md`: the program tree
 
 ## Commands
 

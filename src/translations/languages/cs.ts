@@ -82,6 +82,12 @@ const translation: Translation = {
     recursionLimit: 'Řádek {line}: příliš mnoho vnořených volání funkcí.',
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',
     unknownLanguage: 'Neznámý jazyk: {language}.'
+  },
+  conversion: {
+    mixedTypes:
+      'Řádek {line}: {target} tento program napsat nedokáže: {name} dostává hodnoty dvou druhů, třeba číslo a text.',
+    mixedItems:
+      'Řádek {line}: {target} tento program napsat nedokáže: seznam má položky dvou druhů, třeba čísla a texty.'
   }
 };
 
