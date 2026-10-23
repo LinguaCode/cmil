@@ -1,4 +1,4 @@
-## Unreleased
+## 0.17.0-alpha.0 (2026-10-23)
 
   - **[add]** API: `convert(sourceCode, language, target)` writes a program in C++ or Python, as a teacher would, printing what CMIL prints, with the CMIL line of each line, its comments and its blank lines; `targets` lists the languages. A typed language gives the `problems` of a value with two types, whose messages `problemOf(problem, language)` gives in every language. `docs/converting.md` lists how each construct is written and how each language differs.
   - **[add]** API: `programOf(sourceCode, language)` gives the tree of a program for tools, with its comments, the first spelling of each name, its constants and the lines of `else` and `do`, documented in `docs/tree.md`.
