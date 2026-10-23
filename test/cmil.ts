@@ -106,9 +106,9 @@ collections.forEach(({name, sources, language}) => {
 /**sessions keep their own state*/
 describe('sessions', () => {
   it('a session waiting for input survives another session', () => {
-    const waiting = new Session('input name\nprint "A got " + name', 'en');
+    const waiting = new Session('name = input()\nprint("A got " + name)', 'en');
     assert.deepStrictEqual(waiting.run(), {state: 'input', output: []});
-    assert.deepStrictEqual(new Session('print "B runs"', 'en').run(), {state: 'end', output: ['B runs']});
+    assert.deepStrictEqual(new Session('print("B runs")', 'en').run(), {state: 'end', output: ['B runs']});
     assert.deepStrictEqual(waiting.input('Ani'), {state: 'end', output: ['A got Ani']});
   });
 });
@@ -116,7 +116,7 @@ describe('sessions', () => {
 /**a session may set its own step limit*/
 describe('step limit', () => {
   it('maxSteps ends a loop sooner', () => {
-    const step = new Session('while 1 < 4\n    print 123', 'en', {maxSteps: 100}).run();
+    const step = new Session('while 1 < 4\n    print(123)', 'en', {maxSteps: 100}).run();
     assert.strictEqual(step.state, 'end');
     assert.strictEqual(step.state === 'end' && step.error?.id, 'timeout');
     assert.ok(step.output.length > 0 && step.output.every(line => line === '123'));

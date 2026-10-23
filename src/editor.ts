@@ -27,10 +27,6 @@ const KINDS: Record<Command, CommandKind> = {
   [COMMAND.FOR]: 'block',
   [COMMAND.FUNCTION]: 'block',
 
-  [COMMAND.INPUT]: 'statement',
-  [COMMAND.PRINT]: 'statement',
-  [COMMAND.ADD]: 'statement',
-  [COMMAND.REMOVE]: 'statement',
   [COMMAND.BREAK]: 'statement',
   [COMMAND.CONTINUE]: 'statement',
   [COMMAND.RETURN]: 'statement',
@@ -41,8 +37,6 @@ const KINDS: Record<Command, CommandKind> = {
   [COMMAND.TO]: 'part',
   [COMMAND.STEP]: 'part',
   [COMMAND.IN]: 'part',
-  [COMMAND.INTO]: 'part',
-  [COMMAND.OUT_OF]: 'part',
 
   [COMMAND.OR]: 'operator',
   [COMMAND.AND]: 'operator',
@@ -57,6 +51,10 @@ const KINDS: Record<Command, CommandKind> = {
   [COMMAND.SQRT]: 'function',
   [COMMAND.POW]: 'function',
   [COMMAND.ROUND]: 'function',
+  [COMMAND.INPUT]: 'function',
+  [COMMAND.PRINT]: 'function',
+  [COMMAND.ADD]: 'function',
+  [COMMAND.REMOVE]: 'function',
   [COMMAND.CEIL]: 'function',
   [COMMAND.FLOOR]: 'function',
   [COMMAND.LG]: 'function',
@@ -119,8 +117,8 @@ const splitOther = (text: string): LineSegment[] => {
  * The texts of the parts make up the line.
  *
  * @example
- * segmentsOf('print 1 # one', 'en');
- * // returns keyword 'print' (print), space ' ', number '1', space ' ', comment '# one'
+ * segmentsOf('print(1) # one', 'en');
+ * // returns keyword 'print' (print), operator '(', number '1', operator ')', space ' ', comment '# one'
  */
 export const segmentsOf = (line: string, language: string): LineSegment[] => {
   known(language);

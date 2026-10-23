@@ -26,9 +26,7 @@ export const COMMAND = {
 
   //lists
   ADD: 'add',
-  INTO: 'into',
   REMOVE: 'remove',
-  OUT_OF: 'outOf',
 
   BREAK: 'break',
   CONTINUE: 'continue',

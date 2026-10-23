@@ -94,13 +94,13 @@ const programs = [
 describe('words', () => {
   describe('scan', () => {
     it('splits a line into keywords, names, texts, a comment and the rest', () => {
-      assert.deepStrictEqual(scan('print x + «print» # print', 'en'), [
+      assert.deepStrictEqual(scan('print(x + «print») # print', 'en'), [
         {type: 'keyword', command: 'print', text: 'print'},
-        {type: 'other', text: ' '},
+        {type: 'other', text: '('},
         {type: 'name', text: 'x'},
         {type: 'other', text: ' + '},
         {type: 'string', text: '«print»', value: 'print', closed: true},
-        {type: 'other', text: ' '},
+        {type: 'other', text: ') '},
         {type: 'comment', text: '# print'}
       ]);
     });
@@ -140,58 +140,58 @@ describe('words', () => {
 
   describe('programs', () => {
     it('keywords next to operators', () => {
-      assert.strictEqual(outputOf('if 1<pi then\n    print 1', 'en'), '1');
-      assert.strictEqual(outputOf('print 2>e', 'en'), 'false');
-      assert.strictEqual(outputOf('x = true\nprint x!=true', 'en'), 'false');
+      assert.strictEqual(outputOf('if 1<pi then\n    print(1)', 'en'), '1');
+      assert.strictEqual(outputOf('print(2>e)', 'en'), 'false');
+      assert.strictEqual(outputOf('x = true\nprint(x!=true)', 'en'), 'false');
       assert.strictEqual(outputOf('print(2*pi>6)', 'en'), 'true');
     });
 
     it('keywords that contain another keyword', () => {
-      assert.strictEqual(outputOf('print square(3)\nprint square_root(16)', 'en'), '9\n4');
-      assert.strictEqual(outputOf('výstup mocnina(2, 3)\nvýstup druhá_mocnina(3)', 'cs'), '8\n9');
+      assert.strictEqual(outputOf('print(square(3))\nprint(square_root(16))', 'en'), '9\n4');
+      assert.strictEqual(outputOf('výstup(mocnina(2, 3))\nvýstup(druhá_mocnina(3))', 'cs'), '8\n9');
       assert.strictEqual(
-        outputOf('sortida arrodonir(2.5)\nsortida arrodonir_avall(2.5)\nsortida arrodonir_amunt(2.2)', 'ca'),
+        outputOf('sortida(arrodonir(2.5))\nsortida(arrodonir_avall(2.5))\nsortida(arrodonir_amunt(2.2))', 'ca'),
         '3\n2\n3'
       );
-      assert.strictEqual(outputOf('uscita e_numero > 2 e vero', 'it'), 'vero');
+      assert.strictEqual(outputOf('uscita(e_numero > 2 e vero)', 'it'), 'vero');
       assert.strictEqual(
-        outputOf('вывести округлить(2.5)\nвывести округлить_вниз(2.5)\nвывести округлить_вверх(2.2)', 'ru'),
+        outputOf('вывести(округлить(2.5))\nвывести(округлить_вниз(2.5))\nвывести(округлить_вверх(2.2))', 'ru'),
         '3\n2\n3'
       );
-      assert.strictEqual(outputOf('izhod res\nizhod ni_res', 'sl'), 'res\nni_res');
-      assert.strictEqual(outputOf('izhod kvadrat(3)\nizhod kvadratni_koren(16)', 'sl'), '9\n4');
+      assert.strictEqual(outputOf('izhod(res)\nizhod(ni_res)', 'sl'), 'res\nni_res');
+      assert.strictEqual(outputOf('izhod(kvadrat(3))\nizhod(kvadratni_koren(16))', 'sl'), '9\n4');
       assert.strictEqual(
-        outputOf('shkruaj e vërtetë\nshkruaj e rreme\nshkruaj e > 2', 'sq'),
+        outputOf('shkruaj(e vërtetë)\nshkruaj(e rreme)\nshkruaj(e > 2)', 'sq'),
         'e vërtetë\ne rreme\ne vërtetë'
       );
     });
 
     it('two-word keywords, with any spaces between the words', () => {
-      assert.strictEqual(outputOf('nëse e vërtetë atëherë\n    shkruaj 7', 'sq'), '7');
-      assert.strictEqual(outputOf('nëse e  \tvërtetë atëherë\n    shkruaj 7', 'sq'), '7');
+      assert.strictEqual(outputOf('nëse e vërtetë atëherë\n    shkruaj(7)', 'sq'), '7');
+      assert.strictEqual(outputOf('nëse e  \tvërtetë atëherë\n    shkruaj(7)', 'sq'), '7');
     });
 
     it('keywords in any case', () => {
-      assert.strictEqual(outputOf('PRINT 5\nPrint Pi > 3', 'en'), '5\ntrue');
-      assert.strictEqual(outputOf('ԱՐՏԱԾԵԼ ՃԻՇՏ', 'hy-AM'), 'ճիշտ');
+      assert.strictEqual(outputOf('PRINT(5)\nPrint(Pi > 3)', 'en'), '5\ntrue');
+      assert.strictEqual(outputOf('ԱՐՏԱԾԵԼ(ՃԻՇՏ)', 'hy-AM'), 'ճիշտ');
     });
 
     it('words in texts and comments are not keywords', () => {
       assert.strictEqual(
-        outputOf('print «print»\nprint "say \\"print\\" now"\nprint \'it\\\'s print\' # print 2', 'en'),
+        outputOf('print(«print»)\nprint("say \\"print\\" now")\nprint(\'it\\\'s print\') # print 2', 'en'),
         'print\nsay "print" now\nit\'s print'
       );
     });
 
     it('names that contain a keyword', () => {
       assert.strictEqual(
-        outputOf('print_x = 3\nx_print = 4\nprintx = 5\nprint print_x + x_print + printx', 'en'),
+        outputOf('print_x = 3\nx_print = 4\nprintx = 5\nprint(print_x + x_print + printx)', 'en'),
         '12'
       );
     });
 
     it('a number joined to a word is a syntax error', () => {
-      assert.deepStrictEqual(run('print 2pi', 'en'), {output: [], errorId: 'syntaxError', line: 1});
+      assert.deepStrictEqual(run('print(2pi)', 'en'), {output: [], errorId: 'syntaxError', line: 1});
     });
 
     it('@ is not part of the language', () => {
@@ -200,21 +200,21 @@ describe('words', () => {
   });
 
   describe('translate', () => {
-    const program = 'input name\nif name == "Ani" then\n    print "output " + name\nelse\n    print name';
+    const program = 'name = input()\nif name == "Ani" then\n    print("output " + name)\nelse\n    print(name)';
 
     it('translates commands and the quotes of texts, and keeps names', () => {
       assert.strictEqual(
         translate(program, 'en', 'hy-AM'),
-        'մուտքագրել name\nեթե name == «Ani» ապա\n    արտածել «output » + name\nայլապես\n    արտածել name'
+        'name = մուտքագրել()\nեթե name == «Ani» ապա\n    արտածել(«output » + name)\nայլապես\n    արտածել(name)'
       );
     });
 
     it('writes texts in the quotes of the language, with their escapes', () => {
-      assert.strictEqual(translate('print "a » b"', 'en', 'hy-AM'), 'արտածել «a \\» b»');
-      assert.strictEqual(translate('print "a\\\\b\\n\\tc"', 'en', 'de'), 'ausgeben „a\\\\b\\n\\tc“');
-      assert.strictEqual(translate('出力 「a」 + 『b』', 'ja', 'en'), 'print "a" + "b"');
+      assert.strictEqual(translate('print("a » b")', 'en', 'hy-AM'), 'արտածել(«a \\» b»)');
+      assert.strictEqual(translate('print("a\\\\b\\n\\tc")', 'en', 'de'), 'ausgeben(„a\\\\b\\n\\tc“)');
+      assert.strictEqual(translate('出力(「a」 + 『b』)', 'ja', 'en'), 'print("a" + "b")');
       //an unclosed text stays as written
-      assert.strictEqual(translate('print "a', 'en', 'ru'), 'вывести "a');
+      assert.strictEqual(translate('print("a', 'en', 'ru'), 'вывести("a');
     });
 
     it('reads the quotes of every language, and those of every language in each', () => {
@@ -229,7 +229,7 @@ describe('words', () => {
           );
         });
         assert.strictEqual(
-          translate('print "a"', 'en', language).endsWith(own[0][0] + 'a' + own[0][1]),
+          translate('print("a")', 'en', language).endsWith(`(${own[0][0]}a${own[0][1]})`),
           true,
           language
         );
@@ -242,23 +242,23 @@ describe('words', () => {
 
     it('keeps spacing, texts and comments', () => {
       assert.strictEqual(
-        translate('print  1<pi  # output pi\n\n    print(«if»)', 'en', 'ru'),
-        'вывести  1<pi  # output pi\n\n    вывести(«if»)'
+        translate('print(1<pi)  # output pi\n\n    print(«if»)', 'en', 'ru'),
+        'вывести(1<pi)  # output pi\n\n    вывести(«if»)'
       );
     });
 
     it('translates a two-word keyword', () => {
-      assert.strictEqual(translate('print true', 'en', 'sq'), 'shkruaj e vërtetë');
-      assert.strictEqual(translate('shkruaj e  rreme', 'sq', 'en'), 'print false');
+      assert.strictEqual(translate('print(true)', 'en', 'sq'), 'shkruaj(e vërtetë)');
+      assert.strictEqual(translate('shkruaj(e  rreme)', 'sq', 'en'), 'print(false)');
     });
 
     it('renames a name that is a keyword in the other language, the same everywhere', () => {
       //i is the Catalan and
-      assert.strictEqual(translate('i = 1\nI = i + 1\nprint i', 'en', 'ca'), 'i_ = 1\nI_ = i_ + 1\nsortida i_');
+      assert.strictEqual(translate('i = 1\nI = i + 1\nprint(i)', 'en', 'ca'), 'i_ = 1\nI_ = i_ + 1\nsortida(i_)');
     });
 
     it('renames to a name the program does not use', () => {
-      assert.strictEqual(translate('i = 1\ni_ = 2\nprint i + i_', 'en', 'ca'), 'i__ = 1\ni_ = 2\nsortida i__ + i_');
+      assert.strictEqual(translate('i = 1\ni_ = 2\nprint(i + i_)', 'en', 'ca'), 'i__ = 1\ni_ = 2\nsortida(i__ + i_)');
     });
 
     it('rejects an unknown language', () => {

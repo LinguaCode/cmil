@@ -26,12 +26,13 @@ export type Expression =
   | {type: 'variable'; name: string; column: number}
   | {type: 'call'; name: string; args: Expression[]; column: number}
   | {type: 'userCall'; name: string; args: Expression[]; column: number}
+  //input(), whose value is the answer of the user
+  | {type: 'input'; column: number}
   | {type: 'unary'; operator: string; operand: Expression; column: number}
   | {type: 'binary'; operator: string; left: Expression; right: Expression; column: number};
 
 export type Statement =
   | {type: 'print'; expression: Expression; line: number}
-  | {type: 'input'; name: string; line: number}
   | {type: 'assign'; name: string; expression: Expression; line: number}
   | {type: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {type: 'add'; expression: Expression; target: Expression; line: number}
@@ -55,7 +56,6 @@ export type Branch = {
 
 export type Instruction =
   | {op: 'print'; expression: Expression; line: number}
-  | {op: 'input'; name: string; line: number}
   | {op: 'assign'; name: string; expression: Expression; line: number}
   | {op: 'setItem'; target: Expression; index: Expression; expression: Expression; column: number; line: number}
   | {op: 'add'; expression: Expression; target: Expression; line: number}
@@ -82,7 +82,8 @@ export type Program = {
   instructions: Instruction[];
   slots: number;
   functions: Map<string, UserFunction>;
-  //the instructions with calls of functions, which run again with the values they had when the call returns
+  //the instructions with calls of functions or inputs, which run again with the values they had when the call returns
+  //or the input comes
   replays: boolean[];
 };
 

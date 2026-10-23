@@ -6,7 +6,7 @@ const sources: Source[] = [
     sources: [
       {
         title: 'JavaScript function call',
-        code: 'print eval("1")',
+        code: 'print(eval("1"))',
         errorId: 'undefinedFunction',
         errorParam: {
           line: 1
@@ -14,7 +14,7 @@ const sources: Source[] = [
       },
       {
         title: 'JavaScript property access',
-        code: 'print (1).constructor',
+        code: 'print((1).constructor)',
         errorId: 'syntaxError',
         errorParam: {
           line: 1
@@ -22,7 +22,7 @@ const sources: Source[] = [
       },
       {
         title: 'JavaScript constructor in an assignment',
-        code: 'x = this.constructor.constructor("return 1")()\nprint x',
+        code: 'x = this.constructor.constructor("return 1")()\nprint(x)',
         errorId: 'syntaxError',
         errorParam: {
           line: 1
@@ -30,12 +30,12 @@ const sources: Source[] = [
       },
       {
         title: 'template literal syntax in text',
-        code: 'print "${1 + 1}"',
+        code: 'print("${1 + 1}")',
         output: '${1 + 1}'
       },
       {
         title: 'JavaScript in an input value',
-        code: 'input x\nprint x',
+        code: 'x = input()\nprint(x)',
         inputs: ["a'+(1+1)+'"],
         output: "a'+(1+1)+'"
       }

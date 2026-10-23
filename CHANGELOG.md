@@ -1,3 +1,12 @@
+## Unreleased
+
+  - **[change]** print: `print(value)` is called like a function and prints one value, like `print("Fruits: " + (3 + 5))`. Another count of values, like `print("Fruits:", 8)`, or `print "Fruits"` without the parentheses, is an `argumentError` that says print takes 1 value, instead of a `syntaxError`; anything after the `)`, like `print("a") + "b"`, is a `syntaxError`.
+  - **[change]** print: an empty text prints an empty line, like `print("")`, instead of nothing.
+  - **[change]** input: `input()` gives the answer, so it is stored with `=`, like `name = input()`, or used like any other value, like `if input() == "yes"`; several `input()` in one line are asked from left to right. `input name` and `input()` on a line of its own are a `syntaxError`, and a value in the parentheses, like `input("Your name?")`, is an `argumentError`.
+  - **[change]** lists: `add(list, value)` and `remove(list, value)`, with the list first, replace `add value into list` and `remove value out of list`. The words of `into` and `out of` are removed from every language, so they read the same in every word order.
+  - **[change]** errors: `print`, `add` and `remove` give no value, so using one in an expression, like `x = print(1)`, is a `noValue`, found before the program runs.
+  - **[change]** API: `commandsOf()` gives `print`, `input`, `add` and `remove` the kind `function`, so editors complete them with parentheses; the command ids `into` and `outOf` are removed.
+
 ## 0.13.0-alpha.0 (2026-10-23)
 
   - **[change]** print: `print` prints one value, and values are joined into one text with `+`, like `print "Fruits: " + (3 + 5)`. A comma between values, like `print "Fruits:", 3 + 5`, is a `syntaxError` at the comma, and so is a decimal comma, like `print 2,5`, which printed `2 5`.

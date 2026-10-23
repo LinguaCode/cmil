@@ -57,10 +57,10 @@ describe('translations', () => {
     it(`${language} runs its constants, booleans and ceil`, () => {
       const word = (command: Command) => wordOf(language, command);
       const lines = [
-        `${word('print')} ${word('pi')} > 3`,
-        `${word('print')} ${word('e')} > 2`,
-        `${word('print')} ${word('true')} ${word('and')} ${word('not')} ${word('false')}`,
-        `${word('print')} ${word('ceil')}(1.2)`
+        `${word('print')}(${word('pi')} > 3)`,
+        `${word('print')}(${word('e')} > 2)`,
+        `${word('print')}(${word('true')} ${word('and')} ${word('not')} ${word('false')})`,
+        `${word('print')}(${word('ceil')}(1.2))`
       ];
       const step = run(lines.join('\n'), language);
       const yes = word('true');

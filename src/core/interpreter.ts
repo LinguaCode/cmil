@@ -4,6 +4,7 @@
  * A call of a function runs the instructions of the function in the same loop, so a function can wait for input.
  * The instruction with the call stops, and records the values it computed until the call; when the function returns,
  * the instruction runs again with the recorded values and the value of the call, and continues where it was.
+ * An input() stops its instruction the same way, until the answer comes.
  */
 import CmilError from './error.ts';
 import * as values from './values.ts';
@@ -16,6 +17,8 @@ export type RunStatus = (typeof STATE)[keyof typeof STATE];
 
 //thrown when an instruction stops at a call of a function
 const SUSPEND = Symbol('suspend');
+//thrown when an instruction stops at an input() that has no answer yet
+const WAIT = Symbol('wait');
 //the value of a call of a function that returned without a value
 const NONE = Symbol('none');
 
@@ -146,6 +149,17 @@ class Interpreter {
       this.enter(node, args, number);
       throw SUSPEND;
     }
+    //the answer, once it came; the instruction runs again with the values it has when it comes
+    if (node.type === 'input') {
+      if (this.input === undefined) {
+        this.resumed = tape;
+        throw WAIT;
+      }
+      const value = this.input;
+      this.input = undefined;
+      tape[number] = {value, end: this.counter};
+      return value;
+    }
 
     const value = this.compute(node);
     tape[number] = {value, end: this.counter};
@@ -206,7 +220,8 @@ class Interpreter {
         );
       }
       case 'userCall':
-        throw new Error('A call of a function in an instruction without calls.');
+      case 'input':
+        throw new Error('A call of a function or an input in an instruction without them.');
       case 'unary': {
         const operand = this.evaluate(node.operand);
         return this.apply(node, node.operator, () => values.unary(node.operator, operand));
@@ -281,20 +296,13 @@ class Interpreter {
         switch (instruction.op) {
           case 'print': {
             const text = this.text(this.evaluate(instruction.expression));
-            if (text !== '') {
-              this.outputLength += text.length + 1;
-              if (this.outputLength > MAX_OUTPUT_LENGTH) {
-                throw new CmilError({id: ERROR.MEMORY_LIMIT, line: this.line});
-              }
-              this.output.push(text);
+            this.outputLength += text.length + 1;
+            if (this.outputLength > MAX_OUTPUT_LENGTH) {
+              throw new CmilError({id: ERROR.MEMORY_LIMIT, line: this.line});
             }
+            this.output.push(text);
             break;
           }
-          case 'input':
-            if (this.input === undefined) return STATE.INPUT;
-            this.variables.set(instruction.name, this.input);
-            this.input = undefined;
-            break;
           case 'assign':
             this.variables.set(instruction.name, this.evaluate(instruction.expression));
             break;
@@ -406,6 +414,8 @@ class Interpreter {
       } catch (error) {
         //the function of the call runs next
         if (error === SUSPEND) continue;
+        //the instruction runs again when the answer comes
+        if (error === WAIT) return STATE.INPUT;
         throw error;
       }
 

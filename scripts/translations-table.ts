@@ -50,8 +50,8 @@ const NAMES: Record<string, [string, string]> = {
 };
 
 const MEANINGS: Record<Command, string> = {
-  [COMMAND.INPUT]: 'waits for the user and stores the answer in a variable',
-  [COMMAND.PRINT]: 'prints values, separated by commas, on one line',
+  [COMMAND.INPUT]: 'waits for the user and gives the answer, in name = input()',
+  [COMMAND.PRINT]: 'prints a value on a line, in print(value)',
   [COMMAND.IF]: 'runs the block below when its condition is true',
   [COMMAND.ELSE]: 'runs the block below when the conditions before it are false',
   [COMMAND.THEN]: 'may end the condition of if',
@@ -69,10 +69,8 @@ const MEANINGS: Record<Command, string> = {
   [COMMAND.TO]: 'the last value of for',
   [COMMAND.STEP]: 'how much for adds each pass, 1 unless given',
   [COMMAND.IN]: 'the list or text whose items for … in passes; also true when a list has a value, or a text has a text',
-  [COMMAND.ADD]: 'adds a value at the end of a list, in add … into …',
-  [COMMAND.INTO]: 'the list of add',
-  [COMMAND.REMOVE]: 'removes the first item equal to a value from a list, in remove … out of …',
-  [COMMAND.OUT_OF]: 'the list of remove',
+  [COMMAND.ADD]: 'adds a value at the end of a list, in add(list, value)',
+  [COMMAND.REMOVE]: 'removes the first item equal to a value from a list, in remove(list, value)',
   [COMMAND.BREAK]: 'leaves the innermost loop',
   [COMMAND.CONTINUE]: 'starts the next pass of the innermost loop',
   [COMMAND.FUNCTION]: 'defines a function, in function name(a, b)',

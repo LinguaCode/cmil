@@ -11,8 +11,7 @@ CMIL programs are written with the commands of the learner's language. The examp
 | repeat … times | `repeat`, `times` | `կրկնել`, `անգամ` | `повторять`, `раз` |
 | for … from … to … step | `for`, `from`, `to`, `step` | `յուրաքանչյուր`, `սկսած`, `մինչև`, `քայլ` | `для`, `от`, `до`, `шаг` |
 | for … in, in | `for`, `in` | `յուրաքանչյուր`, `մեջ` | `для`, `среди` |
-| add … into | `add`, `into` | `ավելացնել`, `վերջում` | `добавить`, `в_конец` |
-| remove … out of | `remove`, `out of` | `հեռացնել`, `ից` | `удалить`, `из` |
+| add, remove | `add`, `remove` | `ավելացնել`, `հեռացնել` | `добавить`, `удалить` |
 | function, return | `function`, `return` | `ֆունկցիա`, `վերադարձնել` | `функция`, `вернуть` |
 | break, continue | `break`, `continue` | `դադարեցնել`, `շարունակել` | `прервать`, `продолжать` |
 | and, or, not | `and`, `or`, `not` | `և` (`եւ`, `ու`), `կամ`, `ոչ` | `и`, `или`, `не` |
@@ -29,7 +28,7 @@ The test cases in [`test/collection`](../test/collection) are the specification 
 
 ```
 # say hello
-print "Hello"
+print("Hello")
 ```
 
 ## Values
@@ -49,19 +48,23 @@ Values are never converted into another type: `"5" == 5` is `false`, and an oper
 ```
 դրամ = 300
 դրամ = դրամ + 200
-print դրամ
+print(դրամ)
 ```
 prints `500`.
 
 ## Output and input
 
-`print expression` prints a value on a line. Values are joined into one text with `+`: `print "Fruits: " + (3 + 5)` prints `Fruits: 8`, and without the parentheses `print "Fruits: " + 3 + 5` joins from left to right and prints `Fruits: 35`. A comma between values, like `print "Fruits:", 8`, is a syntax error. `input name` waits for the user and stores the answer: a number when it is numeric, else a text. An empty answer is asked for again. `input` only reads: what the user should type is printed before it, like `print "Your name?"`, and anything between `input` and the name is a syntax error.
+`print(value)` prints a value on a line; an empty text prints an empty line. Values are joined into one text with `+`: `print("Fruits: " + (3 + 5))` prints `Fruits: 8`, and without the inner parentheses `print("Fruits: " + 3 + 5)` joins from left to right and prints `Fruits: 35`. `print` takes one value, so `print("Fruits:", 8)` is an `argumentError`, and so is `print "Fruits"` without its parentheses.
+
+`input()` waits for the user and gives the answer: a number when it is numeric, else a text. An empty answer is asked for again. The answer is stored with `=`, like `name = input()`, or used like any other value, like `if input() == "yes"`; several `input()` in one line are asked from left to right. `input` only reads: what the user should type is printed before it, like `print("Your name?")`, and a value in its parentheses is an `argumentError`.
 
 ```
-print "What is your name?"
-input name
-print "Hello, " + name
+print("What is your name?")
+name = input()
+print("Hello, " + name)
 ```
+
+`print`, `add` and `remove` are lines of their own: they give no value, so `x = print(1)` is a `noValue` error, found before the program runs.
 
 ## Operators
 
@@ -85,13 +88,13 @@ Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becom
 ## Conditions
 
 ```
-input age
+age = input()
 if age < 18
-    print "Only for adults"
+    print("Only for adults")
 else if age > 18 then
-    print "Welcome"
+    print("Welcome")
 else
-    print "Limited access"
+    print("Limited access")
 ```
 
 `then` is optional. A condition must be `true` or `false`; any other value is a `conditionError`.
@@ -101,21 +104,21 @@ else
 ```
 a = 0
 while a < 3
-    print a
+    print(a)
     a = a + 1
 
 do
-    input password
+    password = input()
 while password != "secret"
 
 repeat 3 times
-    print "a"
+    print("a")
 
 for i from 1 to 10 step 2
-    print i
+    print(i)
 
 for fruit in ["apple", "pear"]
-    print fruit
+    print(fruit)
 ```
 
 - `while` checks its condition before every pass, `do … while` after every pass.
@@ -128,19 +131,19 @@ for fruit in ["apple", "pear"]
 
 ```
 fruits = ["apple", "pear"]
-add "plum" into fruits
+add(fruits, "plum")
 fruits[1] = "cherry"
-print fruits
-print length_of(fruits)
-print fruits[3]
+print(fruits)
+print(length_of(fruits))
+print(fruits[3])
 ```
 prints `["cherry", "pear", "plum"]`, `3` and `plum`.
 
 - `list[i]` is the item at `i`, counted from 1, and `list[i] = value` replaces it. An `i` that isn't a whole number from 1 to the length of the list is an `indexError`. Lists in lists have items of items: `table[2][1]`.
-- `add value into list` puts the value at the end of the list, and `remove value out of list` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`.
+- `add(list, value)` puts the value at the end of the list, and `remove(list, value)` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`. The list comes first: `add("plum", fruits)` is a `typeError`.
 - `value in list` is `true` when the list has the value.
 - `text[i]` is a letter of a text; letters can be read but not replaced. An emoji is one letter.
-- A list is shared, not copied, when it is assigned: after `b = a`, `add 1 into b` adds to `a` too.
+- A list is shared, not copied, when it is assigned: after `b = a`, `add(b, 1)` adds to `a` too.
 - A list is printed with its items in brackets, texts in the main quotes of the program's language: `[1, "a", true]` in English, `[1, «ա», ճիշտ]` in Armenian. A list inside itself is printed as `[...]`.
 
 ## Math functions
@@ -179,9 +182,9 @@ function area(width, height)
     return width * height
 
 function greet(name)
-    print "Hello, " + name
+    print("Hello, " + name)
 
-print area(3, 4)
+print(area(3, 4))
 greet("Ani")
 ```
 prints `12` and `Hello, Ani`.
@@ -194,21 +197,21 @@ prints `12` and `Hello, Ani`.
 
 ## Output format
 
-Every `print` prints one line. Booleans are printed in the words of the program's language, numbers as described under **Values**, texts as written, and lists as described under **Lists**.
+Every `print` prints one line, also an empty one. Booleans are printed in the words of the program's language, numbers as described under **Values**, texts as written, and lists as described under **Lists**.
 
 ## Errors
 
-A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation, argument and `undefinedFunction` errors are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
+A session that ends with an error returns it as `{id, …}`, with the line and, where it points at a token, the column, both counted from 1. Syntax, indentation, argument and `undefinedFunction` errors, and the `noValue` of `print`, `add` and `remove`, are found before the program runs, also by `check()`; output printed before any other error comes with it. `messageOf(error, language)` gives its message in every language.
 
 | `id` | When | Also |
 |---|---|---|
 | `indentError` | indentation is not a multiple of 4 spaces, or deeper than its block | `line` |
 | `syntaxError` | a line is not valid CMIL, including JavaScript syntax such as `.`, `!`, `&&` or `;` | `line`, `column` unless the line ends too early |
-| `argumentError` | a call with another count of arguments, or a function of the language without its `(` or `)` | `line`, `column` and `function`, the name as written, and `min` and `max`, the counts of values it takes |
+| `argumentError` | a call with another count of arguments, or a function of the language, like `print` or `input`, without its `(` or `)` | `line`, `column` and `function`, the name as written, and `min` and `max`, the counts of values it takes |
 | `equalsError` | `=` inside an expression, like `if x = 5`, where `==` compares | `line`, `column` of the `=` |
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
 | `undefinedFunction` | a call of a function the program doesn't define | `line`, `column`, `function` |
-| `noValue` | the value of a call of a function that returned without one | `line`, `column`, `function` |
+| `noValue` | the value of a call of a function that returned without one, or of `print`, `add` or `remove`, which give none | `line`, `column`, `function` |
 | `typeError` | an operator, function, index, `repeat`, `for … in`, `add` or `remove` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
 | `divisionByZero` | `/` or `%` by `0` | `line`, `column` |

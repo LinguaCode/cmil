@@ -45,7 +45,7 @@ import {Worker} from 'node:worker_threads';
 import {messageOf} from 'cmil';
 
 const worker = new Worker(new URL('./session-worker.mjs', import.meta.url), {
-  workerData: {sourceCode: 'print "Your name?"\ninput name\nprint "Hello, " + name', language: 'en'},
+  workerData: {sourceCode: 'print("Your name?")\nname = input()\nprint("Hello, " + name)', language: 'en'},
   resourceLimits: {maxOldGenerationSizeMb: 64}
 });
 

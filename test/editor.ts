@@ -13,14 +13,15 @@ const casesOf = (sources: Source[]): Case[] =>
 describe('editor', () => {
   describe('segmentsOf', () => {
     it('splits a line into the parts an editor colors', () => {
-      assert.deepStrictEqual(segmentsOf('print 1.5 + x # hi', 'en'), [
+      assert.deepStrictEqual(segmentsOf('print(1.5 + x) # hi', 'en'), [
         {type: 'keyword', text: 'print', command: 'print'},
-        {type: 'space', text: ' '},
+        {type: 'operator', text: '('},
         {type: 'number', text: '1.5'},
         {type: 'space', text: ' '},
         {type: 'operator', text: '+'},
         {type: 'space', text: ' '},
         {type: 'name', text: 'x'},
+        {type: 'operator', text: ')'},
         {type: 'space', text: ' '},
         {type: 'comment', text: '# hi'}
       ]);
@@ -28,10 +29,10 @@ describe('editor', () => {
 
     it('reads the texts and numbers of the language, and marks the rest as other', () => {
       assert.deepStrictEqual(
-        segmentsOf('արտածել «ա» >= 2․5, 1x @', 'hy-AM').map(({type, text}) => `${type}:${text}`),
+        segmentsOf('արտածել(«ա» >= 2․5, 1x @)', 'hy-AM').map(({type, text}) => `${type}:${text}`),
         [
           'keyword:արտածել',
-          'space: ',
+          'operator:(',
           'string:«ա»',
           'space: ',
           'operator:>=',
@@ -41,7 +42,8 @@ describe('editor', () => {
           'space: ',
           'other:1x',
           'space: ',
-          'other:@'
+          'other:@',
+          'operator:)'
         ]
       );
     });

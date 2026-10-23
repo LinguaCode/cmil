@@ -14,6 +14,14 @@ const syntaxError = (line: number, token?: Token) =>
 const argumentError = (line: number, column: number, name: string, {min, max}: {min: number; max: number}) =>
   new CmilError({id: ERROR.ARGUMENT_ERROR, line, column, function: name, min, max});
 
+//the commands that are called like functions but give no value, with the counts of values they take
+const ACTIONS: Record<string, {min: number; max: number}> = {
+  [COMMAND.PRINT]: {min: 1, max: 1},
+  [COMMAND.ADD]: {min: 2, max: 2},
+  [COMMAND.REMOVE]: {min: 2, max: 2}
+};
+const NO_VALUES = {min: 0, max: 0};
+
 const isCommand = (token: Token | undefined, command: string) =>
   !!token && token.type === 'command' && token.value === command;
 const isOperator = (token: Token | undefined, operator: string) =>
@@ -22,8 +30,10 @@ const isOperator = (token: Token | undefined, operator: string) =>
 /**
  * Parses one expression of a line, from the lowest to the highest precedence:
  * or, and, not, == !=, < > <= >=, + -, * / %, unary - +, indexes like list[1], values.
+ *
+ * @param action - the tokens are the call of an action, like print(1), and nothing after it.
  */
-const parseExpression = (tokens: Token[], line: number): Expression => {
+const parseExpression = (tokens: Token[], line: number, action = false): Expression => {
   //= only stores a value, at the start of a statement; in an expression it is meant as ==
   const equals = tokens.find(token => isOperator(token, '='));
   if (equals) throw new CmilError({id: ERROR.EQUALS_ERROR, line, column: equals.column});
@@ -100,6 +110,21 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
     if (Object.hasOwn(FUNCTIONS, token.value)) {
       return nest(() => parseCall(token));
     }
+    if (token.value === COMMAND.INPUT) {
+      return nest(() => ({type: 'input', column: parseCall(token, NO_VALUES).column}));
+    }
+    //an action is a statement of its own: its call has no value
+    if (Object.hasOwn(ACTIONS, token.value)) {
+      if (!action || depth) {
+        throw new CmilError({
+          id: ERROR.NO_VALUE,
+          line,
+          column: token.column,
+          function: token.text ?? String(token.value)
+        });
+      }
+      return nest(() => parseCall(token, ACTIONS[token.value]));
+    }
 
     throw syntaxError(line, token);
   };
@@ -142,8 +167,10 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   };
 
   //the errors of a call of a function of the language name the function as written and the arguments it takes
-  const parseCall = (name: Token): Expression => {
-    const counts = FUNCTIONS[String(name.value)];
+  const parseCall = (
+    name: Token,
+    counts: {min: number; max: number} = FUNCTIONS[String(name.value)]
+  ): Expression & {type: 'call'} => {
     const fail = () => argumentError(line, name.column, name.text ?? String(name.value), counts);
     const call = parseArguments(name, fail);
     if (call.args.length < counts.min || call.args.length > counts.max) throw fail();
@@ -181,7 +208,7 @@ const parseExpression = (tokens: Token[], line: number): Expression => {
   const parseAnd = binary(parseNot, token => isCommand(token, COMMAND.AND));
   const parseOr = binary(parseAnd, token => isCommand(token, COMMAND.OR));
 
-  const node = parseOr();
+  const node = action ? parseValue() : parseOr();
   if (index !== tokens.length) throw syntaxError(line, tokens[index]);
 
   return node;
@@ -227,8 +254,6 @@ const parseParameters = (tokens: Token[], line: number): string[] => {
 //the expressions of a statement, without those of its blocks
 const expressionsOf = (statement: Statement): (Expression | undefined)[] => {
   switch (statement.type) {
-    case 'input':
-      return [];
     case 'print':
     case 'assign':
     case 'return':
@@ -371,16 +396,14 @@ export const parse = (lines: Line[]): Statement[] => {
 
     if (first.type !== 'command') throw syntaxError(line, first);
 
+    if (Object.hasOwn(ACTIONS, first.value)) {
+      const {args} = parseExpression(tokens, line, true) as Expression & {type: 'call'};
+      if (first.value === COMMAND.PRINT) return {type: 'print', expression: args[0], line};
+      //add(list, value) and remove(list, value)
+      return {type: first.value === COMMAND.ADD ? 'add' : 'remove', target: args[0], expression: args[1], line};
+    }
+
     switch (first.value) {
-      case COMMAND.PRINT:
-        return {type: 'print', expression: parseExpression(rest, line), line};
-      case COMMAND.INPUT: {
-        //input name: it only reads, so a question is printed before it
-        const [name, extra] = rest;
-        if (!name || name.type !== 'identifier') throw syntaxError(line, name ?? first);
-        if (extra) throw syntaxError(line, extra);
-        return {type: 'input', name: name.value, line};
-      }
       case COMMAND.IF:
         return parseIf(rest, line, level);
       case COMMAND.WHILE:
@@ -388,19 +411,6 @@ export const parse = (lines: Line[]): Statement[] => {
       case COMMAND.REPEAT: {
         if (!isCommand(rest[rest.length - 1], COMMAND.TIMES)) throw syntaxError(line, rest[rest.length - 1] ?? first);
         return {type: 'repeat', count: condition(rest, line, COMMAND.TIMES), body: parseBody(level, true), line};
-      }
-      case COMMAND.ADD:
-      case COMMAND.REMOVE: {
-        //add a value into a list, or remove it out of a list
-        const separator = first.value === COMMAND.ADD ? COMMAND.INTO : COMMAND.OUT_OF;
-        const at = rest.findIndex(token => isCommand(token, separator));
-        if (at < 0) throw syntaxError(line, rest[rest.length - 1] ?? first);
-        return {
-          type: first.value === COMMAND.ADD ? 'add' : 'remove',
-          expression: parseExpression(rest.slice(0, at), line),
-          target: parseExpression(rest.slice(at + 1), line),
-          line
-        };
       }
       case COMMAND.FOR: {
         //for name from a to b, for name from a to b step c, or for name in a list or a text

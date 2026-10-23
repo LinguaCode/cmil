@@ -1,9 +1,9 @@
 /**
  * Compiles the statements of a program into a flat list of instructions with jumps,
- * so the interpreter runs them in a loop and can pause at any input.
+ * so the interpreter runs them in a loop and can pause at any input().
  *
  * Instructions:
- * - print {expression}, input {name}, assign {name, expression}
+ * - print {expression}, assign {name, expression}
  * - setItem {target, index, expression}, add {expression, target}, remove {expression, target}: change a list
  * - jump {target}, jumpUnless {expression, target}, jumpIf {expression, target}
  * - repeatStart {slot, expression}, repeatTest {slot, target}: the passes left of a repeat loop, counted once
@@ -13,7 +13,7 @@
  *
  * The instructions of the functions follow the end of the program.
  */
-import {callsOf} from './tree.ts';
+import {pausesOf} from './tree.ts';
 import type {Expression, Instruction, Program, Statement, UserFunction} from './types.ts';
 
 //a jump whose target is patched once the target is compiled
@@ -27,8 +27,6 @@ type Loop = {
 //the expressions of an instruction
 const expressionsOf = (instruction: Instruction): (Expression | undefined)[] => {
   switch (instruction.op) {
-    case 'input':
-      return [];
     case 'print':
     case 'assign':
     case 'return':
@@ -84,9 +82,6 @@ export const compile = (statements: Statement[]): Program => {
     switch (node.type) {
       case 'print':
         emit({op: 'print', expression: node.expression, line});
-        break;
-      case 'input':
-        emit({op: 'input', name: node.name, line});
         break;
       case 'assign':
         emit({op: 'assign', name: node.name, expression: node.expression, line});
@@ -194,7 +189,7 @@ export const compile = (statements: Statement[]): Program => {
     }
   }
 
-  const replays = instructions.map(instruction => expressionsOf(instruction).some(node => callsOf(node).length));
+  const replays = instructions.map(instruction => expressionsOf(instruction).some(node => pausesOf(node).length));
 
   return {instructions, slots, functions, replays};
 };

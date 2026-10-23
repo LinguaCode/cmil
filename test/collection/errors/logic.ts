@@ -6,7 +6,7 @@ const sources: Source[] = [
     sources: [
       {
         title: 'undefined variable',
-        code: 'print X',
+        code: 'print(X)',
         errorId: 'undefinedVariable',
         errorParam: {
           variable: 'x',
@@ -15,7 +15,7 @@ const sources: Source[] = [
       },
       {
         title: 'output before an error',
-        code: 'print 1\nprint X',
+        code: 'print(1)\nprint(X)',
         errorId: 'undefinedVariable',
         errorParam: {
           variable: 'x',
@@ -25,7 +25,7 @@ const sources: Source[] = [
       },
       {
         title: 'undefined variable in a block',
-        code: 'x = 1\nif x == 1\n    print y',
+        code: 'x = 1\nif x == 1\n    print(y)',
         errorId: 'undefinedVariable',
         errorParam: {
           variable: 'y',
@@ -42,12 +42,12 @@ const sources: Source[] = [
       },
       {
         title: 'Big loop: overload',
-        code: 'repeat 1000000 times\n    print 1010101010',
+        code: 'repeat 1000000 times\n    print(1010101010)',
         errorId: 'timeout'
       },
       {
         title: 'Infinity loop',
-        code: 'while 1 < 4\n    print 123',
+        code: 'while 1 < 4\n    print(123)',
         errorId: 'timeout'
       }
     ]
