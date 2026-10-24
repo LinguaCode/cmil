@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Línea {line}: no existe la función {function}.',
     noValue: 'Línea {line}: {function} no devuelve ningún valor.',
     typeError: 'Línea {line}: {operator} no funciona con estos valores.',
+    listAsText:
+      'Línea {line}: una lista no se imprime tal cual; une sus elementos en un texto con {join}, o imprímelos uno a uno.',
     conditionError: 'Línea {line}: una condición debe ser verdadera o falsa.',
     divisionByZero: 'Línea {line}: división entre cero.',
     mathError: 'Línea {line}: {operator} no tiene resultado para este valor.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Línea {line}: {target} no puede escribir este programa: {name} recibe valores de dos tipos, como un número y un texto.',
     mixedItems:
-      'Línea {line}: {target} no puede escribir este programa: una lista tiene elementos de dos tipos, como números y textos.'
+      'Línea {line}: {target} no puede escribir este programa: una lista tiene elementos de dos tipos, como números y textos.',
+    fixedArrays:
+      'Línea {line}: {target} no puede escribir este programa con los arrays fijos de un primer curso, como una lista de listas o una función que da una lista.'
   }
 };
 

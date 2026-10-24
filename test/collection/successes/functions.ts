@@ -15,15 +15,45 @@ const sources: Source[] = [
         output: '6'
       },
       {
+        title: 'a function calls one defined after it',
+        code: 'function a()\n    return b() + 1\nfunction b()\n    return 1\nprint(a())',
+        output: '2'
+      },
+      {
+        title: 'a function gives a text it makes',
+        code: 'function greet(name)\n    return "Hi, " + name + "!"\nprint(greet("Ani"))',
+        output: 'Hi, Ani!'
+      },
+      {
+        title: 'a function that is never called',
+        code: 'function greet(name)\n    message = "Hi, " + name\n    print(message)\nprint("done")',
+        output: 'done'
+      },
+      {
         title: 'a call as a statement',
         code: 'function greet(name)\n    print("Hello, " + name)\ngreet("Ani")\ngreet("Aram")',
         output: 'Hello, Ani\nHello, Aram'
+      },
+      {
+        title: 'a call as a statement of a function that gives a value',
+        code: 'function f()\n    print(1)\n    return 2\nf()',
+        output: '1'
       },
       {title: 'without parameters', code: 'function hello()\n    return "hi"\nprint(hello())', output: 'hi'},
       {
         title: 'several parameters',
         code: 'function area(width, height)\n    return width * height\nprint(area(3, 4))',
         output: '12'
+      },
+      {
+        title: 'seven parameters',
+        code: 'function sum(a, b, c, d, f, g, h)\n    return a + b + c + d + f + g + h\nfunction last(a, b, c, d, f, g, h)\n    print(h)\nprint(sum(1, 2, 3, 4, 5, 6, 7))\nlast(1, 2, 3, 4, 5, 6, "seven")',
+        output: '28\nseven'
+      },
+      {
+        title: 'parameters the function changes',
+        code: 'function count_down(n, word)\n    while n > 0\n        word = word + "!"\n        print(word)\n        n = n - 1\ncount_down(2, "go")',
+        output: 'go!\ngo!!'
       },
       {
         title: 'calls in calls',
@@ -51,9 +81,24 @@ const sources: Source[] = [
         output: '50\n1'
       },
       {
+        title: 'a variable and a parameter can have the name of a function',
+        code: 'function total(total)\n    return total + 1\ntotal = total(2)\nprint(total)\nprint(total(total))',
+        output: '3\n4'
+      },
+      {
         title: 'a list given to a function is shared',
-        code: 'function fill(list)\n    add(list, 0)\nnumbers = []\nfill(numbers)\nfill(numbers)\nprint(numbers)',
-        output: '[0, 0]'
+        code: 'function fill(list)\n    add(list, 0)\nnumbers = []\nfill(numbers)\nfill(numbers)\nprint(join(numbers, ", "))',
+        output: '0, 0'
+      },
+      {
+        title: 'a list written in place, given to a function that changes it',
+        code: 'function first_added(list)\n    add(list, 1)\n    return list[1]\nprint(first_added([]))',
+        output: '1'
+      },
+      {
+        title: 'a list a function gives, and its items',
+        code: 'function pair()\n    return [5, 6]\ni = 1\nprint(pair()[2] + pair()[i])',
+        output: '11'
       },
       {
         title: 'a function asks for input',

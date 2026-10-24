@@ -90,6 +90,7 @@ export const ERROR = {
   UNDEFINED_FUNCTION: 'undefinedFunction',
   NO_VALUE: 'noValue',
   TYPE_ERROR: 'typeError',
+  LIST_AS_TEXT: 'listAsText',
   CONDITION_ERROR: 'conditionError',
   DIVISION_BY_ZERO: 'divisionByZero',
   MATH_ERROR: 'mathError',

@@ -73,6 +73,8 @@ const translation: Translation = {
     undefinedFunction: 'Vrstica {line}: funkcije {function} ni.',
     noValue: 'Vrstica {line}: {function} ne vrne vrednosti.',
     typeError: 'Vrstica {line}: {operator} ne deluje s temi vrednostmi.',
+    listAsText:
+      'Vrstica {line}: seznam se ne izpiše tak, kot je; združite njegove elemente v besedilo z {join} ali jih izpišite enega za drugim.',
     conditionError: 'Vrstica {line}: pogoj mora biti resničen ali neresničen.',
     divisionByZero: 'Vrstica {line}: deljenje z nič.',
     mathError: 'Vrstica {line}: {operator} za to vrednost nima rezultata.',
@@ -87,7 +89,9 @@ const translation: Translation = {
     mixedTypes:
       'Vrstica {line}: {target} tega programa ne more zapisati: {name} dobi vrednosti dveh vrst, na primer število in besedilo.',
     mixedItems:
-      'Vrstica {line}: {target} tega programa ne more zapisati: seznam ima elemente dveh vrst, na primer števila in besedila.'
+      'Vrstica {line}: {target} tega programa ne more zapisati: seznam ima elemente dveh vrst, na primer števila in besedila.',
+    fixedArrays:
+      'Vrstica {line}: {target} tega programa ne more zapisati s fiksnimi tabelami prvega tečaja, na primer seznama seznamov ali funkcije, ki vrne seznam.'
   }
 };
 

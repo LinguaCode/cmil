@@ -15,6 +15,8 @@ export type Case = {
   errorParam?: {
     line?: number;
     variable?: string;
+    //the word of join in the program's language, which a listAsText names
+    join?: string;
   };
   todo?: string;
   skip?: string;

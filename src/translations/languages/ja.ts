@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: '{line} 行目: 関数 {function} はありません。',
     noValue: '{line} 行目: {function} は値を返しません。',
     typeError: '{line} 行目: {operator} はこれらの値には使えません。',
+    listAsText:
+      '{line} 行目: リストはそのまま表示できません。{join} で項目をつないでテキストにするか、一つずつ表示してください。',
     conditionError: '{line} 行目: 条件は真か偽でなければなりません。',
     divisionByZero: '{line} 行目: 0 で割ることはできません。',
     mathError: '{line} 行目: この値では {operator} の結果がありません。',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       '{line} 行目: {target} ではこのプログラムを書けません。{name} に数と文字列のような 2 種類の値が入ります。',
     mixedItems:
-      '{line} 行目: {target} ではこのプログラムを書けません。リストに数と文字列のような 2 種類の要素があります。'
+      '{line} 行目: {target} ではこのプログラムを書けません。リストに数と文字列のような 2 種類の要素があります。',
+    fixedArrays:
+      '{line} 行目: {target} では入門の固定長配列でこのプログラムを書けません。リストのリストや、リストを返す関数などです。'
   }
 };
 

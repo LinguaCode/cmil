@@ -74,6 +74,8 @@ const translation: Translation = {
     undefinedFunction: 'Line {line}: there is no function {function}.',
     noValue: 'Line {line}: {function} returns no value.',
     typeError: "Line {line}: {operator} doesn't work with these values.",
+    listAsText:
+      "Line {line}: a list isn't printed as it is; join its items into a text with {join}, or print them one by one.",
     conditionError: 'Line {line}: a condition must be true or false.',
     divisionByZero: 'Line {line}: division by zero.',
     mathError: 'Line {line}: {operator} has no result for this value.',
@@ -87,7 +89,10 @@ const translation: Translation = {
   conversion: {
     mixedTypes:
       "Line {line}: {target} can't write this program: {name} gets values of two kinds, like a number and a text.",
-    mixedItems: "Line {line}: {target} can't write this program: a list has items of two kinds, like numbers and texts."
+    mixedItems:
+      "Line {line}: {target} can't write this program: a list has items of two kinds, like numbers and texts.",
+    fixedArrays:
+      "Line {line}: {target} can't write this program with the fixed arrays of a first course, like a list of lists or a function that gives a list."
   }
 };
 

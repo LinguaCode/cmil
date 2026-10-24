@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Riga {line}: non esiste la funzione {function}.',
     noValue: 'Riga {line}: {function} non restituisce un valore.',
     typeError: 'Riga {line}: {operator} non funziona con questi valori.',
+    listAsText:
+      "Riga {line}: una lista non si stampa così com'è; unisci i suoi elementi in un testo con {join}, oppure stampali uno alla volta.",
     conditionError: 'Riga {line}: una condizione deve essere vera o falsa.',
     divisionByZero: 'Riga {line}: divisione per zero.',
     mathError: 'Riga {line}: {operator} non ha risultato per questo valore.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Riga {line}: {target} non può scrivere questo programma: {name} riceve valori di due tipi, come un numero e un testo.',
     mixedItems:
-      'Riga {line}: {target} non può scrivere questo programma: una lista ha elementi di due tipi, come numeri e testi.'
+      'Riga {line}: {target} non può scrivere questo programma: una lista ha elementi di due tipi, come numeri e testi.',
+    fixedArrays:
+      'Riga {line}: {target} non può scrivere questo programma con gli array fissi di un primo corso, come una lista di liste o una funzione che dà una lista.'
   }
 };
 

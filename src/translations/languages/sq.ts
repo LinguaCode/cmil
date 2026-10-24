@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Rreshti {line}: nuk ka funksion {function}.',
     noValue: 'Rreshti {line}: {function} nuk kthen asnjë vlerë.',
     typeError: 'Rreshti {line}: {operator} nuk punon me këto vlera.',
+    listAsText:
+      'Rreshti {line}: një listë nuk shtypet ashtu siç është; bashko elementet e saj në një tekst me {join}, ose shtypi ato një nga një.',
     conditionError: 'Rreshti {line}: një kusht duhet të jetë i vërtetë ose i rremë.',
     divisionByZero: 'Rreshti {line}: pjesëtim me zero.',
     mathError: 'Rreshti {line}: {operator} nuk ka rezultat për këtë vlerë.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: {name} merr vlera të dy llojeve, si një numër dhe një tekst.',
     mixedItems:
-      'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: një listë ka elemente të dy llojeve, si numra dhe tekste.'
+      'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: një listë ka elemente të dy llojeve, si numra dhe tekste.',
+    fixedArrays:
+      'Rreshti {line}: {target} nuk mund ta shkruajë këtë program me vargjet fikse të një kursi të parë, si një listë listash ose një funksion që jep një listë.'
   }
 };
 

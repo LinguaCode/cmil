@@ -73,6 +73,8 @@ const translation: Translation = {
     undefinedFunction: 'السطر {line}: لا توجد دالة باسم {function}.',
     noValue: 'السطر {line}: الدالة {function} لا ترجع قيمة.',
     typeError: 'السطر {line}: لا يعمل {operator} مع هذه القيم.',
+    listAsText:
+      'السطر {line}: لا تُطبع القائمة كما هي؛ اجمع عناصرها في نص باستخدام {join}، أو اطبعها واحدًا تلو الآخر.',
     conditionError: 'السطر {line}: يجب أن يكون الشرط صحيحًا أو خاطئًا.',
     divisionByZero: 'السطر {line}: قسمة على صفر.',
     mathError: 'السطر {line}: ليس لـ {operator} نتيجة لهذه القيمة.',
@@ -85,7 +87,9 @@ const translation: Translation = {
   },
   conversion: {
     mixedTypes: 'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج، فـ {name} يأخذ قيمًا من نوعين، مثل رقم ونص.',
-    mixedItems: 'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج، ففي القائمة عناصر من نوعين، مثل أرقام ونصوص.'
+    mixedItems: 'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج، ففي القائمة عناصر من نوعين، مثل أرقام ونصوص.',
+    fixedArrays:
+      'السطر {line}: لا تستطيع {target} كتابة هذا البرنامج بالمصفوفات الثابتة لدرس أول، مثل قائمة من القوائم أو دالة تعطي قائمة.'
   }
 };
 

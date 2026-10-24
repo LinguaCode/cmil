@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Línia {line}: no existeix la funció {function}.',
     noValue: 'Línia {line}: {function} no retorna cap valor.',
     typeError: 'Línia {line}: {operator} no funciona amb aquests valors.',
+    listAsText:
+      "Línia {line}: una llista no s'escriu tal com és; uneix-ne els elements en un text amb {join}, o escriu-los un per un.",
     conditionError: 'Línia {line}: una condició ha de ser certa o falsa.',
     divisionByZero: 'Línia {line}: divisió per zero.',
     mathError: 'Línia {line}: {operator} no té resultat per a aquest valor.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Línia {line}: {target} no pot escriure aquest programa: {name} rep valors de dos tipus, com un nombre i un text.',
     mixedItems:
-      'Línia {line}: {target} no pot escriure aquest programa: una llista té elements de dos tipus, com nombres i textos.'
+      'Línia {line}: {target} no pot escriure aquest programa: una llista té elements de dos tipus, com nombres i textos.',
+    fixedArrays:
+      'Línia {line}: {target} no pot escriure aquest programa amb les taules fixes d’un primer curs, com una llista de llistes o una funció que dona una llista.'
   }
 };
 

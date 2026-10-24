@@ -73,6 +73,8 @@ const translation: Translation = {
     undefinedFunction: 'Riadok {line}: funkcia {function} neexistuje.',
     noValue: 'Riadok {line}: {function} nevracia žiadnu hodnotu.',
     typeError: 'Riadok {line}: {operator} s týmito hodnotami nefunguje.',
+    listAsText:
+      'Riadok {line}: zoznam sa nevypisuje celý, ako je; spojte jeho prvky do textu pomocou {join}, alebo ich vypíšte jeden po druhom.',
     conditionError: 'Riadok {line}: podmienka musí byť pravdivá alebo nepravdivá.',
     divisionByZero: 'Riadok {line}: delenie nulou.',
     mathError: 'Riadok {line}: {operator} pre túto hodnotu nemá výsledok.',
@@ -87,7 +89,9 @@ const translation: Translation = {
     mixedTypes:
       'Riadok {line}: {target} tento program nedokáže napísať: {name} dostáva hodnoty dvoch druhov, napríklad číslo a text.',
     mixedItems:
-      'Riadok {line}: {target} tento program nedokáže napísať: zoznam má položky dvoch druhov, napríklad čísla a texty.'
+      'Riadok {line}: {target} tento program nedokáže napísať: zoznam má položky dvoch druhov, napríklad čísla a texty.',
+    fixedArrays:
+      'Riadok {line}: {target} tento program s pevnými poľami prvého kurzu nedokáže napísať, napríklad zoznam zoznamov alebo funkciu, ktorá vracia zoznam.'
   }
 };
 

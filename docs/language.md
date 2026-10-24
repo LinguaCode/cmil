@@ -36,7 +36,7 @@ print("Hello")
 - **Numbers:** `617`, `2.5`. On Armenian keyboards `․` is also a decimal point. Whole numbers are printed whole, others with 12 significant digits, and numbers are compared as they are printed: `0.1 + 0.2` prints `0.3` and equals `0.3`. Numbers are always printed with all their digits, like `0.0000001`, never as `1e-7`.
 - **Texts** in `«…»`, `"…"` or `'…'` in every language, and in the quotes of the program's language, like `“…”` in English, `„…“` in German or `「…」` in Japanese; [translations.md](translations.md) lists them. A backslash takes the next character as it is (`«a \» b»`), `\n` is a new line and `\t` a tab. Code in braces puts its value into the text (see **Values in texts** below), so a brace that stays a brace is written `\{`. `translate()` writes texts in the main quotes of the language it translates into, like `«…»` in Armenian.
 - **Booleans:** `true` and `false`, printed in the words of the program's language, for example `ճիշտ` in Armenian.
-- **Lists:** `[1, 2, "a"]`, or `[]` for an empty list. A list holds any values, also lists. See **Lists** below.
+- **Lists:** `[1, 2, "a"]`, or `[]` for an empty list. A list holds any values, also lists. A list is no text: it isn't printed or joined into a text as it is, and lists aren't compared. See **Lists** below.
 - **Constants:** `pi` and `e`.
 
 Values are never converted into another type: `"5" == 5` is `false`, and an operator or function with a value it doesn't take is a `typeError`.
@@ -77,7 +77,7 @@ print("Hi, {name}! You have {apples} apples, and {apples * 2} after a gift.")
 ```
 prints `Hi, Ani! You have 3 apples, and 6 after a gift.`
 
-- Any expression goes in the braces, like `{length_of(fruits)}`, `{age + 1}` or `{input()}`, also with texts of its own: `{name + "!"}`. Their values are joined into the text as `+` joins them, from left to right.
+- Any expression goes in the braces, like `{length_of(fruits)}`, `{age + 1}` or `{input()}`, also with texts of its own: `{name + "!"}`. Their values are joined into the text as `+` joins them, from left to right, so a list in them is a `listAsText`: `{join(fruits, ", ")}` puts its items in.
 - `\{` is a brace that stays a brace; a `}` outside code is a `}`. Braces without code, `{}`, and a `{` that isn't closed are a `syntaxError`.
 - Every text reads braces, in every quote: `«{x}»`, `"{x}"` and `'{x}'`.
 
@@ -90,15 +90,15 @@ From the lowest to the highest precedence:
 | `or` | either is true | booleans; the right side is skipped when the left one is `true` |
 | `and` | both are true | booleans; the right side is skipped when the left one is `false` |
 | `not` | the opposite | a boolean |
-| `==`, `!=` | equal, not equal | any; values of different types are never equal |
+| `==`, `!=` | equal, not equal | numbers, texts and booleans; values of different types are never equal, and a list is a `typeError` |
 | `<`, `>`, `<=`, `>=` | comparisons | two numbers, or two texts in alphabetical order |
-| `in` | a value in a list, or a text in a text | `"🍎" in basket` is `true` when an item of `basket` is `==` to it; `"ell" in "hello"` is `true` |
-| `+`, `-` | add, subtract | numbers; `+` also joins a text with any value |
+| `in` | a value in a list, or a text in a text | `"🍎" in basket` is `true` when an item of `basket` is `==` to it; `"ell" in "hello"` is `true`; a list as the value is a `typeError` |
+| `+`, `-` | add, subtract | numbers; `+` also joins a text with a number, a text or a boolean |
 | `*`, `/`, `%` | multiply, divide, remainder | numbers; dividing by `0` is a `divisionByZero` |
 | `-`, `+` before a value | negative, positive | a number |
 | `x[i]` | the item `i` of a list, or the letter `i` of a text | see **Lists** |
 
-Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: true`. Two lists are equal when their items are equal, in the same order.
+Parentheses group: `(1 + 2) * (3 - 4)` is `-3`. A value joined into a text becomes its text: `"x: " + (5 > 3)` is `x: true`; a list joined into a text is a `listAsText`. Lists aren't compared: their items are, one by one.
 
 ## Conditions
 
@@ -148,18 +148,19 @@ for fruit in ["apple", "pear"]
 fruits = ["apple", "pear"]
 add(fruits, "plum")
 fruits[1] = "cherry"
-print(fruits)
+print(join(fruits, ", "))
 print(length_of(fruits))
 print(fruits[3])
 ```
-prints `["cherry", "pear", "plum"]`, `3` and `plum`.
+prints `cherry, pear, plum`, `3` and `plum`.
 
 - `list[i]` is the item at `i`, counted from 1, and `list[i] = value` replaces it. An `i` that isn't a whole number from 1 to the length of the list is an `indexError`. Lists in lists have items of items: `table[2][1]`.
-- `add(list, value)` puts the value at the end of the list, and `remove(list, value)` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`. The list comes first: `add("plum", fruits)` is a `typeError`.
+- `add(list, value)` puts the value at the end of the list, and `remove(list, value)` takes out its first item `==` to the value; a value the list doesn't have is an `itemError`, and a list as the value a `typeError`. The list comes first: `add("plum", fruits)` is a `typeError`.
 - `value in list` is `true` when the list has the value.
 - `text[i]` is a letter of a text; letters can be read but not replaced. An emoji is one letter.
 - A list is shared, not copied, when it is assigned: after `b = a`, `add(b, 1)` adds to `a` too.
-- A list is printed with its items in brackets, texts in the main quotes of the program's language: `[1, "a", true]` in English, `[1, «ա», ճիշտ]` in Armenian. A list inside itself is printed as `[...]`.
+- A list is no text. Printing it, joining it into a text with `+` or `{…}`, or `to_text` of it is a `listAsText`, whose message says what to do: `join(list, ", ")` puts its items into a text, like `cherry, pear, plum`, and a `for … in` loop prints them one by one.
+- Lists aren't compared: `==` and `!=` of a list, and `in` or `remove` with a list as the value, are a `typeError`; their items are compared one by one.
 
 ## Math functions
 
@@ -184,9 +185,9 @@ Math functions take numbers. Another count of arguments, or a missing `(` or `)`
 | `length_of(x)` | the count of items of a list, or of letters of a text |
 | `uppercase(t)`, `lowercase(t)` | a text in capital or small letters |
 | `to_number(t)` | the number a text holds, read like an input: `to_number("2.5")` is `2.5`; a text that isn't a number is a `typeError` |
-| `to_text(x)` | a value as it is printed: `to_text(5) + to_text(5)` is `55` |
+| `to_text(x)` | a number, a text or a boolean as it is printed: `to_text(5) + to_text(5)` is `55`; a list is a `listAsText` |
 | `split(t)`, `split(t, separator)` | a list of the words of a text, or of its parts between a separator: `split("a,b", ",")` is `["a", "b"]`; an empty separator gives the letters |
-| `join(list)`, `join(list, separator)` | the items of a list as they are printed, joined into a text: `join(["a", "b"], ", ")` is `a, b` |
+| `join(list)`, `join(list, separator)` | the items of a list as they are printed, joined into a text: `join(["a", "b"], ", ")` is `a, b`; an item that is a list is a `listAsText` |
 
 Another value than these functions take is a `typeError`.
 
@@ -212,7 +213,7 @@ prints `12` and `Hello, Ani`.
 
 ## Output format
 
-Every `print` prints one line, also an empty one. Booleans are printed in the words of the program's language, numbers as described under **Values**, texts as written, and lists as described under **Lists**.
+Every `print` prints one line, also an empty one. Booleans are printed in the words of the program's language, numbers as described under **Values**, and texts as written; a list isn't printed, as described under **Lists**.
 
 ## Errors
 
@@ -228,12 +229,13 @@ A session that ends with an error returns it as `{id, …}`, with the line and, 
 | `undefinedVariable` | a variable is read before it is stored | `line`, `column`, `variable` |
 | `undefinedFunction` | a call of a function the program doesn't define | `line`, `column`, `function` |
 | `noValue` | the value of a call of a function that returned without one, or of `print`, `add` or `remove`, which give none | `line`, `column`, `function` |
-| `typeError` | an operator, function, index, `repeat`, `for … in`, `add` or `remove` gets a value it doesn't take, like `"abc" * 2` | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
+| `typeError` | an operator, function, index, `repeat`, `for … in`, `add` or `remove` gets a value it doesn't take, like `"abc" * 2`, or lists are compared | `line`, `column`, `operator`: the word of the program's language, or `[]` for an index |
+| `listAsText` | a list is printed, joined into a text with `+` or `{…}`, given to `to_text`, or is an item `join` joins | `line`, `join`: the word of `join` in the program's language, which the message names |
 | `conditionError` | a condition is not `true` or `false`, like `if 0` | `line` |
 | `divisionByZero` | `/` or `%` by `0` | `line`, `column` |
 | `mathError` | a math function or operator has no result, like `square_root(-1)` | `line`, `column`, `operator` |
 | `indexError` | an index outside a list or a text, like `[1, 2][3]` | `line`, `column` of the `[`, `index` |
-| `itemError` | `remove` of a value the list doesn't have | `line`, `item`: the value as a list prints it |
+| `itemError` | `remove` of a value the list doesn't have | `line`, `item`: the value as it is printed, a text in the main quotes of the program's language |
 | `memoryLimit` | a text, a list, or the output of one step, grows too long | `line` |
 | `recursionLimit` | more than 1000 calls of functions inside each other | `line` |
 | `timeout` | the program runs more steps than its limit between two inputs | none |

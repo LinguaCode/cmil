@@ -8,7 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  # lint, types, the tests but those that build and run the converted programs, and the built package
+  check:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,8 +25,74 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+        env:
+          CMIL_TARGETS: ''
       - name: Run the built package
         run: >-
           node --input-type=module -e "import {Session} from 'cmil';
           const step = new Session('print(1)', 'en').run(); console.log(step.output);
           if (step.state !== 'end' || step.error) process.exit(1);"
+
+  # the spec programs converted, built and run, each group of targets with only its own compilers
+  convert:
+    name: convert (${{ matrix.group }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # the runner's g++ and gcc, and NASM
+          - group: C, C++ and assembly
+            targets: cpp,c,x86-64,x86-64-att,x86-64-nasm
+            apt: nasm
+          # Java 25, which builds and runs the programs in Java, and in Kotlin with the runner's kotlinc
+          - group: Java and Kotlin
+            targets: java,java-classic,kotlin
+            java: true
+          # the runner's .NET
+          - group: C# and Visual Basic
+            targets: csharp,csharp-classic,visualbasic
+          # the runner's Python, Node.js, PHP and Ruby, and Lua and Tcl
+          - group: Python, JavaScript, PHP, Ruby, Lua and Tcl
+            targets: python,javascript,php,ruby,lua,tcl
+            apt: lua5.4 tcl
+          # Free Pascal, gfortran and GnuCOBOL, and FreeBASIC with ncurses, which it links its programs with
+          - group: Pascal, BASIC, Fortran and COBOL
+            targets: pascal,basic,fortran,cobol
+            apt: fp-compiler gfortran gnucobol3 libncurses-dev
+            freebasic: true
+          # Go, with gofmt, which checks the layout of the Go programs, and the runner's rustc and swiftc
+          - group: Go, Rust and Swift
+            targets: go,rust,swift
+            go: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - if: matrix.apt
+        run: sudo apt-get update && sudo apt-get install -y ${{ matrix.apt }}
+      # FreeBASIC's build for Ubuntu 22.04, from SourceForge, checked by the SHA-1 its release on GitHub gives, and
+      # installed from the folder it is unpacked in
+      - if: matrix.freebasic
+        run: |
+          cd "$RUNNER_TEMP"
+          curl -sSfL -o freebasic.tar.xz https://downloads.sourceforge.net/project/fbc/FreeBASIC-1.10.1/Binaries-Linux/FreeBASIC-1.10.1-ubuntu-22.04-x86_64.tar.xz
+          echo "3922c78a427c50bd637462b64b661a44569cb7d9  freebasic.tar.xz" | sha1sum -c
+          tar -xJf freebasic.tar.xz
+          cd FreeBASIC-1.10.1-ubuntu-22.04-x86_64 && sudo ./install.sh -i
+      - if: matrix.go
+        uses: actions/setup-go@v7
+        with:
+          go-version: stable
+          cache: false
+      - if: matrix.java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+      - run: npm ci
+      - run: node --test --test-timeout=5000 test/convert.ts
+        env:
+          CMIL_TARGETS: ${{ matrix.targets }}

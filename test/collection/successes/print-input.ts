@@ -34,9 +34,9 @@ const sources: Source[] = [
       },
       {
         title: 'inputs in a list',
-        code: 'answers = [input(), input()]\nprint(answers)',
+        code: 'answers = [input(), input()]\nprint(join(answers, ", "))',
         inputs: [5, 'five'],
-        output: '[5, "five"]'
+        output: '5, five'
       },
       {
         title: 'input in the condition of while',
@@ -51,6 +51,12 @@ const sources: Source[] = [
         output: 'Password?\nPassword?\nWelcome'
       },
       {
+        title: 'an answer in arithmetic',
+        code: 'print(input() * 2)',
+        inputs: [21],
+        output: '42'
+      },
+      {
         title: 'input in a function, and as its argument',
         code: 'function ask(question)\n    print(question)\n    return input()\nfunction twice(x)\n    return x + x\nprint(twice(ask("A number?")))\nprint(twice(input()))',
         inputs: [21, 'ab'],
@@ -63,9 +69,14 @@ const sources: Source[] = [
         output: '3 apples and 5 pears make 8 fruits.'
       },
       {
+        title: 'seven values in a text',
+        code: 'print("{1} {2} {3} {4} {5} {6} {7}")',
+        output: '1 2 3 4 5 6 7'
+      },
+      {
         title: 'values in a text as print writes them',
-        code: 'print("{0.1 + 0.2} {2 > 1} {[1, "a"]} {7 / 2}")',
-        output: '0.3 true [1, "a"] 3.5'
+        code: 'print("{0.1 + 0.2} {2 > 1} {7 / 2}")',
+        output: '0.3 true 3.5'
       },
       {title: 'a brace that stays a brace', code: 'print("\\{x} and }")', output: '{x} and }'},
       {title: 'a text in the braces of a text', code: 'name = "Ani"\nprint("{name + "!"}")', output: 'Ani!'},

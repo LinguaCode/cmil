@@ -224,35 +224,31 @@ describe('core', () => {
       });
     });
 
-    it('an itemError prints the item as in a list of the language', () => {
+    it('an itemError names the item in the quotes of the language, and a list is never an item to remove', () => {
       assert.deepStrictEqual(run('զ = [1]\nհեռացնել(զ, «ա»)', [], 'hy-AM').error, {
         id: 'itemError',
         line: 2,
         item: '«ա»'
       });
-      assert.deepStrictEqual(run('b = [1]\nremove(b, [2])').error, {id: 'itemError', line: 2, item: '[2]'});
+      assert.deepStrictEqual(run('b = [[2]]\nremove(b, [2])').error, {id: 'typeError', line: 2, operator: 'remove'});
     });
 
-    it('booleans and texts in a list print in the words and quotes of the language', () => {
-      assert.deepStrictEqual(run('արտածել([ճիշտ, սխալ, "ա"])', [], 'hy-AM').output, ['[ճիշտ, սխալ, «ա»]']);
+    it('a list is no text: printing it names join in the language, which joins booleans in its words', () => {
+      assert.deepStrictEqual(run('արտածել([ճիշտ, սխալ, "ա"])', [], 'hy-AM').error, {
+        id: 'listAsText',
+        line: 1,
+        join: 'միացնել'
+      });
+      assert.deepStrictEqual(run('արտածել(միացնել([ճիշտ, սխալ, "ա"], «, »))', [], 'hy-AM').output, ['ճիշտ, սխալ, ա']);
     });
 
-    it('lists inside themselves compare', () => {
-      const code = 'a = [1]\nadd(a, a)\nb = [1]\nadd(b, b)\nc = [2]\nadd(c, c)\nprint(a == b)\nprint(a == c)';
-      assert.deepStrictEqual(run(code).output, ['true', 'false']);
-    });
-
-    it('deep lists print and compare without overflowing the stack', () => {
-      const code =
-        'x = []\ny = []\nrepeat 100000 times\n    x = [x]\n    y = [y]\nprint(x == y)\nprint(length_of(to_text(x)))';
-      assert.deepStrictEqual(run(code).output, ['true', '200002']);
-    });
-
-    it('a list shared many times is printed until its text is too long', () => {
-      const {error} = run(
-        'b = []\nrepeat 40 times\n    b = [b, b]\nprint(b == b)\nprint(length_of(b))\nprint(to_text(b))'
-      );
-      assert.deepStrictEqual(error, {id: 'memoryLimit', line: 6});
+    it('lists are not compared, also a list inside itself', () => {
+      assert.deepStrictEqual(run('a = [1]\nadd(a, a)\nprint(a == a)').error, {
+        id: 'typeError',
+        line: 3,
+        column: 9,
+        operator: '=='
+      });
     });
 
     it('a list grows to MAX_LIST_LENGTH items', () => {
@@ -427,7 +423,12 @@ describe('core', () => {
         column: 13,
         variable: 'y'
       });
-      assert.deepStrictEqual(run('արտածել(«{2 > 1} {[«ա»]}»)', [], 'hy-AM').output, ['ճիշտ [«ա»]']);
+      assert.deepStrictEqual(run('արտածել(«{2 > 1} {0.1 + 0.2}»)', [], 'hy-AM').output, ['ճիշտ 0.3']);
+      assert.deepStrictEqual(run('արտածել(«{[«ա»]}»)', [], 'hy-AM').error, {
+        id: 'listAsText',
+        line: 1,
+        join: 'միացնել'
+      });
       assert.deepStrictEqual(run('print("{")').error, {id: 'syntaxError', line: 1, column: 7});
     });
 
@@ -549,6 +550,7 @@ describe('core', () => {
       {id: 'undefinedFunction', line: 2, column: 3, function: 'abc'},
       {id: 'noValue', line: 2, column: 3, function: 'abc'},
       {id: 'typeError', line: 2, column: 3, operator: '-'},
+      {id: 'listAsText', line: 2, join: 'join'},
       {id: 'conditionError', line: 2},
       {id: 'divisionByZero', line: 2, column: 3},
       {id: 'mathError', line: 2, column: 3, operator: 'square_root'},

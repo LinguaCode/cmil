@@ -1,23 +1,26 @@
 /**
  * Python: nearly the program as it is, in Python's words, printing what the CMIL program prints. Lists count from 0,
- * real numbers are printed with up to 12 digits, and a helper prints a list as CMIL does.
+ * and real numbers are printed with up to 12 digits.
  */
 import {COMMAND} from '../../constants/index.ts';
-import TRANSLATION from '../../translations/index.ts';
+import {Grammar, POSTFIX, UNARY, fromZero, mathOf, type Code} from '../code.ts';
 import {
+  Helpers,
   Names,
   Trivia,
   Writer,
-  assignedIn,
-  changedIn,
-  fromZero,
+  changesItsList,
+  isText,
   joinedParts,
-  variablesIn,
+  negation,
+  quoted,
+  stepOf,
   type Converted
 } from '../emit.ts';
+import {branchesOf, doWhileOf, loopOf, statementsOf, type Braces} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
-import type {Expression, Statement} from '../../core/types.ts';
+import type {Expression} from '../../core/types.ts';
 
 //the words of Python, and the functions the conversion uses, which a program's names can't be
 const RESERVED = new Set(
@@ -46,31 +49,22 @@ const PRECEDENCE: Record<string, number> = {
   '-': 5,
   '*': 6,
   '/': 6,
-  '%': 6
+  '%': 6,
+  //above -, which Python writes before a number: -x ** 2 is -(x ** 2)
+  '**': UNARY + 1
 };
-const UNARY = 7;
-const POWER = 8;
-const POSTFIX = 9;
-const ATOM = 10;
 
-const HELPERS: Record<string, {imports: string[]; code: (quotes: [string, string]) => string[]}> = {
+const HELPERS: Record<string, {imports: string[]; code: () => string[]}> = {
   show: {
     imports: [],
-    code: ([open, close]) => [
-      '# a value as CMIL prints it: a list like [1, 2, "a"], with its texts in quotes, a list inside itself as [...],',
-      '# and numbers with up to 12 digits',
-      'def show(value, inside=False, around=()):',
-      '    if isinstance(value, list):',
-      '        if any(value is outer for outer in around):',
-      '            return "[...]"',
-      '        return "[" + ", ".join(show(item, True, (*around, value)) for item in value) + "]"',
+    code: () => [
+      '# a value of a variable that has values of more than one type, as CMIL prints it: a boolean in small letters,',
+      '# and a number with up to 12 digits',
+      'def show(value):',
       '    if isinstance(value, bool):',
       '        return str(value).lower()',
       '    if isinstance(value, float):',
       '        return f"{value:.12g}"',
-      '    if inside and isinstance(value, str):',
-      `        escaped = value.replace('\\\\', '\\\\\\\\').replace(${single(close)}, ${single('\\' + close)})`,
-      `        return ${single(open)} + escaped.replace('\\n', '\\\\n').replace('\\t', '\\\\t') + ${single(close)}`,
       '    return str(value)'
     ]
   },
@@ -84,12 +78,14 @@ const HELPERS: Record<string, {imports: string[]; code: (quotes: [string, string
   }
 };
 
-//a text in single quotes, for the helpers, where it has double ones
-const single = (text: string) => `'${text.replace(/[\\']/g, symbol => `\\${symbol}`)}'`;
+const py = new Grammar(PRECEDENCE);
+const name = (text: string) => py.atom(text);
 
-//a text as Python writes it, in double quotes
-const quoted = (text: string) =>
-  `"${text.replace(/[\\"\n\t]/g, symbol => ({'\\': '\\\\', '"': '\\"', '\n': '\\n', '\t': '\\t'})[symbol]!)}"`;
+//a power: a value with a sign is in brackets before **, like (-2) ** 2, and needn't be after it, like 2 ** -1
+const power = (base: Code, exponent: Code) => py.binary('**', base, exponent, [PRECEDENCE['**'] + 1, UNARY]);
+
+//Python's blocks: indented after a :, with pass for a block without statements
+const BLOCKS: Braces = {head: text => `${text}:`, tail: text => text, empty: 'pass'};
 
 /**
  * Writes a program in Python.
@@ -98,59 +94,49 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
   const names = new Names(tree.names, RESERVED);
   const trivia = new Trivia(tree.comments, sourceCode, '#', '  ');
   const imports = new Set<string>();
-  const helpers = new Set<string>();
-  const [quotes] = TRANSLATION[tree.language].quotes;
-
-  const use = (helper: string) => {
-    helpers.add(helper);
-    HELPERS[helper].imports.forEach(module => imports.add(module));
-  };
+  const helpers = new Helpers(HELPERS, imports);
 
   const typeOf = (node: Expression): Type => types.expressions.get(node) ?? 'unknown';
+  const code = (node: Expression) => py.print(expression(node));
 
-  const expression = (node: Expression, need = 0): string => {
-    const [text, precedence] = write(node);
-    return precedence < need ? `(${text})` : text;
-  };
-
-  const call = (name: string, args: string[]): [string, number] => [`${name}(${args.join(', ')})`, POSTFIX];
-  const math = (name: string, args: string[]): [string, number] => {
+  const math = (method: string, args: Code[]): Code => {
     imports.add('math');
-    return call(`math.${name}`, args);
+    return py.call(`math.${method}`, args);
   };
 
-  //a value that needs CMIL's way of printing: a list, unless of whole numbers, which Python prints the same way
-  const shown = (type: Type): boolean =>
-    type === 'mixed' || (isList(type) && type.list !== 'whole' && !(isList(type.list) && !shown(type.list)));
+  //a value of a variable that has values of more than one type, which show() prints as CMIL does
+  const shown = (type: Type): boolean => type === 'mixed';
 
   //a real number with up to 12 digits, in an f-string unless the number has a text in quotes
   const real = (node: Expression): string => {
-    const text = expression(node);
+    const text = code(node);
     return /["\\]/.test(text) ? `format(${text}, ".12g")` : `f"{${text}:.12g}"`;
   };
 
-  //a value written in an f-string: a real number with up to 12 digits, a list as CMIL prints it
+  //a value written in an f-string: a real number with up to 12 digits, a value of more than one type by show()
   const inText = (node: Expression): string => {
     const type = typeOf(node);
-    if (type === 'real') return `{${expression(node)}:.12g}`;
+    if (type === 'real') return `{${code(node)}:.12g}`;
     if (shown(type)) {
-      use('show');
-      return `{show(${expression(node)})}`;
+      helpers.use('show');
+      return `{show(${code(node)})}`;
     }
-    return `{${expression(node)}}`;
+    return `{${code(node)}}`;
   };
 
   //values joined into a text, as an f-string; with "a + b" when a part has a text in quotes of its own
   const joined = (parts: Expression[]): string => {
-    const inside = parts.filter(part => !(part.type === 'value' && typeof part.value === 'string'));
-    if (inside.some(part => /["\\{}]/.test(expression(part)))) {
+    const inside = parts.filter(part => !isText(part));
+    if (inside.some(part => /["\\{}]/.test(code(part)))) {
       return parts
-        .map(part => (typeOf(part) === 'text' ? expression(part, PRECEDENCE['+'] + 1) : asText(part)))
+        .map(part =>
+          typeOf(part) === 'text' ? py.print(py.bracketed(expression(part), PRECEDENCE['+'] + 1)) : asText(part)
+        )
         .join(' + ');
     }
     const text = parts
       .map(part =>
-        part.type === 'value' && typeof part.value === 'string'
+        isText(part)
           ? quoted(part.value)
               .slice(1, -1)
               .replace(/[{}]/g, brace => brace + brace)
@@ -160,130 +146,103 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
     return `f"${text}"`;
   };
 
-  //a value as a text: str() of a whole number, a real number with up to 12 digits, a list as CMIL prints it
+  //a value as a text: str() of a whole number, a real number with up to 12 digits, a value of more than one type by
+  //show()
   const asText = (node: Expression): string => {
     const type = typeOf(node);
-    if (type === 'text') return expression(node);
+    if (type === 'text') return code(node);
     if (type === 'real') return real(node);
     if (shown(type)) {
-      use('show');
-      return `show(${expression(node)})`;
+      helpers.use('show');
+      return `show(${code(node)})`;
     }
-    return `str(${expression(node)})`;
+    return `str(${code(node)})`;
   };
 
-  const write = (node: Expression): [string, number] => {
+  const expression = (node: Expression): Code => {
     switch (node.type) {
       case 'value':
         if (node.constant) {
           imports.add('math');
-          return [`math.${node.constant}`, POSTFIX];
+          return py.atom(`math.${node.constant}`, POSTFIX);
         }
-        if (typeof node.value === 'string') return [quoted(node.value), ATOM];
-        if (typeof node.value === 'boolean') return [node.value ? 'True' : 'False', ATOM];
-        return [String(node.value), ATOM];
+        if (typeof node.value === 'string') return name(quoted(node.value));
+        if (typeof node.value === 'boolean') return name(node.value ? 'True' : 'False');
+        return name(String(node.value));
       case 'list':
-        return [`[${node.items.map(item => expression(item)).join(', ')}]`, ATOM];
+        return py.items('[', node.items.map(expression), ']');
       case 'template':
-        return [joined(joinedParts(node, types)), ATOM];
+        return name(joined(joinedParts(node, types)));
       case 'variable':
-        return [names.of(node.name), ATOM];
+        return name(names.of(node.name));
       case 'index':
-        return [
-          `${expression(node.target, POSTFIX)}[${fromZero(node.index, position => expression(position, PRECEDENCE['-']))}]`,
-          POSTFIX
-        ];
+        return py.index(expression(node.target), fromZero(py, node.index, expression));
       case 'input':
-        return typeOf(node) === 'real' ? ['float(input())', POSTFIX] : ['input()', POSTFIX];
+        return typeOf(node) === 'real' ? py.call('float', [py.call('input', [])]) : py.call('input', []);
       case 'userCall':
-        return call(
-          names.of(node.name),
-          node.args.map(arg => expression(arg))
-        );
+        return py.call(names.of(node.name), node.args.map(expression));
       case 'call':
         return builtIn(node);
       case 'unary':
-        if (node.operator === COMMAND.NOT) return [`not ${expression(node.operand, PRECEDENCE.not)}`, PRECEDENCE.not];
-        return [`${node.operator}${expression(node.operand, UNARY)}`, UNARY];
+        if (node.operator === COMMAND.NOT) return py.unary('not ', expression(node.operand), PRECEDENCE.not);
+        return py.unary(node.operator, expression(node.operand));
       case 'binary': {
-        if (node.operator === '+' && typeOf(node) === 'text') return [joined(joinedParts(node, types)), ATOM];
+        if (node.operator === '+' && typeOf(node) === 'text') return name(joined(joinedParts(node, types)));
         const operator = node.operator === COMMAND.AND ? 'and' : node.operator === COMMAND.OR ? 'or' : node.operator;
-        const precedence = PRECEDENCE[operator];
-        return [
-          `${expression(node.left, precedence)} ${operator} ${expression(node.right, precedence + 1)}`,
-          precedence
-        ];
+        return py.binary(operator, expression(node.left), expression(node.right));
       }
     }
   };
 
-  const builtIn = (node: Expression & {type: 'call'}): [string, number] => {
-    const args = node.args.map(arg => expression(arg));
+  const builtIn = (node: Expression & {type: 'call'}): Code => {
+    const args = node.args.map(expression);
     switch (node.name) {
       case COMMAND.POW:
-        return [`${expression(node.args[0], POWER + 1)} ** ${expression(node.args[1], UNARY)}`, POWER];
+        return power(args[0], args[1]);
       case COMMAND.SQR:
-        return [`${expression(node.args[0], POWER + 1)} ** 2`, POWER];
-      case COMMAND.SQRT:
-        return math('sqrt', args);
+        return power(args[0], name('2'));
       case COMMAND.ROUND:
-        if (args.length === 1) {
-          imports.add('math');
-          return [`math.floor(${expression(node.args[0], PRECEDENCE['+'])} + 0.5)`, POSTFIX];
-        }
-        use('round_to');
-        return call('round_to', args);
+        if (args.length === 1) return math('floor', [py.binary('+', args[0], name('0.5'))]);
+        helpers.use('round_to');
+        return py.call('round_to', args);
       case COMMAND.FLOOR:
       case COMMAND.CEIL:
-      case COMMAND.SIN:
-      case COMMAND.COS:
-      case COMMAND.TAN:
         return math(node.name, args);
       case COMMAND.ABS:
-        return call('abs', args);
-      case COMMAND.ARCSIN:
-      case COMMAND.ARCCOS:
-      case COMMAND.ARCTAN:
-        return math(`a${node.name.slice(3)}`, args);
-      case COMMAND.COT:
-        imports.add('math');
-        return [`1 / math.tan(${args[0]})`, PRECEDENCE['/']];
-      case COMMAND.ARCCOT:
-        imports.add('math');
-        return [`math.pi / 2 - math.atan(${args[0]})`, PRECEDENCE['-']];
-      case COMMAND.LN:
-        return math('log', args);
-      case COMMAND.LG:
-        return math('log10', args);
+        return py.call('abs', args);
       case COMMAND.LOG:
         return math('log', [args[1], args[0]]);
       case COMMAND.RANDOM:
         imports.add('random');
-        return call('random.randint', args.length === 1 ? ['1', args[0]] : args);
+        return py.call('random.randint', args.length === 1 ? [name('1'), args[0]] : args);
       case COMMAND.LENGTH:
-        return call('len', args);
+        return py.call('len', args);
       case COMMAND.UPPER:
-        return [`${expression(node.args[0], POSTFIX)}.upper()`, POSTFIX];
+        return py.member(args[0], 'upper', []);
       case COMMAND.LOWER:
-        return [`${expression(node.args[0], POSTFIX)}.lower()`, POSTFIX];
+        return py.member(args[0], 'lower', []);
       case COMMAND.NUMBER:
-        return isNumber(typeOf(node.args[0])) ? write(node.args[0]) : call('float', args);
+        return isNumber(typeOf(node.args[0])) ? args[0] : py.call('float', args);
       case COMMAND.TEXT:
-        return [asText(node.args[0]), POSTFIX];
+        return py.atom(asText(node.args[0]), POSTFIX);
       case COMMAND.SPLIT: {
-        if (args.length === 1) return [`${expression(node.args[0], POSTFIX)}.split()`, POSTFIX];
+        if (args.length === 1) return py.member(args[0], 'split', []);
         const separator = node.args[1];
-        if (separator.type === 'value' && separator.value === '') return call('list', [args[0]]);
-        return [`${expression(node.args[0], POSTFIX)}.split(${args[1]})`, POSTFIX];
+        if (separator.type === 'value' && separator.value === '') return py.call('list', [args[0]]);
+        return py.member(args[0], 'split', [args[1]]);
       }
       case COMMAND.JOIN: {
-        const separator = args[1] ?? '""';
+        const separator = args[1] ?? name('""');
         const list = typeOf(node.args[0]);
         const items =
-          isList(list) && list.list === 'text' ? args[0] : `${asTextOf('item', list)} for item in ${args[0]}`;
-        return [`${separator}.join(${items})`, POSTFIX];
+          isList(list) && list.list === 'text'
+            ? args[0]
+            : name(`${asTextOf('item', list)} for item in ${py.print(args[0])}`);
+        return py.member(separator, 'join', [items]);
       }
     }
+    const formula = mathOf(py, node.name, args, math, () => name('math.pi'));
+    if (formula) return formula;
     throw new Error(`No Python for ${node.name}`);
   };
 
@@ -291,160 +250,127 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
   const asTextOf = (item: string, list: Type): string => {
     const type = isList(list) ? list.list : 'unknown';
     if (type === 'real') return `f"{${item}:.12g}"`;
-    if (isList(type)) {
-      use('show');
-      return `show(${item})`;
-    }
     return `str(${item})`;
   };
 
-  //what print prints: a value, an f-string of values joined into a text, a list as CMIL prints it
+  //what print prints: a value, an f-string of values joined into a text, a value of more than one type by show()
   const printed = (node: Expression): string => {
     const type = typeOf(node);
     if (type === 'real') return real(node);
     if (shown(type)) {
-      use('show');
-      return `show(${expression(node)})`;
+      helpers.use('show');
+      return `show(${code(node)})`;
     }
-    return expression(node);
+    return code(node);
   };
 
-  //the opposite of a condition: a comparison turned around, like == for !=, else with not
-  const negated = (node: Expression): string => {
-    const opposite: Record<string, string> = {'==': '!=', '!=': '==', '<': '>=', '>=': '<', '>': '<=', '<=': '>'};
-    if (node.type === 'binary' && Object.hasOwn(opposite, node.operator)) {
-      return expression({...node, operator: opposite[node.operator]});
-    }
-    if (node.type === 'unary' && node.operator === COMMAND.NOT) return expression(node.operand);
-    return `not ${expression(node, PRECEDENCE.not)}`;
-  };
-
-  const block = (out: Writer, statements: Statement[]) => {
-    if (!statements.length) out.line('pass');
-    statements.forEach(statement => {
-      trivia.before(out, statement.type === 'doWhile' ? statement.doLine : statement.line);
-      emit(out, statement);
-    });
-  };
-
-  const emit = (out: Writer, statement: Statement) => {
-    const {line} = statement;
-    const after = trivia.after(line);
-    const body = (statements: Statement[]) => out.block(() => block(out, statements));
-
-    switch (statement.type) {
-      case 'print':
-        out.line(`print(${printed(statement.expression)})${after}`, line);
-        return;
-      case 'assign':
-        out.line(`${names.of(statement.name)} = ${expression(statement.expression)}${after}`, line);
-        return;
-      case 'setItem': {
-        const index = fromZero(statement.index, position => expression(position, PRECEDENCE['-']));
-        out.line(
-          `${expression(statement.target, POSTFIX)}[${index}] = ${expression(statement.expression)}${after}`,
-          line
-        );
-        return;
-      }
-      case 'add':
-      case 'remove':
-        out.line(
-          `${expression(statement.target, POSTFIX)}.${statement.type === 'add' ? 'append' : 'remove'}(${expression(statement.expression)})${after}`,
-          line
-        );
-        return;
-      case 'call':
-        out.line(`${expression(statement.call)}${after}`, line);
-        return;
-      case 'return':
-        out.line(`return${statement.expression ? ` ${expression(statement.expression)}` : ''}${after}`, line);
-        return;
-      case 'if':
-        statement.branches.forEach((branch, index) => {
-          if (index) trivia.before(out, branch.line);
-          out.line(
-            `${index ? 'elif' : 'if'} ${expression(branch.condition)}:${trivia.after(branch.line)}`,
-            branch.line
-          );
-          body(branch.body);
-        });
-        if (statement.elseLine) {
-          trivia.before(out, statement.elseLine);
-          out.line(`else:${trivia.after(statement.elseLine)}`, statement.elseLine);
-          body(statement.elseBody);
-        }
-        return;
-      case 'while':
-        out.line(`while ${expression(statement.condition)}:${after}`, line);
-        body(statement.body);
-        return;
-      case 'doWhile':
-        out.line(`while True:${trivia.after(statement.doLine)}`, statement.doLine);
-        out.block(() => {
-          block(out, statement.body);
-          trivia.before(out, line);
-          out.line(`if ${negated(statement.condition)}:${after}`, line);
-          out.block(() => out.line('break', line));
-        });
-        return;
-      case 'repeat': {
-        const count =
-          typeOf(statement.count) === 'whole' ? expression(statement.count) : `int(${expression(statement.count)})`;
-        out.line(`for _ in range(${count}):${after}`, line);
-        body(statement.body);
-        return;
-      }
-      case 'for': {
-        const name = names.of(statement.name);
-        const whole = [statement.from, statement.step].every(bound => !bound || typeOf(bound) === 'whole');
-        if (whole) {
-          const step = statement.step;
-          const negative = step?.type === 'unary' && step.operator === '-';
-          const to = statement.to;
-          let last = expression(to, PRECEDENCE['+']);
-          if (typeOf(to) !== 'whole') {
-            imports.add('math');
-            last = `math.${negative ? 'ceil' : 'floor'}(${expression(to)})`;
-          }
-          const end =
-            to.type === 'value' && typeof to.value === 'number'
-              ? String(to.value + (negative ? -1 : 1))
-              : `${last} ${negative ? '-' : '+'} 1`;
-          const args = [expression(statement.from), end, ...(step ? [expression(step)] : [])];
-          if (args[0] === '0' && args.length === 2) args.shift();
-          out.line(`for ${name} in range(${args.join(', ')}):${after}`, line);
-          body(statement.body);
+  const block = statementsOf({
+    trivia,
+    names,
+    braces: BLOCKS,
+    write: (statement, context) => {
+      const {comment} = context;
+      switch (statement.type) {
+        case 'print':
+          context.line(`print(${printed(statement.expression)})${comment}`);
+          return;
+        case 'assign':
+          context.line(`${names.of(statement.name)} = ${code(statement.expression)}${comment}`);
+          return;
+        case 'setItem': {
+          const item = py.index(expression(statement.target), fromZero(py, statement.index, expression));
+          context.line(`${py.print(item)} = ${code(statement.expression)}${comment}`);
           return;
         }
-        //a real number counts with while, which reads its step and its last value once
-        const step = statement.step ? expression(statement.step) : '1';
-        const negative = statement.step?.type === 'unary' && statement.step.operator === '-';
-        out.line(`${name} = ${expression(statement.from)}${after}`, line);
-        out.line(`while ${name} ${negative ? '>=' : '<='} ${expression(statement.to, PRECEDENCE['<'] + 1)}:`, line);
-        out.block(() => {
-          block(out, statement.body);
-          out.line(`${name} += ${step}`, line);
-        });
-        return;
+        case 'add':
+        case 'remove': {
+          const method = statement.type === 'add' ? 'append' : 'remove';
+          const changed = py.member(expression(statement.target), method, [expression(statement.expression)]);
+          context.line(`${py.print(changed)}${comment}`);
+          return;
+        }
+        case 'call':
+          context.line(`${code(statement.call)}${comment}`);
+          return;
+        case 'return':
+          context.line(`return${statement.expression ? ` ${code(statement.expression)}` : ''}${comment}`);
+          return;
+        case 'if':
+          context.blocks(branchesOf(statement, (condition, index) => `${index ? 'elif' : 'if'} ${code(condition)}`));
+          return;
+        case 'while':
+          context.blocks([loopOf(statement, `while ${code(statement.condition)}`)]);
+          return;
+        case 'doWhile':
+          context.blocks([
+            doWhileOf(context, statement, 'while True', `if ${code(negation(statement.condition, types))}`, 'break')
+          ]);
+          return;
+        case 'repeat': {
+          const count = typeOf(statement.count) === 'whole' ? code(statement.count) : `int(${code(statement.count)})`;
+          context.blocks([loopOf(statement, `for _ in range(${count})`)]);
+          return;
+        }
+        case 'for': {
+          const counter = names.of(statement.name);
+          const whole = [statement.from, statement.step].every(bound => !bound || typeOf(bound) === 'whole');
+          const step = statement.step;
+          const {down, signed} = stepOf(statement);
+          //a bound kept in a variable first, as readsOnce() tells
+          const once = (bound: Expression, candidates: string[]) =>
+            context.keep(bound, candidates, kept => `${kept} = ${code(bound)}`);
+          if (whole) {
+            const to = statement.to;
+            //the end range() stops before: one after the last value counting up, one before it counting down
+            const endOf = (down: boolean): Code => {
+              if (to.type === 'value' && typeof to.value === 'number') {
+                return name(String(down ? Math.ceil(to.value) - 1 : Math.floor(to.value) + 1));
+              }
+              const last =
+                typeOf(to) === 'whole'
+                  ? py.bracketed(expression(to), PRECEDENCE['+'])
+                  : math(down ? 'ceil' : 'floor', [expression(to)]);
+              return py.binary(down ? '-' : '+', last, name('1'));
+            };
+            //a step whose sign shows only as the program runs, used twice, is kept first when it asks
+            const by = signed ? (once(step!, ['by', 'step_size']) ?? code(step!)) : step && code(step);
+            const end = signed
+              ? `${py.print(endOf(false))} if ${py.print(py.binary('>', name(by!), name('0')))} else ${py.print(endOf(true))}`
+              : py.print(endOf(down));
+            const args = [code(statement.from), end, ...(by ? [by] : [])];
+            if (args[0] === '0' && args.length === 2) args.shift();
+            context.blocks([loopOf(statement, `for ${counter} in range(${args.join(', ')})`)]);
+            return;
+          }
+          //a real number counts with while, which reads its step and its last value once
+          context.line(`${counter} = ${code(statement.from)}${comment}`);
+          const last = once(statement.to, ['last', 'stop']);
+          const compare = (operator: string) =>
+            py.print(py.binary(operator, name(counter), last ? name(last) : expression(statement.to)));
+          const by = step && (once(step, ['by', 'step_size']) ?? code(step));
+          const test = signed
+            ? `(${compare('<=')} if ${py.print(py.binary('>', name(by!), name('0')))} else ${compare('>=')})`
+            : compare(down ? '>=' : '<=');
+          //the step, after the block and before a continue
+          const next = () => context.line(`${counter} += ${by || '1'}`);
+          context.blocks([loopOf(statement, `while ${test}`, {comment: '', last: next, next})]);
+          return;
+        }
+        case 'forEach': {
+          let items = py.print(py.bracketed(expression(statement.expression), POSTFIX));
+          //the loop changes the list, so it passes a copy: the items the list had when the loop started
+          if (changesItsList(statement) && isList(typeOf(statement.expression))) items += '.copy()';
+          context.blocks([loopOf(statement, `for ${names.of(statement.name)} in ${items}`)]);
+          return;
+        }
+        case 'break':
+        case 'continue':
+          context.next();
+          context.line(`${statement.type}${comment}`);
+          return;
       }
-      case 'forEach': {
-        let items = expression(statement.expression, POSTFIX);
-        const changed = [...variablesIn(statement.expression)].some(
-          name => changedIn(statement.body).has(name) || assignedIn(statement.body).has(name)
-        );
-        //the loop changes the list, so it passes a copy: the items the list had when the loop started
-        if (changed && isList(typeOf(statement.expression))) items += '.copy()';
-        out.line(`for ${names.of(statement.name)} in ${items}:${after}`, line);
-        body(statement.body);
-        return;
-      }
-      case 'break':
-      case 'continue':
-        out.line(`${statement.type}${after}`, line);
-        return;
     }
-  };
+  });
 
   const out = new Writer('    ');
   const program = new Writer('    ');
@@ -456,23 +382,18 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
       `def ${names.of(statement.name)}(${parameters.join(', ')}):${trivia.after(statement.line)}`,
       statement.line
     );
-    program.block(() => block(program, statement.body));
+    program.block(() => {
+      if (!statement.body.length) program.line('pass');
+      block(program, statement.body, new Map(), new Set());
+    });
     program.blank();
   }
   program.blank();
-  tree.statements
-    .filter(statement => statement.type !== 'function')
-    .forEach(statement => {
-      trivia.before(program, statement.type === 'doWhile' ? statement.doLine : statement.line);
-      emit(program, statement);
-    });
+  block(program, tree.statements, new Map(), new Set());
   trivia.rest(program);
 
   for (const module of [...imports].sort()) out.line(`import ${module}`);
-  for (const helper of Object.keys(HELPERS).filter(helper => helpers.has(helper))) {
-    out.blank();
-    HELPERS[helper].code(quotes).forEach(text => out.line(text));
-  }
+  helpers.write(out, helper => helper.code());
   out.blank();
   out.append(program);
   return out.converted();

@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Regel {line}: er is geen functie {function}.',
     noValue: 'Regel {line}: {function} geeft geen waarde terug.',
     typeError: 'Regel {line}: {operator} werkt niet met deze waarden.',
+    listAsText:
+      'Regel {line}: een lijst wordt niet afgedrukt zoals hij is; voeg de elementen met {join} samen tot een tekst, of druk ze een voor een af.',
     conditionError: 'Regel {line}: een voorwaarde moet waar of onwaar zijn.',
     divisionByZero: 'Regel {line}: delen door nul.',
     mathError: 'Regel {line}: {operator} heeft geen uitkomst voor deze waarde.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Regel {line}: {target} kan dit programma niet schrijven: {name} krijgt waarden van twee soorten, zoals een getal en een tekst.',
     mixedItems:
-      'Regel {line}: {target} kan dit programma niet schrijven: een lijst heeft items van twee soorten, zoals getallen en teksten.'
+      'Regel {line}: {target} kan dit programma niet schrijven: een lijst heeft items van twee soorten, zoals getallen en teksten.',
+    fixedArrays:
+      'Regel {line}: {target} kan dit programma niet schrijven met de vaste arrays van een eerste cursus, zoals een lijst van lijsten of een functie die een lijst geeft.'
   }
 };
 

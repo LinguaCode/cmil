@@ -143,6 +143,11 @@ const sources: Source[] = [
         output: 'Մուտքագրեք էլ. հասցեն։\nՄուտքագրեք գաղտնաբառը։\nմուտքը հաջողված է։'
       },
       {
+        title: 'boolean_in_a_text',
+        code: 'արտածել(«5 > 3՝ » + (5 > 3))\nարտածել(տեքստ_դարձնել(5 > 3))',
+        output: '5 > 3՝ ճիշտ\nճիշտ'
+      },
+      {
         title: 'boolean_operators_executing_priority',
         code: 'արտածել(5 <= 1 և (3 == 2 կամ 1 < 7) կամ 9 != 9)',
         output: 'սխալ'

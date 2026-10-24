@@ -68,6 +68,7 @@ const translation: Translation = {
     undefinedFunction: '第 {line} 行：没有函数 {function}。',
     noValue: '第 {line} 行：{function} 没有返回值。',
     typeError: '第 {line} 行：{operator} 不能用于这些值。',
+    listAsText: '第 {line} 行：列表不能直接打印，请用 {join} 把它的项连成文本，或者逐个打印。',
     conditionError: '第 {line} 行：条件必须为真或假。',
     divisionByZero: '第 {line} 行：除数为零。',
     mathError: '第 {line} 行：{operator} 对这个值没有结果。',
@@ -80,7 +81,8 @@ const translation: Translation = {
   },
   conversion: {
     mixedTypes: '第 {line} 行：{target} 写不了这个程序：{name} 的值有两种，比如数字和文本。',
-    mixedItems: '第 {line} 行：{target} 写不了这个程序：列表里的项有两种，比如数字和文本。'
+    mixedItems: '第 {line} 行：{target} 写不了这个程序：列表里的项有两种，比如数字和文本。',
+    fixedArrays: '第 {line} 行：{target} 用入门课程的定长数组写不了这个程序，比如列表的列表，或返回列表的函数。'
   }
 };
 

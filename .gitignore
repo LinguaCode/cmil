@@ -28,3 +28,6 @@ yarn.lock
 
 # Build output
 dist/
+
+# The baseline of npm run snapshot
+.snapshot/

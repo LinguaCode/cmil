@@ -74,6 +74,8 @@ const translation: Translation = {
     undefinedFunction: 'Zeile {line}: Es gibt keine Funktion {function}.',
     noValue: 'Zeile {line}: {function} gibt keinen Wert zurück.',
     typeError: 'Zeile {line}: {operator} funktioniert mit diesen Werten nicht.',
+    listAsText:
+      'Zeile {line}: Eine Liste wird nicht als Ganzes ausgegeben. Ihre Elemente mit {join} zu einem Text verbinden oder einzeln ausgeben.',
     conditionError: 'Zeile {line}: Eine Bedingung muss wahr oder falsch sein.',
     divisionByZero: 'Zeile {line}: Division durch null.',
     mathError: 'Zeile {line}: {operator} hat für diesen Wert kein Ergebnis.',
@@ -88,7 +90,9 @@ const translation: Translation = {
     mixedTypes:
       'Zeile {line}: {target} kann dieses Programm nicht schreiben: {name} bekommt Werte zweier Arten, etwa eine Zahl und einen Text.',
     mixedItems:
-      'Zeile {line}: {target} kann dieses Programm nicht schreiben: Eine Liste hat Elemente zweier Arten, etwa Zahlen und Texte.'
+      'Zeile {line}: {target} kann dieses Programm nicht schreiben: Eine Liste hat Elemente zweier Arten, etwa Zahlen und Texte.',
+    fixedArrays:
+      'Zeile {line}: {target} kann dieses Programm mit den festen Arrays eines ersten Kurses nicht schreiben, etwa eine Liste von Listen oder eine Funktion, die eine Liste gibt.'
   }
 };
 

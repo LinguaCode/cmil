@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Linje {line}: der er ingen funktion {function}.',
     noValue: 'Linje {line}: {function} returnerer ingen værdi.',
     typeError: 'Linje {line}: {operator} virker ikke med disse værdier.',
+    listAsText:
+      'Linje {line}: en liste udskrives ikke, som den er; sæt dens elementer sammen til en tekst med {join}, eller udskriv dem ét ad gangen.',
     conditionError: 'Linje {line}: en betingelse skal være sand eller falsk.',
     divisionByZero: 'Linje {line}: division med nul.',
     mathError: 'Linje {line}: {operator} har intet resultat for denne værdi.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Linje {line}: {target} kan ikke skrive dette program: {name} får værdier af to slags, som et tal og en tekst.',
     mixedItems:
-      'Linje {line}: {target} kan ikke skrive dette program: en liste har elementer af to slags, som tal og tekster.'
+      'Linje {line}: {target} kan ikke skrive dette program: en liste har elementer af to slags, som tal og tekster.',
+    fixedArrays:
+      'Linje {line}: {target} kan ikke skrive dette program med et første kursus’ faste arrays, som en liste af lister eller en funktion, der giver en liste.'
   }
 };
 

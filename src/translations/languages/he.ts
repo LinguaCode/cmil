@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'שורה {line}: אין פונקציה {function}.',
     noValue: 'שורה {line}: {function} לא מחזירה ערך.',
     typeError: 'שורה {line}: {operator} לא עובד עם הערכים האלה.',
+    listAsText:
+      'שורה {line}: רשימה לא מודפסת כמו שהיא; חברו את הפריטים שלה לטקסט בעזרת {join}, או הדפיסו אותם אחד אחד.',
     conditionError: 'שורה {line}: תנאי חייב להיות אמת או שקר.',
     divisionByZero: 'שורה {line}: חלוקה באפס.',
     mathError: 'שורה {line}: ל-{operator} אין תוצאה עבור הערך הזה.',
@@ -83,7 +85,10 @@ const translation: Translation = {
   },
   conversion: {
     mixedTypes: 'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: {name} מקבל ערכים משני סוגים, כמו מספר וטקסט.',
-    mixedItems: 'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: ברשימה יש פריטים משני סוגים, כמו מספרים וטקסטים.'
+    mixedItems:
+      'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: ברשימה יש פריטים משני סוגים, כמו מספרים וטקסטים.',
+    fixedArrays:
+      'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת עם המערכים הקבועים של קורס ראשון, כמו רשימה של רשימות או פונקציה שמחזירה רשימה.'
   }
 };
 

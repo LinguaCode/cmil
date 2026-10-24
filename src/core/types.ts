@@ -110,6 +110,8 @@ export type ProgramError =
   | {id: typeof ERROR.UNDEFINED_FUNCTION | typeof ERROR.NO_VALUE; line: number; column: number; function: string}
   | {id: typeof ERROR.RECURSION_LIMIT; line: number}
   | {id: typeof ERROR.TYPE_ERROR | typeof ERROR.MATH_ERROR; line: number; column?: number; operator: string}
+  //a list printed or put into a text, which join, the command in the program's language, puts its items into
+  | {id: typeof ERROR.LIST_AS_TEXT; line: number; join: string}
   | {id: typeof ERROR.DIVISION_BY_ZERO; line: number; column?: number}
   | {id: typeof ERROR.INDEX_ERROR; line: number; column: number; index: number}
   //remove of an item that isn't in the list, printed as in the program

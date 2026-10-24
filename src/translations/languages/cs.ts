@@ -73,6 +73,8 @@ const translation: Translation = {
     undefinedFunction: 'Řádek {line}: funkce {function} neexistuje.',
     noValue: 'Řádek {line}: {function} nevrací žádnou hodnotu.',
     typeError: 'Řádek {line}: {operator} s těmito hodnotami nefunguje.',
+    listAsText:
+      'Řádek {line}: seznam se nevypisuje celý, jak je; spojte jeho prvky do textu pomocí {join}, nebo je vypište jeden po druhém.',
     conditionError: 'Řádek {line}: podmínka musí být pravdivá, nebo nepravdivá.',
     divisionByZero: 'Řádek {line}: dělení nulou.',
     mathError: 'Řádek {line}: {operator} pro tuto hodnotu nemá výsledek.',
@@ -87,7 +89,9 @@ const translation: Translation = {
     mixedTypes:
       'Řádek {line}: {target} tento program napsat nedokáže: {name} dostává hodnoty dvou druhů, třeba číslo a text.',
     mixedItems:
-      'Řádek {line}: {target} tento program napsat nedokáže: seznam má položky dvou druhů, třeba čísla a texty.'
+      'Řádek {line}: {target} tento program napsat nedokáže: seznam má položky dvou druhů, třeba čísla a texty.',
+    fixedArrays:
+      'Řádek {line}: {target} tento program s pevnými poli prvního kurzu napsat nedokáže, třeba seznam seznamů nebo funkci, která vrací seznam.'
   }
 };
 

@@ -479,6 +479,18 @@ const sources: Source[] = [
             output: '4 > 2'
           },
           {
+            title: 'else if asks only when it is reached',
+            code: 'for x from 1 to 2\n    if x == 1\n        print("one")\n    else if uppercase(input()) == "YES"\n        print("yes")\nprint(input())',
+            inputs: ['yes', 'end'],
+            output: 'one\nyes\nend'
+          },
+          {
+            title: 'or asks only when its left side does not decide',
+            code: 'for ok in [true, false]\n    if ok or length_of(split(input())) > 1\n        print("yes")\nprint(input())',
+            inputs: ['a b', 'end'],
+            output: 'yes\nyes\nend'
+          },
+          {
             title: 'if-else: wrong answer',
             code: 'if 4 > 6\n    print(«4 > 6»)\nelse\n    print(«6 >= 4»)',
             output: '6 >= 4'
@@ -660,6 +672,17 @@ const sources: Source[] = [
             group: 'while-do',
             sources: [
               {
+                title: 'a condition with a text made in it, computed before each test',
+                code: 'answer = "no"\nwhile uppercase(answer) != "YES"\n    answer = input()\n    if answer == "skip"\n        continue\nprint("done")',
+                inputs: ['maybe', 'skip', 'yes'],
+                output: 'done'
+              },
+              {
+                title: 'a condition with an item of a list written in it',
+                code: 'n = 1\nwhile [1, 2, 3][n] < 3\n    n = n + 1\nprint(n)',
+                output: '3'
+              },
+              {
                 title: '5 attempts',
                 code: 'a = 0\nwhile a < 5\n    print(a)\n    a = a + 1',
                 output: '0\n1\n2\n3\n4'
@@ -679,6 +702,11 @@ const sources: Source[] = [
             group: 'do-while',
             sources: [
               {
+                title: 'a condition with a list made in it, computed after each pass',
+                code: 'line = "a"\ndo\n    line = line + " a"\nwhile length_of(split(line)) < 3\nprint(line)',
+                output: 'a a a'
+              },
+              {
                 title: '5 attempts',
                 code: 'a = 0\ndo\n    print(a)\n    a = a + 1\nwhile a < 5',
                 output: '0\n1\n2\n3\n4'
@@ -687,6 +715,11 @@ const sources: Source[] = [
                 title: '1 attempt',
                 code: 'a = 0\ndo\n    print(a)\n    a = a + 1\nwhile a > 5',
                 output: '0'
+              },
+              {
+                title: 'continue tests the condition',
+                code: 'a = 0\ndo\n    a = a + 1\n    if a == 3\n        continue\n    print(a)\nwhile a < 3\nprint("done")',
+                output: '1\n2\ndone'
               },
               {
                 title: 'do-while {output; input}; do-while {output; input}; output',
@@ -719,6 +752,11 @@ const sources: Source[] = [
                 title: 'repeat 5x',
                 code: 'repeat 5 times\n    print("a")',
                 output: 'a\na\na\na\na'
+              },
+              {
+                title: 'repeat with break and continue',
+                code: 'n = 0\nrepeat 5 times\n    n = n + 1\n    if n == 2\n        continue\n    if n == 4\n        break\n    print(n)',
+                output: '1\n3'
               },
               {
                 title: 'input; repeat 2x',
@@ -836,6 +874,11 @@ const sources: Source[] = [
             output: '32'
           },
           {
+            title: 'sqr of an expression',
+            code: 'print(square(2 + 1))',
+            output: '9'
+          },
+          {
             title: 'sqrt',
             code: 'X = 9\nZ = square_root(X)\nprint(Z)',
             output: '3'
@@ -849,6 +892,11 @@ const sources: Source[] = [
             title: 'round',
             code: 'X = 2.5\nZ = round(X)\nprint(Z)',
             output: '3'
+          },
+          {
+            title: 'round of a whole number',
+            code: 'print(round(7))',
+            output: '7'
           },
           {
             title: 'floor',
@@ -879,6 +927,11 @@ const sources: Source[] = [
             title: 'abs',
             code: 'X = -5\nZ = absolute_value(X)\nprint(Z)',
             output: '5'
+          },
+          {
+            title: 'abs of a decimal number',
+            code: 'print(absolute_value(-2.5))',
+            output: '2.5'
           },
           {
             title: 'sin',

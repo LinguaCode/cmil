@@ -68,6 +68,8 @@ const translation: Translation = {
     undefinedFunction: '{line}. sor: nincs {function} nevű függvény.',
     noValue: '{line}. sor: a(z) {function} nem ad vissza értéket.',
     typeError: '{line}. sor: a(z) {operator} nem működik ezekkel az értékekkel.',
+    listAsText:
+      '{line}. sor: egy lista nem írható ki úgy, ahogy van; fűzd össze az elemeit szöveggé a(z) {join} paranccsal, vagy írd ki őket egyenként.',
     conditionError: '{line}. sor: a feltételnek igaznak vagy hamisnak kell lennie.',
     divisionByZero: '{line}. sor: nullával osztás.',
     mathError: '{line}. sor: a(z) {operator} értéke ennél az értéknél nem létezik.',
@@ -82,7 +84,9 @@ const translation: Translation = {
     mixedTypes:
       '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: {name} kétféle értéket kap, például számot és szöveget.',
     mixedItems:
-      '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: egy lista kétféle elemet tartalmaz, például számokat és szövegeket.'
+      '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: egy lista kétféle elemet tartalmaz, például számokat és szövegeket.',
+    fixedArrays:
+      '{line}. sor: a(z) {target} nem tudja megírni ezt a programot egy első tanfolyam rögzített tömbjeivel, például listák listáját vagy listát adó függvényt.'
   }
 };
 

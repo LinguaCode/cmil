@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Rivi {line}: funktiota {function} ei ole.',
     noValue: 'Rivi {line}: {function} ei palauta arvoa.',
     typeError: 'Rivi {line}: {operator} ei toimi näillä arvoilla.',
+    listAsText:
+      'Rivi {line}: listaa ei tulosteta sellaisenaan; yhdistä sen alkiot tekstiksi komennolla {join} tai tulosta ne yksi kerrallaan.',
     conditionError: 'Rivi {line}: ehdon täytyy olla tosi tai epätosi.',
     divisionByZero: 'Rivi {line}: jako nollalla.',
     mathError: 'Rivi {line}: {operator} ei anna tulosta tälle arvolle.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: {name} saa kahdenlaisia arvoja, kuten luvun ja tekstin.',
     mixedItems:
-      'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: listassa on kahdenlaisia alkioita, kuten lukuja ja tekstejä.'
+      'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: listassa on kahdenlaisia alkioita, kuten lukuja ja tekstejä.',
+    fixedArrays:
+      'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa ensimmäisen kurssin kiinteillä taulukoilla, kuten listaa listoista tai funktiota, joka antaa listan.'
   }
 };
 

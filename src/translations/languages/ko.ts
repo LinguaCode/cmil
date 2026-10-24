@@ -68,6 +68,8 @@ const translation: Translation = {
     undefinedFunction: '{line}번째 줄: {function} 함수가 없습니다.',
     noValue: '{line}번째 줄: {function}은(는) 값을 반환하지 않습니다.',
     typeError: '{line}번째 줄: {operator}은(는) 이 값들과 함께 쓸 수 없습니다.',
+    listAsText:
+      '{line}번째 줄: 목록은 그대로 출력할 수 없습니다. {join}(으)로 항목들을 텍스트로 이어 붙이거나 하나씩 출력하세요.',
     conditionError: '{line}번째 줄: 조건은 참이나 거짓이어야 합니다.',
     divisionByZero: '{line}번째 줄: 0으로 나눌 수 없습니다.',
     mathError: '{line}번째 줄: 이 값에서는 {operator}의 결과가 없습니다.',
@@ -82,7 +84,9 @@ const translation: Translation = {
     mixedTypes:
       '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. {name}에 숫자와 글자처럼 두 종류의 값이 들어갑니다.',
     mixedItems:
-      '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. 목록에 숫자와 글자처럼 두 종류의 항목이 있습니다.'
+      '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. 목록에 숫자와 글자처럼 두 종류의 항목이 있습니다.',
+    fixedArrays:
+      '{line}번째 줄: {target}(으)로는 입문 과정의 고정 배열로 이 프로그램을 쓸 수 없습니다. 목록의 목록이나 목록을 돌려주는 함수 같은 것입니다.'
   }
 };
 

@@ -114,7 +114,7 @@ class Interpreter {
     return value;
   }
 
-  //a value as it is printed; a list printed longer than a text may be is a memoryLimit
+  //a value as it is printed; a list is no text, so it is a listAsText
   text(value: Value): string {
     return this.apply({}, '', () => values.toText(value, this.format));
   }
@@ -266,6 +266,9 @@ class Interpreter {
         throw new CmilError({id: error.id, line: this.line, column: node.column ?? 0, index: error.index});
       }
       if (error.id === ERROR.DIVISION_BY_ZERO) throw new CmilError({id: error.id, ...where});
+      if (error.id === ERROR.LIST_AS_TEXT) {
+        throw new CmilError({id: error.id, line: this.line, join: this.wordOf(COMMAND.JOIN)});
+      }
       throw new CmilError({id: error.id, ...where, operator: this.wordOf(operator)});
     }
   }

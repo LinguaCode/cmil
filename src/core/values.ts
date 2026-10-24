@@ -2,7 +2,7 @@
  * Values of CMIL programs: numbers, texts, booleans and lists, their operators and the functions.
  * Values are never converted: an operator or a function with values it doesn't take throws a ValueError.
  */
-import {COMMAND, ERROR, MAX_LIST_LENGTH, MAX_TEXT_LENGTH, NUMBER_PRECISION} from '../constants/index.ts';
+import {COMMAND, ERROR, MAX_LIST_LENGTH, NUMBER_PRECISION} from '../constants/index.ts';
 import {quote} from './words.ts';
 import type {Quotes} from '../translations/index.ts';
 import type {Value} from './types.ts';
@@ -11,6 +11,7 @@ import type {Value} from './types.ts';
 export class ValueError extends Error {
   id:
     | typeof ERROR.TYPE_ERROR
+    | typeof ERROR.LIST_AS_TEXT
     | typeof ERROR.DIVISION_BY_ZERO
     | typeof ERROR.MATH_ERROR
     | typeof ERROR.INDEX_ERROR
@@ -50,49 +51,15 @@ const digits = (value: number): string => {
     : value.toLocaleString('en-US', {useGrouping: false, maximumFractionDigits: 0});
 };
 
-//a list as [1, 2, "a"], with the texts in the quotes of the language, built without recursion so deep lists can't
-//overflow the stack;
-//a list inside itself is [...], and a text longer than a text may be is a memoryLimit
-const listText = (root: Value[], format: Format): string => {
-  let printed = '[';
-  const open = new Set([root]);
-  const stack = [{list: root, index: 0}];
-
-  while (stack.length) {
-    const frame = stack[stack.length - 1];
-    if (frame.index === frame.list.length) {
-      printed += ']';
-      open.delete(frame.list);
-      stack.pop();
-      continue;
-    }
-
-    if (frame.index) printed += ', ';
-    const next = frame.list[frame.index++];
-    if (!Array.isArray(next)) {
-      printed += itemText(next, format);
-    } else if (open.has(next)) {
-      printed += '[...]';
-    } else {
-      printed += '[';
-      open.add(next);
-      stack.push({list: next, index: 0});
-    }
-
-    if (printed.length > MAX_TEXT_LENGTH) throw new ValueError(ERROR.MEMORY_LIMIT);
-  }
-
-  return printed;
-};
-
 /**
- * A value as an item of a list is printed: a text in quotes, other values as they are printed.
+ * A value as an error names an item of a list: a text in quotes, other values as they are printed.
  */
 export const itemText = (value: Value, format: Format): string =>
   typeof value === 'string' ? quote(value, format.quotes) : toText(value, format);
 
 /**
- * Converts a value into text; booleans become the words of the program's language.
+ * Converts a value into text; booleans become the words of the program's language. A list is no text: its items are
+ * joined into one by join, or printed one by one, so a list here is a listAsText.
  *
  * @example
  * values.toText(4 > 2, {true: 'ճիշտ', false: 'սխալ', quotes: ['«', '»']});
@@ -101,7 +68,7 @@ export const itemText = (value: Value, format: Format): string =>
 export const toText = (value: Value, format: Format): string => {
   if (typeof value === 'boolean') return value ? format.true : format.false;
   if (typeof value === 'number') return digits(rounded(value) || 0);
-  if (Array.isArray(value)) return listText(value, format);
+  if (Array.isArray(value)) throw new ValueError(ERROR.LIST_AS_TEXT);
   return value;
 };
 
@@ -147,39 +114,18 @@ const compare = (left: Value, right: Value): [number, number] | [string, string]
   throw typeError();
 };
 
-//lists are equal when their items are; a pair of lists met again counts as equal, so lists inside themselves compare
-const listsEqual = (left: Value[], right: Value[]): boolean => {
-  const compared = new Map<Value[], Set<Value[]>>();
-  const pairs: [Value[], Value[]][] = [[left, right]];
-
-  for (let pair; (pair = pairs.pop());) {
-    const [a, b] = pair;
-    if (a === b) continue;
-
-    let seen = compared.get(a);
-    if (!seen) compared.set(a, (seen = new Set()));
-    if (seen.has(b)) continue;
-    seen.add(b);
-
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      const [x, y] = [a[i], b[i]];
-      if (Array.isArray(x) && Array.isArray(y)) pairs.push([x, y]);
-      else if (!equals(x, y)) return false;
-    }
-  }
-
-  return true;
-};
-
-//values of different types are never equal
+//values of different types are never equal; lists aren't compared, as their items are one by one
 const equals = (left: Value, right: Value): boolean => {
-  if (Array.isArray(left) && Array.isArray(right)) return listsEqual(left, right);
+  if (Array.isArray(left) || Array.isArray(right)) throw typeError();
   return typeof left === 'number' && typeof right === 'number' ? rounded(left) === rounded(right) : left === right;
 };
 
+//whether an item of a list is a value, which is no list; an item that is a list never is
+const isItem = (item: Value, value: Value): boolean => !Array.isArray(item) && equals(item, value);
+
 /**
- * Applies a binary operator. + adds numbers, or joins a text with any value; == compares lists by their items.
+ * Applies a binary operator. + adds numbers, or joins a text with a number, a text or a boolean; == compares numbers,
+ * texts and booleans, never lists.
  */
 export const binary = (operator: string, left: Value, right: Value, format: Format): Value => {
   switch (operator) {
@@ -200,9 +146,10 @@ export const binary = (operator: string, left: Value, right: Value, format: Form
       return equals(left, right);
     case '!=':
       return !equals(left, right);
-    //a value in a list, or a text in a text
+    //a value in a list, which is no list, or a text in a text
     case COMMAND.IN:
-      if (Array.isArray(right)) return right.some(item => equals(item, left));
+      if (Array.isArray(left)) throw typeError();
+      if (Array.isArray(right)) return right.some(item => isItem(item, left));
       if (typeof right === 'string' && typeof left === 'string') return right.includes(left);
       throw typeError();
   }
@@ -307,11 +254,12 @@ export const add = (value: Value, target: Value): void => {
 };
 
 /**
- * Removes the first item of a list equal to a value; false when the list has none.
+ * Removes the first item of a list equal to a value, which is no list; false when the list has none.
  */
 export const remove = (value: Value, target: Value): boolean => {
   const all = list(target);
-  const index = all.findIndex(item => equals(item, value));
+  if (Array.isArray(value)) throw typeError();
+  const index = all.findIndex(item => isItem(item, value));
   if (index < 0) return false;
   all.splice(index, 1);
   return true;

@@ -10,7 +10,7 @@ export type Plural = {other: string} & Partial<Record<Exclude<Intl.LDMLPluralRul
 export type Messages = Record<ErrorId, string | Plural>;
 
 /** Why a program can't be converted into a language whose values have one type each, with {line} and {target}. */
-export type Conversion = {mixedTypes: string; mixedItems: string};
+export type Conversion = {mixedTypes: string; mixedItems: string; fixedArrays: string};
 
 /** A pair of quotes around texts, like « and ». */
 export type Quotes = [open: string, close: string];

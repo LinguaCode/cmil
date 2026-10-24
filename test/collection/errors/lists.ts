@@ -46,10 +46,54 @@ const sources: Source[] = [
       {title: 'a list without its ]', code: 'print([1, 2)', errorId: 'syntaxError', errorParam: {line: 1}},
       {title: 'a list without an item', code: 'print([1, , 2])', errorId: 'syntaxError', errorParam: {line: 1}},
       {
-        title: 'a list printed too long',
-        code: 't = "a"\nrepeat 19 times\n    t = t + t\nprint([t, t])',
+        title: 'a list joined into a text too long',
+        code: 't = "a"\nrepeat 19 times\n    t = t + t\nprint(join([t, t]))',
         errorId: 'memoryLimit',
         errorParam: {line: 4}
+      }
+    ]
+  },
+  {
+    //a list is no text: its items are joined with join, or printed one by one
+    group: 'a list as a text',
+    sources: [
+      {
+        title: 'a list printed',
+        code: 'print([1, "a", true])',
+        errorId: 'listAsText',
+        errorParam: {line: 1, join: 'join'}
+      },
+      {
+        title: 'a list joined to a text',
+        code: 'print("items: " + [1, 2])',
+        errorId: 'listAsText',
+        errorParam: {line: 1}
+      },
+      {title: 'a list in a text', code: 'x = [1]\nprint("x is {x}")', errorId: 'listAsText', errorParam: {line: 2}},
+      {title: 'a list into a text', code: 'print(to_text([1]))', errorId: 'listAsText', errorParam: {line: 1}},
+      {title: 'a join of lists', code: 'print(join([[1], [2]], ", "))', errorId: 'listAsText', errorParam: {line: 1}},
+      {
+        title: 'output before a list printed',
+        code: 'print(1)\nprint(split("a b"))',
+        errorId: 'listAsText',
+        errorParam: {line: 2},
+        output: '1'
+      }
+    ]
+  },
+  {
+    //lists aren't compared: their items are, one by one
+    group: 'lists compared',
+    sources: [
+      {title: 'lists compared with ==', code: 'print([1, 2] == [1, 2])', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'lists compared with !=', code: 'print([1] != [2])', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'a list compared with a text', code: 'print([] == "")', errorId: 'typeError', errorParam: {line: 1}},
+      {title: 'a list in a list', code: 'print([1] in [[1], 2])', errorId: 'typeError', errorParam: {line: 1}},
+      {
+        title: 'a list removed from a list',
+        code: 't = [[1]]\nremove(t, [1])',
+        errorId: 'typeError',
+        errorParam: {line: 2}
       }
     ]
   },

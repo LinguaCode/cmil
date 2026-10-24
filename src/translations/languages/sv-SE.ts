@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: 'Rad {line}: det finns ingen funktion {function}.',
     noValue: 'Rad {line}: {function} returnerar inget värde.',
     typeError: 'Rad {line}: {operator} fungerar inte med de här värdena.',
+    listAsText:
+      'Rad {line}: en lista skrivs inte ut som den är; sätt ihop dess element till en text med {join}, eller skriv ut dem ett i taget.',
     conditionError: 'Rad {line}: ett villkor måste vara sant eller falskt.',
     divisionByZero: 'Rad {line}: division med noll.',
     mathError: 'Rad {line}: {operator} har inget resultat för det här värdet.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Rad {line}: {target} kan inte skriva det här programmet: {name} får värden av två slag, som ett tal och en text.',
     mixedItems:
-      'Rad {line}: {target} kan inte skriva det här programmet: en lista har element av två slag, som tal och texter.'
+      'Rad {line}: {target} kan inte skriva det här programmet: en lista har element av två slag, som tal och texter.',
+    fixedArrays:
+      'Rad {line}: {target} kan inte skriva det här programmet med en första kurs fasta arrayer, som en lista av listor eller en funktion som ger en lista.'
   }
 };
 

@@ -4,22 +4,27 @@
  */
 import {COMMAND} from '../../constants/index.ts';
 import TRANSLATION from '../../translations/index.ts';
+import {counterTest, fromZero, Grammar, mathOf, type Code} from '../code.ts';
 import {
+  Helpers,
   Names,
   Trivia,
   Writer,
   assignedIn,
-  blocksOf,
   callsIn,
   changedIn,
-  fromZero,
+  sharedListsOf,
+  changesItsList,
   isJoined,
+  isSimple,
+  isText,
   joinedParts,
-  namesIn,
-  ownNames,
-  variablesIn,
+  neverEqual,
+  quoted,
+  stepOf,
   type Converted
 } from '../emit.ts';
+import {SAME_LINE, branchesOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
 import type {Expression, Statement} from '../../core/types.ts';
@@ -33,7 +38,7 @@ const RESERVED = new Set(
     'namespace new noexcept not not_eq nullptr operator or or_eq private protected public register reinterpret_cast',
     'requires return short signed sizeof static static_assert static_cast struct switch template this thread_local throw',
     'true try typedef typeid typename union unsigned using virtual void volatile wchar_t while xor xor_eq main std',
-    'number_text value_text item_text letters uppercase lowercase split_words split join round_to random_number',
+    'number_text value_text letters uppercase lowercase split_words split join round_to random_number',
     'generator read_text read_number'
   ]
     .join(' ')
@@ -57,18 +62,15 @@ const PRECEDENCE: Record<string, number> = {
   '/': 7,
   '%': 7
 };
-const UNARY = 8;
-const POSTFIX = 9;
-const ATOM = 10;
 
 const OPERATORS: Record<string, string> = {[COMMAND.AND]: '&&', [COMMAND.OR]: '||'};
 
-type Helper = {includes: string[]; uses?: string[]; code: (quotes: [string, string]) => string[]};
+type Helper = {imports: string[]; uses?: string[]; code: (words: [string, string]) => string[]};
 
-//the helpers, by name, in the order they are written: the includes they need, the helpers they use, and their code
+//the helpers, by name, in the order they are written: the headers they include, the helpers they use, and their code
 const HELPERS: Record<string, Helper> = {
   number_text: {
-    includes: ['sstream', 'iomanip', 'string'],
+    imports: ['sstream', 'iomanip', 'string'],
     code: () => [
       '// a number as CMIL prints it: whole numbers whole, others with up to 12 digits',
       'std::string number_text(double number) {',
@@ -79,42 +81,18 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   value_text: {
-    includes: ['string', 'vector'],
+    imports: ['string'],
     uses: ['number_text'],
-    code: ([open, close]) => [
-      '// a value as CMIL prints it; in a list, a text is in quotes, like [1, 2, "a"]',
+    code: ([yes, no]) => [
+      '// an item of a list as CMIL prints it, for join: a boolean in the words of the program',
       'std::string value_text(int number) { return std::to_string(number); }',
       'std::string value_text(double number) { return number_text(number); }',
-      'std::string value_text(bool value) { return value ? "true" : "false"; }',
-      'std::string value_text(const std::string& text) { return text; }',
-      'template <typename T>',
-      'std::string value_text(const std::vector<T>& list);',
-      'template <typename T>',
-      'std::string item_text(const T& item) { return value_text(item); }',
-      '// a text in a list is in quotes, with \\ before a quote or a \\ in it, and \\n and \\t for a new line and a tab',
-      'std::string item_text(const std::string& text) {',
-      `    std::string quoted = ${literal(open)};`,
-      '    for (char letter : text) {',
-      `        if (letter == '\\n') quoted += "\\\\n";`,
-      `        else if (letter == '\\t') quoted += "\\\\t";`,
-      `        else if (letter == '\\\\'${close.length === 1 ? ` || letter == '${close === "'" ? "\\'" : close}'` : ''}) quoted += std::string("\\\\") + letter;`,
-      '        else quoted += letter;',
-      '    }',
-      `    return quoted + ${literal(close)};`,
-      '}',
-      'template <typename T>',
-      'std::string value_text(const std::vector<T>& list) {',
-      '    std::string text = "[";',
-      '    for (std::size_t i = 0; i < list.size(); i++) {',
-      '        if (i > 0) text += ", ";',
-      '        text += item_text(list[i]);',
-      '    }',
-      '    return text + "]";',
-      '}'
+      `std::string value_text(bool value) { return value ? ${literal(yes)} : ${literal(no)}; }`,
+      'std::string value_text(const std::string& text) { return text; }'
     ]
   },
   letters: {
-    includes: ['string', 'vector'],
+    imports: ['string', 'vector'],
     code: () => [
       '// the letters of a text: a std::string has bytes, and a letter like ա has more than one',
       'std::vector<std::string> letters(const std::string& text) {',
@@ -130,7 +108,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   uppercase: {
-    includes: ['string', 'cctype'],
+    imports: ['string', 'cctype'],
     code: () => [
       '// a text in capital letters; std::toupper changes only English letters',
       'std::string uppercase(std::string text) {',
@@ -140,7 +118,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   lowercase: {
-    includes: ['string', 'cctype'],
+    imports: ['string', 'cctype'],
     code: () => [
       '// a text in small letters; std::tolower changes only English letters',
       'std::string lowercase(std::string text) {',
@@ -150,7 +128,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   split_words: {
-    includes: ['string', 'vector', 'sstream'],
+    imports: ['string', 'vector', 'sstream'],
     code: () => [
       '// the words of a text',
       'std::vector<std::string> split_words(const std::string& text) {',
@@ -163,7 +141,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   split: {
-    includes: ['string', 'vector'],
+    imports: ['string', 'vector'],
     uses: ['letters'],
     code: () => [
       '// the parts of a text between a separator; an empty separator gives its letters',
@@ -181,7 +159,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   join: {
-    includes: ['string', 'vector'],
+    imports: ['string', 'vector'],
     uses: ['value_text'],
     code: () => [
       '// the items of a list as they are printed, with a separator between them',
@@ -197,7 +175,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   round_to: {
-    includes: ['cmath', 'string'],
+    imports: ['cmath', 'string'],
     uses: ['number_text'],
     code: () => [
       '// a number rounded to a count of decimals, a half up, after rounding it like it is printed, so 1.005 is 1.01',
@@ -208,7 +186,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   random_number: {
-    includes: ['random'],
+    imports: ['random'],
     code: () => [
       '// a random whole number from min to max',
       'std::mt19937 generator(std::random_device{}());',
@@ -218,7 +196,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   read_text: {
-    includes: ['iostream', 'string'],
+    imports: ['iostream', 'string'],
     code: () => [
       '// an answer of the user, as a text',
       'std::string read_text() {',
@@ -229,7 +207,7 @@ const HELPERS: Record<string, Helper> = {
     ]
   },
   read_number: {
-    includes: ['iostream'],
+    imports: ['iostream'],
     code: () => [
       '// an answer of the user, as a number',
       'double read_number() {',
@@ -272,13 +250,10 @@ export const cppType = (type: Type): string => {
 };
 
 //a text as C++ writes it, like "a \"b\""
-const literal = (text: string) =>
-  `"${text.replace(/[\\"\n\t]/g, symbol => ({'\\': '\\\\', '"': '\\"', '\n': '\\n', '\t': '\\t'})[symbol]!)}"`;
+const literal = (text: string) => quoted(text);
 
-const isSimple = (node: Expression) => node.type === 'variable' || node.type === 'value';
-
-//whether a block has a name
-const has = (name: string) => (statements: Statement[]) => statements.some(statement => namesIn(statement).has(name));
+const cpp = new Grammar(PRECEDENCE);
+const name = (text: string) => cpp.atom(text);
 
 /**
  * Writes a program in C++.
@@ -286,116 +261,101 @@ const has = (name: string) => (statements: Statement[]) => statements.some(state
 export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Converted => {
   const names = new Names(tree.names, RESERVED);
   const trivia = new Trivia(tree.comments, sourceCode, '//');
-  const helpers = new Set<string>();
   const includes = new Set<string>();
+  const helpers = new Helpers(HELPERS, includes);
   const english = tree.language === 'en';
-  const {words, quotes} = TRANSLATION[tree.language];
+  const {words} = TRANSLATION[tree.language];
   let printsReal = false;
   let printsBoolean = false;
   //how often each variable of the scope being written gets a value
   let assignments = new Map<string, number>();
 
-  const use = (helper: string) => {
-    if (helpers.has(helper)) return;
-    for (const used of HELPERS[helper].uses ?? []) use(used);
-    helpers.add(helper);
-    HELPERS[helper].includes.forEach(include => includes.add(include));
-  };
-
   const typeOf = (node: Expression): Type => types.expressions.get(node) ?? 'unknown';
-
-  //an expression, in brackets when its operator binds more loosely than its place needs
-  const expression = (node: Expression, need = 0): string => {
-    const [text, precedence] = write(node);
-    return precedence < need ? `(${text})` : text;
-  };
-
-  const call = (name: string, args: string[]): [string, number] => [`${name}(${args.join(', ')})`, POSTFIX];
+  const code = (node: Expression) => cpp.print(expression(node));
 
   //the items of a list in braces, with the lists in it in braces too, like {{1, 2}, {3}}
-  const braced = (node: Expression & {type: 'list'}): string =>
-    `{${node.items.map(item => (item.type === 'list' ? braced(item) : expression(item))).join(', ')}}`;
+  const braced = (node: Expression & {type: 'list'}, open = '{'): Code =>
+    cpp.items(
+      open,
+      node.items.map(item => (item.type === 'list' ? braced(item) : expression(item))),
+      '}'
+    );
 
   //a value as a C++ object, for a call of its method: a text in quotes becomes a std::string first
-  const object = (node: Expression) =>
-    node.type === 'value' && typeof node.value === 'string'
-      ? `std::string(${expression(node)})`
-      : expression(node, POSTFIX);
+  const object = (node: Expression): Code =>
+    isText(node) ? cpp.call('std::string', [expression(node)]) : expression(node);
 
   //a boolean in the words of the program's language, as CMIL prints it
   const inWords = (node: Expression) =>
-    `(${expression(node, 1)} ? ${literal(words.true[0])} : ${literal(words.false[0])})`;
+    name(`(${code(node)} ? ${literal(words.true[0])} : ${literal(words.false[0])})`);
 
   //a value as a text, to join with +, and whether it is a std::string already rather than a text in quotes
-  const asText = (node: Expression): [string, boolean] => {
+  const asText = (node: Expression): [Code, boolean] => {
     const type = typeOf(node);
-    if (type === 'text') return [expression(node, PRECEDENCE['+'] + 1), node.type !== 'value'];
-    if (type === 'whole') return [`std::to_string(${expression(node)})`, true];
+    if (type === 'text') return [cpp.bracketed(expression(node), PRECEDENCE['+'] + 1), node.type !== 'value'];
+    if (type === 'whole') return [cpp.call('std::to_string', [expression(node)]), true];
     if (type === 'real') {
-      use('number_text');
-      return [`number_text(${expression(node)})`, true];
+      helpers.use('number_text');
+      return [cpp.call('number_text', [expression(node)]), true];
     }
     if (type === 'boolean') return [inWords(node), false];
-    use('value_text');
-    return [`value_text(${expression(node)})`, true];
+    helpers.use('value_text');
+    return [cpp.call('value_text', [expression(node)]), true];
   };
 
-  const write = (node: Expression): [string, number] => {
+  const expression = (node: Expression): Code => {
     switch (node.type) {
       case 'value':
         if (node.constant) {
           includes.add('numbers');
-          return [`std::numbers::${node.constant}`, ATOM];
+          return name(`std::numbers::${node.constant}`);
         }
         if (typeof node.value === 'string') {
           includes.add('string');
-          return [literal(node.value), ATOM];
+          return name(literal(node.value));
         }
-        return [String(node.value), ATOM];
+        return name(String(node.value));
       case 'list':
         includes.add('vector');
-        return [`${cppType(typeOf(node))}${braced(node)}`, ATOM];
+        return braced(node, `${cppType(typeOf(node))}{`);
       case 'template':
         return joinText(node);
       case 'variable':
-        return [names.of(node.name), ATOM];
+        return name(names.of(node.name));
       case 'index': {
-        const index = fromZero(node.index, position => expression(position, PRECEDENCE['-']));
-        if (isList(typeOf(node.target))) return [`${expression(node.target, POSTFIX)}[${index}]`, POSTFIX];
-        use('letters');
-        return [`letters(${expression(node.target)})[${index}]`, POSTFIX];
+        const index = fromZero(cpp, node.index, expression);
+        if (isList(typeOf(node.target))) return cpp.index(expression(node.target), index);
+        helpers.use('letters');
+        return cpp.index(cpp.call('letters', [expression(node.target)]), index);
       }
-      case 'input':
-        use(typeOf(node) === 'real' ? 'read_number' : 'read_text');
-        return call(typeOf(node) === 'real' ? 'read_number' : 'read_text', []);
+      case 'input': {
+        const reader = typeOf(node) === 'real' ? 'read_number' : 'read_text';
+        helpers.use(reader);
+        return cpp.call(reader, []);
+      }
       case 'userCall':
-        return call(
-          names.of(node.name),
-          node.args.map(arg => expression(arg))
-        );
+        return cpp.call(names.of(node.name), node.args.map(expression));
       case 'call':
         return builtIn(node);
       case 'unary':
-        return [`${node.operator === COMMAND.NOT ? '!' : node.operator}${expression(node.operand, UNARY)}`, UNARY];
+        return cpp.unary(node.operator === COMMAND.NOT ? '!' : node.operator, expression(node.operand));
       case 'binary':
         return binary(node);
     }
   };
 
   //values joined into one text, with + or in a text with code in braces
-  const joinText = (node: Expression): [string, number] => {
+  const joinText = (node: Expression): Code => {
     const parts = joinedParts(node, types).map(asText);
     //two texts in quotes can't be added in C++, so the first one becomes a std::string
     if (parts.length > 1 && !parts[0][1] && !parts[1][1]) {
       includes.add('string');
-      parts[0][0] = `std::string(${parts[0][0]})`;
+      parts[0][0] = cpp.call('std::string', [parts[0][0]]);
     }
-    return parts.length === 1
-      ? [parts[0][0], PRECEDENCE['+']]
-      : [parts.map(([text]) => text).join(' + '), PRECEDENCE['+']];
+    return parts.map(([text]) => text).reduce((left, right) => cpp.binary('+', left, right));
   };
 
-  const binary = (node: Expression & {type: 'binary'}): [string, number] => {
+  const binary = (node: Expression & {type: 'binary'}): Code => {
     const left = typeOf(node.left);
     const right = typeOf(node.right);
 
@@ -403,119 +363,100 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
     if (node.operator === COMMAND.IN) {
       if (isList(right)) {
         includes.add('algorithm');
-        const list = expression(node.right, POSTFIX);
-        return [
-          `std::find(${list}.begin(), ${list}.end(), ${expression(node.left)}) != ${list}.end()`,
-          PRECEDENCE['!=']
-        ];
+        const list = expression(node.right);
+        //a list made in place, like [1, 2] or a list a function gives, is counted, as its begin() and end() would be
+        //of two lists
+        if (node.right.type !== 'variable') {
+          return cpp.binary('>', cpp.call('std::ranges::count', [list, expression(node.left)]), name('0'));
+        }
+        const end = cpp.member(list, 'end', []);
+        const found = cpp.call('std::find', [cpp.member(list, 'begin', []), end, expression(node.left)]);
+        return cpp.binary('!=', found, end);
       }
-      return [`${object(node.right)}.find(${expression(node.left)}) != std::string::npos`, PRECEDENCE['!=']];
+      return cpp.binary(
+        '!=',
+        cpp.member(object(node.right), 'find', [expression(node.left)]),
+        name('std::string::npos')
+      );
     }
     //a whole number divided by a whole number is a whole number in C++, so the first one becomes a double
     if (node.operator === '/' && left === 'whole' && right === 'whole') {
       const dividend =
-        node.left.type === 'value' ? `${node.left.value}.0` : `static_cast<double>(${expression(node.left)})`;
-      return [`${dividend} / ${expression(node.right, PRECEDENCE['/'] + 1)}`, PRECEDENCE['/']];
+        node.left.type === 'value'
+          ? name(`${node.left.value}.0`)
+          : cpp.call('static_cast<double>', [expression(node.left)]);
+      return cpp.binary('/', dividend, expression(node.right));
     }
     if (node.operator === '%' && (left === 'real' || right === 'real')) {
       includes.add('cmath');
-      return call('std::fmod', [expression(node.left), expression(node.right)]);
+      return cpp.call('std::fmod', [expression(node.left), expression(node.right)]);
     }
     const operator = OPERATORS[node.operator] ?? node.operator;
-    const precedence = PRECEDENCE[operator];
-    if (node.operator === '==' || node.operator === '!=') {
-      //values of different types are never equal in CMIL; C++ doesn't compare them
-      const kind = (type: Type) => (isNumber(type) ? 'number' : isList(type) ? 'list' : type);
-      if (kind(left) !== kind(right) && left !== 'unknown' && right !== 'unknown') {
-        return [node.operator === '==' ? 'false' : 'true', ATOM];
-      }
+    //values of different types are never equal in CMIL; C++ doesn't compare them
+    if ((node.operator === '==' || node.operator === '!=') && neverEqual(left, right)) {
+      return name(node.operator === '==' ? 'false' : 'true');
     }
     //two texts in quotes are compared as texts, not as where they are
-    const quoted = (side: Expression) => side.type === 'value' && typeof side.value === 'string';
     const first =
-      quoted(node.left) && quoted(node.right)
-        ? `std::string(${expression(node.left)})`
-        : expression(node.left, precedence);
-    return [`${first} ${operator} ${expression(node.right, precedence + 1)}`, precedence];
+      isText(node.left) && isText(node.right)
+        ? cpp.call('std::string', [expression(node.left)])
+        : expression(node.left);
+    return cpp.binary(operator, first, expression(node.right));
   };
 
-  const builtIn = (node: Expression & {type: 'call'}): [string, number] => {
-    const args = node.args.map(arg => expression(arg));
-    const math = (name: string) => {
+  const builtIn = (node: Expression & {type: 'call'}): Code => {
+    const args = node.args.map(expression);
+    const math = (method: string, values = args) => {
       includes.add('cmath');
-      return call(`std::${name}`, args);
+      return cpp.call(`std::${method}`, values);
     };
     switch (node.name) {
-      case COMMAND.POW:
-        return math('pow');
-      case COMMAND.SQRT:
-        return math('sqrt');
-      case COMMAND.SQR: {
-        if (!isSimple(node.args[0])) {
-          includes.add('cmath');
-          return call('std::pow', [args[0], '2']);
-        }
-        const factor = expression(node.args[0], PRECEDENCE['*'] + 1);
-        return [`${factor} * ${factor}`, PRECEDENCE['*']];
-      }
+      case COMMAND.SQR:
+        if (!isSimple(node.args[0])) return math('pow', [args[0], name('2')]);
+        return cpp.binary('*', args[0], args[0]);
       case COMMAND.ROUND:
         if (args.length === 1) return math('round');
-        use('round_to');
-        return call('round_to', args);
+        helpers.use('round_to');
+        return cpp.call('round_to', args);
       case COMMAND.FLOOR:
         return math('floor');
       case COMMAND.CEIL:
         return math('ceil');
       case COMMAND.ABS:
         return math('abs');
-      case COMMAND.SIN:
-      case COMMAND.COS:
-      case COMMAND.TAN:
-        return math(node.name);
-      case COMMAND.ARCSIN:
-      case COMMAND.ARCCOS:
-      case COMMAND.ARCTAN:
-        return math(`a${node.name.slice(3)}`);
-      case COMMAND.COT:
-        includes.add('cmath');
-        return [`1 / std::tan(${args[0]})`, PRECEDENCE['/']];
-      case COMMAND.ARCCOT:
-        includes.add('cmath');
-        includes.add('numbers');
-        return [`std::numbers::pi / 2 - std::atan(${args[0]})`, PRECEDENCE['-']];
-      case COMMAND.LN:
-        return math('log');
-      case COMMAND.LG:
-        return math('log10');
-      case COMMAND.LOG:
-        includes.add('cmath');
-        return [`std::log(${args[1]}) / std::log(${args[0]})`, PRECEDENCE['/']];
       case COMMAND.RANDOM:
-        use('random_number');
-        return call('random_number', args.length === 1 ? ['1', args[0]] : args);
+        helpers.use('random_number');
+        return cpp.call('random_number', args.length === 1 ? [name('1'), args[0]] : args);
       case COMMAND.LENGTH:
-        if (isList(typeOf(node.args[0]))) return [`${expression(node.args[0], POSTFIX)}.size()`, POSTFIX];
-        use('letters');
-        return [`letters(${args[0]}).size()`, POSTFIX];
+        if (isList(typeOf(node.args[0]))) return cpp.member(args[0], 'size', []);
+        helpers.use('letters');
+        return cpp.member(cpp.call('letters', [args[0]]), 'size', []);
       case COMMAND.UPPER:
       case COMMAND.LOWER: {
         const helper = node.name === COMMAND.UPPER ? 'uppercase' : 'lowercase';
-        use(helper);
-        return call(helper, args);
+        helpers.use(helper);
+        return cpp.call(helper, args);
       }
       case COMMAND.NUMBER:
-        if (isNumber(typeOf(node.args[0]))) return write(node.args[0]);
+        if (isNumber(typeOf(node.args[0]))) return args[0];
         includes.add('string');
-        return call('std::stod', args);
+        return cpp.call('std::stod', args);
       case COMMAND.TEXT:
-        return [asText(node.args[0])[0], PRECEDENCE['+']];
-      case COMMAND.SPLIT:
-        use(args.length === 1 ? 'split_words' : 'split');
-        return call(args.length === 1 ? 'split_words' : 'split', args);
+        return asText(node.args[0])[0];
+      case COMMAND.SPLIT: {
+        const helper = args.length === 1 ? 'split_words' : 'split';
+        helpers.use(helper);
+        return cpp.call(helper, args);
+      }
       case COMMAND.JOIN:
-        use('join');
-        return call('join', args.length === 1 ? [args[0], '""'] : args);
+        helpers.use('join');
+        return cpp.call('join', args.length === 1 ? [args[0], name('""')] : args);
     }
+    const formula = mathOf(cpp, node.name, args, math, () => {
+      includes.add('numbers');
+      return name('std::numbers::pi');
+    });
+    if (formula) return formula;
     throw new Error(`No C++ for ${node.name}`);
   };
 
@@ -524,235 +465,173 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
     (isJoined(node, types) ? joinedParts(node, types) : [node]).map(part => {
       const type = typeOf(part);
       if (type === 'real') printsReal = true;
-      if (type === 'boolean' && !english) return inWords(part);
+      if (type === 'boolean' && !english) return cpp.print(inWords(part));
       if (type === 'boolean') printsBoolean = true;
-      if (isList(type)) {
-        use('value_text');
-        return `value_text(${expression(part)})`;
-      }
-      return expression(part, PRECEDENCE['<<'] + 1);
+      return cpp.print(cpp.bracketed(expression(part), PRECEDENCE['<<'] + 1));
     });
 
-  //the variables a block declares: where they get their first value, or before the statement that first has them
-  const declarations = (statements: Statement[], scope: Map<string, Type>, declared: Set<string>) => {
-    const before = new Map<number, string[]>();
-    const inline = new Set<Statement>();
-    const used = statements.map(statement => namesIn(statement));
-    for (const name of scope.keys()) {
-      if (declared.has(name)) continue;
-      const first = used.findIndex(found => found.has(name));
-      if (first < 0) continue;
-      const statement = statements[first];
-      const elsewhere = used.some((found, index) => index !== first && found.has(name));
-      if (statement.type === 'assign' && statement.name === name) inline.add(statement);
-      else if ((statement.type === 'for' || statement.type === 'forEach') && statement.name === name && !elsewhere) {
-        inline.add(statement);
-      } else if (elsewhere || ownNames(statement).has(name) || blocksOf(statement).filter(has(name)).length !== 1) {
-        before.set(first, [...(before.get(first) ?? []), name]);
-      }
-      //else the one block that has it declares it
-    }
-    return {before, inline};
-  };
-
-  const block = (out: Writer, statements: Statement[], scope: Map<string, Type>, declared: Set<string>) => {
-    const {before, inline} = declarations(statements, scope, declared);
-    statements.forEach((statement, index) => {
-      trivia.before(out, statement.type === 'doWhile' ? statement.doLine : statement.line);
-      for (const name of before.get(index) ?? []) {
-        out.line(`${cppType(scope.get(name)!)} ${names.of(name)};`, statement.line);
-        declared.add(name);
-      }
-      emit(out, statement, scope, declared, inline.has(statement));
-    });
-  };
-
-  const emit = (
-    out: Writer,
-    statement: Statement,
-    scope: Map<string, Type>,
-    declared: Set<string>,
-    declares: boolean
-  ) => {
-    const {line} = statement;
-    const after = trivia.after(line);
-    const body = (statements: Statement[]) => out.block(() => block(out, statements, scope, declared));
-    //CMIL reads the bounds of a loop once; when the loop changes them, C++ keeps them in a variable first
-    const once = (bound: Expression, type: string, candidates: string[]) => {
-      const changed = assignedIn('body' in statement ? statement.body : []);
-      if (![...variablesIn(bound)].some(name => changed.has(name))) return expression(bound, PRECEDENCE['<'] + 1);
-      const name = names.fresh(candidates);
-      out.line(`const ${type} ${name} = ${expression(bound)};`, line);
-      return name;
-    };
-    if (declares && 'name' in statement) declared.add(statement.name);
-
-    switch (statement.type) {
-      case 'print':
-        includes.add('iostream');
-        out.line(`std::cout << ${printed(statement.expression).join(' << ')} << '\\n';${after}`, line);
-        return;
-      case 'assign': {
-        const name = names.of(statement.name);
-        const type = cppType(scope.get(statement.name)!);
-        if (statement.expression.type === 'input') {
+  const block = statementsOf({
+    trivia,
+    names,
+    braces: SAME_LINE,
+    declare: (variable, type) => [`${cppType(type)} ${names.of(variable)};`],
+    write: (statement, context) => {
+      const {comment, declares, scope} = context;
+      //CMIL reads the bounds of a loop once; when the loop changes them, C++ keeps them in a variable first
+      const once = (bound: Expression, candidates: string[]): Code => {
+        const kept = context.keep(
+          bound,
+          candidates,
+          variable => `const ${cppType(typeOf(bound))} ${variable} = ${code(bound)};`
+        );
+        return kept ? name(kept) : expression(bound);
+      };
+      switch (statement.type) {
+        case 'print':
           includes.add('iostream');
-          if (declares) out.line(`${type} ${name};`, line);
-          if (types.expressions.get(statement.expression) === 'real') {
-            out.line(`std::cin >> ${name};${after}`, line);
+          context.line(`std::cout << ${printed(statement.expression).join(' << ')} << '\\n';${comment}`);
+          return;
+        case 'assign': {
+          const variable = names.of(statement.name);
+          const type = cppType(scope.get(statement.name)!);
+          const {expression: value} = statement;
+          if (value.type === 'input') {
+            includes.add('iostream');
+            if (declares) context.line(`${type} ${variable};`);
+            if (typeOf(value) === 'real') {
+              context.line(`std::cin >> ${variable};${comment}`);
+            } else {
+              includes.add('string');
+              context.line(`std::getline(std::cin >> std::ws, ${variable});${comment}`);
+            }
+            return;
+          }
+          if (declares && value.type === 'list') {
+            includes.add('vector');
+            const items = value.items.length ? ` = ${cpp.print(braced(value))}` : '';
+            context.line(`${type} ${variable}${items};${comment}`);
+            return;
+          }
+          //a list is shared by the variables it is in, so a variable that only ever has another's list refers to it
+          if (
+            declares &&
+            value.type === 'variable' &&
+            type.startsWith('std::vector') &&
+            assignments.get(statement.name) === 1
+          ) {
+            context.line(`${type}& ${variable} = ${code(value)};${comment}`);
+            return;
+          }
+          context.line(`${declares ? `${type} ` : ''}${variable} = ${code(value)};${comment}`);
+          return;
+        }
+        case 'setItem': {
+          const item = cpp.index(expression(statement.target), fromZero(cpp, statement.index, expression));
+          context.line(`${cpp.print(item)} = ${code(statement.expression)};${comment}`);
+          return;
+        }
+        case 'add':
+          context.line(
+            `${cpp.print(cpp.member(expression(statement.target), 'push_back', [expression(statement.expression)]))};${comment}`
+          );
+          return;
+        case 'remove': {
+          includes.add('algorithm');
+          const list = expression(statement.target);
+          const found = cpp.call('std::find', [
+            cpp.member(list, 'begin', []),
+            cpp.member(list, 'end', []),
+            expression(statement.expression)
+          ]);
+          context.line(`${cpp.print(cpp.member(list, 'erase', [found]))};${comment}`);
+          return;
+        }
+        case 'call':
+          context.line(`${code(statement.call)};${comment}`);
+          return;
+        case 'return':
+          context.line(`return${statement.expression ? ` ${code(statement.expression)}` : ''};${comment}`);
+          return;
+        case 'if':
+          context.blocks(branchesOf(statement, (condition, index) => `${index ? 'else ' : ''}if (${code(condition)})`));
+          return;
+        case 'while':
+          context.blocks([loopOf(statement, `while (${code(statement.condition)})`)]);
+          return;
+        case 'doWhile':
+          context.blocks([{text: 'do', line: statement.doLine, body: statement.body}], {
+            text: `while (${code(statement.condition)});`,
+            line: statement.line
+          });
+          return;
+        case 'repeat': {
+          const count = once(statement.count, ['times', 'count']);
+          const counter = context.fresh(['i', 'j', 'k']);
+          const test = cpp.print(cpp.binary('<', name(counter), count));
+          context.blocks([loopOf(statement, `for (int ${counter} = 0; ${test}; ${counter}++)`)]);
+          return;
+        }
+        case 'for': {
+          const counter = names.of(statement.name);
+          const type = cppType(scope.get(statement.name)!);
+          const {down, size, signed} = stepOf(statement);
+          //the first value too, when it asks and a later bound is kept, so the program asks in CMIL's order
+          const first = once(statement.from, ['first', 'start']);
+          const last = once(statement.to, ['last', 'end']);
+          const by = size && once(size, ['step', 'by']);
+          const test = counterTest(cpp, operator => cpp.binary(operator, name(counter), last), {down, signed}, by);
+          const next = !by
+            ? `${counter}${down ? '--' : '++'}`
+            : `${counter} ${down ? '-=' : '+='} ${cpp.print(cpp.bracketed(by, PRECEDENCE['+'] + 1))}`;
+          const start = `${declares ? `${type} ` : ''}${counter} = ${cpp.print(first)}`;
+          context.blocks([loopOf(statement, `for (${start}; ${test}; ${next})`)]);
+          return;
+        }
+        case 'forEach': {
+          const type = typeOf(statement.expression);
+          let items = code(statement.expression);
+          if (!isList(type)) {
+            helpers.use('letters');
+            items = `letters(${items})`;
+          } else if (changesItsList(statement)) {
+            //the loop changes the list, so it passes a copy: the items the list had when the loop started
+            items = `${cppType(type)}(${items})`;
+          }
+          const item = cppType(scope.get(statement.name)!);
+          if (declares) {
+            context.blocks([loopOf(statement, `for (${item} ${names.of(statement.name)} : ${items})`)]);
           } else {
-            includes.add('string');
-            out.line(`std::getline(std::cin >> std::ws, ${name});${after}`, line);
+            //the variable is used after the loop too, so it gets each item
+            const each = context.fresh(['item', 'each']);
+            context.blocks([
+              loopOf(statement, `for (${item} ${each} : ${items})`, {first: [`${names.of(statement.name)} = ${each};`]})
+            ]);
           }
           return;
         }
-        if (declares && statement.expression.type === 'list') {
-          includes.add('vector');
-          const items = statement.expression.items.length ? ` = ${braced(statement.expression)}` : '';
-          out.line(`${type} ${name}${items};${after}`, line);
+        case 'break':
+        case 'continue':
+          context.line(`${statement.type};${comment}`);
           return;
-        }
-        //a list is shared by the variables it is in, so a variable that only ever has another's list refers to it
-        if (
-          declares &&
-          statement.expression.type === 'variable' &&
-          type.startsWith('std::vector') &&
-          assignments.get(statement.name) === 1
-        ) {
-          out.line(`${type}& ${name} = ${expression(statement.expression)};${after}`, line);
-          return;
-        }
-        out.line(`${declares ? `${type} ` : ''}${name} = ${expression(statement.expression)};${after}`, line);
-        return;
       }
-      case 'setItem': {
-        const index = fromZero(statement.index, position => expression(position, PRECEDENCE['-']));
-        out.line(
-          `${expression(statement.target, POSTFIX)}[${index}] = ${expression(statement.expression)};${after}`,
-          line
-        );
-        return;
-      }
-      case 'add':
-        out.line(
-          `${expression(statement.target, POSTFIX)}.push_back(${expression(statement.expression)});${after}`,
-          line
-        );
-        return;
-      case 'remove': {
-        includes.add('algorithm');
-        const list = expression(statement.target, POSTFIX);
-        const item = expression(statement.expression);
-        out.line(`${list}.erase(std::find(${list}.begin(), ${list}.end(), ${item}));${after}`, line);
-        return;
-      }
-      case 'call':
-        out.line(`${expression(statement.call)};${after}`, line);
-        return;
-      case 'return':
-        out.line(`return${statement.expression ? ` ${expression(statement.expression)}` : ''};${after}`, line);
-        return;
-      case 'if':
-        statement.branches.forEach((branch, index) => {
-          if (index) trivia.before(out, branch.line);
-          out.line(
-            `${index ? '} else ' : ''}if (${expression(branch.condition)}) {${trivia.after(branch.line)}`,
-            branch.line
-          );
-          body(branch.body);
-        });
-        if (statement.elseLine) {
-          trivia.before(out, statement.elseLine);
-          out.line(`} else {${trivia.after(statement.elseLine)}`, statement.elseLine);
-          body(statement.elseBody);
-        }
-        out.line('}');
-        return;
-      case 'while':
-        out.line(`while (${expression(statement.condition)}) {${after}`, line);
-        body(statement.body);
-        out.line('}');
-        return;
-      case 'doWhile':
-        out.line(`do {${trivia.after(statement.doLine)}`, statement.doLine);
-        body(statement.body);
-        trivia.before(out, line);
-        out.line(`} while (${expression(statement.condition)});${after}`, line);
-        return;
-      case 'repeat': {
-        const count = once(statement.count, 'int', ['times', 'count']);
-        const counter = names.fresh(['i', 'j', 'k']);
-        out.line(`for (int ${counter} = 0; ${counter} < ${count}; ${counter}++) {${after}`, line);
-        body(statement.body);
-        out.line('}');
-        names.release(counter);
-        return;
-      }
-      case 'for': {
-        const name = names.of(statement.name);
-        const {step} = statement;
-        //a step in the program like -2, or a step of a value that has no sign in the program
-        const negative = step?.type === 'unary' && step.operator === '-';
-        const size = step && (step.type === 'unary' && negative ? step.operand : step);
-        const next =
-          !size || (size.type === 'value' && size.value === 1)
-            ? `${name}${negative ? '--' : '++'}`
-            : `${name} ${negative ? '-=' : '+='} ${expression(size, PRECEDENCE['+'] + 1)}`;
-        const test = `${name} ${negative ? '>=' : '<='} ${once(statement.to, cppType(scope.get(statement.name)!), ['last', 'end'])}`;
-        const start = `${declares ? `${cppType(scope.get(statement.name)!)} ` : ''}${name} = ${expression(statement.from)}`;
-        out.line(`for (${start}; ${test}; ${next}) {${after}`, line);
-        body(statement.body);
-        out.line('}');
-        return;
-      }
-      case 'forEach': {
-        const type = typeOf(statement.expression);
-        let items = expression(statement.expression);
-        if (!isList(type)) {
-          use('letters');
-          items = `letters(${items})`;
-        } else if (
-          [...variablesIn(statement.expression)].some(
-            name => changedIn(statement.body).has(name) || assignedIn(statement.body).has(name)
-          )
-        ) {
-          //the loop changes the list, so it passes a copy: the items the list had when the loop started
-          items = `${cppType(type)}(${items})`;
-        }
-        const item = cppType(scope.get(statement.name)!);
-        if (declares) {
-          out.line(`for (${item} ${names.of(statement.name)} : ${items}) {${after}`, line);
-          body(statement.body);
-        } else {
-          //the variable is used after the loop too, so it gets each item
-          const each = names.fresh(['item', 'each']);
-          out.line(`for (${item} ${each} : ${items}) {${after}`, line);
-          out.block(() => out.line(`${names.of(statement.name)} = ${each};`, line));
-          body(statement.body);
-          names.release(each);
-        }
-        out.line('}');
-        return;
-      }
-      case 'break':
-      case 'continue':
-        out.line(`${statement.type};${after}`, line);
-        return;
     }
-  };
+  });
 
   const definitions = tree.statements.filter(statement => statement.type === 'function');
   const signature = (definition: Statement & {type: 'function'}) => {
     const scope = types.variables.get(definition.name)!;
     const result = types.results.get(definition.name)!;
     const changed = changedIn(definition.body);
+    const shared = sharedListsOf(tree.statements, definition);
     const assigned = assignedIn(definition.body);
     const parameters = definition.parameters.map(parameter => {
       const type = scope.get(parameter)!;
       const written = `${cppType(type)} ${names.of(parameter)}`;
       if (!isList(type) || assigned.has(parameter)) return written;
-      //a list is shared with the function, as in CMIL; one the function only reads is const
-      return changed.has(parameter) ? written.replace(' ', '& ') : `const ${written.replace(' ', '& ')}`;
+      //a list is shared with the function, as in CMIL, when the caller sees its changes; one it changes that no caller
+      //sees is its own copy, and one it only reads is const
+      if (shared.has(parameter)) return written.replace(' ', '& ');
+      return changed.has(parameter) ? written : `const ${written.replace(' ', '& ')}`;
     });
     return `${result === 'unknown' ? 'void' : cppType(result)} ${names.of(definition.name)}(${parameters.join(', ')})`;
   };
@@ -772,12 +651,7 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
   }
   assignments = assignedIn(tree.statements.filter(statement => statement.type !== 'function'));
   main.block(() => {
-    block(
-      main,
-      tree.statements.filter(statement => statement.type !== 'function'),
-      types.variables.get('')!,
-      new Set()
-    );
+    block(main, tree.statements, types.variables.get('')!, new Set());
     trivia.rest(main);
   });
 
@@ -789,10 +663,7 @@ export const toCpp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
 
   const out = new Writer('    ');
   for (const include of INCLUDES.filter(include => includes.has(include))) out.line(`#include <${include}>`);
-  for (const helper of Object.keys(HELPERS).filter(helper => helpers.has(helper))) {
-    out.blank();
-    HELPERS[helper].code(quotes[0]).forEach(text => out.line(text));
-  }
+  helpers.write(out, helper => helper.code([words.true[0], words.false[0]]));
   if (prototypes.length) {
     out.blank();
     prototypes.forEach(definition => out.line(`${signature(definition)};`));

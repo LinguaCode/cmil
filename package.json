@@ -24,7 +24,8 @@
     "coverage": "c8 --reporter=text --reporter=html npm test",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "translations-table": "node scripts/translations-table.ts"
+    "translations-table": "node scripts/translations-table.ts",
+    "snapshot": "node scripts/snapshot.ts"
   },
   "repository": {
     "type": "git",

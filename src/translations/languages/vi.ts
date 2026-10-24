@@ -68,6 +68,8 @@ const translation: Translation = {
     undefinedFunction: 'Dòng {line}: không có hàm {function}.',
     noValue: 'Dòng {line}: {function} không trả về giá trị.',
     typeError: 'Dòng {line}: {operator} không dùng được với các giá trị này.',
+    listAsText:
+      'Dòng {line}: không in được nguyên một danh sách; hãy nối các phần tử của nó thành văn bản bằng {join}, hoặc in từng phần tử một.',
     conditionError: 'Dòng {line}: điều kiện phải đúng hoặc sai.',
     divisionByZero: 'Dòng {line}: chia cho không.',
     mathError: 'Dòng {line}: {operator} không có kết quả cho giá trị này.',
@@ -82,7 +84,9 @@ const translation: Translation = {
     mixedTypes:
       'Dòng {line}: {target} không viết được chương trình này: {name} nhận giá trị thuộc hai loại, như một số và một văn bản.',
     mixedItems:
-      'Dòng {line}: {target} không viết được chương trình này: một danh sách có phần tử thuộc hai loại, như số và văn bản.'
+      'Dòng {line}: {target} không viết được chương trình này: một danh sách có phần tử thuộc hai loại, như số và văn bản.',
+    fixedArrays:
+      'Dòng {line}: {target} không viết được chương trình này bằng mảng cố định của khóa học đầu tiên, như danh sách các danh sách hoặc hàm trả về danh sách.'
   }
 };
 

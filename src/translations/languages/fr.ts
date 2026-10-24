@@ -71,6 +71,8 @@ const translation: Translation = {
     undefinedFunction: "Ligne {line} : il n'y a pas de fonction {function}.",
     noValue: 'Ligne {line} : {function} ne renvoie pas de valeur.',
     typeError: 'Ligne {line} : {operator} ne fonctionne pas avec ces valeurs.',
+    listAsText:
+      "Ligne {line} : une liste ne s'affiche pas telle quelle ; joignez ses éléments en un texte avec {join}, ou affichez-les un par un.",
     conditionError: 'Ligne {line} : une condition doit être vraie ou fausse.',
     divisionByZero: 'Ligne {line} : division par zéro.',
     mathError: 'Ligne {line} : {operator} n’a pas de résultat pour cette valeur.',
@@ -85,7 +87,9 @@ const translation: Translation = {
     mixedTypes:
       'Ligne {line} : {target} ne peut pas écrire ce programme : {name} reçoit des valeurs de deux sortes, comme un nombre et un texte.',
     mixedItems:
-      'Ligne {line} : {target} ne peut pas écrire ce programme : une liste a des éléments de deux sortes, comme des nombres et des textes.'
+      'Ligne {line} : {target} ne peut pas écrire ce programme : une liste a des éléments de deux sortes, comme des nombres et des textes.',
+    fixedArrays:
+      'Ligne {line} : {target} ne peut pas écrire ce programme avec les tableaux fixes d’un premier cours, comme une liste de listes ou une fonction qui donne une liste.'
   }
 };
 

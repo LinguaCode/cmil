@@ -73,6 +73,8 @@ const translation: Translation = {
     undefinedFunction: 'Wiersz {line}: nie ma funkcji {function}.',
     noValue: 'Wiersz {line}: {function} nie zwraca wartości.',
     typeError: 'Wiersz {line}: {operator} nie działa z tymi wartościami.',
+    listAsText:
+      'Wiersz {line}: listy nie wypisuje się w całości; połącz jej elementy w tekst za pomocą {join} albo wypisz je po kolei.',
     conditionError: 'Wiersz {line}: warunek musi być prawdziwy albo fałszywy.',
     divisionByZero: 'Wiersz {line}: dzielenie przez zero.',
     mathError: 'Wiersz {line}: {operator} nie ma wyniku dla tej wartości.',
@@ -87,7 +89,9 @@ const translation: Translation = {
     mixedTypes:
       'Wiersz {line}: {target} nie może zapisać tego programu: {name} dostaje wartości dwóch rodzajów, np. liczbę i tekst.',
     mixedItems:
-      'Wiersz {line}: {target} nie może zapisać tego programu: lista ma elementy dwóch rodzajów, np. liczby i teksty.'
+      'Wiersz {line}: {target} nie może zapisać tego programu: lista ma elementy dwóch rodzajów, np. liczby i teksty.',
+    fixedArrays:
+      'Wiersz {line}: {target} nie może zapisać tego programu stałymi tablicami pierwszego kursu, np. listy list albo funkcji, która zwraca listę.'
   }
 };
 

@@ -72,6 +72,8 @@ const translation: Translation = {
     undefinedFunction: 'Linia {line}: nu există funcția {function}.',
     noValue: 'Linia {line}: {function} nu returnează nicio valoare.',
     typeError: 'Linia {line}: {operator} nu funcționează cu aceste valori.',
+    listAsText:
+      'Linia {line}: o listă nu se afișează așa cum este; unește-i elementele într-un text cu {join} sau afișează-le pe rând.',
     conditionError: 'Linia {line}: o condiție trebuie să fie adevărată sau falsă.',
     divisionByZero: 'Linia {line}: împărțire la zero.',
     mathError: 'Linia {line}: {operator} nu are rezultat pentru această valoare.',
@@ -86,7 +88,9 @@ const translation: Translation = {
     mixedTypes:
       'Linia {line}: {target} nu poate scrie acest program: {name} primește valori de două feluri, ca un număr și un text.',
     mixedItems:
-      'Linia {line}: {target} nu poate scrie acest program: o listă are elemente de două feluri, ca numere și texte.'
+      'Linia {line}: {target} nu poate scrie acest program: o listă are elemente de două feluri, ca numere și texte.',
+    fixedArrays:
+      'Linia {line}: {target} nu poate scrie acest program cu tablourile fixe ale unui prim curs, ca o listă de liste sau o funcție care dă o listă.'
   }
 };
 

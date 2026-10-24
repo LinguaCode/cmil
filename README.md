@@ -60,7 +60,7 @@ if (step.state === 'end' && step.error) {
 
 For editors, `segmentsOf(line, language)` splits a line into the parts to color, with the command of each keyword (`{type: 'keyword', text: 'արտածել', command: 'print'}`), and names, texts, numbers, comments, operators, spaces and other characters, which are syntax errors. `commandsOf(language)` lists the commands of a language with their words and their kind: `block` (like `if`, which indents the next line), `statement`, `part`, `operator`, `value` or `function` (like `print` or `sin`, which are called with parentheses). `quotesOf(language)` lists the quotes of texts in a language, its main quotes first.
 
-`convert(sourceCode, language, target)` writes a program in another language, so a learner sees it in C++ or Python line by line: `convert('print("Hi")', 'en', 'python')` gives `{code: 'print("Hi")\n', lines: [1]}`. `targets` lists the languages, and `programOf(sourceCode, language)` gives the tree of a program for other tools. See [docs/converting.md](docs/converting.md) and [docs/tree.md](docs/tree.md).
+`convert(sourceCode, language, target)` writes a program in another language, so a learner sees it in C++, Python, C#, Java, C, JavaScript, Pascal, Go, Kotlin, Swift, Rust, PHP, Ruby, Lua, BASIC, Visual Basic, Fortran, Tcl, COBOL or x86-64 assembly, C# and Java modern or classic, assembly in the Intel or AT&T syntax of the GNU assembler or in NASM's, line by line: `convert('print("Hi")', 'en', 'python')` gives `{code: 'print("Hi")\n', lines: [1]}`. `targets` lists the languages, and `programOf(sourceCode, language)` gives the tree of a program for other tools. See [docs/converting.md](docs/converting.md) and [docs/tree.md](docs/tree.md).
 
 CMIL runs programs with its own interpreter, never as JavaScript, and limits their steps and memory. See [docs/running.md](docs/running.md) for the limits and for running sessions in a worker.
 
@@ -73,13 +73,13 @@ npm test
 ```
 CMIL is written in TypeScript. `npm install` also builds `src/` into `dist/` (`npm run build`), and `npm run typecheck` checks the types.
 
-`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()`, the editor functions, the translations and the conversion, which compiles and runs every spec program in C++ and Python when `g++` and `python3` are installed; Node.js runs the TypeScript sources directly. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
+`npm test` runs every case of [`test/collection`](test/collection), the specification of the language, in a `Session`, plus the tests of the interpreter, the keyword scanner, `translate()`, the editor functions, the translations and the conversion, which compiles and runs every spec program in C++, Python, C#, Java, C, JavaScript, Pascal, Go, Kotlin, Swift, Rust, PHP, Ruby, Lua, BASIC, Visual Basic, Fortran, Tcl, COBOL and x86-64 assembly when `g++`, `python3`, `dotnet` (for C# and Visual Basic), Java 25 (`JAVA_HOME`), `gcc` (for C and the GNU assembler), `nasm`, `fpc`, `go`, `kotlinc` (`KOTLIN_HOME`), `swiftc`, `rustc`, `php`, `ruby`, `lua5.4`, `fbc`, `gfortran`, `tclsh` and `cobc` are installed; Node.js runs the TypeScript sources directly. `CMIL_TARGETS=c,x86-64 npm test` builds and runs the spec programs in those targets alone. `npm run snapshot` lists every spec program whose conversion a change has changed since `npm run snapshot -- --save`. `npm run coverage` also writes a coverage report into `coverage/`. `npm run lint` checks the code with ESLint and Prettier, and `npm run format` formats it.
 
 ## Documentation
 - [The CMIL language](docs/language.md): commands, values, operators, lists, functions and errors.
 - [Running CMIL programs](docs/running.md): limits, and running sessions in a worker.
 - [Translations](docs/translations.md): the words of every language.
-- [Converting CMIL programs](docs/converting.md): CMIL programs in C++ and Python, and how they differ.
+- [Converting CMIL programs](docs/converting.md): CMIL programs in C++, Python, C#, Java (modern and classic), C, JavaScript, Pascal, Go, Kotlin, Swift, Rust, PHP, Ruby, Lua, BASIC, Visual Basic, Fortran, Tcl, COBOL and x86-64 assembly, and how they differ.
 - [The program tree](docs/tree.md): the statements and expressions of a program, for tools.
 
 ## Screenshot
