@@ -1,4 +1,4 @@
-## Unreleased
+## 0.19.0-alpha.0 (2026-10-24)
 
   - **[change]** a list is no text: printing a list, joining it into a text with `+` or `{…}`, `to_text` of it, and `join` of a list whose items are lists are the new error `listAsText`, whose message, in every language, says to join its items with `join`, named in the program's language, or to print them one by one. A printed list like `[«հաց», «կաթ»]` is no output a program wants; `join(list, ", ")` prints `հաց, կաթ`.
   - **[change]** lists aren't compared: `==` and `!=` of a list, and `in` and `remove` with a list as the value, are a `typeError`; their items are compared one by one.
