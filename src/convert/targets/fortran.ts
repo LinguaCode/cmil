@@ -346,20 +346,25 @@ const HELPERS: Record<string, Helper> = {
       'end function letter_of'
     ]
   },
+  //the letters and the parts of a text are kept in a variable before string() takes them, since gfortran 13 builds the
+  //string() of a part of a text wrong in a list
   letters: {
     code: () => [
       '! the letters of a text, each a text of its own: a letter starts at a byte that is not 10xxxxxx',
       'function letters(text) result(list)',
       '    character(len=*), intent(in) :: text',
       '    type(string), allocatable :: list(:)',
+      '    character(len=:), allocatable :: letter',
       '    integer :: i, first',
       '    list = [string ::]',
       '    first = 1',
       '    do i = 2, len(text) + 1',
       '        if (i > len(text)) then',
-      '            list = [list, string(text(first:))]',
+      '            letter = text(first:)',
+      '            list = [list, string(letter)]',
       '        else if (iand(iachar(text(i:i)), 192) /= 128) then',
-      '            list = [list, string(text(first:i - 1))]',
+      '            letter = text(first:i - 1)',
+      '            list = [list, string(letter)]',
       '            first = i',
       '        end if',
       '    end do',
@@ -396,6 +401,7 @@ const HELPERS: Record<string, Helper> = {
       'function split_at(text, separator) result(parts)',
       '    character(len=*), intent(in) :: text, separator',
       '    type(string), allocatable :: parts(:)',
+      '    character(len=:), allocatable :: part',
       '    integer :: start, found',
       '    if (separator == "") then',
       '        parts = letters(text)',
@@ -406,10 +412,12 @@ const HELPERS: Record<string, Helper> = {
       '    do',
       '        found = index(text(start:), separator)',
       '        if (found == 0) exit',
-      '        parts = [parts, string(text(start:start + found - 2))]',
+      '        part = text(start:start + found - 2)',
+      '        parts = [parts, string(part)]',
       '        start = start + found - 1 + len(separator)',
       '    end do',
-      '    parts = [parts, string(text(start:))]',
+      '    part = text(start:)',
+      '    parts = [parts, string(part)]',
       'end function split_at'
     ]
   },
