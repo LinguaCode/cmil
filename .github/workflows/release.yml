@@ -11,6 +11,8 @@ permissions:
   contents: write
   # trusted publishing: npm exchanges this token for a short-lived publish token
   id-token: write
+  # whether the test workflow passed on the commit
+  actions: read
 
 jobs:
   release:
@@ -25,7 +27,21 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
+      # the tests but those that build and run the converted programs, as the check job of the test workflow runs them
       - run: npm test
+        env:
+          CMIL_TARGETS: ''
+      # the converted programs are built and run by the convert jobs of the test workflow, which has to have passed on
+      # this commit
+      - name: Check the test workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          passed=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow test --commit "$GITHUB_SHA" --status success --json databaseId --jq length)
+          if [ "$passed" = 0 ]; then
+            echo "The test workflow hasn't passed on $GITHUB_SHA."
+            exit 1
+          fi
       - name: Check the version
         run: |
           version=$(node -p "require('./package.json').version")
