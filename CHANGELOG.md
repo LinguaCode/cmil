@@ -1,4 +1,4 @@
-## Unreleased
+## 0.20.0-alpha.0 (2026-10-25)
 
   - **[add]** API: the entry `cmil/convert`, which has `convert()` alone, so a page can load the converters when it first shows a program in another language, like `const {convert} = await import('cmil/convert')`; `targets`, from `cmil`, loads none of them.
   - **[optimize]** package: `"sideEffects": false`, since no module of CMIL does anything when it loads, so a bundler leaves out what a page or a worker doesn't use: a worker that runs programs with `Session` no longer carries the converters, about 300 kB of its 428 kB.

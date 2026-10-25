@@ -1,6 +1,6 @@
 {
   "name": "cmil",
-  "version": "0.19.0-alpha.0",
+  "version": "0.20.0-alpha.0",
   "description": "Multilanguage programming platform especially for kids",
   "type": "module",
   "main": "dist/index.js",
