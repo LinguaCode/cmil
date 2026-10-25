@@ -40,7 +40,7 @@ To change the words yourself:
 1. Fork this repository.
 2. To add a language, copy `src/translations/languages/en.ts` to a file named after the language code, for example `it.ts`, or `pt-PT.ts` for a regional variant, add it to `src/translations/index.ts`, and add its name to `scripts/translations-table.ts`. To improve a language, edit its existing file.
 3. Translate the words of every command. Join the words of a phrase with `_`, for example `tant_que`, and list alternative spellings, for example `and: ['և', 'եւ', 'ու']`; the first is the main one. In `quotes`, list the quotes of texts in the language, its main pair first, like `[['„', '“']]` in German; `«…»`, `"…"` and `'…'` work in every language.
-4. Run `npm run translations-table`, which updates `docs/translations.md`, then `npm test`, which checks that every language defines every command, gives every word only one command and runs programs, and open a pull request.
+4. Run `npm run translations-table`, which updates `docs/translations.md`, then `npm test`, which checks that every language defines every command, gives every word only one command, runs programs and writes its messages in its own punctuation, like ՛ and ։ in Armenian or the full-width ： in Japanese, and open a pull request.
 5. Take this :pizza: piece of pizza from us in return for help :blush:.
 
 ## License

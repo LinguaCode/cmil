@@ -6,7 +6,7 @@ import {describe, it} from 'node:test';
 
 import type {Command} from '../src/constants/index.ts';
 import translations from '../src/translations/index.ts';
-import {Session, languages} from '../src/index.ts';
+import {Session, languages, quotesOf} from '../src/index.ts';
 import {DOCS_PATH, translationsTable} from '../scripts/translations-table.ts';
 
 const LANGUAGES_PATH = path.join(import.meta.dirname, '../src/translations/languages');
@@ -17,6 +17,57 @@ const commandsOf = (language: string) => Object.keys(translations[language].word
 const wordOf = (language: string, command: Command) => translations[language].words[command][0];
 
 const run = (code: string, language: string) => new Session(code, language).run();
+
+//the marks a language doesn't use in its messages, with those it uses instead
+const FORBIDDEN: Record<string, [RegExp, string][]> = {
+  //Armenian: ՛ for an exclamation or an emphasis, ՞ for a question, ։ at the end of a sentence, ՝ or ․ for a colon
+  'hy-AM': [
+    [/[!?;:]/, '՛ ՞ ։ ՝'],
+    [/՜/, '՛'],
+    [/\.(\s|$)/, '։']
+  ],
+  //Greek ends a question with ;
+  el: [[/\?/, ';']],
+  //Arabic has its own question mark, comma and semicolon
+  ar: [[/[?,;]/, '؟ ، ؛']],
+  //Chinese and Japanese write their marks full-width
+  'zh-CN': [
+    [/[!?,:;]/, '！？，：；'],
+    [/\.(\s|$)/, '。']
+  ],
+  ja: [
+    [/[!?,:;]/, '！？，：；'],
+    [/\.(\s|$)/, '。']
+  ]
+};
+
+//the problems of a message's words with the punctuation of its language; what it quotes, like names, and its
+//placeholders aren't words
+const punctuationOf = (message: string, language: string): string[] => {
+  const prose = quotesOf(language)
+    .reduce(
+      (prose, [open, close]) =>
+        prose
+          .split(open)
+          .map((part, index) => (index ? part.split(close).slice(1).join(close) : part))
+          .join('Q'),
+      message
+    )
+    .replace(/\{[^{}]*\}/g, 'X');
+  const problems = (FORBIDDEN[language] ?? []).filter(([mark]) => mark.test(prose)).map(([, instead]) => instead);
+  //no double spaces, and no space before a comma or a full stop
+  if (/ {2}| [,.]/.test(prose.trim())) problems.push('spaces');
+  //Spanish opens what it ends: ¡…! and ¿…?
+  if (
+    language === 'es-ES' &&
+    (prose.split('!').length !== prose.split('¡').length || prose.split('?').length !== prose.split('¿').length)
+  ) {
+    problems.push('¡ ¿');
+  }
+  //French puts a space before ! ? : and ;
+  if (language === 'fr' && /[^\s\u00a0\u202f][!?:;]/.test(prose)) problems.push('a space before ! ? : ;');
+  return problems;
+};
 
 describe('translations', () => {
   it('index lists every language file', () => {
@@ -65,6 +116,21 @@ describe('translations', () => {
       const step = run(lines.join('\n'), language);
       const yes = word('true');
       assert.deepStrictEqual(step, {state: 'end', output: [yes, yes, yes, '2']}, lines.join('\n'));
+    });
+
+    it(`${language} writes its messages in its own punctuation`, () => {
+      const {messages, conversion} = translations[language];
+      //every message, each plural form of one too
+      const texts = [...Object.entries(messages), ...Object.entries(conversion)].flatMap(([id, message]) =>
+        typeof message === 'string'
+          ? [[id, message]]
+          : Object.entries(message).map(([form, text]) => [`${id}.${form}`, text])
+      );
+      const wrong = texts.flatMap(([id, text]) => {
+        const problems = punctuationOf(text, language);
+        return problems.length ? [`${id}: ${text} (${problems.join(', ')})`] : [];
+      });
+      assert.deepStrictEqual(wrong, []);
     });
   });
 });

@@ -64,32 +64,32 @@ const translation: Translation = {
   messages: {
     syntaxError: '{line} 行目に構文エラーがあります。',
     indentError: '{line} 行目の字下げが正しくありません。ブロックは 4 スペースで字下げしてください。',
-    argumentError: '{line} 行目: {function} の引数は {count} 個です。',
-    equalsError: '{line} 行目: 比べるときは = ではなく == を使います。',
-    nameError: '{line} 行目: {name} は命令なので、名前には使えません。別の名前にしてください。',
-    undefinedVariable: '{line} 行目: {variable} にはまだ値がありません。',
-    undefinedFunction: '{line} 行目: 関数 {function} はありません。',
-    noValue: '{line} 行目: {function} は値を返しません。',
-    typeError: '{line} 行目: {operator} はこれらの値には使えません。',
+    argumentError: '{line} 行目：{function} の引数は {count} 個です。',
+    equalsError: '{line} 行目：比べるときは = ではなく == を使います。',
+    nameError: '{line} 行目：{name} は命令なので、名前には使えません。別の名前にしてください。',
+    undefinedVariable: '{line} 行目：{variable} にはまだ値がありません。',
+    undefinedFunction: '{line} 行目：関数 {function} はありません。',
+    noValue: '{line} 行目：{function} は値を返しません。',
+    typeError: '{line} 行目：{operator} はこれらの値には使えません。',
     listAsText:
-      '{line} 行目: リストはそのまま表示できません。{join} で項目をつないでテキストにするか、一つずつ表示してください。',
-    conditionError: '{line} 行目: 条件は真か偽でなければなりません。',
-    divisionByZero: '{line} 行目: 0 で割ることはできません。',
-    mathError: '{line} 行目: この値では {operator} の結果がありません。',
-    indexError: '{line} 行目: {index} 番目の要素はありません。',
-    itemError: '{line} 行目: リストに {item} はありません。',
-    memoryLimit: '{line} 行目: テキストかリストが長くなりすぎました。',
-    recursionLimit: '{line} 行目: 関数の呼び出しが深すぎます。',
+      '{line} 行目：リストはそのまま表示できません。{join} で項目をつないでテキストにするか、一つずつ表示してください。',
+    conditionError: '{line} 行目：条件は真か偽でなければなりません。',
+    divisionByZero: '{line} 行目：0 で割ることはできません。',
+    mathError: '{line} 行目：この値では {operator} の結果がありません。',
+    indexError: '{line} 行目：{index} 番目の要素はありません。',
+    itemError: '{line} 行目：リストに {item} はありません。',
+    memoryLimit: '{line} 行目：テキストかリストが長くなりすぎました。',
+    recursionLimit: '{line} 行目：関数の呼び出しが深すぎます。',
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
-    unknownLanguage: '不明な言語: {language}'
+    unknownLanguage: '不明な言語：{language}'
   },
   conversion: {
     mixedTypes:
-      '{line} 行目: {target} ではこのプログラムを書けません。{name} に数と文字列のような 2 種類の値が入ります。',
+      '{line} 行目：{target} ではこのプログラムを書けません。{name} に数と文字列のような 2 種類の値が入ります。',
     mixedItems:
-      '{line} 行目: {target} ではこのプログラムを書けません。リストに数と文字列のような 2 種類の要素があります。',
+      '{line} 行目：{target} ではこのプログラムを書けません。リストに数と文字列のような 2 種類の要素があります。',
     fixedArrays:
-      '{line} 行目: {target} では入門の固定長配列でこのプログラムを書けません。リストのリストや、リストを返す関数などです。'
+      '{line} 行目：{target} では入門の固定長配列でこのプログラムを書けません。リストのリストや、リストを返す関数などです。'
   }
 };
 
