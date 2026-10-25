@@ -1,4 +1,4 @@
-## Unreleased
+## 0.21.0-alpha.0 (2026-10-25)
 
   - **[fix]** translations: the Japanese messages write the full-width colon of Japanese, like `{line} 行目：…`, where they had `:`, as the messages of every other language use the marks of their language.
   - **[add]** tests: every language's messages, each plural form too, are checked against the punctuation of the language, like ՛, ՞ and ։ in Armenian, ; for a question in Greek, ؟ in Arabic, the full-width marks of Chinese and Japanese, ¡…! and ¿…? in Spanish, and a space before ! ? : and ; in French.
