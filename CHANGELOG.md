@@ -1,3 +1,8 @@
+## Unreleased
+
+  - **[add]** API: the entry `cmil/convert`, which has `convert()` alone, so a page can load the converters when it first shows a program in another language, like `const {convert} = await import('cmil/convert')`; `targets`, from `cmil`, loads none of them.
+  - **[optimize]** package: `"sideEffects": false`, since no module of CMIL does anything when it loads, so a bundler leaves out what a page or a worker doesn't use: a worker that runs programs with `Session` no longer carries the converters, about 300 kB of its 428 kB.
+
 ## 0.19.0-alpha.0 (2026-10-24)
 
   - **[change]** a list is no text: printing a list, joining it into a text with `+` or `{…}`, `to_text` of it, and `join` of a list whose items are lists are the new error `listAsText`, whose message, in every language, says to join its items with `join`, named in the program's language, or to print them one by one. A printed list like `[«հաց», «կաթ»]` is no output a program wants; `join(list, ", ")` prints `հաց, կաթ`.

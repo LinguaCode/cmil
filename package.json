@@ -9,8 +9,13 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./convert": {
+      "types": "./dist/convert/index.d.ts",
+      "default": "./dist/convert/index.js"
     }
   },
+  "sideEffects": false,
   "files": [
     "dist",
     "src/constants/LICENSE",

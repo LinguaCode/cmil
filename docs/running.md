@@ -67,4 +67,4 @@ worker.on('message', step => {
 
 ## In a browser
 
-Bundle cmil with your bundler and run each session in a [Web Worker](https://developer.mozilla.org/docs/Web/API/Web_Workers_API), with the same messages as above. Then a long program doesn't freeze the page.
+Bundle cmil with your bundler and run each session in a [Web Worker](https://developer.mozilla.org/docs/Web/API/Web_Workers_API), with the same messages as above. Then a long program doesn't freeze the page. CMIL declares that its modules have no side effects, so a worker that imports only `Session` gets the interpreter without the converters.

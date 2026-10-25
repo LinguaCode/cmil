@@ -16,6 +16,7 @@ if ('code' in result) {
 }
 ```
 
+- `convert` is also the package's entry `cmil/convert`, which has only it, so a page can load the converters when it first shows a program in another language, like `const {convert} = await import('cmil/convert')`. `targets` doesn't load them; CMIL declares that its modules have no side effects (`"sideEffects": false`), so a bundler leaves out what a page doesn't use.
 - `targets` lists the languages, each `{id, name, extension}`: `cpp` (C++), `python` (Python), `c` (C), `javascript` (JavaScript), `pascal` (Pascal), `go` (Go), `kotlin` (Kotlin), `swift` (Swift), `rust` (Rust), `php` (PHP), `ruby` (Ruby), `lua` (Lua), `basic` (BASIC), `visualbasic` (Visual Basic), `fortran` (Fortran), `tcl` (Tcl), `cobol` (COBOL), C# and Java in two shapes each, with their `style`: `csharp` and `java`, `modern`, and `csharp-classic` and `java-classic`, `classic`, and x86-64 Assembly in three syntaxes, with theirs: `x86-64`, `intel`, and `x86-64-att`, `att`, of the GNU assembler, and `x86-64-nasm`, `nasm`.
 - `convert(sourceCode, language, target)` gives one of three things:
   - `{code, lines}`;
