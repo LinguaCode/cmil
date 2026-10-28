@@ -86,6 +86,10 @@ const translation: Translation = {
     timeout: 'Das Programm lief zu lange, ohne nach einer Eingabe zu fragen.',
     unknownLanguage: 'Unbekannte Sprache: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} ist ein Text: Eine Antwort wie {number} ist eine Zahl, und eine Zahl ist nie gleich einem Text. Schreib {number} ohne Anführungszeichen.'
+  },
   conversion: {
     mixedTypes:
       'Zeile {line}: {target} kann dieses Programm nicht schreiben: {name} bekommt Werte zweier Arten, etwa eine Zahl und einen Text.',

@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Programmet körde för länge utan att be om indata.',
     unknownLanguage: 'Okänt språk: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} är en text: ett svar som {number} är ett tal, och ett tal är aldrig lika med en text. Skriv {number} utan citattecken.'
+  },
   conversion: {
     mixedTypes:
       'Rad {line}: {target} kan inte skriva det här programmet: {name} får värden av två slag, som ett tal och en text.',

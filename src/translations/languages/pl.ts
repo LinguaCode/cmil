@@ -85,6 +85,10 @@ const translation: Translation = {
     timeout: 'Program działał zbyt długo, nie prosząc o dane.',
     unknownLanguage: 'Nieznany język: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} to tekst: odpowiedź taka jak {number} jest liczbą, a liczba nigdy nie równa się tekstowi. Napisz {number} bez cudzysłowu.'
+  },
   conversion: {
     mixedTypes:
       'Wiersz {line}: {target} nie może zapisać tego programu: {name} dostaje wartości dwóch rodzajów, np. liczbę i tekst.',

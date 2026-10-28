@@ -1,8 +1,10 @@
 /**
- * Help for editors of CMIL programs: the parts of a line to color, the commands of a language, and its quotes.
+ * Help for editors of CMIL programs: the parts of a line to color, the commands of a language, its quotes, and the
+ * warnings of a program.
  */
-import {COMMAND, type Command} from './constants/index.ts';
+import {COMMAND, WARNING, type Command} from './constants/index.ts';
 import {OPERATORS} from './core/lexer.ts';
+import {fromInput} from './core/values.ts';
 import {DECIMAL_POINTS, DIGIT, IDENTIFIER_PART, QUOTES, scan, type Segment} from './core/words.ts';
 import TRANSLATION, {type Quotes} from './translations/index.ts';
 
@@ -17,6 +19,13 @@ export type LineSegment = {
  * What a command does: starts a block, is a statement, is a part of one, combines values, is a value, or is a function.
  */
 export type CommandKind = 'block' | 'statement' | 'part' | 'operator' | 'value' | 'function';
+
+/**
+ * A warning about a program, which runs as it is but may not do what it means to: a text that holds a number and is
+ * compared, like "1234" in pin != "1234", which an answer that is a number never equals (numberText), with the text
+ * as written, its number, and where it is; the column counts from 1.
+ */
+export type Warning = {id: typeof WARNING.NUMBER_TEXT; line: number; column: number; text: string; number: string};
 
 const KINDS: Record<Command, CommandKind> = {
   [COMMAND.IF]: 'block',
@@ -165,4 +174,36 @@ export const commandsOf = (language: string): {command: string; words: string[];
 export const quotesOf = (language: string): Quotes[] => {
   const all = [...known(language).quotes, ...QUOTES];
   return all.filter(([open], index) => all.findIndex(([other]) => other === open) === index).map(([a, b]) => [a, b]);
+};
+
+const isComparison = (segment: LineSegment | undefined) =>
+  segment?.type === 'operator' && (segment.text === '==' || segment.text === '!=');
+
+/**
+ * The warnings of a program, line by line: each text that holds a number, like "1234", and is compared with == or
+ * !=, since an answer that is a number, which input() gives as one, never equals a text.
+ *
+ * @example
+ * warningsOf('pin = input()\nif pin == "1234"\n    print("Hi")', 'en');
+ * // returns [{id: 'numberText', line: 2, column: 11, text: '"1234"', number: '1234'}]
+ */
+export const warningsOf = (sourceCode: string, language: string): Warning[] => {
+  const quotes = new Map(quotesOf(language));
+  return sourceCode.split('\n').flatMap((line, index) => {
+    //the parts of the line with their columns, without its spaces and its comment
+    let column = 1;
+    const code = segmentsOf(line, language).flatMap(segment => {
+      const at = {...segment, column};
+      column += segment.text.length;
+      return segment.type === 'space' || segment.type === 'comment' ? [] : [at];
+    });
+    return code.flatMap((segment, at): Warning[] => {
+      const {type, text} = segment;
+      if (type !== 'string' || text.length < 2 || quotes.get(text[0]) !== text.at(-1)) return [];
+      const value = text.slice(1, -1);
+      if (typeof fromInput(value) !== 'number') return [];
+      if (!isComparison(code[at - 1]) && !isComparison(code[at + 1])) return [];
+      return [{id: WARNING.NUMBER_TEXT, line: index + 1, column: segment.column, text, number: value.trim()}];
+    });
+  });
 };

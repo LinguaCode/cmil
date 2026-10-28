@@ -9,7 +9,7 @@ export {messageOf, problemOf} from './messages.ts';
 export {programOf, TREE_FORMAT} from './program.ts';
 export {convert} from './convert/index.ts';
 export {targets} from './targets.ts';
-export {segmentsOf, commandsOf, quotesOf} from './editor.ts';
+export {segmentsOf, commandsOf, quotesOf, warningsOf} from './editor.ts';
 
 export type {Step, SessionOptions} from './session.ts';
 export type {ProgramError, Statement, Expression, Comment} from './core/types.ts';
@@ -17,7 +17,7 @@ export type {ProgramTree} from './program.ts';
 export type {Conversion, ConversionProblem} from './convert/index.ts';
 export type {Target} from './targets.ts';
 export type {Converted} from './convert/emit.ts';
-export type {LineSegment, CommandKind} from './editor.ts';
+export type {LineSegment, CommandKind, Warning} from './editor.ts';
 export type {Quotes} from './translations/index.ts';
 
 /** The codes of the languages programs can be written in, for example 'en' or 'hy-AM'. */

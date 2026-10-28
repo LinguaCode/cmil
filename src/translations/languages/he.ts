@@ -83,6 +83,9 @@ const translation: Translation = {
     timeout: 'התוכנית רצה זמן רב מדי בלי לבקש קלט.',
     unknownLanguage: 'שפה לא מוכרת: {language}.'
   },
+  warnings: {
+    numberText: '{text} הוא טקסט: תשובה כמו {number} היא מספר, ומספר אף פעם לא שווה לטקסט. כתבו {number} בלי המירכאות.'
+  },
   conversion: {
     mixedTypes: 'שורה {line}: {target} לא יכולה לכתוב את התוכנית הזאת: {name} מקבל ערכים משני סוגים, כמו מספר וטקסט.',
     mixedItems:

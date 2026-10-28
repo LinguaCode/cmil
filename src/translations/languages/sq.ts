@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Programi punoi shumë gjatë pa kërkuar hyrje.',
     unknownLanguage: 'Gjuhë e panjohur: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} është tekst: një përgjigje si {number} është numër, dhe një numër nuk është kurrë i barabartë me një tekst. Shkruaje {number} pa thonjëza.'
+  },
   conversion: {
     mixedTypes:
       'Rreshti {line}: {target} nuk mund ta shkruajë këtë program: {name} merr vlera të dy llojeve, si një numër dhe një tekst.',

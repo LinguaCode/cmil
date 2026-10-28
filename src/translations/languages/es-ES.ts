@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'El programa se ejecutó demasiado tiempo sin pedir una entrada.',
     unknownLanguage: 'Idioma desconocido: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} es un texto: una respuesta como {number} es un número, y un número nunca es igual a un texto. Escribe {number} sin comillas.'
+  },
   conversion: {
     mixedTypes:
       'Línea {line}: {target} no puede escribir este programa: {name} recibe valores de dos tipos, como un número y un texto.',

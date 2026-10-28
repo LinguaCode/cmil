@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Le programme a tourné trop longtemps sans demander d’entrée.',
     unknownLanguage: 'Langue inconnue : {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} est un texte : une réponse comme {number} est un nombre, et un nombre n’est jamais égal à un texte. Écris {number} sans les guillemets.'
+  },
   conversion: {
     mixedTypes:
       'Ligne {line} : {target} ne peut pas écrire ce programme : {name} reçoit des valeurs de deux sortes, comme un nombre et un texte.',

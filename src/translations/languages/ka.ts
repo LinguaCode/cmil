@@ -80,6 +80,10 @@ const translation: Translation = {
     timeout: 'პროგრამა ზედმეტად დიდხანს მუშაობდა შეყვანის მოთხოვნის გარეშე.',
     unknownLanguage: 'უცნობი ენა: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} ტექსტია: პასუხი, როგორიცაა {number}, რიცხვია, რიცხვი კი ტექსტს არასდროს უდრის. დაწერე {number} ბრჭყალების გარეშე.'
+  },
   conversion: {
     mixedTypes:
       '{line}-ე ხაზი: {target} ამ პროგრამას ვერ დაწერს: {name} ორი სახის მნიშვნელობას იღებს, მაგალითად, რიცხვს და ტექსტს.',

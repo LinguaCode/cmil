@@ -85,6 +85,10 @@ const translation: Translation = {
     timeout: 'Program běžel příliš dlouho, aniž by požádal o vstup.',
     unknownLanguage: 'Neznámý jazyk: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} je text: odpověď jako {number} je číslo a číslo se textu nikdy nerovná. Napiš {number} bez uvozovek.'
+  },
   conversion: {
     mixedTypes:
       'Řádek {line}: {target} tento program napsat nedokáže: {name} dostává hodnoty dvou druhů, třeba číslo a text.',

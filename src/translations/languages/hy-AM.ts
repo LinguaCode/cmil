@@ -80,6 +80,10 @@ const translation: Translation = {
     timeout: 'Ծրագիրը չափազանց երկար աշխատեց՝ առանց մուտքագրում խնդրելու։',
     unknownLanguage: 'Անհայտ լեզու՝ {language}։'
   },
+  warnings: {
+    numberText:
+      '{text}-ը տեքստ է․ {number}-ի պես պատասխանը թիվ է, իսկ թիվը երբեք հավասար չէ տեքստի։ Գրիր {number}՝ առանց չակերտների։'
+  },
   conversion: {
     mixedTypes:
       '{line}-րդ տող․ {target}-ը չի կարող գրել այս ծրագիրը․ {name}-ը ստանում է երկու տեսակի արժեքներ, օրինակ՝ թիվ և տեքստ։',

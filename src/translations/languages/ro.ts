@@ -84,6 +84,10 @@ const translation: Translation = {
     timeout: 'Programul a rulat prea mult fără să ceară o intrare.',
     unknownLanguage: 'Limbă necunoscută: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} este un text: un răspuns ca {number} este un număr, iar un număr nu este niciodată egal cu un text. Scrie {number} fără ghilimele.'
+  },
   conversion: {
     mixedTypes:
       'Linia {line}: {target} nu poate scrie acest program: {name} primește valori de două feluri, ca un număr și un text.',

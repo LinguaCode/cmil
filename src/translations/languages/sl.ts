@@ -85,6 +85,10 @@ const translation: Translation = {
     timeout: 'Program je tekel predolgo, ne da bi zahteval vhod.',
     unknownLanguage: 'Neznan jezik: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} je besedilo: odgovor, kot je {number}, je število, število pa ni nikoli enako besedilu. Napiši {number} brez narekovajev.'
+  },
   conversion: {
     mixedTypes:
       'Vrstica {line}: {target} tega programa ne more zapisati: {name} dobi vrednosti dveh vrst, na primer število in besedilo.',

@@ -84,6 +84,10 @@ const translation: Translation = {
     timeout: 'Програм је радио предуго, а није тражио унос.',
     unknownLanguage: 'Непознат језик: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} је текст: одговор као што је {number} је број, а број никад није једнак тексту. Напиши {number} без наводника.'
+  },
   conversion: {
     mixedTypes:
       'Ред {line}: {target} не може да напише овај програм: {name} добија вредности две врсте, као број и текст.',

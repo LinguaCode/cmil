@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Ohjelma toimi liian kauan kysymättä syötettä.',
     unknownLanguage: 'Tuntematon kieli: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} on teksti: vastaus kuten {number} on luku, eikä luku ole koskaan sama kuin teksti. Kirjoita {number} ilman lainausmerkkejä.'
+  },
   conversion: {
     mixedTypes:
       'Rivi {line}: {target} ei voi kirjoittaa tätä ohjelmaa: {name} saa kahdenlaisia arvoja, kuten luvun ja tekstin.',

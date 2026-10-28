@@ -80,6 +80,10 @@ const translation: Translation = {
     timeout: '프로그램이 입력을 요청하지 않고 너무 오래 실행되었습니다.',
     unknownLanguage: '알 수 없는 언어: {language}'
   },
+  warnings: {
+    numberText:
+      '{text}은(는) 글자예요. {number} 같은 답은 숫자라서 글자와 절대 같지 않아요. 따옴표 없이 쓰세요: {number}'
+  },
   conversion: {
     mixedTypes:
       '{line}번째 줄: {target}(으)로는 이 프로그램을 쓸 수 없습니다. {name}에 숫자와 글자처럼 두 종류의 값이 들어갑니다.',

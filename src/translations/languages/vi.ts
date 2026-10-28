@@ -80,6 +80,10 @@ const translation: Translation = {
     timeout: 'Chương trình chạy quá lâu mà không yêu cầu dữ liệu vào.',
     unknownLanguage: 'Ngôn ngữ không xác định: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} là một văn bản: câu trả lời như {number} là một số, và một số không bao giờ bằng một văn bản. Hãy viết {number} không có dấu ngoặc kép.'
+  },
   conversion: {
     mixedTypes:
       'Dòng {line}: {target} không viết được chương trình này: {name} nhận giá trị thuộc hai loại, như một số và một văn bản.',

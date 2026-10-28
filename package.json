@@ -13,6 +13,14 @@
     "./convert": {
       "types": "./dist/convert/index.d.ts",
       "default": "./dist/convert/index.js"
+    },
+    "./codemirror": {
+      "types": "./dist/codemirror/index.d.ts",
+      "default": "./dist/codemirror/index.js"
+    },
+    "./codemirror/targets": {
+      "types": "./dist/codemirror/targets.d.ts",
+      "default": "./dist/codemirror/targets.js"
     }
   },
   "sideEffects": false,
@@ -42,8 +50,82 @@
   "author": "Arman Yeghiazaryan <otanim617@gmail.com> (https://otanim.com)",
   "license": "GPL-3.0-only",
   "bugs": "https://github.com/LinguaCode/cmil/issues",
+  "peerDependencies": {
+    "@codemirror/autocomplete": "^6",
+    "@codemirror/lang-cpp": "^6",
+    "@codemirror/lang-go": "^6",
+    "@codemirror/lang-java": "^6",
+    "@codemirror/lang-javascript": "^6",
+    "@codemirror/lang-php": "^6",
+    "@codemirror/lang-python": "^6",
+    "@codemirror/lang-rust": "^6",
+    "@codemirror/language": "^6",
+    "@codemirror/legacy-modes": "^6",
+    "@codemirror/lint": "^6",
+    "@codemirror/state": "^6",
+    "@codemirror/view": "^6",
+    "@lezer/highlight": "^1"
+  },
+  "peerDependenciesMeta": {
+    "@codemirror/autocomplete": {
+      "optional": true
+    },
+    "@codemirror/lang-cpp": {
+      "optional": true
+    },
+    "@codemirror/lang-go": {
+      "optional": true
+    },
+    "@codemirror/lang-java": {
+      "optional": true
+    },
+    "@codemirror/lang-javascript": {
+      "optional": true
+    },
+    "@codemirror/lang-php": {
+      "optional": true
+    },
+    "@codemirror/lang-python": {
+      "optional": true
+    },
+    "@codemirror/lang-rust": {
+      "optional": true
+    },
+    "@codemirror/language": {
+      "optional": true
+    },
+    "@codemirror/legacy-modes": {
+      "optional": true
+    },
+    "@codemirror/lint": {
+      "optional": true
+    },
+    "@codemirror/state": {
+      "optional": true
+    },
+    "@codemirror/view": {
+      "optional": true
+    },
+    "@lezer/highlight": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@codemirror/autocomplete": "^6.20.4",
+    "@codemirror/lang-cpp": "^6.0.3",
+    "@codemirror/lang-go": "^6.0.1",
+    "@codemirror/lang-java": "^6.0.2",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-php": "^6.0.2",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lang-rust": "^6.0.2",
+    "@codemirror/language": "^6.13.1",
+    "@codemirror/legacy-modes": "^6.5.5",
+    "@codemirror/lint": "^6.9.7",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
     "@eslint/js": "^10.0.1",
+    "@lezer/highlight": "^1.2.5",
     "@types/node": "^24.19.0",
     "c8": "^12.0.0",
     "eslint": "^10.12.0",

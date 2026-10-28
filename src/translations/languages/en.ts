@@ -86,6 +86,10 @@ const translation: Translation = {
     timeout: 'The program ran too long without asking for input.',
     unknownLanguage: 'Unknown language: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} is a text: an answer like {number} is a number, and a number never equals a text. Write {number} without the quotes.'
+  },
   conversion: {
     mixedTypes:
       "Line {line}: {target} can't write this program: {name} gets values of two kinds, like a number and a text.",

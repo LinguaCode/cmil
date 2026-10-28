@@ -88,6 +88,10 @@ const translation: Translation = {
     timeout: 'Програма працювала задовго, не запитуючи введення.',
     unknownLanguage: 'Невідома мова: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} — це текст: відповідь на кшталт {number} — число, а число ніколи не дорівнює тексту. Напиши {number} без лапок.'
+  },
   conversion: {
     mixedTypes:
       'Рядок {line}: мовою {target} цю програму не написати: {name} отримує значення двох видів, наприклад число й текст.',

@@ -104,6 +104,13 @@ export const ERROR = {
 
 export type ErrorId = (typeof ERROR)[keyof typeof ERROR];
 
+//the warnings about a program, which runs as it is but may not do what it means to
+export const WARNING = {
+  NUMBER_TEXT: 'numberText'
+} as const;
+
+export type WarningId = (typeof WARNING)[keyof typeof WARNING];
+
 //what a session does when it stops running
 export const STATE = {
   INPUT: 'input',

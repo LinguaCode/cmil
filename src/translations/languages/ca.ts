@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: "El programa s'ha executat massa temps sense demanar cap entrada.",
     unknownLanguage: 'Llengua desconeguda: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} és un text: una resposta com {number} és un nombre, i un nombre mai no és igual a un text. Escriu {number} sense les cometes.'
+  },
   conversion: {
     mixedTypes:
       'Línia {line}: {target} no pot escriure aquest programa: {name} rep valors de dos tipus, com un nombre i un text.',

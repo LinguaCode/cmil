@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Il programma è andato avanti troppo a lungo senza chiedere input.',
     unknownLanguage: 'Lingua sconosciuta: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} è un testo: una risposta come {number} è un numero, e un numero non è mai uguale a un testo. Scrivi {number} senza virgolette.'
+  },
   conversion: {
     mixedTypes:
       'Riga {line}: {target} non può scrivere questo programma: {name} riceve valori di due tipi, come un numero e un testo.',

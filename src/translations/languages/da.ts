@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Programmet kørte for længe uden at bede om inddata.',
     unknownLanguage: 'Ukendt sprog: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} er en tekst: et svar som {number} er et tal, og et tal er aldrig lig med en tekst. Skriv {number} uden anførselstegn.'
+  },
   conversion: {
     mixedTypes:
       'Linje {line}: {target} kan ikke skrive dette program: {name} får værdier af to slags, som et tal og en tekst.',

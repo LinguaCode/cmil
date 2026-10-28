@@ -2,9 +2,9 @@
 import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
-import {Session, check, languages, messageOf, type ProgramError, type Step} from '../src/index.ts';
+import {Session, check, languages, messageOf, warningsOf, type ProgramError, type Step} from '../src/index.ts';
 import translations, {type Plural} from '../src/translations/index.ts';
-import {ERROR, MAX_LIST_LENGTH, MAX_RECURSION} from '../src/constants/index.ts';
+import {ERROR, MAX_LIST_LENGTH, MAX_RECURSION, WARNING} from '../src/constants/index.ts';
 import * as values from '../src/core/values.ts';
 
 /**
@@ -567,6 +567,31 @@ describe('core', () => {
       languages.forEach(language => {
         assert.deepStrictEqual(Object.keys(translations[language].messages).sort(), Object.values(ERROR).sort());
       });
+    });
+
+    it('every warning has a message in every language, with the placeholders of the English one', () => {
+      const placeholders = (text: string) => (text.match(/\{\w+\}/g) || []).sort();
+      languages.forEach(language => {
+        const {warnings} = translations[language];
+        assert.deepStrictEqual(Object.keys(warnings).sort(), Object.values(WARNING).sort(), language);
+        Object.values(WARNING).forEach(id => {
+          assert.deepStrictEqual(
+            placeholders(warnings[id]),
+            placeholders(translations.en.warnings[id]),
+            `${language}: ${id}`
+          );
+        });
+      });
+    });
+
+    it('gives a warning its message', () => {
+      const [warning] = warningsOf('if x == "5"\n    print(x)', 'en');
+      assert.strictEqual(
+        messageOf(warning, 'en'),
+        '"5" is a text: an answer like 5 is a number, and a number never equals a text. Write 5 without the quotes.'
+      );
+      assert.strictEqual(messageOf(warning, 'xx'), messageOf(warning, 'en'));
+      languages.forEach(language => assert.doesNotMatch(messageOf(warning, language), /\{\w+\}/, language));
     });
 
     it('messages, and each of their plural forms, have the placeholders of the English ones', () => {

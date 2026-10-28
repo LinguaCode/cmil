@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'Het programma liep te lang zonder om invoer te vragen.',
     unknownLanguage: 'Onbekende taal: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} is een tekst: een antwoord als {number} is een getal, en een getal is nooit gelijk aan een tekst. Schrijf {number} zonder aanhalingstekens.'
+  },
   conversion: {
     mixedTypes:
       'Regel {line}: {target} kan dit programma niet schrijven: {name} krijgt waarden van twee soorten, zoals een getal en een tekst.',

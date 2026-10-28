@@ -80,6 +80,10 @@ const translation: Translation = {
     timeout: 'A program túl sokáig futott anélkül, hogy bemenetet kért volna.',
     unknownLanguage: 'Ismeretlen nyelv: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} szöveg: egy válasz, például {number}, szám, és egy szám sosem egyenlő egy szöveggel. Írd idézőjelek nélkül: {number}.'
+  },
   conversion: {
     mixedTypes:
       '{line}. sor: a(z) {target} nem tudja megírni ezt a programot: {name} kétféle értéket kap, például számot és szöveget.',

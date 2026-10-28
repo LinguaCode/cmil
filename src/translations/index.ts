@@ -33,7 +33,7 @@ import zhCN from './languages/zh-CN.ts';
 
 import type {Translation} from './types.ts';
 
-export type {Conversion, Messages, Plural, Quotes, Translation, Words} from './types.ts';
+export type {Conversion, Messages, Plural, Quotes, Translation, Warnings, Words} from './types.ts';
 
 //the words of the commands, one file per language
 const translations: Record<string, Translation> = {

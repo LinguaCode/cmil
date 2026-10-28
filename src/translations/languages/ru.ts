@@ -88,6 +88,10 @@ const translation: Translation = {
     timeout: 'Программа работала слишком долго, не запрашивая ввод.',
     unknownLanguage: 'Неизвестный язык: {language}.'
   },
+  warnings: {
+    numberText:
+      '{text} — это текст: ответ вроде {number} — число, а число никогда не равно тексту. Напиши {number} без кавычек.'
+  },
   conversion: {
     mixedTypes:
       'Строка {line}: на {target} эту программу не написать: {name} получает значения двух видов, например число и текст.',

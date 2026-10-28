@@ -2,7 +2,7 @@
 import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
-import {commandsOf, languages, quotesOf, segmentsOf, translate} from '../src/index.ts';
+import {commandsOf, languages, quotesOf, segmentsOf, translate, warningsOf} from '../src/index.ts';
 import {COMMAND} from '../src/constants/index.ts';
 import successes from './collection/successes/index.ts';
 import type {Case, Source} from './collection/types.ts';
@@ -116,6 +116,34 @@ describe('editor', () => {
       assert.throws(() => quotesOf('xx'), /Unknown language: xx/);
       assert.throws(() => segmentsOf('', 'xx'), /Unknown language: xx/);
       assert.throws(() => commandsOf('xx'), /Unknown language: xx/);
+      assert.throws(() => warningsOf('', 'xx'), /Unknown language: xx/);
+    });
+  });
+
+  describe('warningsOf', () => {
+    it('warns about a text that holds a number and is compared, which an answer never equals', () => {
+      assert.deepStrictEqual(warningsOf('pin = input()\nwhile pin != "1234"\n    pin = input()', 'en'), [
+        {id: 'numberText', line: 2, column: 14, text: '"1234"', number: '1234'}
+      ]);
+      assert.deepStrictEqual(warningsOf('if "7" == x or x == « -2.5 » # 3\n    print(x)', 'en'), [
+        {id: 'numberText', line: 1, column: 4, text: '"7"', number: '7'},
+        {id: 'numberText', line: 1, column: 21, text: '« -2.5 »', number: '-2.5'}
+      ]);
+      assert.deepStrictEqual(warningsOf('արտածել(պատասխան == «5»)', 'hy-AM'), [
+        {id: 'numberText', line: 1, column: 21, text: '«5»', number: '5'}
+      ]);
+    });
+
+    it("doesn't warn about a text that isn't a number as an answer is, isn't compared, or isn't closed", () => {
+      assert.deepStrictEqual(
+        warningsOf(
+          'if x == "yes" or x == 7 or "1" + x == "12a" or x == "0x10" or x == ""\n    print("1") # == "2"',
+          'en'
+        ),
+        []
+      );
+      assert.deepStrictEqual(warningsOf('if x == "1{y}"\n    print(x)', 'en'), []);
+      assert.deepStrictEqual(warningsOf('print(x == "12', 'en'), []);
     });
   });
 });

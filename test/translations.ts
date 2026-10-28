@@ -119,9 +119,10 @@ describe('translations', () => {
     });
 
     it(`${language} writes its messages in its own punctuation`, () => {
-      const {messages, conversion} = translations[language];
+      const {messages, warnings, conversion} = translations[language];
       //every message, each plural form of one too
-      const texts = [...Object.entries(messages), ...Object.entries(conversion)].flatMap(([id, message]) =>
+      const all = [...Object.entries(messages), ...Object.entries(warnings), ...Object.entries(conversion)];
+      const texts = all.flatMap(([id, message]) =>
         typeof message === 'string'
           ? [[id, message]]
           : Object.entries(message).map(([form, text]) => [`${id}.${form}`, text])

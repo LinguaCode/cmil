@@ -83,6 +83,10 @@ const translation: Translation = {
     timeout: 'プログラムが入力を求めないまま長く実行されすぎました。',
     unknownLanguage: '不明な言語：{language}'
   },
+  warnings: {
+    numberText:
+      '{text} は文字列です。{number} のような答えは数なので、文字列と等しくなることはありません。引用符をつけずに {number} と書きましょう。'
+  },
   conversion: {
     mixedTypes:
       '{line} 行目：{target} ではこのプログラムを書けません。{name} に数と文字列のような 2 種類の値が入ります。',
