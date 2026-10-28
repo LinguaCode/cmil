@@ -37,6 +37,13 @@ jobs:
           node --input-type=module -e "import {targets} from 'cmil'; import {convert} from 'cmil/convert';
           const conversion = convert('print(1)', 'en', targets[0].id); console.log(conversion.code);
           if (!('code' in conversion)) process.exit(1);"
+      - name: Edit and color through the built package's codemirror entries
+        run: >-
+          node --input-type=module -e "import {EditorState} from '@codemirror/state';
+          import {cmil, tokenClasses} from 'cmil/codemirror'; import {targetLanguage} from 'cmil/codemirror/targets';
+          const state = EditorState.create({doc: 'print(1)', extensions: cmil('en')});
+          const cpp = EditorState.create({doc: 'int main() {}', extensions: await targetLanguage('cpp')});
+          console.log(state.doc.toString(), cpp.doc.toString(), Object.values(tokenClasses).join(' '));"
 
   # the spec programs converted, built and run, each group of targets with only its own compilers
   convert:
