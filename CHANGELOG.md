@@ -1,3 +1,7 @@
+## Unreleased
+
+  - **[add]** API: `cmil(language, {classes: false})` and `targetLanguage(target, {classes: false})`, which leave out the highlighter of CMIL's classes and keep the rest, for an editor that colors code with its own highlighter, like DevPulse's: a highlighter that isn't a fallback turns off the fallback ones, so with the classes such an editor showed CMIL's programs and their conversions without colors. The tags of the tokens come from CodeMirror's own, which any highlighter colors. `ColorOptions` is their type.
+
 ## 0.22.0-alpha.0 (2026-10-28)
 
   - **[add]** API: the entry `cmil/codemirror`, which edits programs in CodeMirror 6, as LinguaCode does: `cmil(language)` gives an editor the colors of a language's programs, as a class for each kind of token, like `cmil-block` for `if` and `cmil-string` for a text, which the page colors (`tokenClasses` lists them), their indentation, the closing of the language's quotes as they are typed, also with an input method, the completions of its commands and of the program's names, and the first error of the program as it's written, or its warnings, with their messages in its language. Each part is an export of its own, with `tokensOf()` for code shown without an editor, `markError()` for the error a program ended with, and `linkedLines()` and `showLines()`, which mark the lines of a converted program that go with the line of the cursor. See `docs/codemirror.md`.

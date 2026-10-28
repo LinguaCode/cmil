@@ -8,7 +8,7 @@ import type {Extension} from '@codemirror/state';
 
 import {cmilCompletion} from './complete.ts';
 import {cmilIndent} from './indent.ts';
-import {cmilLanguage, highlighter} from './language.ts';
+import {cmilLanguage, highlighter, type ColorOptions} from './language.ts';
 import {cmilLint} from './lint.ts';
 import {closeQuotes} from './quotes.ts';
 
@@ -19,18 +19,20 @@ export {cmilCompletion, commandCompletions, namesOf} from './complete.ts';
 export {cmilLint, diagnosticOf, markError} from './lint.ts';
 export {linkedLines, markLines, showLines} from './linked.ts';
 
-export type {Token} from './language.ts';
+export type {ColorOptions, Token} from './language.ts';
 
 /**
- * CMIL in one of its languages: its colors, as the classes of tokenClasses, its indentation, quotes, completions,
- * and its errors and warnings.
+ * CMIL in one of its languages: its colors, as the classes of tokenClasses unless classes is false, its indentation,
+ * quotes, completions, and its errors and warnings.
  *
  * @example
  * new EditorView({doc: 'print("Hi")', extensions: cmil('en'), parent: document.body});
+ * //colored by the page's own highlighter
+ * new EditorView({doc: 'print("Hi")', extensions: [cmil('en', {classes: false}), syntaxHighlighting(style)], parent});
  */
-export const cmil = (language: string): Extension => [
+export const cmil = (language: string, options?: ColorOptions): Extension => [
   cmilLanguage(language),
-  syntaxHighlighting(highlighter),
+  options?.classes === false ? [] : syntaxHighlighting(highlighter),
   cmilIndent(language),
   closeQuotes(language),
   cmilCompletion(language),

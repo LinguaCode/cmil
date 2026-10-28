@@ -61,6 +61,14 @@ const css = Object.entries(tokenClasses).map(([token, name]) => `.${name} {color
 
 `tokensOf(line, language)` gives the tokens of a line, for code shown without an editor, like a solution in a dialog.
 
+An editor that has colors of its own, like a theme's `HighlightStyle`, takes `cmil(language, {classes: false})` and `targetLanguage(target, {classes: false})`, which leave out the highlighter of the classes and keep the rest. The tags of CMIL's tokens come from CodeMirror's own, like `controlKeyword` for `block`, `keyword` for `statement` and `part`, `string` and `lineComment`, so any highlighter colors them. The classes are needed off there: a highlighter that isn't a fallback turns the fallback ones off, like `syntaxHighlighting(defaultHighlightStyle, {fallback: true})`, and the program would show only classes the page doesn't color.
+
+```js
+import {defaultHighlightStyle, syntaxHighlighting} from '@codemirror/language';
+
+const extensions = [cmil('en', {classes: false}), syntaxHighlighting(defaultHighlightStyle, {fallback: true})];
+```
+
 ## Converted programs
 
 `targetLanguage(target)`, from `cmil/codemirror/targets`, gives the colors of a target of `convert()` once its package is loaded, with the classes of CMIL: a keyword of C++ that starts a block is `cmil-block`, a text `cmil-string`, a type `cmil-part`, and so on, so a program and its conversion have the same colors. An unknown target is an error.

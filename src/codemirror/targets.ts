@@ -18,6 +18,9 @@ import type {Extension} from '@codemirror/state';
 import {tagHighlighter, tags} from '@lezer/highlight';
 
 import {targets} from '../targets.ts';
+import type {ColorOptions} from './language.ts';
+
+export type {ColorOptions} from './language.ts';
 
 const highlighter = tagHighlighter([
   {tag: [tags.controlKeyword, tags.processingInstruction], class: 'cmil-block'},
@@ -166,14 +169,15 @@ const LOADERS: Record<string, () => Promise<LanguageSupport>> = {
 };
 
 /**
- * The colors of a target of convert(), like cpp, with the classes of CMIL's tokens, once its package is loaded; an
- * unknown target throws an error.
+ * The colors of a target of convert(), like cpp, with the classes of CMIL's tokens unless classes is false, once its
+ * package is loaded; an unknown target throws an error.
  *
  * @example
  * new EditorView({doc: convert(code, 'en', 'cpp').code, extensions: await targetLanguage('cpp'), parent});
  */
-export const targetLanguage = async (target: string): Promise<Extension> => {
+export const targetLanguage = async (target: string, options?: ColorOptions): Promise<Extension> => {
   const extension = targets.find(({id}) => id === target)?.extension;
   if (extension === undefined) throw new Error(`Unknown target: ${target}`);
-  return [await LOADERS[extension](), syntaxHighlighting(highlighter)];
+  const support = await LOADERS[extension]();
+  return options?.classes === false ? support : [support, syntaxHighlighting(highlighter)];
 };

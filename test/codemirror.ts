@@ -5,7 +5,15 @@
 import assert from 'node:assert';
 import {describe, it} from 'node:test';
 
-import {ensureSyntaxTree, getIndentation, getIndentUnit, highlightingFor, language} from '@codemirror/language';
+import {
+  defaultHighlightStyle,
+  ensureSyntaxTree,
+  getIndentation,
+  getIndentUnit,
+  highlightingFor,
+  language,
+  syntaxHighlighting
+} from '@codemirror/language';
 import {EditorSelection, EditorState, Text} from '@codemirror/state';
 import {EditorView, type DecorationSet} from '@codemirror/view';
 import {highlightTree, tags} from '@lezer/highlight';
@@ -57,6 +65,21 @@ const type = (code: string, text: string, language: string) => {
     ? `${result.slice(0, from)}|${result.slice(from)}`
     : `${result.slice(0, from)}[${result.slice(from, to)}]${result.slice(to)}`;
 };
+
+//the classes the highlighters of an editor give its program
+const highlightsOf = (state: EditorState) => {
+  const tree = ensureSyntaxTree(state, state.doc.length, 5000);
+  assert.ok(tree);
+  const classes = new Set<string>();
+  highlightTree(tree, {style: tags => highlightingFor(state, tags)}, (from, to, names) => {
+    names.split(' ').forEach(name => classes.add(name));
+  });
+  return classes;
+};
+
+//the colors of a page of its own, which a highlighter that isn't a fallback turns off, as DevPulse's editor has
+const PAGE_STYLE = syntaxHighlighting(defaultHighlightStyle, {fallback: true});
+const isCmil = (name: string) => name.startsWith('cmil-');
 
 describe('codemirror', () => {
   describe('colors', () => {
@@ -152,6 +175,19 @@ describe('codemirror', () => {
       assert.strictEqual(highlightingFor(state, [tags.string]), 'cmil-string');
       assert.strictEqual(getIndentUnit(state), 4);
       assert.strictEqual(getIndentation(state, state.doc.length), 4);
+    });
+
+    it('leaves the colors to the page without the classes, and keeps the rest', () => {
+      const doc = 'if x > 1\n    print("Hi") # hi\n';
+      const plain = EditorState.create({doc, extensions: [cmil('en', {classes: false}), PAGE_STYLE]});
+      const classes = highlightsOf(plain);
+      assert.ok(classes.size >= 3, [...classes].join(' '));
+      assert.ok(![...classes].some(isCmil), [...classes].join(' '));
+      assert.strictEqual(plain.facet(language)?.name, 'cmil');
+      assert.strictEqual(getIndentation(plain, plain.doc.length), 4);
+      //with the classes, the page's fallback colors are off
+      const colored = EditorState.create({doc, extensions: [cmil('en'), PAGE_STYLE]});
+      assert.ok([...highlightsOf(colored)].every(isCmil));
     });
   });
 
@@ -361,14 +397,7 @@ describe('codemirror', () => {
     const targetClasses = async (target: string) => {
       const conversion = convert('# hi\nx = 2\nprint("Hi " + to_text(x * 1.5))', 'en', target);
       assert.ok('code' in conversion, target);
-      const state = EditorState.create({doc: conversion.code, extensions: await targetLanguage(target)});
-      const tree = ensureSyntaxTree(state, state.doc.length, 5000);
-      assert.ok(tree, target);
-      const classes = new Set<string>();
-      highlightTree(tree, {style: tags => highlightingFor(state, tags)}, (from, to, names) => {
-        names.split(' ').forEach(name => classes.add(name));
-      });
-      return classes;
+      return highlightsOf(EditorState.create({doc: conversion.code, extensions: await targetLanguage(target)}));
     };
 
     it('colors the programs of every target with the classes of CMIL', async () => {
@@ -379,6 +408,16 @@ describe('codemirror', () => {
           [...classes].every(name => Object.values(tokenClasses).includes(name)),
           `${id}: ${[...classes].join(' ')}`
         );
+      }
+    });
+
+    it('leaves the colors of a target to the page without the classes', async () => {
+      for (const target of ['cpp', 'python', 'tcl', 'cobol']) {
+        const conversion = convert('# hi\nprint("Hi")', 'en', target);
+        assert.ok('code' in conversion, target);
+        const extensions = [await targetLanguage(target, {classes: false}), PAGE_STYLE];
+        const classes = highlightsOf(EditorState.create({doc: conversion.code, extensions}));
+        assert.ok(classes.size && ![...classes].some(isCmil), `${target}: ${[...classes].join(' ')}`);
       }
     });
 

@@ -32,6 +32,14 @@ export const tokenClasses: Readonly<Record<Token, string>> = Object.freeze(
   Object.fromEntries(Object.keys(TAGS).map(token => [token, `cmil-${token}`])) as Record<Token, string>
 );
 
+/**
+ * How an editor colors programs: with the classes of tokenClasses, the default, or, with classes false, without
+ * them, so that a highlighter of the page colors their tokens by their tags, which come from CodeMirror's own, like
+ * keyword and string. A highlighter that isn't a fallback, like that of the classes, turns off the fallback ones,
+ * like syntaxHighlighting(defaultHighlightStyle, {fallback: true}).
+ */
+export type ColorOptions = {classes?: boolean};
+
 /** Gives the tokens of CMIL, and those of the converted programs of cmil/codemirror/targets, their classes. */
 export const highlighter = tagHighlighter(
   Object.entries(TAGS).map(([token, tag]) => ({tag, class: tokenClasses[token as Token]}))
