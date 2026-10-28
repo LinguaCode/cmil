@@ -1,4 +1,4 @@
-## Unreleased
+## 0.23.0-alpha.0 (2026-10-28)
 
   - **[add]** API: `cmil(language, {classes: false})` and `targetLanguage(target, {classes: false})`, which leave out the highlighter of CMIL's classes and keep the rest, for an editor that colors code with its own highlighter, like DevPulse's: a highlighter that isn't a fallback turns off the fallback ones, so with the classes such an editor showed CMIL's programs and their conversions without colors. The tags of the tokens come from CodeMirror's own, which any highlighter colors. `ColorOptions` is their type.
 
