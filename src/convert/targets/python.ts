@@ -20,6 +20,7 @@ import {
 import {branchesOf, doWhileOf, loopOf, statementsOf, type Braces} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression} from '../../core/types.ts';
 
 //the words of Python, and the functions the conversion uses, which a program's names can't be
@@ -398,3 +399,6 @@ export const toPython = (tree: ProgramTree, types: Types, sourceCode: string): C
   out.append(program);
   return out.converted();
 };
+
+/** The writer of Python: its targets, which cmil/convert/python gives convert(). */
+export const WRITERS: Writers = {python: {typed: false, write: toPython}};

@@ -33,6 +33,7 @@ import {
 import {SAME_LINE, branchesApart, loopMade, loopOf, statementsOf, testsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of C, and the names of the library, the conversion and the helpers, which a program's names can't be
@@ -1032,3 +1033,6 @@ export const toC = (tree: ProgramTree, types: Types, sourceCode: string): Conver
   out.line('}');
   return out.converted();
 };
+
+/** The writer of C: its targets, which cmil/convert/c gives convert(). */
+export const WRITERS: Writers = {c: {typed: true, fixedArrays: C_ARRAYS, write: toC}};

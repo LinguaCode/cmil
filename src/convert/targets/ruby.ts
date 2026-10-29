@@ -28,6 +28,7 @@ import {
 import {branchesOf, loopOf, statementsOf, type Braces, type Context} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Ruby, and the methods of its library and of the helpers, which a program's names can't be
@@ -445,3 +446,6 @@ export const toRuby = (tree: ProgramTree, types: Types, sourceCode: string): Con
   out.append(program);
   return out.converted();
 };
+
+/** The writer of Ruby: its targets, which cmil/convert/ruby gives convert(). */
+export const WRITERS: Writers = {ruby: {typed: false, write: toRuby}};

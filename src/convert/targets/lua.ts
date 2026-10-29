@@ -25,6 +25,7 @@ import {
 import {branchesOf, loopOf, loopOverValues, statementsOf, type Braces} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Lua, its library and the helpers, which a program's names can't be
@@ -486,3 +487,6 @@ export const toLua = (tree: ProgramTree, types: Types, sourceCode: string): Conv
   out.append(program);
   return out.converted();
 };
+
+/** The writer of Lua: its targets, which cmil/convert/lua gives convert(). */
+export const WRITERS: Writers = {lua: {typed: false, write: toLua}};

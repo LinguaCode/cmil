@@ -36,6 +36,7 @@ import {
 import {branchesApart, doWhileOf, loopMade, loopOf, statementsOf, testsOf, type Braces} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the names a program's names can't be, whatever their case, in small letters: Fortran reserves none of its words, so
@@ -1262,3 +1263,6 @@ export const toFortran = (tree: ProgramTree, types: Types, sourceCode: string): 
     lines: pieces.flatMap((each, index) => each.map(() => sources[index]))
   };
 };
+
+/** The writer of Fortran: its targets, which cmil/convert/fortran gives convert(). */
+export const WRITERS: Writers = {fortran: {typed: true, fixedArrays: FORTRAN_ARRAYS, write: toFortran}};

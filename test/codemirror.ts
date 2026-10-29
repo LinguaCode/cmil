@@ -35,7 +35,7 @@ import {
   tokensOf,
   typeQuote
 } from '../src/codemirror/index.ts';
-import {targetLanguage} from '../src/codemirror/targets.ts';
+import {targetLanguage} from '../src/codemirror/targets/index.ts';
 import successes from './collection/successes/index.ts';
 import type {Case, Source} from './collection/types.ts';
 

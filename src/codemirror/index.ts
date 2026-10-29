@@ -12,14 +12,16 @@ import {cmilLanguage, highlighter, type ColorOptions} from './language.ts';
 import {cmilLint} from './lint.ts';
 import {closeQuotes} from './quotes.ts';
 
-export {cmilLanguage, highlighter, tokenClasses, tokensOf} from './language.ts';
+export {cmilLanguage, highlighter, tokenClasses} from './language.ts';
+export {insideText, tokensOf} from '../editing.ts';
 export {cmilIndent, indentationOf, INDENT} from './indent.ts';
-export {closeQuotes, closeComposed, insideText, typeQuote} from './quotes.ts';
+export {closeQuotes, closeComposed, typeQuote} from './quotes.ts';
 export {cmilCompletion, commandCompletions, namesOf} from './complete.ts';
 export {cmilLint, diagnosticOf, markError} from './lint.ts';
 export {linkedLines, markLines, showLines} from './linked.ts';
 
-export type {ColorOptions, Token} from './language.ts';
+export type {ColorOptions} from './language.ts';
+export type {Token} from '../editing.ts';
 
 /**
  * CMIL in one of its languages: its colors, as the classes of tokenClasses unless classes is false, its indentation,

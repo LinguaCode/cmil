@@ -34,6 +34,7 @@ import {
 import {SAME_LINE, branchesOf, doWhileOf, loopOf, loopOverValues, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Rust, and the names of its library and of the helpers, which a program's names can't be
@@ -782,3 +783,6 @@ export const toRust = (tree: ProgramTree, types: Types, sourceCode: string): Con
   helpers.write(out, helper => helper.code(words));
   return out.converted();
 };
+
+/** The writer of Rust: its targets, which cmil/convert/rust gives convert(). */
+export const WRITERS: Writers = {rust: {typed: true, write: toRust}};

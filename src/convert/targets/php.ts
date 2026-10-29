@@ -24,6 +24,7 @@ import {
 import {SAME_LINE, branchesOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression} from '../../core/types.ts';
 
 //the variables of PHP that a program's variables can't be
@@ -510,3 +511,6 @@ export const toPhp = (tree: ProgramTree, types: Types, sourceCode: string): Conv
   helpers.write(out, helper => helper.code(words));
   return out.converted();
 };
+
+/** The writer of PHP: its targets, which cmil/convert/php gives convert(). */
+export const WRITERS: Writers = {php: {typed: false, write: toPhp}};

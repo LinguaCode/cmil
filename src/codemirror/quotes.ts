@@ -5,28 +5,8 @@
 import {EditorSelection, Prec, type EditorState, type Extension, type Transaction} from '@codemirror/state';
 import {EditorView, keymap} from '@codemirror/view';
 
-import {quotesOf, segmentsOf} from '../editor.ts';
-
-//whether a text ends with its closing quote, which isn't escaped
-const closed = (text: string, close: string | undefined) => {
-  for (let i = 1; i < text.length; i++) {
-    if (text[i] === '\\') i++;
-    else if (text[i] === close) return true;
-  }
-  return false;
-};
-
-/**
- * Whether the text of a line before the cursor ends inside a text or a comment, where quotes are typed as they are.
- */
-export const insideText = (before: string, language: string): boolean => {
-  const last = segmentsOf(before, language).at(-1);
-  if (last?.type === 'comment') return true;
-  if (last?.type !== 'string') return false;
-
-  const quotes = new Map(quotesOf(language));
-  return !closed(last.text, quotes.get(last.text[0]));
-};
+import {quotesOf} from '../editor.ts';
+import {insideText} from '../editing.ts';
 
 //the closing quote is added before a space, a bracket that closes, a comma or the end of the line
 const CLOSE_BEFORE = /^$|^[\s)\],]/;

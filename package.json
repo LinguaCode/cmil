@@ -14,16 +14,35 @@
       "types": "./dist/convert/index.d.ts",
       "default": "./dist/convert/index.js"
     },
+    "./convert/core": {
+      "types": "./dist/convert/core.d.ts",
+      "default": "./dist/convert/core.js"
+    },
+    "./convert/*": {
+      "types": "./dist/convert/writers/*.d.ts",
+      "default": "./dist/convert/writers/*.js"
+    },
     "./codemirror": {
       "types": "./dist/codemirror/index.d.ts",
       "default": "./dist/codemirror/index.js"
     },
     "./codemirror/targets": {
-      "types": "./dist/codemirror/targets.d.ts",
-      "default": "./dist/codemirror/targets.js"
+      "types": "./dist/codemirror/targets/index.d.ts",
+      "default": "./dist/codemirror/targets/index.js"
+    },
+    "./codemirror/targets/core": {
+      "types": "./dist/codemirror/targets/core.d.ts",
+      "default": "./dist/codemirror/targets/core.js"
+    },
+    "./codemirror/targets/*": {
+      "types": "./dist/codemirror/targets/writers/*.d.ts",
+      "default": "./dist/codemirror/targets/writers/*.js"
     }
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "./dist/convert/writers/*.js",
+    "./dist/codemirror/targets/writers/*.js"
+  ],
   "files": [
     "dist",
     "src/constants/LICENSE",

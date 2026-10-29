@@ -27,6 +27,7 @@ import {
 import {SAME_LINE, branchesOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression} from '../../core/types.ts';
 
 //the words of Java, and the names of the library and of the helpers, which a program's names can't be
@@ -644,4 +645,10 @@ export const toJava = (tree: ProgramTree, types: Types, sourceCode: string, styl
   out.block(() => out.append(members));
   out.line('}');
   return out.converted();
+};
+
+/** The writer of Java, in its modern and its classic style: its targets, which cmil/convert/java gives convert(). */
+export const WRITERS: Writers = {
+  java: {typed: true, write: (tree, types, sourceCode) => toJava(tree, types, sourceCode, 'modern')},
+  'java-classic': {typed: true, write: (tree, types, sourceCode) => toJava(tree, types, sourceCode, 'classic')}
 };

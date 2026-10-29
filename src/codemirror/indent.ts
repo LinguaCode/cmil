@@ -6,7 +6,7 @@ import {indentService, indentUnit} from '@codemirror/language';
 import type {Extension} from '@codemirror/state';
 
 import {segmentsOf} from '../editor.ts';
-import {kindsOf} from './language.ts';
+import {kindsOf} from '../editing.ts';
 
 /** The spaces of one level of indentation, which CMIL takes. */
 export const INDENT = 4;

@@ -23,6 +23,7 @@ import {
 import {SAME_LINE, branchesOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression} from '../../core/types.ts';
 
 //the words of JavaScript, the names a page already has, and the names the conversion uses, which a program's names
@@ -351,3 +352,6 @@ export const toJavascript = (tree: ProgramTree, types: Types, sourceCode: string
   helpers.write(out, helper => helper.code(words));
   return out.converted();
 };
+
+/** The writer of JavaScript: its targets, which cmil/convert/javascript gives convert(). */
+export const WRITERS: Writers = {javascript: {typed: false, write: toJavascript}};

@@ -32,6 +32,7 @@ import {
 import {branchesApart, loopMade, loopOf, statementsOf, testsOf, type Braces} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of FreeBASIC, in small letters, which a program's names can't be whatever their case: its keywords and
@@ -922,3 +923,6 @@ const MATH: Record<string, string> = {
   log: 'Log',
   pow: 'Pow'
 };
+
+/** The writer of BASIC: its targets, which cmil/convert/basic gives convert(). */
+export const WRITERS: Writers = {basic: {typed: true, fixedArrays: BASIC_ARRAYS, write: toBasic}};

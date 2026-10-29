@@ -29,6 +29,7 @@ import {
 import {SAME_LINE, branchesOf, doWhileOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression} from '../../core/types.ts';
 
 //the words of Go, its predeclared names and packages, and the helpers, which a program's names can't be
@@ -764,3 +765,6 @@ export const toGo = (tree: ProgramTree, types: Types, sourceCode: string): Conve
   const converted = out.converted();
   return {...converted, code: lineUp(converted.code)};
 };
+
+/** The writer of Go: its targets, which cmil/convert/go gives convert(). */
+export const WRITERS: Writers = {go: {typed: true, write: toGo}};

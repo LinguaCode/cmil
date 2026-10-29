@@ -13,19 +13,9 @@ import {
 import {Prec, type Extension} from '@codemirror/state';
 import {keymap, type EditorView} from '@codemirror/view';
 
-import {commandsOf, segmentsOf, type CommandKind} from '../editor.ts';
-import {insideText} from './quotes.ts';
+import {commandCompletionsOf, completionsAt, WORD, type Completion as CmilCompletion} from '../editing.ts';
 
-const WORD = /[\p{L}\p{M}\p{N}_]+/u;
-
-const TYPES: Record<CommandKind, string> = {
-  block: 'keyword',
-  statement: 'keyword',
-  part: 'keyword',
-  operator: 'keyword',
-  value: 'constant',
-  function: 'function'
-};
+export {namesOf} from '../editing.ts';
 
 //a function is completed with its brackets, with the cursor between them
 const call =
@@ -39,25 +29,17 @@ const call =
     });
   };
 
+//a completion of CMIL in CodeMirror, whose types have the names of its kinds
+const optionOf = ({label, kind}: CmilCompletion): Completion => ({
+  label,
+  type: kind,
+  ...(kind === 'function' ? {apply: call(label)} : {})
+});
+
 /**
  * The completions of the commands of a language: every word of each, with its kind as its type.
  */
-export const commandCompletions = (language: string): Completion[] =>
-  commandsOf(language).flatMap(({words, kind}) =>
-    words.map(word => ({label: word, type: TYPES[kind], ...(kind === 'function' ? {apply: call(word)} : {})}))
-  );
-
-/**
- * The names in a program, without the one being typed.
- */
-export const namesOf = (lines: Iterable<string>, language: string, typed = ''): string[] => {
-  const names = new Set<string>();
-  for (const line of lines) {
-    segmentsOf(line, language).forEach(({type, text}) => type === 'name' && names.add(text));
-  }
-  names.delete(typed);
-  return [...names];
-};
+export const commandCompletions = (language: string): Completion[] => commandCompletionsOf(language).map(optionOf);
 
 //Tab takes the chosen completion, and Enter always starts a new line, so a name at the end of a line stays as typed
 const keys = Prec.high(
@@ -69,8 +51,6 @@ const keys = Prec.high(
  * chosen one, and Enter starts a new line.
  */
 export const cmilCompletion = (language: string): Extension => {
-  const commands = commandCompletions(language);
-
   return [
     keys,
     autocompletion({
@@ -80,15 +60,11 @@ export const cmilCompletion = (language: string): Extension => {
           const word = context.matchBefore(WORD);
           if (!word && !context.explicit) return null;
 
-          const from = word ? word.from : context.pos;
-          const line = context.state.doc.lineAt(from);
-          if (insideText(line.text.slice(0, from - line.from), language)) return null;
-
-          const names = namesOf(context.state.doc.iterLines(), language, word?.text).map(label => ({
-            label,
-            type: 'variable'
-          }));
-          return {from, options: [...commands, ...names], validFor: /^[\p{L}\p{M}\p{N}_]*$/u};
+          const line = context.state.doc.lineAt(context.pos);
+          const at = {line: line.number - 1, character: context.pos - line.from};
+          const options = completionsAt(context.state.doc.toString(), language, at).map(optionOf);
+          if (!options.length) return null;
+          return {from: word ? word.from : context.pos, options, validFor: /^[\p{L}\p{M}\p{N}_]*$/u};
         }
       ]
     })

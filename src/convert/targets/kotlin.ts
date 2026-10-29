@@ -29,6 +29,7 @@ import {
 import {SAME_LINE, branchesOf, loopOf, loopOverValues, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Kotlin, and the functions of its library and of the helpers, which a program's names can't be
@@ -524,3 +525,6 @@ export const toKotlin = (tree: ProgramTree, types: Types, sourceCode: string): C
   helpers.write(out, helper => helper.code(words));
   return out.converted();
 };
+
+/** The writer of Kotlin: its targets, which cmil/convert/kotlin gives convert(). */
+export const WRITERS: Writers = {kotlin: {typed: true, write: toKotlin}};

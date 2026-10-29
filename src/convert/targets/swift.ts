@@ -32,6 +32,7 @@ import {
 import {SAME_LINE, branchesOf, loopOf, loopOverValues, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Swift, and the functions of its library and of the helpers, which a program's names can't be
@@ -575,3 +576,6 @@ export const toSwift = (tree: ProgramTree, types: Types, sourceCode: string): Co
   helpers.write(out, helper => helper.code(words));
   return out.converted();
 };
+
+/** The writer of Swift: its targets, which cmil/convert/swift gives convert(). */
+export const WRITERS: Writers = {swift: {typed: true, write: toSwift}};

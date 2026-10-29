@@ -16,8 +16,19 @@ if ('code' in result) {
 }
 ```
 
-- `convert` is also the package's entry `cmil/convert`, which has only it, so a page can load the converters when it first shows a program in another language, like `const {convert} = await import('cmil/convert')`. `targets` doesn't load them; CMIL declares that its modules have no side effects (`"sideEffects": false`), so a bundler leaves out what a page doesn't use.
-- `targets` lists the languages, each `{id, name, extension}`: `cpp` (C++), `python` (Python), `c` (C), `javascript` (JavaScript), `pascal` (Pascal), `go` (Go), `kotlin` (Kotlin), `swift` (Swift), `rust` (Rust), `php` (PHP), `ruby` (Ruby), `lua` (Lua), `basic` (BASIC), `visualbasic` (Visual Basic), `fortran` (Fortran), `tcl` (Tcl), `cobol` (COBOL), C# and Java in two shapes each, with their `style`: `csharp` and `java`, `modern`, and `csharp-classic` and `java-classic`, `classic`, and x86-64 Assembly in three syntaxes, with theirs: `x86-64`, `intel`, and `x86-64-att`, `att`, of the GNU assembler, and `x86-64-nasm`, `nasm`.
+- `convert` is also the package's entry `cmil/convert`, which has only it, so a page can load the converters when it first shows a program in another language, like `const {convert} = await import('cmil/convert')`. `targets` doesn't load them; CMIL declares that its modules have no side effects, but for the parts below, so a bundler leaves out what a page doesn't use.
+- `convert` also comes in parts, for a page or an app that shows a few languages and loads each when it needs it: `cmil/convert/core` has `convert()` with no writer, and `cmil/convert/<writer>` gives it the targets of a writer when it is imported. A target of a writer that isn't imported throws an error that names its entry.
+
+  ```js
+  import {convert, targets} from 'cmil/convert/core';
+  import 'cmil/convert/csharp';
+
+  convert('print(1)', 'en', 'csharp-classic'); // C# in its classic shape
+  targets.find(({id}) => id === 'x86-64-nasm').writer; // 'assembly': import 'cmil/convert/assembly'
+  ```
+
+  The writers are `cpp`, `python`, `csharp` (both shapes), `java` (both shapes), `c`, `javascript`, `pascal`, `go`, `kotlin`, `swift`, `rust`, `php`, `ruby`, `lua`, `basic`, `visualbasic`, `fortran`, `tcl`, `cobol` and `assembly` (the three syntaxes). `cmil/convert` gives its `convert()` every writer when it first converts.
+- `targets` lists the languages, each `{id, name, extension, writer}`: `cpp` (C++), `python` (Python), `c` (C), `javascript` (JavaScript), `pascal` (Pascal), `go` (Go), `kotlin` (Kotlin), `swift` (Swift), `rust` (Rust), `php` (PHP), `ruby` (Ruby), `lua` (Lua), `basic` (BASIC), `visualbasic` (Visual Basic), `fortran` (Fortran), `tcl` (Tcl), `cobol` (COBOL), C# and Java in two shapes each, with their `style`: `csharp` and `java`, `modern`, and `csharp-classic` and `java-classic`, `classic`, and x86-64 Assembly in three syntaxes, with theirs: `x86-64`, `intel`, and `x86-64-att`, `att`, of the GNU assembler, and `x86-64-nasm`, `nasm`.
 - `convert(sourceCode, language, target)` gives one of three things:
   - `{code, lines}`;
   - `{problems}`, why a typed language can't write the program;

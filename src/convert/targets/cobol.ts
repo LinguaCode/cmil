@@ -34,6 +34,7 @@ import {
 import {branchesApart, loopMade, loopOf, statementsOf, testsOf, type Braces} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the names a name of the program can't be, whatever its case, in small letters: the words of GnuCOBOL a variable
@@ -1351,3 +1352,6 @@ export const toCobol = (tree: ProgramTree, types: Types, sourceCode: string): Co
   helpers.write(out, (helper, helperName) => helper.code({words, kinds: [...(forKinds.get(helperName) ?? [])]}));
   return out.converted();
 };
+
+/** The writer of COBOL: its targets, which cmil/convert/cobol gives convert(). */
+export const WRITERS: Writers = {cobol: {typed: true, fixedArrays: COBOL_ARRAYS, write: toCobol}};

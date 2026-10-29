@@ -27,6 +27,7 @@ import {
 import {branchesOf, loopOf, statementsOf, type Braces} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Pascal and the names of its units and of the helpers, in small letters, which a program's names can't
@@ -740,3 +741,6 @@ const itemOf = (list: string) => {
   const item = list.replace(/^T/, '').replace(/Array$/, '');
   return item === 'String' ? 'string' : item;
 };
+
+/** The writer of Pascal: its targets, which cmil/convert/pascal gives convert(). */
+export const WRITERS: Writers = {pascal: {typed: true, write: toPascal}};

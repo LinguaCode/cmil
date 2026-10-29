@@ -30,9 +30,11 @@ import {
 } from '../../emit.ts';
 import {isList, isNumber, type Type, type Types} from '../../types.ts';
 import type {ProgramTree} from '../../../program.ts';
+import type {Writers} from '../../registry.ts';
 import type {Expression, Statement} from '../../../core/types.ts';
 import {
   AL,
+  AT_AND_T,
   EAX,
   INTEL,
   LIBRARY,
@@ -54,6 +56,7 @@ import {
   external,
   item,
   local,
+  NASM,
   number,
   register
 } from './syntax.ts';
@@ -1302,4 +1305,11 @@ export const toAssembly = (tree: ProgramTree, types: Types, sourceCode: string, 
   program.blank();
   program.block(() => program.line(`${syntax.section('stack')} ${syntax.comment} the stack holds no code`));
   return program.converted();
+};
+
+/** The writer of x86-64 assembly, in the intel and att syntaxes of the GNU assembler and in NASM's: its targets, which cmil/convert/assembly gives convert(). */
+export const WRITERS: Writers = {
+  'x86-64': {typed: true, write: (tree, types, sourceCode) => toAssembly(tree, types, sourceCode, INTEL)},
+  'x86-64-att': {typed: true, write: (tree, types, sourceCode) => toAssembly(tree, types, sourceCode, AT_AND_T)},
+  'x86-64-nasm': {typed: true, write: (tree, types, sourceCode) => toAssembly(tree, types, sourceCode, NASM)}
 };

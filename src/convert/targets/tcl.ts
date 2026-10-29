@@ -27,6 +27,7 @@ import {
 import {SAME_LINE, branchesOf, doWhileOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the commands of Tcl and the helpers, which a function of the program can't be named, since it would replace them
@@ -596,3 +597,6 @@ export const toTcl = (tree: ProgramTree, types: Types, sourceCode: string): Conv
   out.append(main);
   return out.converted();
 };
+
+/** The writer of Tcl: its targets, which cmil/convert/tcl gives convert(). */
+export const WRITERS: Writers = {tcl: {typed: true, write: toTcl}};

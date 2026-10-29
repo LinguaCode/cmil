@@ -26,6 +26,7 @@ import {
 import {branchesOf, loopOf, statementsOf, type Braces} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of Visual Basic, in small letters, which a program's names can't be whatever their case: its keywords,
@@ -608,3 +609,6 @@ export const toVisualBasic = (tree: ProgramTree, types: Types, sourceCode: strin
   out.line('End Module');
   return out.converted();
 };
+
+/** The writer of Visual Basic: its targets, which cmil/convert/visualbasic gives convert(). */
+export const WRITERS: Writers = {visualbasic: {typed: true, write: toVisualBasic}};

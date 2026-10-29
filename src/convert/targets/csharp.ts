@@ -27,6 +27,7 @@ import {
 import {OWN_LINES, branchesOf, loopOf, statementsOf} from '../statements.ts';
 import {isList, isNumber, type Type, type Types} from '../types.ts';
 import type {ProgramTree} from '../../program.ts';
+import type {Writers} from '../registry.ts';
 import type {Expression, Statement} from '../../core/types.ts';
 
 //the words of C#, the names of the library the conversion uses and of the helpers, which a program's names can't be
@@ -600,4 +601,10 @@ export const toCsharp = (tree: ProgramTree, types: Types, sourceCode: string, st
   });
   out.line('}');
   return out.converted();
+};
+
+/** The writer of C#, in its modern and its classic style: its targets, which cmil/convert/csharp gives convert(). */
+export const WRITERS: Writers = {
+  csharp: {typed: true, write: (tree, types, sourceCode) => toCsharp(tree, types, sourceCode, 'modern')},
+  'csharp-classic': {typed: true, write: (tree, types, sourceCode) => toCsharp(tree, types, sourceCode, 'classic')}
 };
